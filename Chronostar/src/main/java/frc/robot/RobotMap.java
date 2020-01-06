@@ -8,32 +8,17 @@
 package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.Counter;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.SPI.Port;
-import frc.robot.sensors.DriveEncoder;
 import frc.robot.sensors.Navx;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.tools.pathTools.PathList;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.fasterxml.jackson.databind.ser.std.StdArraySerializers.IntArraySerializer;
-import com.revrobotics.SparkMax;
 
-/**
- * The RobotMap is a mapping from the ports sensors and actuators are wired into
- * to a variable name. This provides flexibility changing wiring, makes checking
- * the wiring easier and significantly reduces the number of magic numbers
- * floating around.
- */
 public class RobotMap {
 
   public static AHRS navx = new AHRS(Port.kMXP);
@@ -59,13 +44,11 @@ public class RobotMap {
   public static TalonFX rightDriveLead = new TalonFX(rightMasterFalcon);
 
 	public static TalonFX leftDriveFollowerOne = new TalonFX(leftFollowerFalcon);
-  public static TalonFX rightDriveFollowerOne = new TalonFX(rightFollowerFalcon);
+  public static TalonFX rightDriveFollowerOne = new TalonFX(rightFollowerFalcon);  
 
   public static TalonFX shooterMaster = new TalonFX(shooterMotor);
-  
-  public static SparkMax sparky = new SparkMax(1);
 
-
+  public static CANSparkMax sparkMax = new CANSparkMax(7, MotorType.kBrushless);
   
   public static PathList pathlist = new PathList();
 
@@ -83,8 +66,13 @@ public class RobotMap {
     RobotMap.leftDriveLead,
     RobotMap.rightDriveLead,
   };
-
-
+  public static TalonFX allFalcons[] = {
+    RobotMap.leftDriveLead,
+    RobotMap.rightDriveLead,
+    RobotMap.leftDriveFollowerOne,
+    RobotMap.rightDriveFollowerOne,
+    RobotMap.shooterMaster
+  };
   public static DriveTrain drive = new DriveTrain();
   
 }

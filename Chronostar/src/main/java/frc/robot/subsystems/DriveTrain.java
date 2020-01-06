@@ -8,11 +8,8 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.RobotState;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ButtonMap;
@@ -25,7 +22,6 @@ public class DriveTrain extends SubsystemBase {
 	private double deadZone = 0.0102;
 	private double turn =0;
 	private double throttel = 0;
-	private double ratio;
 	public static DriveEncoder leftMainDrive = new DriveEncoder(RobotMap.leftDriveLead,RobotMap.leftDriveLead.getSelectedSensorPosition(0));
 	public static DriveEncoder rightMainDrive = new DriveEncoder(RobotMap.rightDriveLead,RobotMap.rightDriveLead.getSelectedSensorPosition(0));
 	private double speed;
@@ -70,13 +66,11 @@ public class DriveTrain extends SubsystemBase {
 		RobotMap.leftDriveLead.config_kP(profile, p, 0);
 		RobotMap.leftDriveLead.config_kI(profile, i, 0);
 		RobotMap.leftDriveLead.config_kD(profile, d, 0);
-		RobotMap.leftDriveLead.set(ControlMode.Velocity, leftMainDrive.convertftpersToNativeUnitsper100ms(speed));
 		RobotMap.rightDriveLead.selectProfileSlot(profile, 0);
 		RobotMap.rightDriveLead.config_kF(profile, f, 0);
 		RobotMap.rightDriveLead.config_kP(profile, p, 0);
 		RobotMap.rightDriveLead.config_kI(profile, i, 0);
 		RobotMap.rightDriveLead.config_kD(profile, d, 0);
-		RobotMap.rightDriveLead.set(ControlMode.Velocity, rightMainDrive.convertftpersToNativeUnitsper100ms(speed));
 	}
 	
 	public void arcadeDrive(){
@@ -84,13 +78,12 @@ public class DriveTrain extends SubsystemBase {
 		double rightPower;
 		double differential;
 		if(Math.abs(ButtonMap.getDriveThrottle())>deadZone){
-			throttel = Math.tanh(ButtonMap.getDriveThrottle())*(4/3.14); 
+			throttel = Math.tanh(ButtonMap.getDriveThrottle())*(4/Math.PI); 
 		}
 		else{
 			throttel = 0;
 		}
 
-		ratio = Math.abs(throttel);
 		if(Math.abs(ButtonMap.getRotation())>deadZone){
 			turn = ButtonMap.getRotation();
 		}
@@ -135,7 +128,7 @@ public class DriveTrain extends SubsystemBase {
 		RobotMap.rightDriveLead.set(ControlMode.PercentOutput, percent);
 	}
 	public void stopDriveTrainMotors(){
-		for(TalonSRX talon : RobotMap.driveMotorLeads){
+		for(TalonFX talon : RobotMap.driveMotorLeads){
 			talon.set(ControlMode.PercentOutput, 0);
 		}
 	}

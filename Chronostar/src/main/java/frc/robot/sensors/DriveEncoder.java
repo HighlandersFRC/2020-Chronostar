@@ -1,15 +1,16 @@
 package frc.robot.sensors;
 
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import frc.robot.RobotConfig;
 import frc.robot.RobotStats;
 
 public class DriveEncoder {
-	private TalonSRX masterTalon;
+	private TalonFX masterTalon;
 	private int startingValue;
 	
-	public DriveEncoder(TalonSRX talon, int startingValue) {
+	public DriveEncoder(TalonFX talon, int startingValue) {
 		masterTalon = talon;
 	}
 	public double getEncoderValue() {

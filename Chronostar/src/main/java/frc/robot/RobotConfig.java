@@ -11,14 +11,17 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.revrobotics.CANSparkMax;
 
 /**
  * Add your docs here.
  */
 public class RobotConfig {
     public void setStartingConfig(){
-        
+
         RobotConfig.setAllMotorsBrake();
         RobotMap.rightDriveLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,0);
 		RobotMap.leftDriveLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,0);
@@ -33,18 +36,11 @@ public class RobotConfig {
     	RobotMap.leftDriveLead.setInverted(true);
         RobotMap.leftDriveFollowerOne.setInverted(InvertType.FollowMaster);
 
-        RobotMap.leftDriveLead.setSensorPhase(true);
-        RobotMap.rightDriveLead.setSensorPhase(true);
+        RobotMap.leftDriveLead.setSensorPhase(false);
+        RobotMap.rightDriveLead.setSensorPhase(false);
+
     	RobotMap.leftDriveLead.setSelectedSensorPosition(0, 0,0);
         RobotMap.rightDriveLead.setSelectedSensorPosition(0, 0, 0);
-        
-    	for(TalonSRX talon:RobotMap.driveMotors) {
-    		talon.configContinuousCurrentLimit(RobotStats.driveMotorContinuousCurrentHighGear);
-    		talon.configPeakCurrentLimit(RobotStats.driveMotorPeakCurrentHighGear);
-            talon.configPeakCurrentDuration(RobotStats.driveMotorPeakCurrentDurationHighGear);
-            talon.enableCurrentLimit(true);
-        }
-
     }
     public void setTeleopConfig(){
         RobotConfig.setDriveMotorsCoast();
@@ -53,18 +49,22 @@ public class RobotConfig {
         RobotConfig.setDriveMotorsBrake();
     }
     public static void setAllMotorsBrake() {
-		for(TalonSRX talon:RobotMap.allMotors){
+		for(TalonFX talon:RobotMap.allFalcons){
             talon.setNeutralMode(NeutralMode.Brake);
         }
-	}
-	public static void setDriveMotorsCoast() {
-		for(TalonSRX talon:RobotMap.driveMotors){
+    }
+    public static void setAllMotorsCoast() {
+		for(TalonFX talon:RobotMap.allFalcons){
             talon.setNeutralMode(NeutralMode.Coast);
         }
 	}
-
+	public static void setDriveMotorsCoast() {
+		for(TalonFX talon:RobotMap.driveMotors){
+            talon.setNeutralMode(NeutralMode.Coast);
+        }
+	}
 	public static void setDriveMotorsBrake() {
-		for(TalonSRX talon:RobotMap.driveMotors){
+		for(TalonFX talon:RobotMap.driveMotors){
             talon.setNeutralMode(NeutralMode.Brake);
         }
 	}

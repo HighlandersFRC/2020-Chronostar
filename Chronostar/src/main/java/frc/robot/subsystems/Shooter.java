@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotMap;
 
 public class Shooter extends SubsystemBase {
 
@@ -22,8 +23,18 @@ public class Shooter extends SubsystemBase {
 
   }
   public void initVelocityControl(){
-  
+      RobotMap.leftDriveLead.selectProfileSlot(profile, 0);
+      RobotMap.leftDriveLead.config_kF(profile, f, 0);
+      RobotMap.leftDriveLead.config_kP(profile, p, 0);
+      RobotMap.leftDriveLead.config_kI(profile, i, 0);
+      RobotMap.leftDriveLead.config_kD(profile, d, 0);
+      RobotMap.rightDriveLead.selectProfileSlot(profile, 0);
+      RobotMap.rightDriveLead.config_kF(profile, f, 0);
+      RobotMap.rightDriveLead.config_kP(profile, p, 0);
+      RobotMap.rightDriveLead.config_kI(profile, i, 0);
+      RobotMap.rightDriveLead.config_kD(profile, d, 0);
   }
+  
 
 
   @Override

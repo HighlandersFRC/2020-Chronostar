@@ -11,4 +11,7 @@ package frc.robot.sensors;
  * Add your docs here.
  */
 public class FlywheelEncoder {
+    public FlywheelEncoder(){
+        
+    }
 }
