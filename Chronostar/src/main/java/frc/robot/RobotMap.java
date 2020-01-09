@@ -24,9 +24,7 @@ public class RobotMap {
   public static AHRS navx = new AHRS(Port.kMXP);
 
   public static Navx mainNavx = new Navx(navx);
-  
-  public static PowerDistributionPanel pdp = new PowerDistributionPanel();
-  
+    
 	public static Relay visionRelay1 = new Relay(0);
 
   
