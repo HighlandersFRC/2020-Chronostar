@@ -21,14 +21,14 @@ class TapeDetect:
     def process(self, inframe, outframe):
         #out = self.UniversalProcess(inframe)
         #outframe.sendCv(out)
-        jevois.sendSerial("hello")
+        #jevois.sendSerial("hello")
         out = self.UniversalProcess(inframe)
         outframe.sendCv(out)
 
     def processNoUSB(self, inframe):
         out = self.UniversalProcess(inframe)
         #outframe.sendCv(out)
-        jevois.sendSerial("bonjour")
+        #jevois.sendSerial("bonjour")
         
         
     def sortContours(self, cntArray):
@@ -62,7 +62,7 @@ class TapeDetect:
         hsv = cv2.cvtColor(inimg, cv2.COLOR_BGR2HSV)
         
         oKernel = np.ones((2, 2), np.uint8)
-        cKernel = np.ones((5, 5), np.uint8)
+        cKernel = np.ones((4, 4), np.uint8)
         #cKernel = np.array([
         #[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
         #[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
@@ -79,7 +79,7 @@ class TapeDetect:
         mask = cv2.inRange(hsv, lowerThreshold, upperThreshold)
         
         #create blur on image to reduce noise
-        blur = cv2.GaussianBlur(mask,(7,7),0)
+        blur = cv2.GaussianBlur(mask,(5,5),0)
         
         ret,thresh = cv2.threshold(blur, 65, 255, cv2.THRESH_BINARY)
         
