@@ -16,16 +16,17 @@ class TapeDetect:
         
         self.draw = True
         
-        self.lowerH = 45
-        self.upperH = 75
+        self.lowerH = 57
+        self.upperH = 84
         
-        self.lowerS = 50
+        self.lowerS = 222
         self.upperS = 255
         
-        self.lowerV = 50
+        self.lowerV = 62
         self.upperV = 255
         
-        global stringForHSV
+        #gain = 20
+        #exposure = 27
         
         self.stringForHSV = "hi"
                 
@@ -44,7 +45,6 @@ class TapeDetect:
         #jevois.sendSerial("bonjour")
         
     def parseSerial(self, string):
-        global stringForHSV
         self.stringForHSV = string
         #jevois.sendSerial("hello parseSerial")
         #jevois.sendSerial(stringForHSV)
@@ -84,8 +84,8 @@ class TapeDetect:
         arrayForHSV = list(self.stringForHSV)
         
         #threshold colors to detect - Green: First value decides color, second val determines intensity, third val decides brightness
-        lowerThreshold = np.array([45, 50, 50])
-        upperThreshold = np.array([75, 255, 255])
+        lowerThreshold = np.array([self.lowerH, self.lowerS, self.lowerV])
+        upperThreshold = np.array([self.upperH, self.upperS, self.upperV])
         
         
         if len(arrayForHSV) > 15 and arrayForHSV[4] == "h":
@@ -113,8 +113,8 @@ class TapeDetect:
             self.upperV = int(stringV[1])
             lowerThreshold = np.array([self.lowerH, self.lowerS, self.lowerV])
             upperThreshold = np.array([self.upperH, self.upperS, self.upperV])
-        jevois.sendSerial(str(lowerThreshold))
-        jevois.sendSerial(str(upperThreshold))
+        #jevois.sendSerial(str(lowerThreshold))
+        #jevois.sendSerial(str(upperThreshold))
         
         
         oKernel = np.ones((2, 2), np.uint8)
@@ -130,7 +130,7 @@ class TapeDetect:
         #check if color in range
         mask = cv2.inRange(hsv, lowerThreshold, upperThreshold)
         
-        
+        result = cv2.bitwise_and(inimg, inimg, mask = mask)
         
         #create blur on image to reduce noise
         blur = cv2.GaussianBlur(mask,(5,5),0)
@@ -158,7 +158,7 @@ class TapeDetect:
         sortedArray = self.sortContours(cntArray)
         
         if len(sortedArray) == 0:
-            #jevois.sendSerial('{"Distance":-11, "Angle":-100}')
+            jevois.sendSerial('{"Distance":-11, "Angle":-100}')
             #outimg = cv2.cvtColor(opening, cv2.COLOR_GRAY2BGR)
             outimg = cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
             return outimg
@@ -168,7 +168,7 @@ class TapeDetect:
         target = cv2.minAreaRect(sortedArray[0])
         points_A = cv2.boxPoints(target)
         points_1 = np.int0(points_A)
-        cv2.drawContours(hsv, [points_1], 0, boxColor, 2)
+        cv2.drawContours(result, [points_1], 0, boxColor, 2)
         targetX = target[0][0]
         targetY = target[0][1]
         
@@ -182,10 +182,11 @@ class TapeDetect:
         
         JSON = '{"Distance":' + distance + ', "Angle":' + yawAngle + '}'
         
-        #jevois.sendSerial(JSON)
+        jevois.sendSerial(JSON)
         #jevois.sendSerial(yawAngle)
         
         #outimg = cv2.cvtColor(opening, cv2.COLOR_GRAY2BGR)
         outimg = cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
         
-        return outimg
+        return result
+        #return outimg

@@ -73,12 +73,15 @@ def serial_ports():
 	
 	
 def deploy(port, module):
-	srcFile = "./modules/Highlanders/" + module + "/" + module + ".py"
-	dstDir = "D:/modules/Highlanders/" + module
-	
-	copyFile(port, srcFile, dstDir)
-	sendCommand(port, b'restart\r')
-		
+    moduleFile = "./modules/Highlanders/" + module + "/" + module + ".py"
+    scriptFile = "./modules/Highlanders/" + module + "/" + "script.cfg"
+    dstDir = "D:/modules/Highlanders/" + module
+
+    copyFile(port, moduleFile, dstDir)
+    copyFile(port, scriptFile, dstDir)
+    time.sleep(3)
+    sendCommand(port, b'restart\r')
+        
 def sendConfig(port, file):
 	srcFile = "./config/" + file
 	dstDir = "D:/config"
