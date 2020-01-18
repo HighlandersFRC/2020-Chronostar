@@ -15,6 +15,10 @@ class TapeDetect:
         self.timer = jevois.Timer("processing timer", 100, jevois.LOG_INFO)
         
         self.draw = True
+        
+        global stringForHSV
+        
+        self.stringForHSV = "hi"
                 
     # ###################################################################################################
     ## Process function with USB output
@@ -30,6 +34,13 @@ class TapeDetect:
         #outframe.sendCv(out)
         #jevois.sendSerial("bonjour")
         
+    def parseSerial(self, string):
+        global stringForHSV
+        self.stringForHSV = string
+        #jevois.sendSerial("hello parseSerial")
+        #jevois.sendSerial(stringForHSV)
+        return self.stringForHSV;
+    #stringForHSV = string    
         
     def sortContours(self, cntArray):
         arraySize = len(cntArray)
@@ -60,6 +71,37 @@ class TapeDetect:
         
         #change to hsv
         hsv = cv2.cvtColor(inimg, cv2.COLOR_BGR2HSV)
+        
+        arrayForHSV = list(self.stringForHSV)
+        
+        #jevois.sendSerial(str(len(arrayForHSV)))
+        
+        if len(arrayForHSV) == 16 and arrayForHSV[4] == "h":
+            try:
+                hLow = arrayForHSV[11] + arrayForHSV[12]
+                #hHigh = arrayForHSV[16] + arrayForHSV[17] + arrayForHSV[18]
+            except:
+                hLow = "10"
+                #hHigh = "10"
+            try:
+                hHigh = arrayForHSV[16] + arrayForHSV[17] + arrayForHSV[18]
+            except:
+                hHigh = "10"
+            #jevois.sendSerial(low)
+            #jevois.sendSerial(high)
+            hLow = int(hLow)
+            hHigh = int(hHigh)
+            lowerThreshold = np.array([hLow, 50, 50])
+            upperThreshold = np.array([hHigh, 255, 255])
+            #jevois.sendSerial("helloooooooooo")
+            jevois.sendSerial(str(lowerThreshold))
+            #jevois.sendSerial("helllooooooo")
+            jevois.sendSerial(str(upperThreshold))
+        
+        #jevois.sendSerial("alive")
+        #jevois.sendSerial(str(arrayForHSV))
+        #jevois.sendSerial(low)
+        #jevois.sendSerial(high)
         
         oKernel = np.ones((2, 2), np.uint8)
         cKernel = np.ones((4, 4), np.uint8)
@@ -104,7 +146,7 @@ class TapeDetect:
         sortedArray = self.sortContours(cntArray)
         
         if len(sortedArray) == 0:
-            jevois.sendSerial('{"Distance":-11, "Angle":-100}')
+            #jevois.sendSerial('{"Distance":-11, "Angle":-100}')
             #outimg = cv2.cvtColor(opening, cv2.COLOR_GRAY2BGR)
             outimg = cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
             return outimg
@@ -128,7 +170,7 @@ class TapeDetect:
         
         JSON = '{"Distance":' + distance + ', "Angle":' + yawAngle + '}'
         
-        jevois.sendSerial(JSON)
+        #jevois.sendSerial(JSON)
         #jevois.sendSerial(yawAngle)
         
         #outimg = cv2.cvtColor(opening, cv2.COLOR_GRAY2BGR)
