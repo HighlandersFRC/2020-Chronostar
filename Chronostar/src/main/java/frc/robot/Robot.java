@@ -21,11 +21,12 @@ public class Robot extends TimedRobot {
     commandSuites = new CommandSuites();
     robotConfig = new RobotConfig();
     robotConfig.setStartingConfig();
-    RobotMap.drive.initVelocityPIDs();
     m_oi = new OI();
   }
   @Override
   public void robotPeriodic() {
+    RobotMap.shooter.periodic();
+    RobotMap.drive.periodic();
   }
   @Override
   public void disabledInit() {
@@ -50,8 +51,8 @@ public class Robot extends TimedRobot {
   }
   @Override
   public void teleopInit() {
-    commandSuites.startTeleopCommands();
     robotConfig.setTeleopConfig();
+    commandSuites.startTeleopCommands();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }

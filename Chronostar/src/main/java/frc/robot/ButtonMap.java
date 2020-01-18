@@ -14,13 +14,18 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
  */
 public class ButtonMap {
     public static OI oi = new OI();
+    //driver controller buttons
     public static double getDriveThrottle(){
         return -oi.driverController.getRawAxis(1);
     } 
     public static double getRotation(){
         return oi.driverController.getRawAxis(4);
     }
-    public static boolean runAuto(){
-        return oi.driverController.getYButton();
+    //slightly less important person buttons
+    public static boolean shooterUp(){
+        return oi.operatorController.getYButton();
+    }
+    public static boolean shooterDown(){
+        return oi.operatorController.getAButton();
     }
 }

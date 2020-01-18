@@ -26,21 +26,31 @@ public class RobotConfig {
         RobotMap.rightDriveLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,0);
 		RobotMap.leftDriveLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,0);
         
-        RobotMap.rightDriveFollowerOne.set(ControlMode.Follower, RobotMap.rightMasterFalcon);
-        RobotMap.leftDriveFollowerOne.set(ControlMode.Follower, RobotMap.leftMasterFalcon);
+        RobotMap.rightDriveFollowerOne.set(ControlMode.Follower, RobotMap.leftDriveLeadID);
+        RobotMap.leftDriveFollowerOne.set(ControlMode.Follower, RobotMap.rightDriveLeadID);
 
-        
+        RobotMap.shooterFollower.set(ControlMode.Follower, RobotMap.shooterMasterID);
+
+
         RobotMap.rightDriveLead.setInverted(false);
         RobotMap.rightDriveFollowerOne.setInverted(InvertType.FollowMaster);
 
     	RobotMap.leftDriveLead.setInverted(true);
         RobotMap.leftDriveFollowerOne.setInverted(InvertType.FollowMaster);
-
+        
         RobotMap.leftDriveLead.setSensorPhase(false);
         RobotMap.rightDriveLead.setSensorPhase(false);
 
     	RobotMap.leftDriveLead.setSelectedSensorPosition(0, 0,0);
         RobotMap.rightDriveLead.setSelectedSensorPosition(0, 0, 0);
+
+        RobotMap.drive.initVelocityPIDs();
+        RobotMap.drive.initAlignmentPID();
+        RobotMap.shooter.initShooterPID();
+        
+        RobotMap.shooterMaster.configPeakOutputForward(RobotStats.maxShooterPercentVoltage);
+        RobotMap.shooterMaster.configPeakOutputReverse(0);
+        RobotMap.shooterMaster.configClosedLoopPeakOutput(0, RobotStats.maxShooterPercentVoltage);
     }
     public void setTeleopConfig(){
         RobotConfig.setDriveMotorsCoast();
