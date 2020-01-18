@@ -16,6 +16,15 @@ class TapeDetect:
         
         self.draw = True
         
+        self.lowerH = 45
+        self.upperH = 75
+        
+        self.lowerS = 50
+        self.upperS = 255
+        
+        self.lowerV = 50
+        self.upperV = 255
+        
         global stringForHSV
         
         self.stringForHSV = "hi"
@@ -74,34 +83,39 @@ class TapeDetect:
         
         arrayForHSV = list(self.stringForHSV)
         
-        #jevois.sendSerial(str(len(arrayForHSV)))
+        #threshold colors to detect - Green: First value decides color, second val determines intensity, third val decides brightness
+        lowerThreshold = np.array([45, 50, 50])
+        upperThreshold = np.array([75, 255, 255])
         
-        if len(arrayForHSV) == 16 and arrayForHSV[4] == "h":
-            try:
-                hLow = arrayForHSV[11] + arrayForHSV[12]
-                #hHigh = arrayForHSV[16] + arrayForHSV[17] + arrayForHSV[18]
-            except:
-                hLow = "10"
-                #hHigh = "10"
-            try:
-                hHigh = arrayForHSV[16] + arrayForHSV[17] + arrayForHSV[18]
-            except:
-                hHigh = "10"
-            #jevois.sendSerial(low)
-            #jevois.sendSerial(high)
-            hLow = int(hLow)
-            hHigh = int(hHigh)
-            lowerThreshold = np.array([hLow, 50, 50])
-            upperThreshold = np.array([hHigh, 255, 255])
-            #jevois.sendSerial("helloooooooooo")
-            jevois.sendSerial(str(lowerThreshold))
-            #jevois.sendSerial("helllooooooo")
-            jevois.sendSerial(str(upperThreshold))
         
-        #jevois.sendSerial("alive")
-        #jevois.sendSerial(str(arrayForHSV))
-        #jevois.sendSerial(low)
-        #jevois.sendSerial(high)
+        if len(arrayForHSV) > 15 and arrayForHSV[4] == "h":
+            stringForH = self.stringForHSV.lstrip("set hrange")
+            stringHSpace= stringForH.replace("..."," ")
+            stringH = stringHSpace.split(" ")
+            self.lowerH = int(stringH[0])
+            self.upperH = int(stringH[1])
+            lowerThreshold = np.array([self.lowerH, self.lowerS, self.lowerV])
+            upperThreshold = np.array([self.upperH, self.upperS, self.upperV])
+            #jevois.sendSerial("hello")
+        if len(arrayForHSV) > 15 and arrayForHSV[4] == "s":
+            stringForS = self.stringForHSV.lstrip("set srange")
+            stringSSpace= stringForS.replace("..."," ")
+            stringS = stringSSpace.split(" ")
+            self.lowerS = int(stringS[0])
+            self.upperS = int(stringS[1])
+            lowerThreshold = np.array([self.lowerH, self.lowerS, self.lowerV])
+            upperThreshold = np.array([self.upperH, self.upperS, self.upperV])
+        if len(arrayForHSV) > 15 and arrayForHSV[4] == "v":
+            stringForV = self.stringForHSV.lstrip("set vrange")
+            stringVSpace= stringForV.replace("..."," ")
+            stringV = stringVSpace.split(" ")
+            self.lowerV = int(stringV[0])
+            self.upperV = int(stringV[1])
+            lowerThreshold = np.array([self.lowerH, self.lowerS, self.lowerV])
+            upperThreshold = np.array([self.upperH, self.upperS, self.upperV])
+        jevois.sendSerial(str(lowerThreshold))
+        jevois.sendSerial(str(upperThreshold))
+        
         
         oKernel = np.ones((2, 2), np.uint8)
         cKernel = np.ones((4, 4), np.uint8)
@@ -111,14 +125,12 @@ class TapeDetect:
         #[0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0],
         #[0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0],
         #[0, 0, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0]], dtype = np.uint8)
-        
-        
-        #threshold colors to detect - Green: First value decides color, second val determines intensity, third val decides brightness
-        lowerThreshold = np.array([45, 50, 50])
-        upperThreshold = np.array([75, 255, 255])
+
         
         #check if color in range
         mask = cv2.inRange(hsv, lowerThreshold, upperThreshold)
+        
+        
         
         #create blur on image to reduce noise
         blur = cv2.GaussianBlur(mask,(5,5),0)
