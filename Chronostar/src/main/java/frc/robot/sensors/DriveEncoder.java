@@ -20,16 +20,16 @@ public class DriveEncoder {
 		return masterTalon.getSelectedSensorVelocity(0);
 	}
 	public double getDistance(){
-		return ((((getEncoderValue())/RobotStats.encoderTicsPerWheelRotation)*RobotStats.wheelCircum));
+		return ((((getEncoderValue())/RobotStats.driveTicsPerWheelRotation)*RobotStats.wheelCircum));
 	}
 	public double getVelocity(){
-		return (((((getEncoderVelocity()*10))/RobotStats.encoderTicsPerWheelRotation)*RobotStats.wheelCircum));
+		return (((((getEncoderVelocity()*10))/RobotStats.driveTicsPerWheelRotation)*RobotStats.wheelCircum));
 	}
 	public void softReset(){
 		startingValue = masterTalon.getSelectedSensorPosition(0);
 	}
 	public double convertftpersToNativeUnitsper100ms(double feetPerSecond){
-		return (((feetPerSecond/10)/(RobotStats.wheelCircum))*RobotStats.encoderTicsPerWheelRotation);
+		return (((feetPerSecond/10)/(RobotStats.wheelCircum))*RobotStats.driveTicsPerWheelRotation);
 	}
 
 }

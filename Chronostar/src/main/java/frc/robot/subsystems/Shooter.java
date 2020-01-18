@@ -7,38 +7,44 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.ButtonMap;
 import frc.robot.RobotMap;
 
 public class Shooter extends SubsystemBase {
-
-	private double f = 0.0;
-	private double p = 0.0;
-	private double i = 0.000000;
-	private double d = 0;
-  private int profile = 0;
-  private double desiredAcceleration;
-  private double desiredCruiseVelocity;
+  /**
+   * Creates a new Shooter.
+   */
+  private double kF;
+  private double kP;
+  private double kI;
+  private double kD;
+  private int flyWheelAcceleration;
+  private double bigNumber = 1E99;
+  private double desiredRPM;
   public Shooter() {
 
   }
-  public void initVelocityControl(){
-      RobotMap.leftDriveLead.selectProfileSlot(profile, 0);
-      RobotMap.leftDriveLead.config_kF(profile, f, 0);
-      RobotMap.leftDriveLead.config_kP(profile, p, 0);
-      RobotMap.leftDriveLead.config_kI(profile, i, 0);
-      RobotMap.leftDriveLead.config_kD(profile, d, 0);
-      RobotMap.rightDriveLead.selectProfileSlot(profile, 0);
-      RobotMap.rightDriveLead.config_kF(profile, f, 0);
-      RobotMap.rightDriveLead.config_kP(profile, p, 0);
-      RobotMap.rightDriveLead.config_kI(profile, i, 0);
-      RobotMap.rightDriveLead.config_kD(profile, d, 0);
+  public void initShooterPID(){
+    RobotMap.shooterMaster.config_kF(0, kF);
+    RobotMap.shooterMaster.config_kP(0, kP);
+    RobotMap.shooterMaster.config_kI(0, kI);
+    RobotMap.shooterMaster.config_kD(0, kD);
+    RobotMap.shooterMaster.configMotionAcceleration(flyWheelAcceleration);
+    RobotMap.shooterMaster.configMotionCruiseVelocity(0);
+    RobotMap.shooterMaster.set(ControlMode.MotionMagic, bigNumber);
   }
-  
-
+  public void setFlyWheelSpeed(double Velocity){
+    RobotMap.shooterMaster.configMotionCruiseVelocity(convertRPMToEncoderTicsPer100ms(Velocity));
+  }
+  public int convertRPMToEncoderTicsPer100ms(double rpm){
+    return (int)rpm;
+  }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+
   }
 }

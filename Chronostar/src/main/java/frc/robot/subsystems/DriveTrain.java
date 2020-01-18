@@ -19,23 +19,21 @@ import frc.robot.tools.pathTools.Odometry;
 
 public class DriveTrain extends SubsystemBase {
 
-	private double deadZone = 0.0102;
+	private double deadZone = 0.01;
 	private double turn =0;
 	private double throttel = 0;
-	public static DriveEncoder leftMainDrive = new DriveEncoder(RobotMap.leftDriveLead,RobotMap.leftDriveLead.getSelectedSensorPosition(0));
-	public static DriveEncoder rightMainDrive = new DriveEncoder(RobotMap.rightDriveLead,RobotMap.rightDriveLead.getSelectedSensorPosition(0));
-	private double speed;
-	private double f = 0.153;
-	private double p = 0.35025;
-	private double i = 0.000000;
-	private double d = 0;
+	private static DriveEncoder leftMainDrive = new DriveEncoder(RobotMap.leftDriveLead,RobotMap.leftDriveLead.getSelectedSensorPosition(0));
+	private static DriveEncoder rightMainDrive = new DriveEncoder(RobotMap.rightDriveLead,RobotMap.rightDriveLead.getSelectedSensorPosition(0));
+	private double vKF = 0.0;
+	private double vKP = 0.0;
+	private double vKI = 0.000000;
+	private double vKD = 0;
 	private int profile = 0;
 	private Odometry autoOdometry;
   	public DriveTrain() {
 
   	}
 	public void startAutoOdometry(double x, double y, double theta){
-
 	};
 	public double getDriveTrainX(){
 		return autoOdometry.getX();
@@ -62,15 +60,15 @@ public class DriveTrain extends SubsystemBase {
 
 	public void initVelocityPIDs(){
 		RobotMap.leftDriveLead.selectProfileSlot(profile, 0);
-		RobotMap.leftDriveLead.config_kF(profile, f, 0);
-		RobotMap.leftDriveLead.config_kP(profile, p, 0);
-		RobotMap.leftDriveLead.config_kI(profile, i, 0);
-		RobotMap.leftDriveLead.config_kD(profile, d, 0);
+		RobotMap.leftDriveLead.config_kF(profile, vKF, 0);
+		RobotMap.leftDriveLead.config_kP(profile, vKP, 0);
+		RobotMap.leftDriveLead.config_kI(profile, vKI, 0);
+		RobotMap.leftDriveLead.config_kD(profile, vKD, 0);
 		RobotMap.rightDriveLead.selectProfileSlot(profile, 0);
-		RobotMap.rightDriveLead.config_kF(profile, f, 0);
-		RobotMap.rightDriveLead.config_kP(profile, p, 0);
-		RobotMap.rightDriveLead.config_kI(profile, i, 0);
-		RobotMap.rightDriveLead.config_kD(profile, d, 0);
+		RobotMap.rightDriveLead.config_kF(profile, vKF, 0);
+		RobotMap.rightDriveLead.config_kP(profile, vKP, 0);
+		RobotMap.rightDriveLead.config_kI(profile, vKI, 0);
+		RobotMap.rightDriveLead.config_kD(profile, vKD, 0);
 	}
 	
 	public void arcadeDrive(){
@@ -106,6 +104,29 @@ public class DriveTrain extends SubsystemBase {
 		}
 		RobotMap.leftDriveLead.set(ControlMode.PercentOutput, leftPower);
 		RobotMap.rightDriveLead.set(ControlMode.PercentOutput, rightPower);
+	}
+	public boolean trackVisionTape(){
+		Robot.visionCamera.updateVision();
+		if(Timer.getFPGATimestamp()-Robot.visionCamera.lastParseTime>0.25){
+			alignmentPID.updatePID(0);
+		}
+		else{
+			alignmentPID.updatePID(Robot.visionCamera.getAngle());
+		}
+			
+		power = 0.0;
+		System.out.println(alignmentPID.getResult());
+		RobotMap.drive.setLowGear();
+		RobotConfig.setDriveMotorsBrake();
+		setLeftSpeed(alignmentPID.getResult());
+		setRightSpeed(-alignmentPID.getResult());
+		if(Robot.visionCamera.getAngle()<1){
+			return true;
+		}
+		else{
+			return false;
+		}
+		
 	}
 	public void Stop(){
 		RobotMap.leftDriveLead.set(ControlMode.PercentOutput, 0);

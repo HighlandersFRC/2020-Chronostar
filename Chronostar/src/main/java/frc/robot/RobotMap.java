@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SPI.Port;
 import frc.robot.sensors.Navx;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Shooter;
 import frc.robot.tools.pathTools.PathList;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
@@ -28,25 +29,26 @@ public class RobotMap {
 	public static Relay visionRelay1 = new Relay(0);
 
   
-	public static int rightMasterFalcon = 3;
-  public static int leftMasterFalcon = 1;
+	public static int rightDriveLeadID = 3;
+  public static int leftDriveLeadID = 1;
 
-  public static int rightFollowerFalcon = 4;
-  public static int leftFollowerFalcon = 2;
+  public static int rightFollowerFalconID = 4;
+  public static int leftFollowerFalconID = 2;
 
-  public static int shooterMotor = 5;
+  public static int shooterMasterID = 5;
+  public static int shooterFollowerID = 6;
 
-  public static int indexerMotor =  6;
+  public static int indexerMotor =  7;
   
-  public static TalonFX leftDriveLead = new TalonFX(leftMasterFalcon);
-  public static TalonFX rightDriveLead = new TalonFX(rightMasterFalcon);
+  public static TalonFX leftDriveLead = new TalonFX(leftDriveLeadID);
+  public static TalonFX rightDriveLead = new TalonFX(rightDriveLeadID);
 
-	public static TalonFX leftDriveFollowerOne = new TalonFX(leftFollowerFalcon);
-  public static TalonFX rightDriveFollowerOne = new TalonFX(rightFollowerFalcon);  
+	public static TalonFX leftDriveFollowerOne = new TalonFX(leftFollowerFalconID);
+  public static TalonFX rightDriveFollowerOne = new TalonFX(rightFollowerFalconID);  
 
-  public static TalonFX shooterMaster = new TalonFX(shooterMotor);
+  public static TalonFX shooterMaster = new TalonFX(shooterMasterID);
+  public static TalonFX shooterFollower = new TalonFX(shooterFollowerID);
 
-  public static CANSparkMax sparkMax = new CANSparkMax(7, MotorType.kBrushless);
   
   public static PathList pathlist = new PathList();
 
@@ -72,5 +74,6 @@ public class RobotMap {
     RobotMap.shooterMaster
   };
   public static DriveTrain drive = new DriveTrain();
+  public static Shooter shooter = new Shooter();
   
 }
