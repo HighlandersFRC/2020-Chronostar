@@ -26,17 +26,17 @@ public class RobotConfig {
         RobotMap.rightDriveLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,0);
 		RobotMap.leftDriveLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,0);
         
-        RobotMap.rightDriveFollowerOne.set(ControlMode.Follower, RobotMap.leftDriveLeadID);
-        RobotMap.leftDriveFollowerOne.set(ControlMode.Follower, RobotMap.rightDriveLeadID);
+        RobotMap.rightDriveFollowerOne.set(ControlMode.Follower, RobotMap.rightDriveLeadID);
+        RobotMap.leftDriveFollowerOne.set(ControlMode.Follower, RobotMap.leftDriveLeadID);
 
-        RobotMap.shooterFollower.set(ControlMode.Follower, RobotMap.shooterMasterID);
+        //RobotMap.shooterFollower.set(ControlMode.Follower, RobotMap.shooterMasterID);
 
 
         RobotMap.rightDriveLead.setInverted(false);
-        RobotMap.rightDriveFollowerOne.setInverted(InvertType.FollowMaster);
+        RobotMap.rightDriveFollowerOne.setInverted(false);
 
     	RobotMap.leftDriveLead.setInverted(true);
-        RobotMap.leftDriveFollowerOne.setInverted(InvertType.FollowMaster);
+        RobotMap.leftDriveFollowerOne.setInverted(true);
         
         RobotMap.leftDriveLead.setSensorPhase(false);
         RobotMap.rightDriveLead.setSensorPhase(false);
@@ -46,11 +46,11 @@ public class RobotConfig {
 
         RobotMap.drive.initVelocityPIDs();
         RobotMap.drive.initAlignmentPID();
-        RobotMap.shooter.initShooterPID();
+        //RobotMap.shooter.initShooterPID();
         
-        RobotMap.shooterMaster.configPeakOutputForward(RobotStats.maxShooterPercentVoltage);
-        RobotMap.shooterMaster.configPeakOutputReverse(0);
-        RobotMap.shooterMaster.configClosedLoopPeakOutput(0, RobotStats.maxShooterPercentVoltage);
+        //RobotMap.shooterMaster.configPeakOutputForward(RobotStats.maxShooterPercentVoltage);
+        //RobotMap.shooterMaster.configPeakOutputReverse(0);
+        //RobotMap.shooterMaster.configClosedLoopPeakOutput(0, RobotStats.maxShooterPercentVoltage);
     }
     public void setTeleopConfig(){
         RobotConfig.setDriveMotorsCoast();

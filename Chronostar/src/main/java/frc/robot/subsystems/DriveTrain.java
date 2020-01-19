@@ -10,11 +10,14 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.RobotState;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ButtonMap;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.sensors.DriveEncoder;
+import frc.robot.tools.controlLoops.PID;
 import frc.robot.tools.pathTools.Odometry;
 
 public class DriveTrain extends SubsystemBase {
@@ -29,6 +32,11 @@ public class DriveTrain extends SubsystemBase {
 	private double vKI = 0.000000;
 	private double vKD = 0;
 	private int profile = 0;
+	private PID alignmentPID;
+	private double aKP;
+	private double aKI;
+	private double aKD;
+	private double setPointOffset = 0;
 	private Odometry autoOdometry;
   	public DriveTrain() {
 
@@ -44,7 +52,6 @@ public class DriveTrain extends SubsystemBase {
 	public double getDriveTrainHeading(){
 		return autoOdometry.gettheta();
 	}
-
 	public void setDriveTrainX(double x){
 		 autoOdometry.setX(x);
 	}
@@ -69,6 +76,13 @@ public class DriveTrain extends SubsystemBase {
 		RobotMap.rightDriveLead.config_kP(profile, vKP, 0);
 		RobotMap.rightDriveLead.config_kI(profile, vKI, 0);
 		RobotMap.rightDriveLead.config_kD(profile, vKD, 0);
+	}
+	
+	public void initAlignmentPID(){
+		alignmentPID = new PID(aKP, aKD, aKI);
+		alignmentPID.setSetPoint(setPointOffset);
+		alignmentPID.setMaxOutput(6);
+		alignmentPID.setMinInput(-6);
 	}
 	
 	public void arcadeDrive(){
@@ -114,10 +128,7 @@ public class DriveTrain extends SubsystemBase {
 			alignmentPID.updatePID(Robot.visionCamera.getAngle());
 		}
 			
-		power = 0.0;
 		System.out.println(alignmentPID.getResult());
-		RobotMap.drive.setLowGear();
-		RobotConfig.setDriveMotorsBrake();
 		setLeftSpeed(alignmentPID.getResult());
 		setRightSpeed(-alignmentPID.getResult());
 		if(Robot.visionCamera.getAngle()<1){
@@ -156,7 +167,7 @@ public class DriveTrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if(RobotState.isOperatorControl()){
+    if(RobotState.isOperatorControl()&&!RobotState.isDisabled()){
       arcadeDrive();
     }
     // This method will be called once per scheduler run

@@ -28,16 +28,16 @@ public class Shooter extends SubsystemBase {
 
   }
   public void initShooterPID(){
-    RobotMap.shooterMaster.config_kF(0, kF);
+    /*RobotMap.shooterMaster.config_kF(0, kF);
     RobotMap.shooterMaster.config_kP(0, kP);
     RobotMap.shooterMaster.config_kI(0, kI);
     RobotMap.shooterMaster.config_kD(0, kD);
     RobotMap.shooterMaster.configMotionAcceleration(flyWheelAcceleration);
     RobotMap.shooterMaster.configMotionCruiseVelocity(0);
-    RobotMap.shooterMaster.set(ControlMode.MotionMagic, bigNumber);
+    RobotMap.shooterMaster.set(ControlMode.MotionMagic, bigNumber);*/
   }
   public void setFlyWheelSpeed(double Velocity){
-    RobotMap.shooterMaster.configMotionCruiseVelocity(convertRPMToEncoderTicsPer100ms(Velocity));
+    //RobotMap.shooterMaster.configMotionCruiseVelocity(convertRPMToEncoderTicsPer100ms(Velocity));
   }
   public int convertRPMToEncoderTicsPer100ms(double rpm){
     return (int)rpm;
