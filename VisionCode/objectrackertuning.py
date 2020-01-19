@@ -22,6 +22,7 @@ smax = 255
 vmin = 60
 vmax = 253
 absexp = 50
+gain = 30
 ####################################################################################################
 # Send a command to JeVois and show response
 def send_command(cmd):
@@ -90,8 +91,13 @@ def update_vmax(val):
 def update_exposure(val):
     global absexp
     absexp = val
-    send_command('setcam absexp '.format(absexp))
+    send_command('setcam absexp {0}'.format(absexp))
     print("exposure = " + absexp)
+    
+def update_gain(val):
+    global gain
+    gain = val
+    send_command('setcam gain {0}'.format(gain))
 ####################################################################################################
 # Main code
 ser = serial.Serial(serdev, 115200, timeout=1)
@@ -138,13 +144,18 @@ w12.set(vmax)
 w12.pack()
 
 w13 = Label(master, text = "Exposure")
-w13.pack
+w13.pack()
 w14 = Scale(master, from_=8, to=300, tickinterval=30, length=600, orient=HORIZONTAL, command=update_exposure)
 #global absexp
-absexp = 420
-
+#absexp = 420
 w14.set(absexp)
 w14.pack()
+
+w15 = Label(master, text = "Gain")
+w15.pack()
+w16 = Scale(master, from_=16, to=100, tickinterval=15, length=600, orient=HORIZONTAL, command=update_gain)
+w16.set(gain)
+w16.pack()
 
 mainloop()
 

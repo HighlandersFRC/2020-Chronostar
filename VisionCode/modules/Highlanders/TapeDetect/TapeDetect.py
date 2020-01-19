@@ -16,13 +16,13 @@ class TapeDetect:
         
         self.draw = True
         
-        self.lowerH = 57
-        self.upperH = 84
+        self.lowerH = 54
+        self.upperH = 87
         
-        self.lowerS = 222
+        self.lowerS = 240
         self.upperS = 255
         
-        self.lowerV = 62
+        self.lowerV = 71
         self.upperV = 255
         
         #gain = 20
@@ -152,7 +152,7 @@ class TapeDetect:
             peri = cv2.arcLength(contour, True)
             approx = cv2.approxPolyDP(contour, 0.04 * peri, True)
             cntArea = cv2.contourArea(contour)
-            if cntArea > 75 and cntArea < 300:
+            if cntArea > 75 and cntArea < 800:
                 cntArray.append(contour)
         
         sortedArray = self.sortContours(cntArray)
@@ -161,7 +161,7 @@ class TapeDetect:
             jevois.sendSerial('{"Distance":-11, "Angle":-100}')
             #outimg = cv2.cvtColor(opening, cv2.COLOR_GRAY2BGR)
             outimg = cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
-            return outimg
+            return result
 
         boxColor = (240,255, 255)
         
