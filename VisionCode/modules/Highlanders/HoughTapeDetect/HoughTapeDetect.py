@@ -104,12 +104,40 @@ class HoughTapeDetect:
         
         #jevois.sendSerial(str(lines))
         
+        numLines = 0
+        centerX = 0
+        centerY = 0
+        
         if lines is not None:
             for i in range(0, len(lines)):
                 l = lines[i][0]
-                cv2.line(outimg, (l[0], l[1]), (l[2], l[3]), (60, 255, 255), 3, cv2.LINE_AA)
-                
-        centerX = 
+                cv2.line(outimg, (l[0], l[1]), (l[2], l[3]), (0, 0, 255), 1, cv2.LINE_AA)
+                numLines = numLines + 2
+                centerX = centerX + l[0] + l[2]
+                centerY = centerY + l[1] + l[3]
+        else:
+            jevois.sendSerial('{"Distance":-11, "Angle":-100}')
+            return outimg
+            
+        if numLines != 0:
+            centerX = centerX/numLines
+            centerY = centerY/numLines
+            centerY = centerY - 20
+            
+        centerX = int(centerX)
+        centerY = int(centerY)
+        
+        yawAngle = (centerX - 159.5) * 0.203125
+        yawAngle = str(yawAngle)
+        distance = "-11"
+        
+        cv2.circle(outimg, (centerX, centerY), 5, (120, 255, 255))
+        
+        JSON = '{"Distance":' + distance + ', "Angle":' + yawAngle + '}'
+        
+        #jevois.sendSerial("CenterX:" + str(centerX))
+        #jevois.sendSerial("CenterY:" + str(centerY))
+        jevois.sendSerial(JSON)
         
         
         #jevois.sendSerial("hello")
