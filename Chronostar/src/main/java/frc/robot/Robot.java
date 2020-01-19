@@ -35,7 +35,6 @@ public class Robot extends TimedRobot {
   }
   @Override
   public void robotPeriodic() {
-    RobotMap.shooter.periodic();
     RobotMap.drive.periodic();
   }
   @Override

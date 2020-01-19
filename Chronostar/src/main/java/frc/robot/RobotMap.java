@@ -27,22 +27,22 @@ public class RobotMap {
 	public static int rightDriveLeadID = 3;
   public static int leftDriveLeadID = 1;
 
-  public static int rightFollowerFalconID = 4;
-  public static int leftFollowerFalconID = 2;
+  public static int rightFollowerID = 4;
+  public static int leftFollowerID = 2;
 
-  public static int shooterMasterID = 5;
-  public static int shooterFollowerID = 6;
+  //public static int shooterMasterID = 5;
+  //public static int shooterFollowerID = 6;
 
-  public static int indexerMotor =  7;
+  //public static int indexerMotor =  7;
   
   public static TalonFX leftDriveLead = new TalonFX(leftDriveLeadID);
   public static TalonFX rightDriveLead = new TalonFX(rightDriveLeadID);
 
-	public static TalonFX leftDriveFollowerOne = new TalonFX(leftFollowerFalconID);
-  public static TalonFX rightDriveFollowerOne = new TalonFX(rightFollowerFalconID);  
+	public static TalonFX leftDriveFollowerOne = new TalonFX(leftFollowerID);
+  public static TalonFX rightDriveFollowerOne = new TalonFX(rightFollowerID);  
 
-  public static TalonFX shooterMaster = new TalonFX(shooterMasterID);
-  public static TalonFX shooterFollower = new TalonFX(shooterFollowerID);
+  //public static TalonFX shooterMaster = new TalonFX(shooterMasterID);
+  //public static TalonFX shooterFollower = new TalonFX(shooterFollowerID);
   
   public static PathList pathlist = new PathList();
 
@@ -65,9 +65,9 @@ public class RobotMap {
     RobotMap.rightDriveLead,
     RobotMap.leftDriveFollowerOne,
     RobotMap.rightDriveFollowerOne,
-    RobotMap.shooterMaster
+    //RobotMap.shooterMaster
   };
   public static DriveTrain drive = new DriveTrain();
-  public static Shooter shooter = new Shooter();
+  //public static Shooter shooter = new Shooter();
   
 }
