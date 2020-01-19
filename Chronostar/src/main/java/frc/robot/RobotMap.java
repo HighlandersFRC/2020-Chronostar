@@ -8,12 +8,9 @@
 package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.SPI.Port;
+import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 import frc.robot.sensors.Navx;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Shooter;
@@ -21,13 +18,11 @@ import frc.robot.tools.pathTools.PathList;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 public class RobotMap {
-
   public static AHRS navx = new AHRS(Port.kMXP);
 
   public static Navx mainNavx = new Navx(navx);
     
 	public static Relay visionRelay1 = new Relay(0);
-
   
 	public static int rightDriveLeadID = 3;
   public static int leftDriveLeadID = 1;
@@ -48,7 +43,6 @@ public class RobotMap {
 
   public static TalonFX shooterMaster = new TalonFX(shooterMasterID);
   public static TalonFX shooterFollower = new TalonFX(shooterFollowerID);
-
   
   public static PathList pathlist = new PathList();
 

@@ -7,15 +7,20 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import frc.robot.sensors.VisionCamera;
 
 public class Robot extends TimedRobot {
   public static OI m_oi;
   Command m_autonomousCommand;
   private CommandSuites commandSuites;
   private RobotConfig robotConfig;
+  private static SerialPort cameraPort = new SerialPort(115200, Port.kUSB);
+  public static VisionCamera visionCamera = new VisionCamera(cameraPort);
   @Override
   public void robotInit() {
     commandSuites = new CommandSuites();
