@@ -19,14 +19,19 @@ public class Robot extends TimedRobot {
   Command m_autonomousCommand;
   private CommandSuites commandSuites;
   private RobotConfig robotConfig;
-  private static SerialPort cameraPort = new SerialPort(115200, Port.kUSB);
-  public static VisionCamera visionCamera = new VisionCamera(cameraPort);
-  @Override
+  private static SerialPort cameraPort;
+  public static VisionCamera visionCamera;
   public void robotInit() {
     commandSuites = new CommandSuites();
     robotConfig = new RobotConfig();
     robotConfig.setStartingConfig();
     m_oi = new OI();
+    try {
+      cameraPort = new SerialPort(115200, Port.kUSB);
+      visionCamera = new VisionCamera(cameraPort);
+    } catch (Exception e) {
+
+    }
   }
   @Override
   public void robotPeriodic() {
