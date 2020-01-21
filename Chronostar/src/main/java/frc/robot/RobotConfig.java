@@ -32,11 +32,11 @@ public class RobotConfig {
         //RobotMap.shooterFollower.set(ControlMode.Follower, RobotMap.shooterMasterID);
 
 
-        RobotMap.rightDriveLead.setInverted(false);
-        RobotMap.rightDriveFollowerOne.setInverted(false);
+        RobotMap.rightDriveLead.setInverted(true);
+        RobotMap.rightDriveFollowerOne.setInverted(InvertType.FollowMaster);
 
-    	RobotMap.leftDriveLead.setInverted(true);
-        RobotMap.leftDriveFollowerOne.setInverted(true);
+    	RobotMap.leftDriveLead.setInverted(false);
+        RobotMap.leftDriveFollowerOne.setInverted(InvertType.FollowMaster);
         
         RobotMap.leftDriveLead.setSensorPhase(false);
         RobotMap.rightDriveLead.setSensorPhase(false);
