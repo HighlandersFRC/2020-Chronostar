@@ -19,7 +19,7 @@ public class ButtonMap {
         return -oi.driverController.getRawAxis(1);
     } 
     public static double getRotation(){
-        return oi.driverController.getRawAxis(4);
+        return -oi.driverController.getRawAxis(4);
     }
     //slightly less important person buttons
     public static boolean shooterUp(){

@@ -8,9 +8,12 @@
 package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.SerialPort.Port;
+import frc.robot.sensors.LidarLite;
 import frc.robot.sensors.Navx;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Shooter;
@@ -22,7 +25,7 @@ public class RobotMap {
 
   public static Navx mainNavx = new Navx(navx);
     
-	public static Relay visionRelay1 = new Relay(0);
+  public static Relay visionRelay1 = new Relay(0);
   
 	public static int rightDriveLeadID = 3;
   public static int leftDriveLeadID = 1;
