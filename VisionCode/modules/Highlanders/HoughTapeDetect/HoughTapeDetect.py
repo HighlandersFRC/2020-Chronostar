@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 import json
 import math
+import time
 
 
 class HoughTapeDetect:
@@ -16,13 +17,13 @@ class HoughTapeDetect:
         
         self.draw = True
         
-        self.lowerH = 57
-        self.upperH = 84
+        self.lowerH = 43
+        self.upperH = 82
         
-        self.lowerS = 222
+        self.lowerS = 240
         self.upperS = 255
         
-        self.lowerV = 62
+        self.lowerV = 60
         self.upperV = 255
         
         #gain = 20
@@ -51,10 +52,13 @@ class HoughTapeDetect:
         return self.stringForHSV;
     #stringForHSV = string    
 
+
     def UniversalProcess(self, inframe):
         inimg = inframe.getCvBGR()
         outimg = inimg
         
+        oKernel = (2,2)
+    
         #change to hsv
         hsv = cv2.cvtColor(inimg, cv2.COLOR_BGR2HSV)
         
@@ -98,9 +102,14 @@ class HoughTapeDetect:
         
         result = cv2.bitwise_and(inimg, inimg, mask = mask)
         
-        edges = cv2.Canny(mask, 75, 150)
+        edges = cv2.Canny(mask, 150, 175)
+       
+        #takes away noise from outside object
+        opening = cv2.morphologyEx(edges, cv2.MORPH_OPEN, oKernel)
         
-        lines = cv2.HoughLinesP(edges,1,np.pi/180,10)
+        lines = 0
+        
+        lines = cv2.HoughLinesP(edges, 5,np.pi/180 * 30,15, lines, 25, 10)
         
         #jevois.sendSerial(str(lines))
         
@@ -108,13 +117,22 @@ class HoughTapeDetect:
         centerX = 0
         centerY = 0
         
+        drawColor = (0, 0, 255)
+        
         if lines is not None:
             for i in range(0, len(lines)):
                 l = lines[i][0]
-                cv2.line(outimg, (l[0], l[1]), (l[2], l[3]), (0, 0, 255), 1, cv2.LINE_AA)
-                numLines = numLines + 2
-                centerX = centerX + l[0] + l[2]
-                centerY = centerY + l[1] + l[3]
+                drawColor = (255, 0, 0)
+                #cv2.line(outimg, (l[0], l[1]), (l[2], l[3]), (0, 0, 0), 2, cv2.LINE_AA)
+                #numLines = numLines + 1
+                
+                if l[1] < 200 and l[3] < 200:
+                    drawColor = (0, 255, 0)
+                    #centerY = centerY + ((l[1] + l[3])/2)
+                    centerX = centerX + ((l[0] + l[2])/2)
+                    #centerX = centerX + l[0] + l[2]
+                    numLines = numLines + 1
+                cv2.line(outimg, (l[0], l[1]), (l[2], l[3]), drawColor, 2, cv2.LINE_AA)
         else:
             jevois.sendSerial('{"Distance":-11, "Angle":-100}')
             return outimg
@@ -122,23 +140,26 @@ class HoughTapeDetect:
         if numLines != 0:
             centerX = centerX/numLines
             centerY = centerY/numLines
-            centerY = centerY - 20
+            centerY = centerY - 15
             
         centerX = int(centerX)
         centerY = int(centerY)
         
-        yawAngle = (centerX - 159.5) * 0.203125
+        yawAngle = (centerX - 319.5) * 0.1015625
         yawAngle = str(yawAngle)
         distance = "-11"
         
-        cv2.circle(outimg, (centerX, centerY), 5, (120, 255, 255))
+        cv2.circle(outimg, (centerX, centerY), 5, (128, 128, 0))
+        cv2.line(outimg, (centerX, 0), (centerX, 480), (128, 128, 0), 2, cv2.LINE_AA)
         
         JSON = '{"Distance":' + distance + ', "Angle":' + yawAngle + '}'
         
         #jevois.sendSerial("CenterX:" + str(centerX))
         #jevois.sendSerial("CenterY:" + str(centerY))
         jevois.sendSerial(JSON)
+        jevois.sendSerial(str(len(lines)))
         
+        #time.sleep(3)
         
         #jevois.sendSerial("hello")
         
