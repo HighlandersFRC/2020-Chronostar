@@ -25,10 +25,10 @@ public class DriveTrain extends SubsystemBase {
 	private double deadZone = 0.01;
 	private double turn =0;
 	private double throttel = 0;
-	private static DriveEncoder leftMainDrive = new DriveEncoder(RobotMap.leftDriveLead,RobotMap.leftDriveLead.getSelectedSensorPosition(0));
-	private static DriveEncoder rightMainDrive = new DriveEncoder(RobotMap.rightDriveLead,RobotMap.rightDriveLead.getSelectedSensorPosition(0));
-	private double vKF = 0.0;
-	private double vKP = 0.0;
+	public static DriveEncoder leftMainDrive = new DriveEncoder(RobotMap.leftDriveLead,RobotMap.leftDriveLead.getSelectedSensorPosition(0));
+	public static DriveEncoder rightMainDrive = new DriveEncoder(RobotMap.rightDriveLead,RobotMap.rightDriveLead.getSelectedSensorPosition(0));
+	private double vKF = 0.0455925;
+	private double vKP = 0.21;
 	private double vKI = 0.000000;
 	private double vKD = 0;
 	private int profile = 0;
@@ -41,7 +41,9 @@ public class DriveTrain extends SubsystemBase {
   	public DriveTrain() {
 
   	}
-	public void startAutoOdometry(double x, double y, double theta){
+	public void startAutoOdometry(double x, double y, double theta, boolean shouldReverse){
+		autoOdometry = new Odometry(shouldReverse, x, y);
+		autoOdometry.start();
 	};
 	public double getDriveTrainX(){
 		return autoOdometry.getX();
@@ -104,7 +106,6 @@ public class DriveTrain extends SubsystemBase {
 		}
 		turn = ButtonMap.getRotation();
 		differential = turn;
-		SmartDashboard.putNumber("differential", differential);
 		leftPower = (throttel - (differential));
 		rightPower = (throttel + (differential));
 	
@@ -145,8 +146,6 @@ public class DriveTrain extends SubsystemBase {
 
 	}
 	public void setLeftSpeed(double speed){
-		SmartDashboard.putNumber("LeftSpeed", leftMainDrive.getVelocity());
-		SmartDashboard.putNumber("RightSpeed", rightMainDrive.getVelocity());
 		RobotMap.leftDriveLead.set(ControlMode.Velocity, leftMainDrive.convertftpersToNativeUnitsper100ms(speed));
 	}
 	public void setRightSpeed(double speed){

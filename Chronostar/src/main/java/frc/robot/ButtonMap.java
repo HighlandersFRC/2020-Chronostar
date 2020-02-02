@@ -21,11 +21,14 @@ public class ButtonMap {
     public static double getRotation(){
         return -oi.driverController.getRawAxis(4);
     }
-    //slightly less important person buttons
+    //slightly less important person(operator) buttons
     public static boolean shooterUp(){
         return oi.operatorController.getYButton();
     }
     public static boolean shooterDown(){
         return oi.operatorController.getAButton();
+    }
+    public static double shooterAxis(){
+        return oi.operatorController.getTriggerAxis(Hand.kRight);
     }
 }

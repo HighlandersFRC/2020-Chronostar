@@ -9,9 +9,11 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ButtonMap;
 import frc.robot.RobotMap;
+import frc.robot.RobotStats;
 
 public class Shooter extends SubsystemBase {
   /**
@@ -24,10 +26,12 @@ public class Shooter extends SubsystemBase {
   private int flyWheelAcceleration;
   private double bigNumber = 1E99;
   private double desiredRPM;
+  private double shooterPower;
   public Shooter() {
 
   }
   public void initShooterPID(){
+    shooterPower = 0;
     /*RobotMap.shooterMaster.config_kF(0, kF);
     RobotMap.shooterMaster.config_kP(0, kP);
     RobotMap.shooterMaster.config_kI(0, kI);
@@ -45,6 +49,21 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
+    if(RobotState.isOperatorControl()&&!RobotState.isDisabled()){
+      if(ButtonMap.shooterUp()){
+        shooterPower = shooterPower + 0.02;
+      }
+      if(ButtonMap.shooterDown()){
+        shooterPower = shooterPower -0.02;
+      }
+      if(shooterPower>RobotStats.maxShooterPercentVoltage){
+        shooterPower = RobotStats.maxShooterPercentVoltage;
+      }
+      else if(shooterPower <0){
+        shooterPower = 0;
+      }
+      RobotMap.shooterMaster.set(ControlMode.PercentOutput, shooterPower);
+    }
 
   }
 }

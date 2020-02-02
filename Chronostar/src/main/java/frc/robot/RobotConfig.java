@@ -21,15 +21,15 @@ import com.revrobotics.CANSparkMax;
  */
 public class RobotConfig {
     public void setStartingConfig(){
-
         RobotConfig.setAllMotorsBrake();
-        RobotMap.rightDriveLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,0);
-		RobotMap.leftDriveLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,0);
-        
+        RobotMap.rightDriveLead.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor,0,0);
+        RobotMap.leftDriveLead.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);   
+        RobotMap.shooterMaster.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);        
+     
         RobotMap.rightDriveFollowerOne.set(ControlMode.Follower, RobotMap.rightDriveLeadID);
         RobotMap.leftDriveFollowerOne.set(ControlMode.Follower, RobotMap.leftDriveLeadID);
 
-        //RobotMap.shooterFollower.set(ControlMode.Follower, RobotMap.shooterMasterID);
+        RobotMap.shooterFollower.set(ControlMode.Follower, RobotMap.shooterMasterID);
 
 
         RobotMap.rightDriveLead.setInverted(true);
@@ -41,16 +41,25 @@ public class RobotConfig {
         RobotMap.leftDriveLead.setSensorPhase(false);
         RobotMap.rightDriveLead.setSensorPhase(false);
 
+        RobotMap.shooterMaster.setInverted(false);
+        RobotMap.shooterFollower.setInverted(InvertType.OpposeMaster);
+
     	RobotMap.leftDriveLead.setSelectedSensorPosition(0, 0,0);
         RobotMap.rightDriveLead.setSelectedSensorPosition(0, 0, 0);
 
+        RobotConfig.setDriveTrainVoltageCompensation();
+
         RobotMap.drive.initVelocityPIDs();
         RobotMap.drive.initAlignmentPID();
-        //RobotMap.shooter.initShooterPID();
+        RobotMap.shooter.initShooterPID();
+        RobotMap.shooterMaster.setSelectedSensorPosition(0,0,0);
         
-        //RobotMap.shooterMaster.configPeakOutputForward(RobotStats.maxShooterPercentVoltage);
-        //RobotMap.shooterMaster.configPeakOutputReverse(0);
-        //RobotMap.shooterMaster.configClosedLoopPeakOutput(0, RobotStats.maxShooterPercentVoltage);
+        RobotMap.shooterMaster.configPeakOutputForward(RobotStats.maxShooterPercentVoltage);
+        RobotMap.shooterMaster.configPeakOutputReverse(0);
+        RobotMap.shooterMaster.configClosedLoopPeakOutput(0, RobotStats.maxShooterPercentVoltage);
+
+        RobotConfig.setShooterMotorsCoast();
+        
     }
     public void setTeleopConfig(){
         RobotConfig.setDriveMotorsCoast();
@@ -76,6 +85,22 @@ public class RobotConfig {
 	public static void setDriveMotorsBrake() {
 		for(TalonFX talon:RobotMap.driveMotors){
             talon.setNeutralMode(NeutralMode.Brake);
+        }
+    }
+    public static void setDriveTrainVoltageCompensation(){
+        for(TalonFX talon:RobotMap.driveMotors){
+            talon.configVoltageCompSaturation(11.7);
+            talon.enableVoltageCompensation(true);
+        }
+    }
+    public static void disableDriveTrainVoltageCompensation(){
+        for(TalonFX talon:RobotMap.driveMotors){
+            talon.enableVoltageCompensation(false);
+        }
+    }
+    public static void setShooterMotorsCoast() {
+		for(TalonFX talon:RobotMap.shooterMotors){
+            talon.setNeutralMode(NeutralMode.Coast);
         }
 	}
 }

@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.SerialPort.Port;
@@ -36,6 +38,14 @@ public class Robot extends TimedRobot {
   }
   @Override
   public void robotPeriodic() {
+    try{
+      SmartDashboard.putNumber("leftHeat", RobotMap.leftDriveLead.getTemperature());
+      SmartDashboard.putNumber("rightHeat", RobotMap.rightDriveLead.getTemperature());
+
+    }
+    catch(Exception e){
+
+    }
     RobotMap.drive.periodic();
   }
   @Override
@@ -49,7 +59,9 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     robotConfig.setAutoConfig();
-    commandSuites.startAutoCommands();
+    //commandSuites.startAutoCommands();
+    //RobotMap.drive.startAutoOdometry(0, 0, 0, false);
+
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.start();
@@ -57,6 +69,10 @@ public class Robot extends TimedRobot {
   }
   @Override
   public void autonomousPeriodic() {
+    //SmartDashboard.putNumber("rightSpeed", RobotMap.drive.rightMainDrive.getVelocity());
+    //SmartDashboard.putNumber("leftSpeed", RobotMap.drive.leftMainDrive.getVelocity());
+    //SmartDashboard.putNumber("rx", RobotMap.drive.getDriveTrainX());
+    //SmartDashboard.putNumber("ry", RobotMap.drive.getDriveTrainY());
     Scheduler.getInstance().run();
   }
   @Override
@@ -69,6 +85,7 @@ public class Robot extends TimedRobot {
   }
   @Override
   public void teleopPeriodic() {
+    RobotMap.shooterMaster.set(ControlMode.PercentOutput, ButtonMap.shooterAxis()*RobotStats.maxShooterPercentVoltage);
     Scheduler.getInstance().run();
   }
 
