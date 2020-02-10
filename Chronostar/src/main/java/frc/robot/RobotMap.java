@@ -18,8 +18,6 @@ import frc.robot.sensors.Navx;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Shooter;
 import frc.robot.tools.pathTools.PathList;
-
-import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 public class RobotMap {
@@ -35,16 +33,19 @@ public class RobotMap {
   public static int rightFollowerID = 4;
   public static int leftFollowerID = 2;
 
+  //public static int shooterMasterID = 5;
+  //public static int shooterFollowerID = 6;
+
+  //public static int indexerMotor =  7;
   
   public static TalonFX leftDriveLead = new TalonFX(leftDriveLeadID);
   public static TalonFX rightDriveLead = new TalonFX(rightDriveLeadID);
 
 	public static TalonFX leftDriveFollowerOne = new TalonFX(leftFollowerID);
-  public static TalonFX rightDriveFollowerOne = new TalonFX(rightFollowerID);
+  public static TalonFX rightDriveFollowerOne = new TalonFX(rightFollowerID);  
 
-  public static SupplyCurrentLimitConfiguration robotCurrentConfigurationEnabled = new SupplyCurrentLimitConfiguration(true, RobotStats.driveTrainMaxCurrent, RobotStats.driveTrainPeakThreshold, RobotStats.driveTrainPeakTime);
-  public static SupplyCurrentLimitConfiguration robotCurrentConfigurationDisabled = new SupplyCurrentLimitConfiguration(false, RobotStats.driveTrainMaxCurrent, RobotStats.driveTrainPeakThreshold, RobotStats.driveTrainPeakTime);
-
+  //public static TalonFX shooterMaster = new TalonFX(shooterMasterID);
+  //public static TalonFX shooterFollower = new TalonFX(shooterFollowerID);
   
   public static PathList pathlist = new PathList();
 
