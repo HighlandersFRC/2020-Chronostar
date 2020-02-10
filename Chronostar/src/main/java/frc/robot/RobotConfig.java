@@ -29,9 +29,6 @@ public class RobotConfig {
         RobotMap.rightDriveFollowerOne.set(ControlMode.Follower, RobotMap.rightDriveLeadID);
         RobotMap.leftDriveFollowerOne.set(ControlMode.Follower, RobotMap.leftDriveLeadID);
 
-        //RobotMap.shooterFollower.set(ControlMode.Follower, RobotMap.shooterMasterID);
-
-
         RobotMap.rightDriveLead.setInverted(true);
         RobotMap.rightDriveFollowerOne.setInverted(InvertType.FollowMaster);
 
@@ -46,16 +43,19 @@ public class RobotConfig {
 
         RobotMap.drive.initVelocityPIDs();
         RobotMap.drive.initAlignmentPID();
-        //RobotMap.shooter.initShooterPID();
-        
-        //RobotMap.shooterMaster.configPeakOutputForward(RobotStats.maxShooterPercentVoltage);
-        //RobotMap.shooterMaster.configPeakOutputReverse(0);
-        //RobotMap.shooterMaster.configClosedLoopPeakOutput(0, RobotStats.maxShooterPercentVoltage);
+
+        RobotConfig.enableDriveCurrentLimiting();
+        RobotConfig.setDriveTrainVoltageCompensation();
+
     }
     public void setTeleopConfig(){
+        RobotConfig.enableDriveCurrentLimiting();
+        RobotConfig.setDriveTrainVoltageCompensation();
         RobotConfig.setDriveMotorsCoast();
     }
     public void setAutoConfig(){
+        RobotConfig.enableDriveCurrentLimiting();
+        RobotConfig.disableDriveTrainVoltageCompensation();
         RobotConfig.setDriveMotorsBrake();
     }
     public static void setAllMotorsBrake() {
@@ -77,5 +77,26 @@ public class RobotConfig {
 		for(TalonFX talon:RobotMap.driveMotors){
             talon.setNeutralMode(NeutralMode.Brake);
         }
-	}
+    }
+    public static void enableDriveCurrentLimiting() {
+		for(TalonFX talon:RobotMap.driveMotors){
+            talon.configSupplyCurrentLimit(RobotMap.robotCurrentConfigurationEnabled);
+        }
+    }
+    public static void disableDriveCurrentLimiting() {
+		for(TalonFX talon:RobotMap.driveMotors){
+            talon.configSupplyCurrentLimit(RobotMap.robotCurrentConfigurationDisabled);
+        }
+    }
+    public static void setDriveTrainVoltageCompensation(){
+        for(TalonFX talon:RobotMap.driveMotors){
+            talon.configVoltageCompSaturation(RobotStats.voltageCompensationValue);
+            talon.enableVoltageCompensation(true);
+        }
+    }
+    public static void disableDriveTrainVoltageCompensation(){
+        for(TalonFX talon:RobotMap.driveMotors){
+            talon.enableVoltageCompensation(false);
+        }
+    }
 }
