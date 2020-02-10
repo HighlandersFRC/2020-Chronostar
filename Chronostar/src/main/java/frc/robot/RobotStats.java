@@ -21,5 +21,9 @@ public class RobotStats {
     public static final double maxShooterPercentVoltage = 0.5;
     public static final double maxShooterRPM = 5000;
     public static final double flyWheelTicsPerWheelRotation = 0;
+    public static final double driveTrainMaxCurrent = 39;
+    public static final double driveTrainPeakThreshold = 40;
+    public static final double driveTrainPeakTime = 10;
+    public static final double voltageCompensationValue = 11.7;
     
 }
