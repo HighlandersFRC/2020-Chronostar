@@ -44,6 +44,7 @@ public class RobotConfig {
         RobotMap.drive.initAlignmentPID();
 
         RobotMap.shooterFollower.set(ControlMode.Follower, RobotMap.shooterMasterID);
+        RobotMap.shooterFollower.setInverted(InvertType.OpposeMaster);
 
         RobotConfig.enableDriveCurrentLimiting();
         RobotConfig.setDriveTrainVoltageCompensation();
