@@ -26,6 +26,7 @@ public class Robot extends TimedRobot {
     commandSuites = new CommandSuites();
     robotConfig = new RobotConfig();
     robotConfig.setStartingConfig();
+    RobotMap.hood.inithood();
     m_oi = new OI();
     try {
       cameraPort = new SerialPort(115200, Port.kUSB);
@@ -38,6 +39,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     //RobotMap.drive.periodic();
     RobotMap.shooter.periodic();
+    RobotMap.hood.periodic();
   }
   @Override
   public void disabledInit() {

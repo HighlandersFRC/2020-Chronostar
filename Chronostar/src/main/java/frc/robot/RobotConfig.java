@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 /**
  * Add your docs here.
@@ -45,6 +46,10 @@ public class RobotConfig {
 
         RobotMap.shooterFollower.set(ControlMode.Follower, RobotMap.shooterMasterID);
         RobotMap.shooterFollower.setInverted(InvertType.OpposeMaster);
+
+        RobotMap.hoodMotor.setInverted(true);
+        RobotMap.hoodMotor.setIdleMode(IdleMode.kBrake);
+        
 
         RobotConfig.enableDriveCurrentLimiting();
         RobotConfig.setDriveTrainVoltageCompensation();
