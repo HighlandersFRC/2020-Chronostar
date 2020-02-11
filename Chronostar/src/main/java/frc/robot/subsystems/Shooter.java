@@ -23,9 +23,10 @@ public class Shooter extends SubsystemBase {
    */
   private double kF = 0.05;
   private double kP = 0.45;
-  private double kI;
+  private double kI = 0.0009;
   private int offCount;
   private double kD = 10;
+  private int iZone = 439;
   private double shooterPower;
   private double offTime;
 
@@ -38,6 +39,7 @@ public class Shooter extends SubsystemBase {
     RobotMap.shooterMaster.config_kP(0, kP);
     RobotMap.shooterMaster.config_kI(0, kI);
     RobotMap.shooterMaster.config_kD(0, kD);
+    RobotMap.shooterMaster.config_IntegralZone(0, iZone);
   }
   public void setFlyWheelSpeed(double velocity){
     RobotMap.shooterMaster.set(ControlMode.Velocity, convertRPMToEncoderTicsPer100ms(velocity));
