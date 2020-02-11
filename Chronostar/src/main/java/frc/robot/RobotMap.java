@@ -35,12 +35,20 @@ public class RobotMap {
   public static int rightFollowerID = 4;
   public static int leftFollowerID = 2;
 
+  public static int shooterMasterID = 5;
+  public static int shooterFollowerID = 6;
+
   
   public static TalonFX leftDriveLead = new TalonFX(leftDriveLeadID);
   public static TalonFX rightDriveLead = new TalonFX(rightDriveLeadID);
 
 	public static TalonFX leftDriveFollowerOne = new TalonFX(leftFollowerID);
   public static TalonFX rightDriveFollowerOne = new TalonFX(rightFollowerID);
+
+  
+  public static TalonFX shooterMaster = new TalonFX(shooterMasterID);
+  public static TalonFX shooterFollower = new TalonFX(shooterFollowerID);
+  
 
   public static SupplyCurrentLimitConfiguration robotCurrentConfigurationEnabled = new SupplyCurrentLimitConfiguration(true, RobotStats.driveTrainMaxCurrent, RobotStats.driveTrainPeakThreshold, RobotStats.driveTrainPeakTime);
   public static SupplyCurrentLimitConfiguration robotCurrentConfigurationDisabled = new SupplyCurrentLimitConfiguration(false, RobotStats.driveTrainMaxCurrent, RobotStats.driveTrainPeakThreshold, RobotStats.driveTrainPeakTime);
@@ -67,7 +75,12 @@ public class RobotMap {
     RobotMap.rightDriveLead,
     RobotMap.leftDriveFollowerOne,
     RobotMap.rightDriveFollowerOne,
-    //RobotMap.shooterMaster
+    RobotMap.shooterMaster,
+    RobotMap.shooterFollower
+  };
+  public static TalonFX shooterMotors[] = {
+    RobotMap.shooterMaster,
+    RobotMap.shooterFollower
   };
   public static DriveTrain drive = new DriveTrain();
   //public static Shooter shooter = new Shooter();

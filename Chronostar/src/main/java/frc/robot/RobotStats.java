@@ -15,7 +15,7 @@ public class RobotStats {
     public static final double robotMaxAccertion= 0;
     public static final double robotMaxVelocity = 0;
     public static final double driveTicsPerWheelRotation = 0;
-    public static final double wheelDiam = 0.5;
+    public static final double wheelDiam = 0.4;
     public static final double wheelCircum = wheelDiam*Math.PI;
     public static final double flyWheelTicksPerRotation = 0;
     public static final double maxShooterPercentVoltage = 0.5;

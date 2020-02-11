@@ -47,6 +47,15 @@ public class RobotConfig {
         RobotConfig.enableDriveCurrentLimiting();
         RobotConfig.setDriveTrainVoltageCompensation();
 
+        RobotMap.shooterMaster.setSelectedSensorPosition(0,0,0);
+        
+        RobotMap.shooterMaster.configPeakOutputForward(RobotStats.maxShooterPercentVoltage);
+        RobotMap.shooterMaster.configPeakOutputReverse(0);
+        RobotMap.shooterMaster.configClosedLoopPeakOutput(0, RobotStats.maxShooterPercentVoltage);
+
+        RobotConfig.setShooterMotorsCoast();
+        RobotConfig.setShooterMotorVoltageCompensation();
+
     }
     public void setTeleopConfig(){
         RobotConfig.enableDriveCurrentLimiting();
@@ -97,6 +106,17 @@ public class RobotConfig {
     public static void disableDriveTrainVoltageCompensation(){
         for(TalonFX talon:RobotMap.driveMotors){
             talon.enableVoltageCompensation(false);
+        }
+    }
+    public static void setShooterMotorsCoast() {
+		for(TalonFX talon:RobotMap.shooterMotors){
+            talon.setNeutralMode(NeutralMode.Coast);
+        }
+    }
+    public static void setShooterMotorVoltageCompensation(){
+        for(TalonFX talon:RobotMap.shooterMotors){
+            talon.configVoltageCompSaturation(11.7);
+            talon.enableVoltageCompensation(true);
         }
     }
 }
