@@ -67,9 +67,9 @@ public class Shooter extends SubsystemBase {
         else if(shooterPower <0){
           shooterPower = 0;
         }
-        
+        System.out.println(shooterPower);
         SmartDashboard.putNumber("Speed", this.getShooterVelocity());
-        SmartDashboard.putBoolean("Close", Math.abs(this.getShooterVelocity()-shooterPower)>100);
+        SmartDashboard.putBoolean("Close", Math.abs(this.getShooterVelocity()-shooterPower)<100);
 
         setFlyWheelSpeed(shooterPower);
       }

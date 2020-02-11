@@ -23,8 +23,8 @@ public class RobotConfig {
     public void setStartingConfig(){
 
         RobotConfig.setAllMotorsBrake();
-        RobotMap.rightDriveLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,0);
-		RobotMap.leftDriveLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,0);
+        RobotMap.rightDriveLead.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor,0,0);
+		RobotMap.leftDriveLead.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor,0,0);
         
         RobotMap.rightDriveFollowerOne.set(ControlMode.Follower, RobotMap.rightDriveLeadID);
         RobotMap.leftDriveFollowerOne.set(ControlMode.Follower, RobotMap.leftDriveLeadID);
@@ -46,13 +46,14 @@ public class RobotConfig {
 
         RobotConfig.enableDriveCurrentLimiting();
         RobotConfig.setDriveTrainVoltageCompensation();
-
+        
+        RobotMap.shooterMaster.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
         RobotMap.shooterMaster.setSelectedSensorPosition(0,0,0);
         
         RobotMap.shooterMaster.configPeakOutputForward(RobotStats.maxShooterPercentVoltage);
         RobotMap.shooterMaster.configPeakOutputReverse(0);
         RobotMap.shooterMaster.configClosedLoopPeakOutput(0, RobotStats.maxShooterPercentVoltage);
-
+        RobotMap.shooter.initShooterPID();
         RobotConfig.setShooterMotorsCoast();
         RobotConfig.setShooterMotorVoltageCompensation();
 

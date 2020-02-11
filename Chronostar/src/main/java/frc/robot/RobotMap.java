@@ -83,6 +83,6 @@ public class RobotMap {
     RobotMap.shooterFollower
   };
   public static DriveTrain drive = new DriveTrain();
-  //public static Shooter shooter = new Shooter();
+  public static Shooter shooter = new Shooter();
   
 }

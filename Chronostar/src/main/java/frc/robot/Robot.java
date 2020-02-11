@@ -36,7 +36,8 @@ public class Robot extends TimedRobot {
   }
   @Override
   public void robotPeriodic() {
-    RobotMap.drive.periodic();
+    //RobotMap.drive.periodic();
+    RobotMap.shooter.periodic();
   }
   @Override
   public void disabledInit() {
@@ -69,6 +70,7 @@ public class Robot extends TimedRobot {
   }
   @Override
   public void teleopPeriodic() {
+    System.out.println(RobotMap.shooterMaster.getSelectedSensorPosition());
     Scheduler.getInstance().run();
   }
 
