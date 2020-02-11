@@ -24,5 +24,6 @@ public class RobotStats {
     public static final double driveTrainPeakThreshold = 40;
     public static final double driveTrainPeakTime = 10;
     public static final double voltageCompensationValue = 11.7;
+
     
 }

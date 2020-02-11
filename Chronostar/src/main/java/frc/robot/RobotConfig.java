@@ -11,10 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.revrobotics.CANSparkMax;
 
 /**
  * Add your docs here.
@@ -28,6 +25,8 @@ public class RobotConfig {
         
         RobotMap.rightDriveFollowerOne.set(ControlMode.Follower, RobotMap.rightDriveLeadID);
         RobotMap.leftDriveFollowerOne.set(ControlMode.Follower, RobotMap.leftDriveLeadID);
+
+
 
         RobotMap.rightDriveLead.setInverted(true);
         RobotMap.rightDriveFollowerOne.setInverted(InvertType.FollowMaster);
@@ -44,6 +43,8 @@ public class RobotConfig {
         RobotMap.drive.initVelocityPIDs();
         RobotMap.drive.initAlignmentPID();
 
+        RobotMap.shooterFollower.set(ControlMode.Follower, RobotMap.shooterMasterID);
+
         RobotConfig.enableDriveCurrentLimiting();
         RobotConfig.setDriveTrainVoltageCompensation();
         
@@ -57,16 +58,19 @@ public class RobotConfig {
         RobotConfig.setShooterMotorsCoast();
         RobotConfig.setShooterMotorVoltageCompensation();
 
+
     }
     public void setTeleopConfig(){
+        RobotConfig.disableDriveTrainVoltageCompensation();
         RobotConfig.enableDriveCurrentLimiting();
-        RobotConfig.setDriveTrainVoltageCompensation();
         RobotConfig.setDriveMotorsCoast();
+
     }
     public void setAutoConfig(){
+        RobotConfig.setDriveTrainVoltageCompensation();
         RobotConfig.enableDriveCurrentLimiting();
-        RobotConfig.disableDriveTrainVoltageCompensation();
         RobotConfig.setDriveMotorsBrake();
+
     }
     public static void setAllMotorsBrake() {
 		for(TalonFX talon:RobotMap.allFalcons){
