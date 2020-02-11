@@ -24,8 +24,10 @@ public class Shooter extends SubsystemBase {
   private double kF = 0.05;
   private double kP = 0.45;
   private double kI;
+  private int offCount;
   private double kD = 10;
   private double shooterPower;
+  private double offTime;
 
   public Shooter() {
 
@@ -70,7 +72,13 @@ public class Shooter extends SubsystemBase {
         System.out.println(shooterPower);
         SmartDashboard.putNumber("Speed", this.getShooterVelocity());
         SmartDashboard.putBoolean("Close", Math.abs(this.getShooterVelocity()-shooterPower)<100);
-
+        if(Math.abs(this.getShooterVelocity()-shooterPower)>100){
+          offCount++;
+          SmartDashboard.putNumber("count", offCount);
+        }
+        else{
+          offCount = 0;
+        }
         setFlyWheelSpeed(shooterPower);
       }
     }
