@@ -11,10 +11,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 /**
  * Add your docs here.
@@ -23,11 +21,13 @@ public class RobotConfig {
     public void setStartingConfig(){
 
         RobotConfig.setAllMotorsBrake();
-        RobotMap.rightDriveLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,0);
-		RobotMap.leftDriveLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,0);
+        RobotMap.rightDriveLead.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor,0,0);
+		RobotMap.leftDriveLead.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor,0,0);
         
         RobotMap.rightDriveFollowerOne.set(ControlMode.Follower, RobotMap.rightDriveLeadID);
         RobotMap.leftDriveFollowerOne.set(ControlMode.Follower, RobotMap.leftDriveLeadID);
+
+
 
         RobotMap.rightDriveLead.setInverted(true);
         RobotMap.rightDriveFollowerOne.setInverted(InvertType.FollowMaster);
@@ -44,19 +44,39 @@ public class RobotConfig {
         RobotMap.drive.initVelocityPIDs();
         RobotMap.drive.initAlignmentPID();
 
+        RobotMap.shooterFollower.set(ControlMode.Follower, RobotMap.shooterMasterID);
+        RobotMap.shooterFollower.setInverted(InvertType.OpposeMaster);
+
+        RobotMap.hoodMotor.setInverted(true);
+        RobotMap.hoodMotor.setIdleMode(IdleMode.kBrake);
+        
+
         RobotConfig.enableDriveCurrentLimiting();
         RobotConfig.setDriveTrainVoltageCompensation();
+        
+        RobotMap.shooterMaster.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+        RobotMap.shooterMaster.setSelectedSensorPosition(0,0,0);
+        
+        RobotMap.shooterMaster.configPeakOutputForward(RobotStats.maxShooterPercentVoltage);
+        RobotMap.shooterMaster.configPeakOutputReverse(0);
+        RobotMap.shooterMaster.configClosedLoopPeakOutput(0, RobotStats.maxShooterPercentVoltage);
+        RobotMap.shooter.initShooterPID();
+        RobotConfig.setShooterMotorsCoast();
+        RobotConfig.setShooterMotorVoltageCompensation();
+
 
     }
     public void setTeleopConfig(){
+        RobotConfig.disableDriveTrainVoltageCompensation();
         RobotConfig.enableDriveCurrentLimiting();
-        RobotConfig.setDriveTrainVoltageCompensation();
         RobotConfig.setDriveMotorsCoast();
+
     }
     public void setAutoConfig(){
+        RobotConfig.setDriveTrainVoltageCompensation();
         RobotConfig.enableDriveCurrentLimiting();
-        RobotConfig.disableDriveTrainVoltageCompensation();
         RobotConfig.setDriveMotorsBrake();
+
     }
     public static void setAllMotorsBrake() {
 		for(TalonFX talon:RobotMap.allFalcons){
@@ -97,6 +117,17 @@ public class RobotConfig {
     public static void disableDriveTrainVoltageCompensation(){
         for(TalonFX talon:RobotMap.driveMotors){
             talon.enableVoltageCompensation(false);
+        }
+    }
+    public static void setShooterMotorsCoast() {
+		for(TalonFX talon:RobotMap.shooterMotors){
+            talon.setNeutralMode(NeutralMode.Coast);
+        }
+    }
+    public static void setShooterMotorVoltageCompensation(){
+        for(TalonFX talon:RobotMap.shooterMotors){
+            talon.configVoltageCompSaturation(11.7);
+            talon.enableVoltageCompensation(true);
         }
     }
 }

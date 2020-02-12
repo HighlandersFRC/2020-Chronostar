@@ -9,42 +9,80 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.wpilibj.RobotState;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ButtonMap;
 import frc.robot.RobotMap;
+import frc.robot.RobotStats;
 
 public class Shooter extends SubsystemBase {
   /**
    * Creates a new Shooter.
    */
-  private double kF;
-  private double kP;
-  private double kI;
-  private double kD;
-  private int flyWheelAcceleration;
-  private double bigNumber = 1E99;
-  private double desiredRPM;
+  private double kF = 0.05;
+  private double kP = 0.45;
+  private double kI = 0.0009;
+  private int offCount;
+  private double kD = 10;
+  private int iZone = 439;
+  private double shooterPower;
+  private double offTime;
+
   public Shooter() {
 
   }
   public void initShooterPID(){
-    /*RobotMap.shooterMaster.config_kF(0, kF);
+    shooterPower = 0;
+    RobotMap.shooterMaster.config_kF(0, kF);
     RobotMap.shooterMaster.config_kP(0, kP);
     RobotMap.shooterMaster.config_kI(0, kI);
     RobotMap.shooterMaster.config_kD(0, kD);
-    RobotMap.shooterMaster.configMotionAcceleration(flyWheelAcceleration);
-    RobotMap.shooterMaster.configMotionCruiseVelocity(0);
-    RobotMap.shooterMaster.set(ControlMode.MotionMagic, bigNumber);*/
+    RobotMap.shooterMaster.config_IntegralZone(0, iZone);
   }
-  public void setFlyWheelSpeed(double Velocity){
-    //RobotMap.shooterMaster.configMotionCruiseVelocity(convertRPMToEncoderTicsPer100ms(Velocity));
+  public void setFlyWheelSpeed(double velocity){
+    RobotMap.shooterMaster.set(ControlMode.Velocity, convertRPMToEncoderTicsPer100ms(velocity));
   }
   public int convertRPMToEncoderTicsPer100ms(double rpm){
-    return (int)rpm;
+    return (int)((rpm/600)*RobotStats.flyWheelTicsPerWheelRotation);
+  }
+  public double getShooterVelocity(){
+    return (RobotMap.shooterMaster.getSelectedSensorVelocity()/RobotStats.flyWheelTicsPerWheelRotation)*600;
   }
 
   @Override
   public void periodic() {
-
+    if(RobotMap.shooterMaster.getMotorOutputPercent()!=0 && RobotMap.shooterMaster.getSelectedSensorVelocity() ==0){
+      System.out.println("WARNING, ENCODER FALIURE");
+      RobotMap.shooterMaster.set(ControlMode.PercentOutput, 0);
+    }
+    else{
+      if(RobotState.isOperatorControl()&&!RobotState.isDisabled()){
+        if(ButtonMap.shooterUp()){
+          shooterPower = shooterPower + 100;
+        }
+        if(ButtonMap.shooterDown()){
+          shooterPower = shooterPower -100;
+        }
+        if(shooterPower>RobotStats.maxShooterRPM){
+          shooterPower = RobotStats.maxShooterRPM;
+        }
+        else if(shooterPower <0){
+          shooterPower = 0;
+        }
+        System.out.println(shooterPower);
+        SmartDashboard.putNumber("Speed", this.getShooterVelocity());
+        SmartDashboard.putBoolean("Close", Math.abs(this.getShooterVelocity()-shooterPower)<100);
+        if(Math.abs(this.getShooterVelocity()-shooterPower)>100){
+          offCount++;
+          SmartDashboard.putNumber("count", offCount);
+        }
+        else{
+          offCount = 0;
+        }
+        setFlyWheelSpeed(shooterPower);
+      }
+    }
   }
 }

@@ -8,6 +8,8 @@
 package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.Relay;
@@ -16,6 +18,7 @@ import edu.wpi.first.wpilibj.SerialPort.Port;
 import frc.robot.sensors.LidarLite;
 import frc.robot.sensors.Navx;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Shooter;
 import frc.robot.tools.pathTools.PathList;
 
@@ -35,12 +38,24 @@ public class RobotMap {
   public static int rightFollowerID = 4;
   public static int leftFollowerID = 2;
 
+  public static int shooterMasterID = 5;
+  public static int shooterFollowerID = 6;
+
+  public static int hoodID = 7;
+
   
   public static TalonFX leftDriveLead = new TalonFX(leftDriveLeadID);
   public static TalonFX rightDriveLead = new TalonFX(rightDriveLeadID);
 
 	public static TalonFX leftDriveFollowerOne = new TalonFX(leftFollowerID);
   public static TalonFX rightDriveFollowerOne = new TalonFX(rightFollowerID);
+
+  
+  public static TalonFX shooterMaster = new TalonFX(shooterMasterID);
+  public static TalonFX shooterFollower = new TalonFX(shooterFollowerID);
+
+  public static CANSparkMax hoodMotor = new CANSparkMax(hoodID, MotorType.kBrushless);
+  
 
   public static SupplyCurrentLimitConfiguration robotCurrentConfigurationEnabled = new SupplyCurrentLimitConfiguration(true, RobotStats.driveTrainMaxCurrent, RobotStats.driveTrainPeakThreshold, RobotStats.driveTrainPeakTime);
   public static SupplyCurrentLimitConfiguration robotCurrentConfigurationDisabled = new SupplyCurrentLimitConfiguration(false, RobotStats.driveTrainMaxCurrent, RobotStats.driveTrainPeakThreshold, RobotStats.driveTrainPeakTime);
@@ -67,9 +82,15 @@ public class RobotMap {
     RobotMap.rightDriveLead,
     RobotMap.leftDriveFollowerOne,
     RobotMap.rightDriveFollowerOne,
-    //RobotMap.shooterMaster
+    RobotMap.shooterMaster,
+    RobotMap.shooterFollower
+  };
+  public static TalonFX shooterMotors[] = {
+    RobotMap.shooterMaster,
+    RobotMap.shooterFollower
   };
   public static DriveTrain drive = new DriveTrain();
-  //public static Shooter shooter = new Shooter();
+  public static Shooter shooter = new Shooter();
+  public static Hood hood = new Hood();
   
 }
