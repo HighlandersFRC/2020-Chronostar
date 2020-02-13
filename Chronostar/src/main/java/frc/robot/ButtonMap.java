@@ -28,4 +28,16 @@ public class ButtonMap {
     public static boolean shooterDown(){
         return oi.operatorController.getAButton();
     }
+    public static boolean runMagBelt(){
+        return oi.operatorController.getBumper(Hand.kLeft);
+    }
+    public static boolean runMagWheel(){
+        return oi.operatorController.getBumper(Hand.kRight);
+    }
+    public static boolean runIndexer(){
+        return oi.operatorController.getXButton();
+    }
+    public static boolean reverseMag(){
+        return oi.operatorController.getBButton();
+    }
 }

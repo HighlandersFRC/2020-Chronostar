@@ -40,6 +40,7 @@ public class Robot extends TimedRobot {
     //RobotMap.drive.periodic();
     RobotMap.shooter.periodic();
     RobotMap.hood.periodic();
+    RobotMap.magazine.periodic();
   }
   @Override
   public void disabledInit() {
