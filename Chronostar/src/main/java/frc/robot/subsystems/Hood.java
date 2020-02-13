@@ -22,8 +22,8 @@ public class Hood extends SubsystemBase {
   /**
    * Creates a new Hood.
    */
-  private double kf = .4;
-  private double kp = 0.000004;
+  private double kf = .04;
+  private double kp = 0.000002;
   private double ki = 0.00000001;
   private double kd = 0.000007;
   private float maxpoint = 22;
@@ -54,10 +54,10 @@ public class Hood extends SubsystemBase {
     mpidController.setI(ki);
     mpidController.setD(kd);
     mpidController.setOutputRange(-1, 1);
-    mpidController.setSmartMotionMaxVelocity(5, 0);
-    mpidController.setSmartMotionMinOutputVelocity(-5, 0);
-    mpidController.setSmartMotionMaxAccel(3, 0);
-    mpidController.setSmartMotionAllowedClosedLoopError(.2, 0);
+    mpidController.setSmartMotionMaxVelocity(15, 0);
+    mpidController.setSmartMotionMinOutputVelocity(-15, 0);
+    mpidController.setSmartMotionMaxAccel(10, 0);
+    mpidController.setSmartMotionAllowedClosedLoopError(.1, 0);
     SmartDashboard.putNumber("Set Position", 0);
   }
   public Hood() {
