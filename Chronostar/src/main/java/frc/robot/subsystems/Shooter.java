@@ -22,8 +22,8 @@ public class Shooter extends SubsystemBase {
    * Creates a new Shooter.
    */
   private double kF = 0.05;
-  private double kP = 0.45;
-  private double kI = 0.0009;
+  private double kP = 0.25;
+  private double kI = 0.00001;
   private int offCount;
   private double kD = 10;
   private int iZone = 439;
@@ -40,6 +40,7 @@ public class Shooter extends SubsystemBase {
     RobotMap.shooterMaster.config_kI(0, kI);
     RobotMap.shooterMaster.config_kD(0, kD);
     RobotMap.shooterMaster.config_IntegralZone(0, iZone);
+    SmartDashboard.putNumber("setVelocity", 0);
   }
   public void setFlyWheelSpeed(double velocity){
     RobotMap.shooterMaster.set(ControlMode.Velocity, convertRPMToEncoderTicsPer100ms(velocity));
@@ -61,19 +62,14 @@ public class Shooter extends SubsystemBase {
       RobotMap.shooterMaster.set(ControlMode.PercentOutput, 0);
     }
     else{
-      if(ButtonMap.shooterUp()){
-        shooterPower = shooterPower + 100;
-      }
-      if(ButtonMap.shooterDown()){
-        shooterPower = shooterPower -100;
-      }
+      shooterPower = SmartDashboard.getNumber("setVelocity", 0);
+
       if(shooterPower>RobotStats.maxShooterRPM){
         shooterPower = RobotStats.maxShooterRPM;
       }
       else if(shooterPower <0){
         shooterPower = 0;
       }
-      System.out.println(shooterPower);
       SmartDashboard.putNumber("Speed", this.getShooterVelocity());
       SmartDashboard.putBoolean("Close", Math.abs(this.getShooterVelocity()-shooterPower)<100);
       if(Math.abs(this.getShooterVelocity()-shooterPower)>100){
@@ -85,6 +81,8 @@ public class Shooter extends SubsystemBase {
       }
       setFlyWheelSpeed(shooterPower);
     }
+    setFlyWheelSpeed(shooterPower);
+  
     
   }
 }
