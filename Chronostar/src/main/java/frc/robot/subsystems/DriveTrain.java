@@ -128,7 +128,6 @@ public class DriveTrain extends SubsystemBase {
 			alignmentPID.updatePID(Robot.visionCamera.getAngle());
 		}
 			
-		System.out.println(alignmentPID.getResult());
 		setLeftSpeed(alignmentPID.getResult());
 		setRightSpeed(-alignmentPID.getResult());
 		if(Robot.visionCamera.getAngle()<1){

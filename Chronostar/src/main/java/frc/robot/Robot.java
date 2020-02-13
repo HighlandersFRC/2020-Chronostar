@@ -73,7 +73,6 @@ public class Robot extends TimedRobot {
   }
   @Override
   public void teleopPeriodic() {
-    System.out.println(RobotMap.shooterMaster.getSelectedSensorPosition());
     Scheduler.getInstance().run();
   }
 
