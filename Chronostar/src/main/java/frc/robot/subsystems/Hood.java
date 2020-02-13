@@ -69,28 +69,32 @@ public class Hood extends SubsystemBase {
   public void resetEncodermax(){
     RobotMap.hoodMotor.getEncoder().setPosition(maxpoint);
   }
+  public void setHoodPosition(double desiredPosition){
+    mpidController.setReference(desiredPosition, ControlType.kSmartMotion);
+
+  }
 
   @Override
   public void periodic() {
-   if(m_reverseLimit.get() == true) {
-     resetEncodermin();
-   }
-   if(m_forwardLimit.get() == true){
-      resetEncodermax();
-   }
-    setPoint = SmartDashboard.getNumber("Set Position", 0);
-    if (setPoint <= minpoint){
-      setPoint = minpoint;
-    }
-    if (setPoint >= maxpoint){
-      setPoint = maxpoint;
-    }
-    mpidController.setReference(setPoint, ControlType.kSmartMotion);
-    SmartDashboard.putNumber("hood target", setPoint);
-    SmartDashboard.putNumber("hood pos", hoodEncoder.getPosition());
-    SmartDashboard.putNumber("Output", RobotMap.hoodMotor.getAppliedOutput());
-
     
-    // This method will be called once per scheduler run
+  }
+  public void teleopPeriodic(){
+    if(m_reverseLimit.get() == true) {
+      resetEncodermin();
+    }
+    if(m_forwardLimit.get() == true){
+       resetEncodermax();
+    }
+     setPoint = SmartDashboard.getNumber("Set Position", 0);
+     if (setPoint <= minpoint){
+       setPoint = minpoint;
+     }
+     if (setPoint >= maxpoint){
+       setPoint = maxpoint;
+     }
+     setHoodPosition(setPoint);
+     SmartDashboard.putNumber("hood target", setPoint);
+     SmartDashboard.putNumber("hood pos", hoodEncoder.getPosition());
+     SmartDashboard.putNumber("Output", RobotMap.hoodMotor.getAppliedOutput());
   }
 }

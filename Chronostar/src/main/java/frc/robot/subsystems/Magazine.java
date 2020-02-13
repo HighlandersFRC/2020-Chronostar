@@ -25,6 +25,10 @@ public class Magazine extends SubsystemBase {
 
   @Override
   public void periodic() {
+
+    // This method will be called once per scheduler run
+  }
+  public void teleopPeriodic(){
     SmartDashboard.putBoolean("beam Break", RobotMap.beamBreakOne.get());
 
     if(ButtonMap.runMagBelt() == true){
@@ -33,25 +37,24 @@ public class Magazine extends SubsystemBase {
     else{
       RobotMap.magazineBelt.set(ControlMode.PercentOutput, 0);
     }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     if(ButtonMap.runMagWheel() == true){
       RobotMap.magazineWheel.set(ControlMode.PercentOutput, .6);
     }
     else{
       RobotMap.magazineWheel.set(ControlMode.PercentOutput, 0);
     }
-////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     if(ButtonMap.runIndexer() == true){
       RobotMap.indexer.set(.6);
     }
     else{
       RobotMap.indexer.set(0);
     }
-////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     if(ButtonMap.reverseMag() == true){
       RobotMap.magazineWheel.set(ControlMode.PercentOutput, -.6);
       RobotMap.magazineBelt.set(ControlMode.PercentOutput, -1);
     }
-    // This method will be called once per scheduler run
   }
 }

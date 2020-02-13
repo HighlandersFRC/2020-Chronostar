@@ -53,36 +53,38 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
+
+  }
+  public void teleopPeriodic(){
     if(RobotMap.shooterMaster.getMotorOutputPercent()!=0 && RobotMap.shooterMaster.getSelectedSensorVelocity() ==0){
       System.out.println("WARNING, ENCODER FALIURE");
       RobotMap.shooterMaster.set(ControlMode.PercentOutput, 0);
     }
     else{
-      if(RobotState.isOperatorControl()&&!RobotState.isDisabled()){
-        if(ButtonMap.shooterUp()){
-          shooterPower = shooterPower + 100;
-        }
-        if(ButtonMap.shooterDown()){
-          shooterPower = shooterPower -100;
-        }
-        if(shooterPower>RobotStats.maxShooterRPM){
-          shooterPower = RobotStats.maxShooterRPM;
-        }
-        else if(shooterPower <0){
-          shooterPower = 0;
-        }
-        System.out.println(shooterPower);
-        SmartDashboard.putNumber("Speed", this.getShooterVelocity());
-        SmartDashboard.putBoolean("Close", Math.abs(this.getShooterVelocity()-shooterPower)<100);
-        if(Math.abs(this.getShooterVelocity()-shooterPower)>100){
-          offCount++;
-          SmartDashboard.putNumber("count", offCount);
-        }
-        else{
-          offCount = 0;
-        }
-        setFlyWheelSpeed(shooterPower);
+      if(ButtonMap.shooterUp()){
+        shooterPower = shooterPower + 100;
       }
+      if(ButtonMap.shooterDown()){
+        shooterPower = shooterPower -100;
+      }
+      if(shooterPower>RobotStats.maxShooterRPM){
+        shooterPower = RobotStats.maxShooterRPM;
+      }
+      else if(shooterPower <0){
+        shooterPower = 0;
+      }
+      System.out.println(shooterPower);
+      SmartDashboard.putNumber("Speed", this.getShooterVelocity());
+      SmartDashboard.putBoolean("Close", Math.abs(this.getShooterVelocity()-shooterPower)<100);
+      if(Math.abs(this.getShooterVelocity()-shooterPower)>100){
+        offCount++;
+        SmartDashboard.putNumber("count", offCount);
+      }
+      else{
+        offCount = 0;
+      }
+      setFlyWheelSpeed(shooterPower);
     }
+    
   }
 }
