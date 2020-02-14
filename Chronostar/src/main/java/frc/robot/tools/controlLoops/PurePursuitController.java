@@ -19,7 +19,7 @@ import frc.robot.tools.math.Point;
 import frc.robot.tools.math.Vector;
 import jaci.pathfinder.Pathfinder;
 
-public class PurePursuitController extends edu.wpi.first.wpilibj.command.Command {
+public class PurePursuitController extends CommandBase {
 	private PathSetup chosenPath;
 	private Odometry odometry;
 	private int closestSegment;
@@ -201,9 +201,9 @@ public class PurePursuitController extends edu.wpi.first.wpilibj.command.Command
 		SmartDashboard.putNumber("x", odometry.getX());
 		SmartDashboard.putNumber("closestSegment", closestSegment);
 		SmartDashboard.putNumber("y",odometry.getY());
-		//SmartDashboard.putNumber("theta", odometry.gettheta());
-		//SmartDashboard.putNumber("LAX", lookAheadPoint.getXPos());
-		//SmartDashboard.putNumber("LAY", lookAheadPoint.getYPos());
+		SmartDashboard.putNumber("theta", odometry.gettheta());
+		SmartDashboard.putNumber("LAX", lookAheadPoint.getXPos());
+		SmartDashboard.putNumber("LAY", lookAheadPoint.getYPos());
 		startingNumberLA = (int)partialPointIndex;
 		lastLookAheadPoint = lookAheadPoint;
 		findRobotCurvature();
@@ -237,7 +237,7 @@ public class PurePursuitController extends edu.wpi.first.wpilibj.command.Command
 		double rightVelocity;
 		double v;
 		if(closestSegment <5){
-			v = targetVelocity +0.25;	
+			v = targetVelocity + 0.25;	
 		}
 		else{
 			v = targetVelocity;
@@ -253,8 +253,11 @@ public class PurePursuitController extends edu.wpi.first.wpilibj.command.Command
 			if(odometryDirection!= chosenPath.getReversed()){
 				c = -c;
 			}
+			else{
+				c = c;
+			}
 		}
-
+		c = 0;
 		leftVelocity = v*(2+(c*RobotStats.robotBaseDistance))/2;
 		rightVelocity = v*(2-(c*RobotStats.robotBaseDistance))/2;
 
@@ -294,7 +297,7 @@ public class PurePursuitController extends edu.wpi.first.wpilibj.command.Command
 	}
 	// Called once after isFinished returns true
 	@Override
-	public void end() {
+	public void end( boolean interruptable) {
 		pathNotifier.stop();
 		shouldRunAlgorithm = false;
 		odometry.endOdmetry();

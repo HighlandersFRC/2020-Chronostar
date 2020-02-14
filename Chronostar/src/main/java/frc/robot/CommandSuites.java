@@ -6,14 +6,25 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
+
+import frc.robot.commands.autos.CenterHighGoalAuto;
+
 /**
  * Add your docs here.
  */
 public class CommandSuites {
+    private CenterHighGoalAuto centerBasicHighGoalAuto;
+    private boolean center = true;
     
     public CommandSuites(){
     }
     public void startAutoCommands(){
+        if(center){
+            RobotMap.drive.startAutoOdometry(false, 10, -8 );
+            centerBasicHighGoalAuto = new CenterHighGoalAuto();
+            centerBasicHighGoalAuto.schedule();
+        }
+
 
     }
     public void endAutoCommands(){

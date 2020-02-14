@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.sensors.VisionCamera;
 
 public class Robot extends TimedRobot {
@@ -28,7 +29,6 @@ public class Robot extends TimedRobot {
     robotConfig = new RobotConfig();
     robotConfig.setStartingConfig();
     RobotMap.hood.inithood();
-    RobotMap.visionRelay1.set(Value.kOn);
     m_oi = new OI();
     try {
       cameraPort = new SerialPort(115200, Port.kUSB);
@@ -36,6 +36,7 @@ public class Robot extends TimedRobot {
     } catch (Exception e) {
 
     }
+    CommandScheduler.getInstance().enable();
   }
   @Override
   public void robotPeriodic() {
@@ -45,6 +46,7 @@ public class Robot extends TimedRobot {
     } catch(Exception e){
 
     }
+    CommandScheduler.getInstance().run();
 
   }
   @Override
@@ -70,6 +72,7 @@ public class Robot extends TimedRobot {
   }
   @Override
   public void teleopInit() {
+    RobotMap.drive.startAutoOdometry(false, 0, 0);
     robotConfig.setTeleopConfig();
     commandSuites.startTeleopCommands();
     if (m_autonomousCommand != null) {
@@ -78,17 +81,13 @@ public class Robot extends TimedRobot {
   }
   @Override
   public void teleopPeriodic() {
-    //RobotMap.drive.teleopPeriodic();
+    SmartDashboard.putNumber("x", RobotMap.drive.getDriveTrainX());
+    SmartDashboard.putNumber("y", RobotMap.drive.getDriveTrainY());
+
+    RobotMap.drive.teleopPeriodic();
     RobotMap.shooter.teleopPeriodic();
     RobotMap.hood.teleopPeriodic();
     RobotMap.magazine.teleopPeriodic();
-
-    if(ButtonMap.testButton()){
-		  RobotMap.visionRelay1.set(Value.kForward);
-	  }
-	  else{
-		  RobotMap.visionRelay1.set(Value.kReverse);
-    }
     Scheduler.getInstance().run();
   }
 

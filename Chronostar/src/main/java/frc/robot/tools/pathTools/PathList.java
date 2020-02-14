@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import java.nio.file.Paths;
 
 public class PathList {
-  private static Trajectory traj1;
-  public static PathSetup path1;
+  private static Trajectory centerAutoTraj1;
+  public static PathSetup centerAutoPath1;
 
 
    //remember that for all paths if the first point is at (0,0,0) for some reason the end y value is revesred in the coordinate plane
@@ -23,9 +23,10 @@ public class PathList {
   // be decreasing y units on the coordinate plane, while in the other you would be increasing y units
   public PathList() {
     try{
-      traj1 = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/protostar-Test1.wpilib.json"));
-      path1 = new PathSetup(traj1, false);
-    }
+      centerAutoTraj1 = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Center3Highgoal.wpilib.json"));
+      centerAutoPath1 = new PathSetup(centerAutoTraj1, false);
+    }      
+    
     catch(Exception e){
 
     }

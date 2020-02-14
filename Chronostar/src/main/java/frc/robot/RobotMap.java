@@ -22,6 +22,7 @@ import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Magazine;
 import frc.robot.subsystems.Shooter;
+import frc.robot.tools.pathTools.PathList;
 
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -31,12 +32,12 @@ public class RobotMap {
   public static AHRS navx = new AHRS(Port.kMXP);
 
   public static Navx mainNavx = new Navx(navx);
-    
+
   public static Relay visionRelay1 = new Relay(0);
-  
+
   public static int beamBreak1Port = 0;
-  
-	public static int rightDriveLeadID = 3;
+
+  public static int rightDriveLeadID = 3;
   public static int leftDriveLeadID = 1;
 
   public static int rightFollowerID = 4;
@@ -54,7 +55,7 @@ public class RobotMap {
   public static TalonFX leftDriveLead = new TalonFX(leftDriveLeadID);
   public static TalonFX rightDriveLead = new TalonFX(rightDriveLeadID);
 
-	public static TalonFX leftDriveFollowerOne = new TalonFX(leftFollowerID);
+  public static TalonFX leftDriveFollowerOne = new TalonFX(leftFollowerID);
   public static TalonFX rightDriveFollowerOne = new TalonFX(rightFollowerID);
 
   public static TalonFX shooterMaster = new TalonFX(shooterMasterID);
@@ -69,6 +70,8 @@ public class RobotMap {
 
   public static DigitalInput beamBreakOne = new DigitalInput(beamBreak1Port);
 
+  public static PathList pathList = new PathList();
+  
   public static SupplyCurrentLimitConfiguration robotCurrentConfigurationEnabled = new SupplyCurrentLimitConfiguration(true, RobotStats.driveTrainMaxCurrent, RobotStats.driveTrainPeakThreshold, RobotStats.driveTrainPeakTime);
   public static SupplyCurrentLimitConfiguration robotCurrentConfigurationDisabled = new SupplyCurrentLimitConfiguration(false, RobotStats.driveTrainMaxCurrent, RobotStats.driveTrainPeakThreshold, RobotStats.driveTrainPeakTime);
   public static Counter lidarCounter = new Counter(9);
