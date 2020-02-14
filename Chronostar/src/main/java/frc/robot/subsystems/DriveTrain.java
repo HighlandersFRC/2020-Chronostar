@@ -28,8 +28,8 @@ public class DriveTrain extends SubsystemBase {
 	private double throttel = 0;
 	private static DriveEncoder leftMainDrive = new DriveEncoder(RobotMap.leftDriveLead,RobotMap.leftDriveLead.getSelectedSensorPosition(0));
 	private static DriveEncoder rightMainDrive = new DriveEncoder(RobotMap.rightDriveLead,RobotMap.rightDriveLead.getSelectedSensorPosition(0));
-	private double vKF = 0.0;
-	private double vKP = 0.0;
+	private double vKF = 0.0455925;
+	private double vKP = 0.21;
 	private double vKI = 0.000000;
 	private double vKD = 0;
 	private int profile = 0;
