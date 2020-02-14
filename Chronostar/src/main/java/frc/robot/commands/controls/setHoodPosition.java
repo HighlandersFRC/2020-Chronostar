@@ -16,6 +16,7 @@ import frc.robot.RobotMap;
 public class setHoodPosition extends InstantCommand {
   private double position;
   public setHoodPosition(double desiredPosition) {
+    position = desiredPosition;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

@@ -16,13 +16,14 @@ import frc.robot.RobotMap;
 public class setFlyWheelVelocity extends InstantCommand {
   private double velocity;
   public setFlyWheelVelocity(double desiredVelocity) {
-    addRequirements(RobotMap.shooter);
+    velocity = desiredVelocity;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    RobotMap.shooter.initShooterPID();
     RobotMap.shooter.setFlyWheelSpeed(velocity);
   }
 }

@@ -22,8 +22,8 @@ public class Hood extends SubsystemBase {
   /**
    * Creates a new Hood.
    */
-  private double kf = .04;
-  private double kp = 0.000002;
+  private double kf = .05;
+  private double kp = 0.000001;
   private double ki = 0.00000001;
   private double kd = 0.000007;
   private float maxpoint = 22;

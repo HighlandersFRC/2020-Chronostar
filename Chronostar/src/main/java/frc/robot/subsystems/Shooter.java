@@ -43,6 +43,12 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("setVelocity", 0);
   }
   public void setFlyWheelSpeed(double velocity){
+    if(velocity>RobotStats.maxShooterRPM){
+      velocity = RobotStats.maxShooterRPM;
+    }
+    else if(velocity <0){
+      velocity = 0;
+    }
     RobotMap.shooterMaster.set(ControlMode.Velocity, convertRPMToEncoderTicsPer100ms(velocity));
   }
   public int convertRPMToEncoderTicsPer100ms(double rpm){
@@ -81,7 +87,6 @@ public class Shooter extends SubsystemBase {
       }
       setFlyWheelSpeed(shooterPower);
     }
-    setFlyWheelSpeed(shooterPower);
   
     
   }
