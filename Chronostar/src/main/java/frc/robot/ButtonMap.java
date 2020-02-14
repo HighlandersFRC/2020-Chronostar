@@ -21,6 +21,9 @@ public class ButtonMap {
     public static double getRotation(){
         return -oi.driverController.getRawAxis(4);
     }
+    public static boolean testButton(){
+        return oi.driverController.getBumper(Hand.kRight);
+    }
     //slightly less important person buttons
     public static boolean shooterUp(){
         return oi.operatorController.getYButton();

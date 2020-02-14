@@ -29,8 +29,7 @@ public class Magazine extends SubsystemBase {
     // This method will be called once per scheduler run
   }
   public void teleopPeriodic(){
-    SmartDashboard.putBoolean("beam Break", RobotMap.beamBreakOne.get());
-
+    SmartDashboard.putBoolean("beamBroken", !RobotMap.beamBreakOne.get());
     if(ButtonMap.runMagBelt() == true){
       RobotMap.magazineBelt.set(ControlMode.PercentOutput, 1);
     }

@@ -33,6 +33,7 @@ public class RobotMap {
   public static Navx mainNavx = new Navx(navx);
     
   public static Relay visionRelay1 = new Relay(0);
+  
   public static int beamBreak1Port = 0;
   
 	public static int rightDriveLeadID = 3;
@@ -70,7 +71,8 @@ public class RobotMap {
 
   public static SupplyCurrentLimitConfiguration robotCurrentConfigurationEnabled = new SupplyCurrentLimitConfiguration(true, RobotStats.driveTrainMaxCurrent, RobotStats.driveTrainPeakThreshold, RobotStats.driveTrainPeakTime);
   public static SupplyCurrentLimitConfiguration robotCurrentConfigurationDisabled = new SupplyCurrentLimitConfiguration(false, RobotStats.driveTrainMaxCurrent, RobotStats.driveTrainPeakThreshold, RobotStats.driveTrainPeakTime);
-
+  public static Counter lidarCounter = new Counter(9);
+  public static LidarLite lidar1 = new LidarLite(lidarCounter);
   
 
   public static TalonFX driveMotors[] = {

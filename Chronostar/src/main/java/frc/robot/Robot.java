@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -27,6 +28,7 @@ public class Robot extends TimedRobot {
     robotConfig = new RobotConfig();
     robotConfig.setStartingConfig();
     RobotMap.hood.inithood();
+    RobotMap.visionRelay1.set(Value.kOn);
     m_oi = new OI();
     try {
       cameraPort = new SerialPort(115200, Port.kUSB);
@@ -37,6 +39,13 @@ public class Robot extends TimedRobot {
   }
   @Override
   public void robotPeriodic() {
+    try{
+
+      SmartDashboard.putNumber("lidarDist", RobotMap.lidar1.getDistance());
+    } catch(Exception e){
+
+    }
+
   }
   @Override
   public void disabledInit() {
@@ -73,6 +82,13 @@ public class Robot extends TimedRobot {
     RobotMap.shooter.teleopPeriodic();
     RobotMap.hood.teleopPeriodic();
     RobotMap.magazine.teleopPeriodic();
+
+    if(ButtonMap.testButton()){
+		  RobotMap.visionRelay1.set(Value.kForward);
+	  }
+	  else{
+		  RobotMap.visionRelay1.set(Value.kReverse);
+    }
     Scheduler.getInstance().run();
   }
 
