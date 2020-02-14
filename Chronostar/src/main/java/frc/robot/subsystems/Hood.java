@@ -24,8 +24,8 @@ public class Hood extends SubsystemBase {
    */
   private double kf = .05;
   private double kp = 0.000001;
-  private double ki = 0.00000001;
-  private double kd = 0.000007;
+  private double ki = 0.00000000;
+  private double kd = 0.00007;
   private float maxpoint = 22;
   private float minpoint = 0;
   private CANPIDController mpidController = new CANPIDController(RobotMap.hoodMotor);

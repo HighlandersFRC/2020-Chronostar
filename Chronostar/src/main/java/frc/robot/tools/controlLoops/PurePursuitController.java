@@ -141,13 +141,12 @@ public class PurePursuitController extends CommandBase {
 			distToPoint = Math.sqrt(Math.pow(deltaX, 2)+Math.pow(deltaY, 2));
 			if(distToPoint<minDistanceToPoint){
 				minDistanceToPoint = distToPoint;
-				System.out.println(i);
 				closestSegment = i;
 				closestPoint.setLocation(chosenPath.getMainPath().getStates().get(i).poseMeters.getTranslation().getX(), chosenPath.getMainPath().getStates().get(i).poseMeters.getTranslation().getY());
 			}
 		}
 		startingNumber = closestSegment;
-		minDistanceToPoint = 100;
+		minDistanceToPoint = 1000;
 		firstLookAheadFound = false;
 		for(int i = startingNumberLA; i<chosenPath.getMainPath().getStates().size()-1;i++){
 			startingPointOfLineSegment.setLocation(chosenPath.getMainPath().getStates().get(i).poseMeters.getTranslation().getX(),chosenPath.getMainPath().getStates().get(i).poseMeters.getTranslation().getY());
@@ -199,7 +198,7 @@ public class PurePursuitController extends CommandBase {
 		distToEndVector.setY(chosenPath.getMainPath().getStates().get(chosenPath.getMainPath().getStates().size()-1).poseMeters.getTranslation().getY()-odometry.getY());
 		SmartDashboard.putNumber("distoend", distToEndVector.length());
 		SmartDashboard.putNumber("x", odometry.getX());
-		SmartDashboard.putNumber("closestSegment", closestSegment);
+		SmartDashboard.putNumber("closestSegment", chosenPath.getMainPath().getStates().size()-closestSegment);
 		SmartDashboard.putNumber("y",odometry.getY());
 		SmartDashboard.putNumber("theta", odometry.gettheta());
 		SmartDashboard.putNumber("LAX", lookAheadPoint.getXPos());
@@ -237,7 +236,7 @@ public class PurePursuitController extends CommandBase {
 		double rightVelocity;
 		double v;
 		if(closestSegment <5){
-			v = targetVelocity + 0.25;	
+			v = 0.25+targetVelocity;		
 		}
 		else{
 			v = targetVelocity;
@@ -247,17 +246,14 @@ public class PurePursuitController extends CommandBase {
 			v = -v;
 		}
 		else{
-			c = -c;
+			c = c;
 		}
 		if(useOutsideOdometry){
 			if(odometryDirection!= chosenPath.getReversed()){
 				c = -c;
 			}
-			else{
-				c = c;
-			}
 		}
-		c = 0;
+
 		leftVelocity = v*(2+(c*RobotStats.robotBaseDistance))/2;
 		rightVelocity = v*(2-(c*RobotStats.robotBaseDistance))/2;
 
@@ -297,7 +293,7 @@ public class PurePursuitController extends CommandBase {
 	}
 	// Called once after isFinished returns true
 	@Override
-	public void end( boolean interruptable) {
+	public void end(boolean interrupted) {
 		pathNotifier.stop();
 		shouldRunAlgorithm = false;
 		odometry.endOdmetry();

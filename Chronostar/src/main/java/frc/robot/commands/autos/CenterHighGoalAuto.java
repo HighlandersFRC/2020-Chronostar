@@ -25,7 +25,6 @@ public class CenterHighGoalAuto extends SequentialCommandGroup {
   public CenterHighGoalAuto() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    //super(new setFlyWheelVelocity(4500), new setHoodPosition(10.5), new WaitCommand(1.5), new timedMagazineRun(1.25), new setFlyWheelVelocity(0), new setHoodPosition(0));
-    super( new PurePursuitController(RobotMap.pathList.centerAutoPath1, 10.2, 5.0, true, false));
+    super(new setFlyWheelVelocity(4500), new setHoodPosition(10.5), new WaitCommand(1.5), new timedMagazineRun(1.0), new setFlyWheelVelocity(0), new setHoodPosition(0),new PurePursuitController(RobotMap.pathList.centerAutoPath1, 2.5, 5.0, true, false));
   }
 }
