@@ -28,7 +28,6 @@ public class Robot extends TimedRobot {
     commandSuites = new CommandSuites();
     robotConfig = new RobotConfig();
     robotConfig.setStartingConfig();
-    RobotMap.hood.inithood();
     m_oi = new OI();
 
     try {
