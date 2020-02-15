@@ -30,8 +30,9 @@ public class Robot extends TimedRobot {
     robotConfig.setStartingConfig();
     RobotMap.hood.inithood();
     m_oi = new OI();
+
     try {
-      cameraPort = new SerialPort(115200, Port.kUSB);
+      cameraPort = new SerialPort(115200, Port.kUSB1);
       visionCamera = new VisionCamera(cameraPort);
     } catch (Exception e) {
 
@@ -41,10 +42,10 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     try{
-
+      visionCamera.updateVision();
+      SmartDashboard.putString("camOutput", Robot.visionCamera.getString());
       SmartDashboard.putNumber("lidarDist", RobotMap.lidar1.getDistance());
     } catch(Exception e){
-
     }
     CommandScheduler.getInstance().run();
 
