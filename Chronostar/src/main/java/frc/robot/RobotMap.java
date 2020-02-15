@@ -37,11 +37,11 @@ public class RobotMap {
 
   public static int beamBreak1Port = 0;
 
-  public static int rightDriveLeadID = 3;
-  public static int leftDriveLeadID = 1;
+  public static int rightDriveLeadID = 1;
+  public static int leftDriveLeadID = 3;
 
-  public static int rightFollowerID = 4;
-  public static int leftFollowerID = 2;
+  public static int rightFollowerID = 2;
+  public static int leftFollowerID = 4;
 
   public static int shooterMasterID = 5;
   public static int shooterFollowerID = 6;
