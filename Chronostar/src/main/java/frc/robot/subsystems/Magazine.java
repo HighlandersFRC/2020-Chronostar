@@ -71,9 +71,6 @@ public class Magazine extends SubsystemBase {
       new ShootingSequence().schedule();
     }
 
-    if(ButtonMap.stopMag() == true) {
-      new MagazineControl(0,0,0).schedule();
-    }
     if(ButtonMap.runIndexer() == true){
       RobotMap.indexer.set(.6);
     }

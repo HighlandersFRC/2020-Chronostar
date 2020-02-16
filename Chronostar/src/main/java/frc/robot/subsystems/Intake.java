@@ -24,7 +24,7 @@ public class Intake extends SubsystemBase {
     // This method will be called once per scheduler run
   }
   public void teleopPeriodic(){
-    if(ButtonMap.runMagBelt()){
+    if(ButtonMap.RunIntake()){
       RobotMap.intakeMotor.set(0.5);
     }
     else if(ButtonMap.reverseMag()){
