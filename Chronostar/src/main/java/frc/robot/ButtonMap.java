@@ -24,12 +24,8 @@ public class ButtonMap {
     public static boolean testButton(){
         return oi.driverController.getBumper(Hand.kRight);
     }
-    //slightly less important person buttons
-    public static boolean shooterUp(){
-        return oi.operatorController.getYButton();
-    }
-    public static boolean shooterDown(){
-        return oi.operatorController.getAButton();
+    public static boolean switchCamera(){
+        return oi.driverController.getTriggerAxis(Hand.kRight)>=0.3;
     }
     public static boolean stopMag(){
         return oi.operatorController.getBumper(Hand.kLeft);

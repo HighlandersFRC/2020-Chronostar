@@ -70,23 +70,13 @@ public class Magazine extends SubsystemBase {
     if(ButtonMap.runMag() == true){
       new ShootingSequence().schedule();
     }
-    /*else{
-      RobotMap.magazineBelt.set(ControlMode.PercentOutput, 0);
-    }*/
 
     if(ButtonMap.stopMag() == true) {
       new MagazineControl(0,0,0).schedule();
     }
-    /*
-    else{
-      RobotMap.magazineWheel.set(ControlMode.PercentOutput, 0);
-    }
-*/
     if(ButtonMap.runIndexer() == true){
       RobotMap.indexer.set(.6);
     }
-    
-
     if(ButtonMap.reverseMag() == true){
       RobotMap.magazineWheel.set(ControlMode.PercentOutput, -.6);
       RobotMap.magazineBelt.set(ControlMode.PercentOutput, -1);

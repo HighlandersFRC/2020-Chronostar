@@ -20,6 +20,7 @@ import frc.robot.sensors.LidarLite;
 import frc.robot.sensors.Navx;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Hood;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Magazine;
 import frc.robot.subsystems.Shooter;
 import frc.robot.tools.pathTools.PathList;
@@ -51,6 +52,8 @@ public class RobotMap {
   public static int magazineBeltID = 8;
   public static int indexerID = 9;
   public static int magazineWheelID = 10;
+  
+  public static int intakeMotorID = 12;
 
   public static TalonFX leftDriveLead = new TalonFX(leftDriveLeadID);
   public static TalonFX rightDriveLead = new TalonFX(rightDriveLeadID);
@@ -67,6 +70,8 @@ public class RobotMap {
   public static CANSparkMax indexer = new CANSparkMax(indexerID, MotorType.kBrushless);
 
   public static CANSparkMax hoodMotor = new CANSparkMax(hoodID, MotorType.kBrushless);
+
+  public static CANSparkMax intakeMotor = new CANSparkMax(intakeMotorID, MotorType.kBrushless);
 
   public static DigitalInput beamBreakOne = new DigitalInput(beamBreak1Port);
 
@@ -108,5 +113,5 @@ public class RobotMap {
   public static Shooter shooter = new Shooter();
   public static Hood hood = new Hood();
   public static Magazine magazine = new Magazine();
-  
+  public static Intake intake = new Intake();
 }

@@ -7,12 +7,16 @@
 
 package frc.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoSink;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.sensors.VisionCamera;
@@ -22,6 +26,11 @@ public class Robot extends TimedRobot {
   Command m_autonomousCommand;
   private CommandSuites commandSuites;
   private RobotConfig robotConfig;
+  private UsbCamera camera;
+  private UsbCamera camera2;
+  private VideoSink server;
+  private boolean cameraBoolean;
+  private boolean ableToSwitch;
   private static SerialPort cameraPort;
   public static VisionCamera visionCamera;
   public void robotInit() {
@@ -36,13 +45,40 @@ public class Robot extends TimedRobot {
     } catch (Exception e) {
 
     }
+    camera = CameraServer.getInstance().startAutomaticCapture("VisionCamera1", "/dev/video0");
+		camera.setResolution(320, 240);
+		camera.setFPS(15);
+
+		camera2 = CameraServer.getInstance().startAutomaticCapture("VisionCamera2", "/dev/video1");
+		camera2.setResolution(320, 240);
+		camera2.setFPS(15);
+		RobotMap.visionRelay1.set(Value.kOn);
+	
+
+		server = CameraServer.getInstance().addSwitchedCamera("driverVisionCameras");
+		server.setSource(camera);
+		Shuffleboard.update();
+		SmartDashboard.updateValues(); 
     CommandScheduler.getInstance().enable();
   }
   @Override
   public void robotPeriodic() {
     try{
-
       SmartDashboard.putNumber("lidarDist", RobotMap.lidar1.getDistance());
+      if(ButtonMap.switchCamera()&&ableToSwitch){
+        if(cameraBoolean){
+          server.setSource(camera2);
+          cameraBoolean = false;
+        }
+        else if(!cameraBoolean){
+          server.setSource(camera);
+          cameraBoolean = true;
+        }
+        ableToSwitch = false;
+      }
+      else if(!ButtonMap.switchCamera()){
+        ableToSwitch = true;
+      }
     } catch(Exception e){
 
     }
@@ -72,7 +108,6 @@ public class Robot extends TimedRobot {
   }
   @Override
   public void teleopInit() {
-    RobotMap.drive.startAutoOdometry(false, 0, 0);
     robotConfig.setTeleopConfig();
     commandSuites.startTeleopCommands();
     if (m_autonomousCommand != null) {
@@ -81,13 +116,12 @@ public class Robot extends TimedRobot {
   }
   @Override
   public void teleopPeriodic() {
-    SmartDashboard.putNumber("x", RobotMap.drive.getDriveTrainX());
-    SmartDashboard.putNumber("y", RobotMap.drive.getDriveTrainY());
 
     RobotMap.drive.teleopPeriodic();
     RobotMap.shooter.teleopPeriodic();
     RobotMap.hood.teleopPeriodic();
     RobotMap.magazine.teleopPeriodic();
+    RobotMap.intake.teleopPeriodic();
     Scheduler.getInstance().run();
   }
 
