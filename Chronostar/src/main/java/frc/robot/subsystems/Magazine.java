@@ -14,17 +14,32 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import frc.robot.ButtonMap;
 import frc.robot.RobotMap;
+import frc.robot.commands.controls.MagazineAutomation;
+import frc.robot.commands.controls.MagazineControl;
+import frc.robot.commands.controls.ShootingSequence;
 
 public class Magazine extends SubsystemBase {
   /**
    * Creates a new Magazine.
    */
+  private boolean lastState;
+  private double magCount;
   public Magazine() {
 
   }
 
   @Override
   public void periodic() {
+    SmartDashboard.putBoolean("beamBroken", !RobotMap.beamBreakOne.get());
+    if (RobotMap.beamBreakOne.get() != lastState){
+      if(RobotMap.beamBreakOne.get() == false){
+        new MagazineAutomation().schedule();
+        magCount++;
+      }
+    }
+    lastState = RobotMap.beamBreakOne.get();
+    SmartDashboard.putNumber("balls in mag", magCount);
+    
 
     // This method will be called once per scheduler run
   }
@@ -38,28 +53,39 @@ public class Magazine extends SubsystemBase {
     RobotMap.magazineWheel.set(ControlMode.PercentOutput, 0);
     RobotMap.indexer.set(0);
   }
+
+  public void setWheelSpeed(double wheelSpeed){
+    RobotMap.magazineWheel.set(ControlMode.PercentOutput, wheelSpeed);
+  }
+  public void setBeltSpeed(double beltSpeed){
+    RobotMap.magazineBelt.set(ControlMode.PercentOutput, beltSpeed);
+  }
+  public void setIndexerSpeed(double indexerSpeed){
+    RobotMap.indexer.set(indexerSpeed);
+  }
+
   public void teleopPeriodic(){
     SmartDashboard.putBoolean("beamBroken", !RobotMap.beamBreakOne.get());
-    if(ButtonMap.runMagBelt() == true){
-      RobotMap.magazineBelt.set(ControlMode.PercentOutput, 1);
-    }
-    else{
-      RobotMap.magazineBelt.set(ControlMode.PercentOutput, 0);
-    }
 
-    if(ButtonMap.runMagWheel() == true){
-      RobotMap.magazineWheel.set(ControlMode.PercentOutput, .6);
+    if(ButtonMap.runMag() == true){
+      new ShootingSequence().schedule();
     }
+    /*else{
+      RobotMap.magazineBelt.set(ControlMode.PercentOutput, 0);
+    }*/
+
+    if(ButtonMap.stopMag() == true) {
+      new MagazineControl(0,0,0).schedule();
+    }
+    /*
     else{
       RobotMap.magazineWheel.set(ControlMode.PercentOutput, 0);
     }
-
+*/
     if(ButtonMap.runIndexer() == true){
       RobotMap.indexer.set(.6);
     }
-    else{
-      RobotMap.indexer.set(0);
-    }
+    
 
     if(ButtonMap.reverseMag() == true){
       RobotMap.magazineWheel.set(ControlMode.PercentOutput, -.6);
