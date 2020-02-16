@@ -40,7 +40,7 @@ public class Robot extends TimedRobot {
     m_oi = new OI();
 
     try {
-      cameraPort = new SerialPort(115200, Port.kUSB2);
+      cameraPort = new SerialPort(115200, Port.kUSB);
       visionCamera = new VisionCamera(cameraPort);
     } catch (Exception e) {
 
@@ -118,7 +118,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    RobotMap.drive.teleopPeriodic();
+    //RobotMap.drive.teleopPeriodic();
     RobotMap.shooter.teleopPeriodic();
     RobotMap.hood.teleopPeriodic();
     RobotMap.magazine.teleopPeriodic();
