@@ -37,8 +37,8 @@ public class Robot extends TimedRobot {
     commandSuites = new CommandSuites();
     robotConfig = new RobotConfig();
     robotConfig.setStartingConfig();
-    RobotMap.hood.inithood();
     m_oi = new OI();
+
     try {
       cameraPort = new SerialPort(115200, Port.kUSB);
       visionCamera = new VisionCamera(cameraPort);
@@ -80,7 +80,6 @@ public class Robot extends TimedRobot {
         ableToSwitch = true;
       }
     } catch(Exception e){
-
     }
     CommandScheduler.getInstance().run();
     RobotMap.magazine.periodic();

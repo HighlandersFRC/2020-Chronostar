@@ -73,12 +73,15 @@ public class RobotConfig {
         RobotConfig.disableDriveTrainVoltageCompensation();
         RobotConfig.enableDriveCurrentLimiting();
         RobotConfig.setDriveMotorsCoast();
+        RobotMap.hood.inithood();
 
     }
     public void setAutoConfig(){
         RobotConfig.setDriveTrainVoltageCompensation();
         RobotConfig.enableDriveCurrentLimiting();
         RobotConfig.setDriveMotorsBrake();
+        RobotMap.hood.inithood();
+
 
     }
     public static void setAllMotorsBrake() {
