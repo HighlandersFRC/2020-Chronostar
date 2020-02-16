@@ -29,7 +29,7 @@ public class Robot extends TimedRobot {
   private UsbCamera camera;
   private UsbCamera camera2;
   private VideoSink server;
-
+  private boolean cameraBoolean;
   private boolean ableToSwitch;
   private static SerialPort cameraPort;
   public static VisionCamera visionCamera;
@@ -64,8 +64,21 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     try{
-
       SmartDashboard.putNumber("lidarDist", RobotMap.lidar1.getDistance());
+      if(ButtonMap.switchCamera()&&ableToSwitch){
+        if(cameraBoolean){
+          server.setSource(camera2);
+          cameraBoolean = false;
+        }
+        else if(!cameraBoolean){
+          server.setSource(camera);
+          cameraBoolean = true;
+        }
+        ableToSwitch = false;
+      }
+      else if(!ButtonMap.switchCamera()){
+        ableToSwitch = true;
+      }
     } catch(Exception e){
 
     }
