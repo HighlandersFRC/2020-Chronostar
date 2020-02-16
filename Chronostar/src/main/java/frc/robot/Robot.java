@@ -41,7 +41,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     try{
-
       SmartDashboard.putNumber("lidarDist", RobotMap.lidar1.getDistance());
     } catch(Exception e){
 
@@ -72,7 +71,6 @@ public class Robot extends TimedRobot {
   }
   @Override
   public void teleopInit() {
-    RobotMap.drive.startAutoOdometry(false, 0, 0);
     robotConfig.setTeleopConfig();
     commandSuites.startTeleopCommands();
     if (m_autonomousCommand != null) {
@@ -81,13 +79,12 @@ public class Robot extends TimedRobot {
   }
   @Override
   public void teleopPeriodic() {
-    SmartDashboard.putNumber("x", RobotMap.drive.getDriveTrainX());
-    SmartDashboard.putNumber("y", RobotMap.drive.getDriveTrainY());
 
     RobotMap.drive.teleopPeriodic();
     RobotMap.shooter.teleopPeriodic();
     RobotMap.hood.teleopPeriodic();
     RobotMap.magazine.teleopPeriodic();
+    RobotMap.intake.teleopPeriodic();
     Scheduler.getInstance().run();
   }
 

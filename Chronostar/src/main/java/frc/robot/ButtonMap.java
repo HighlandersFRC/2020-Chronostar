@@ -25,12 +25,6 @@ public class ButtonMap {
         return oi.driverController.getBumper(Hand.kRight);
     }
     //slightly less important person buttons
-    public static boolean shooterUp(){
-        return oi.operatorController.getYButton();
-    }
-    public static boolean shooterDown(){
-        return oi.operatorController.getAButton();
-    }
     public static boolean runMagBelt(){
         return oi.operatorController.getBumper(Hand.kLeft);
     }
