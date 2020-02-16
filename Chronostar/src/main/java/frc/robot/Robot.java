@@ -31,7 +31,7 @@ public class Robot extends TimedRobot {
   private VideoSink server;
   private boolean cameraBoolean;
   private boolean ableToSwitch;
-  private static SerialPort cameraPort;
+  private SerialPort cameraPort;
   public static VisionCamera visionCamera;
   public void robotInit() {
     commandSuites = new CommandSuites();
@@ -117,8 +117,7 @@ public class Robot extends TimedRobot {
   }
   @Override
   public void teleopPeriodic() {
-
-    //RobotMap.drive.teleopPeriodic();
+    RobotMap.drive.teleopPeriodic();
     RobotMap.shooter.teleopPeriodic();
     RobotMap.hood.teleopPeriodic();
     RobotMap.magazine.teleopPeriodic();

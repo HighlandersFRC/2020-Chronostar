@@ -40,24 +40,31 @@ public class Hood extends SubsystemBase {
 
     m_forwardLimit = RobotMap.hoodMotor.getForwardLimitSwitch(LimitSwitchPolarity.kNormallyClosed);
     m_reverseLimit = RobotMap.hoodMotor.getReverseLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
+
     RobotMap.hoodMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
     RobotMap.hoodMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
 
     RobotMap.hoodMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, maxpoint);
     RobotMap.hoodMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, minpoint);
-   //SmartDashboard.putBoolean("Forward Limit Enabled", m_forwardLimit.isLimitSwitchEnabled());
+
+    //SmartDashboard.putBoolean("Forward Limit Enabled", m_forwardLimit.isLimitSwitchEnabled());
     //SmartDashboard.putBoolean("Reverse Limit Enabled", m_reverseLimit.isLimitSwitchEnabled());
+
     mpidController = RobotMap.hoodMotor.getPIDController();
+
     hoodEncoder = RobotMap.hoodMotor.getEncoder();
+
     mpidController.setFF(kf);
     mpidController.setP(kp);
     mpidController.setI(ki);
     mpidController.setD(kd);
+
     mpidController.setOutputRange(-1, 1);
     mpidController.setSmartMotionMaxVelocity(15, 0);
     mpidController.setSmartMotionMinOutputVelocity(-15, 0);
     mpidController.setSmartMotionMaxAccel(10, 0);
     mpidController.setSmartMotionAllowedClosedLoopError(.1, 0);
+    
     SmartDashboard.putNumber("Set Position", 0);
   }
   public Hood() {
@@ -71,7 +78,6 @@ public class Hood extends SubsystemBase {
   }
   public void setHoodPosition(double desiredPosition){
     mpidController.setReference(desiredPosition, ControlType.kSmartMotion);
-
   }
 
   @Override
