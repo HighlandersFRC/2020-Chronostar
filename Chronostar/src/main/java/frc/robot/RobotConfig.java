@@ -53,6 +53,8 @@ public class RobotConfig {
         RobotMap.magazineBelt.setNeutralMode(NeutralMode.Brake);
         RobotMap.magazineWheel.setNeutralMode(NeutralMode.Brake);
         RobotMap.indexer.setIdleMode(IdleMode.kBrake);
+
+        RobotMap.intakeMotor.setIdleMode(IdleMode.kCoast);
         
         RobotConfig.enableDriveCurrentLimiting();
         RobotConfig.setDriveTrainVoltageCompensation();
