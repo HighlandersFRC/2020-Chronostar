@@ -10,9 +10,9 @@ package frc.robot.commands.autos;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotMap;
-import frc.robot.commands.controls.setFlyWheelVelocity;
-import frc.robot.commands.controls.setHoodPosition;
-import frc.robot.commands.controls.timedMagazineRun;
+import frc.robot.commands.controls.SetFlyWheelVelocity;
+import frc.robot.commands.controls.SetHoodPosition;
+import frc.robot.commands.controls.TimedMagazineRun;
 import frc.robot.tools.controlLoops.PurePursuitController;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -25,6 +25,6 @@ public class CenterHighGoalAuto extends SequentialCommandGroup {
   public CenterHighGoalAuto() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new setFlyWheelVelocity(4500), new setHoodPosition(10.5), new WaitCommand(1.5), new timedMagazineRun(1.0), new setFlyWheelVelocity(0), new setHoodPosition(0),new PurePursuitController(RobotMap.pathList.centerAutoPath1, 2.5, 5.0, true, false));
+    super(new SetFlyWheelVelocity(4500), new SetHoodPosition(10.5), new WaitCommand(1.5), new TimedMagazineRun(1.0), new SetFlyWheelVelocity(0), new SetHoodPosition(0),new PurePursuitController(RobotMap.pathList.centerAutoPath1, 2.5, 5.0, true, false));
   }
 }

@@ -36,4 +36,7 @@ public class ButtonMap {
     public static boolean reverseMag(){
         return oi.operatorController.getBButton();
     }
+    public static boolean stopReverseMag(){
+        return oi.operatorController.getBButtonReleased();
+    }
 }

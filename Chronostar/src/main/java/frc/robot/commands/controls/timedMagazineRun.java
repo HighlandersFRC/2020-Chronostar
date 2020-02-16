@@ -13,13 +13,14 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotMap;
 
-public class timedMagazineRun extends CommandBase {
+public class TimedMagazineRun extends CommandBase {
   /**
    * Creates a new timedMagazineRun.
    */
   private double desiredRunTime;
   private double startTime;
-  public timedMagazineRun(double runTime) {
+
+  public TimedMagazineRun(double runTime) {
     desiredRunTime = runTime;
     // Use addRequirements() here to declare subsystem dependencies.
   }

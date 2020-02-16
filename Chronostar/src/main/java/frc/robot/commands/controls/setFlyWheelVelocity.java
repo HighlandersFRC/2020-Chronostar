@@ -13,9 +13,10 @@ import frc.robot.RobotMap;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class setFlyWheelVelocity extends InstantCommand {
+public class SetFlyWheelVelocity extends InstantCommand {
   private double velocity;
-  public setFlyWheelVelocity(double desiredVelocity) {
+
+  public SetFlyWheelVelocity(double desiredVelocity) {
     velocity = desiredVelocity;
     // Use addRequirements() here to declare subsystem dependencies.
   }

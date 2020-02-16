@@ -13,9 +13,10 @@ import frc.robot.RobotMap;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class setHoodPosition extends InstantCommand {
+public class SetHoodPosition extends InstantCommand {
   private double position;
-  public setHoodPosition(double desiredPosition) {
+
+  public SetHoodPosition(double desiredPosition) {
     position = desiredPosition;
     // Use addRequirements() here to declare subsystem dependencies.
   }
