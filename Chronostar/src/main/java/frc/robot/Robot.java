@@ -7,12 +7,16 @@
 
 package frc.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoSink;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.sensors.VisionCamera;
@@ -22,6 +26,11 @@ public class Robot extends TimedRobot {
   Command m_autonomousCommand;
   private CommandSuites commandSuites;
   private RobotConfig robotConfig;
+  private UsbCamera camera;
+  private UsbCamera camera2;
+  private VideoSink server;
+
+  private boolean ableToSwitch;
   private static SerialPort cameraPort;
   public static VisionCamera visionCamera;
   public void robotInit() {
@@ -36,6 +45,20 @@ public class Robot extends TimedRobot {
     } catch (Exception e) {
 
     }
+    camera = CameraServer.getInstance().startAutomaticCapture("VisionCamera1", "/dev/video0");
+		camera.setResolution(320, 240);
+		camera.setFPS(15);
+
+		camera2 = CameraServer.getInstance().startAutomaticCapture("VisionCamera2", "/dev/video1");
+		camera2.setResolution(320, 240);
+		camera2.setFPS(15);
+		RobotMap.visionRelay1.set(Value.kOn);
+	
+
+		server = CameraServer.getInstance().addSwitchedCamera("driverVisionCameras");
+		server.setSource(camera);
+		Shuffleboard.update();
+		SmartDashboard.updateValues(); 
     CommandScheduler.getInstance().enable();
   }
   @Override
