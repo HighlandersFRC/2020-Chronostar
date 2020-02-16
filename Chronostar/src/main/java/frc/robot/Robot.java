@@ -31,7 +31,7 @@ public class Robot extends TimedRobot {
     m_oi = new OI();
 
     try {
-      cameraPort = new SerialPort(115200, Port.kUSB1);
+      cameraPort = new SerialPort(115200, Port.kUSB);
       visionCamera = new VisionCamera(cameraPort);
     } catch (Exception e) {
 
