@@ -47,7 +47,7 @@ public class Robot extends TimedRobot {
 
     }
     CommandScheduler.getInstance().run();
-
+    RobotMap.magazine.periodic();
   }
   @Override
   public void disabledInit() {
