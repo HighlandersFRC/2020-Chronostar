@@ -48,7 +48,7 @@ public class Magazine extends SubsystemBase {
     }
 
     if(ButtonMap.runMagWheel() == true){
-      RobotMap.magazineWheel.set(ControlMode.PercentOutput, .6);
+      RobotMap.magazineWheel.set(ControlMode.PercentOutput, 1);
     }
     else{
       RobotMap.magazineWheel.set(ControlMode.PercentOutput, 0);
