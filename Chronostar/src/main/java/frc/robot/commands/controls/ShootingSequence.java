@@ -13,12 +13,14 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class MagazineAutomation extends SequentialCommandGroup {
+public class ShootingSequence extends SequentialCommandGroup {
   /**
-   * Creates a new MagazineAutomation.
+   * Creates a new ShootingSequence.
    */
-  public MagazineAutomation() {
-    super(new MagazineControl(.8,0.55,0), new WaitCommand(.2), new MagazineControl(0,0,0));
+  public ShootingSequence() {
+    super(new MagazineControl(.9,0.55,1), new WaitCommand(.2), new MagazineControl(.9,0.55,1), new WaitCommand(.2), new MagazineControl(.9,0.55,1),
+    new WaitCommand(.2), new MagazineControl(.9,0.55,1), new WaitCommand(.2), new MagazineControl(.9,0.55,1), new WaitCommand(.5), new MagazineControl(0,0,0) );
+
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
   }

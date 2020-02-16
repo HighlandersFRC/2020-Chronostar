@@ -31,10 +31,10 @@ public class ButtonMap {
     public static boolean shooterDown(){
         return oi.operatorController.getAButton();
     }
-    public static boolean runMagBelt(){
+    public static boolean stopMag(){
         return oi.operatorController.getBumper(Hand.kLeft);
     }
-    public static boolean runMagWheel(){
+    public static boolean runMag(){
         return oi.operatorController.getBumper(Hand.kRight);
     }
     public static boolean runIndexer(){
