@@ -40,7 +40,7 @@ public class Robot extends TimedRobot {
     m_oi = new OI();
 
     try {
-      cameraPort = new SerialPort(115200, Port.kUSB);
+      cameraPort = new SerialPort(115200, Port.kUSB2);
       visionCamera = new VisionCamera(cameraPort);
     } catch (Exception e) {
 
@@ -64,6 +64,8 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     try{
+      Robot.visionCamera.updateVision();
+      SmartDashboard.putString("camString", Robot.visionCamera.getString());
       SmartDashboard.putNumber("lidarDist", RobotMap.lidar1.getDistance());
       if(ButtonMap.switchCamera()&&ableToSwitch){
         if(cameraBoolean){
