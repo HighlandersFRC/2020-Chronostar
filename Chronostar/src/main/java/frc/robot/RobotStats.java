@@ -17,8 +17,8 @@ public class RobotStats {
     public static final double driveTicsPerWheelRotation = 28672;
     public static final double wheelDiam = 6.125;
     public static final double wheelCircum = (wheelDiam*Math.PI)/12;
-    public static final double maxShooterPercentVoltage = 0.65;
-    public static final double maxShooterRPM = 6000;
+    public static final double maxShooterPercentVoltage = 0.75;
+    public static final double maxShooterRPM = 6750;
     public static final double flyWheelTicsPerWheelRotation = 1317;
     public static final double driveTrainMaxCurrent = 39;
     public static final double driveTrainPeakThreshold = 40;

@@ -66,6 +66,8 @@ public class RobotConfig {
         RobotMap.shooterMaster.configPeakOutputReverse(0);
         RobotMap.shooterMaster.configClosedLoopPeakOutput(0, RobotStats.maxShooterPercentVoltage);
         RobotMap.shooter.initShooterPID();
+
+        RobotMap.armMotor.setIdleMode(IdleMode.kBrake);
         RobotConfig.setShooterMotorsCoast();
         RobotConfig.setShooterMotorVoltageCompensation();
 

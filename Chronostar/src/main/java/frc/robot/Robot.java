@@ -24,7 +24,6 @@ import frc.robot.sensors.VisionCamera;
 public class Robot extends TimedRobot {
   public static OI m_oi;
   Command m_autonomousCommand;
-  private CommandSuites commandSuites;
   private RobotConfig robotConfig;
   private UsbCamera camera;
   private UsbCamera camera2;
@@ -34,9 +33,9 @@ public class Robot extends TimedRobot {
   private SerialPort cameraPort;
   public static VisionCamera visionCamera;
   public void robotInit() {
-    commandSuites = new CommandSuites();
     robotConfig = new RobotConfig();
     robotConfig.setStartingConfig();
+    RobotMap.visionRelay1.set(Value.kOn);
     m_oi = new OI();
 
     try {
@@ -97,7 +96,6 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     robotConfig.setAutoConfig();
-    commandSuites.startAutoCommands();
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.start();
@@ -110,13 +108,21 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     robotConfig.setTeleopConfig();
-    commandSuites.startTeleopCommands();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
   }
   @Override
   public void teleopPeriodic() {
+    /*if(ButtonMap.armUp()){
+      RobotMap.armMotor.set(0.2);
+    }
+    else if(ButtonMap.armDown()){
+      RobotMap.armMotor.set(-0.2);
+    }
+    else{
+      RobotMap.armMotor.set(0);
+    }*/
     RobotMap.drive.teleopPeriodic();
     RobotMap.shooter.teleopPeriodic();
     RobotMap.hood.teleopPeriodic();

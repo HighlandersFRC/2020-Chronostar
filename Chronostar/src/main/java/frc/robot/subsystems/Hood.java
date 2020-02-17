@@ -24,7 +24,7 @@ public class Hood extends SubsystemBase {
    */
   private double kf = .05;
   private double kp = 0.000001;
-  private double ki = 0.00000000;
+  private double ki = 0.00000001;
   private double kd = 0.00007;
   private float maxpoint = 22;
   private float minpoint = 0;
@@ -64,7 +64,7 @@ public class Hood extends SubsystemBase {
     mpidController.setSmartMotionMinOutputVelocity(-15, 0);
     mpidController.setSmartMotionMaxAccel(10, 0);
     mpidController.setSmartMotionAllowedClosedLoopError(.1, 0);
-    
+
     SmartDashboard.putNumber("Set Position", 0);
   }
   public Hood() {
@@ -78,6 +78,14 @@ public class Hood extends SubsystemBase {
   }
   public void setHoodPosition(double desiredPosition){
     mpidController.setReference(desiredPosition, ControlType.kSmartMotion);
+  }
+  public double autoHoodPositionCloseDistance(double dist){
+    return 0;
+
+  }
+  public double autoHoodPositionFarDistance(double dist){
+    return 0;
+
   }
 
   @Override

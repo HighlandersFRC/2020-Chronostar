@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import frc.robot.sensors.LidarLite;
 import frc.robot.sensors.Navx;
@@ -52,6 +53,9 @@ public class RobotMap {
   public static int magazineBeltID = 8;
   public static int indexerID = 9;
   public static int magazineWheelID = 10;
+
+  public static int armMotorID = 11;
+
   
   public static int intakeMotorID = 12;
 
@@ -73,6 +77,8 @@ public class RobotMap {
 
   public static CANSparkMax intakeMotor = new CANSparkMax(intakeMotorID, MotorType.kBrushless);
 
+  public static CANSparkMax armMotor = new CANSparkMax(armMotorID, MotorType.kBrushless);
+  public static Spark blinkin = new Spark(0);
   public static DigitalInput beamBreakOne = new DigitalInput(beamBreak1Port);
 
   public static PathList pathList = new PathList();

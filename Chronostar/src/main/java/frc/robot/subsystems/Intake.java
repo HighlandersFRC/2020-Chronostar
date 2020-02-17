@@ -28,7 +28,7 @@ public class Intake extends SubsystemBase {
       RobotMap.intakeMotor.set(0.5);
     }
     else if(ButtonMap.reverseMag()){
-      RobotMap.intakeMotor.set(-0.5);
+      RobotMap.intakeMotor.set(-0.6);
 
     }
     else{

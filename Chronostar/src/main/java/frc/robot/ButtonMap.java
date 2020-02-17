@@ -24,6 +24,9 @@ public class ButtonMap {
     public static boolean switchCamera(){
         return oi.driverController.getTriggerAxis(Hand.kRight)>=0.3;
     }
+    public static boolean startFiringSequence(){
+        return oi.driverController.getBumper(Hand.kRight);
+    }
     public static boolean RunIntake(){
         return oi.operatorController.getBumper(Hand.kLeft);
     }
@@ -38,5 +41,12 @@ public class ButtonMap {
     }
     public static boolean stopReverseMag(){
         return oi.operatorController.getBButtonReleased();
+    }
+        
+    public static boolean armUp(){
+        return oi.operatorController.getAButton();
+    }
+    public static boolean armDown(){
+        return oi.operatorController.getYButton();
     }
 }
