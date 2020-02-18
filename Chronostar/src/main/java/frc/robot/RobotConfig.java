@@ -49,12 +49,14 @@ public class RobotConfig {
 
         RobotMap.hoodMotor.setInverted(true);
         RobotMap.hoodMotor.setIdleMode(IdleMode.kBrake);
-        RobotMap.hoodMotor.setSmartCurrentLimit(12);
+        RobotMap.hoodMotor.setSmartCurrentLimit(RobotStats.hoodCurrentLimit);
         RobotMap.hood.inithood();
 
         RobotMap.magazineBelt.setNeutralMode(NeutralMode.Brake);
         RobotMap.magazineWheel.setNeutralMode(NeutralMode.Brake);
+
         RobotMap.indexer.setIdleMode(IdleMode.kBrake);
+        RobotMap.indexer.setSmartCurrentLimit(RobotStats.indexerCurrentLimit);
 
         RobotMap.intakeMotor.setIdleMode(IdleMode.kCoast);
         

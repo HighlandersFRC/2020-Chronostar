@@ -27,6 +27,12 @@ public class ButtonMap {
     public static boolean startFiringSequence(){
         return oi.driverController.getBumper(Hand.kRight);
     }
+    public static boolean adjustTargetTrackingLeft(){
+        return oi.driverController.getXButton();
+    }
+    public static boolean adjustTargetTrackingRight(){
+        return oi.driverController.getBButton();
+    }
     public static boolean RunIntake(){
         return oi.operatorController.getBumper(Hand.kLeft);
     }

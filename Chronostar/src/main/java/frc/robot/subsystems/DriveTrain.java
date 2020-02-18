@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ButtonMap;
 import frc.robot.Robot;
+import frc.robot.RobotConfig;
 import frc.robot.RobotMap;
 import frc.robot.sensors.DriveEncoder;
 import frc.robot.tools.controlLoops.PID;
@@ -34,10 +35,12 @@ public class DriveTrain extends SubsystemBase {
 	private double vKD = 0;
 	private int profile = 0;
 	private PID alignmentPID;
-	private double aKP;
-	private double aKI;
+	private double aKP = 0.15;
+	private double aKI = 0.001;
 	private double aKD;
-	private double setPointOffset = 0;
+	private double visionOffset = 0;
+	private double visionAcceptablilityZone = 1.5;
+	private double visionDeadzone = 0.5;
 	private Odometry autoOdometry;
   	public DriveTrain() {
 
@@ -83,7 +86,7 @@ public class DriveTrain extends SubsystemBase {
 	
 	public void initAlignmentPID(){
 		alignmentPID = new PID(aKP, aKD, aKI);
-		alignmentPID.setSetPoint(setPointOffset);
+		alignmentPID.setSetPoint(0);
 		alignmentPID.setMaxOutput(6);
 		alignmentPID.setMinInput(-6);
 	}
@@ -123,9 +126,13 @@ public class DriveTrain extends SubsystemBase {
 		RobotMap.rightDriveLead.set(ControlMode.PercentOutput, rightPower);
 	}
 	public boolean trackVisionTape(){
+		RobotConfig.setDriveMotorsBrake();
 		Robot.visionCamera.updateVision();
-		if(Timer.getFPGATimestamp()-Robot.visionCamera.lastParseTime>0.25){
-			alignmentPID.updatePID(0);
+
+		if(Timer.getFPGATimestamp()-Robot.visionCamera.lastParseTime>0.25||Math.abs(Robot.visionCamera.getAngle()-visionOffset)<visionDeadzone){
+			alignmentPID.updatePID(visionOffset);
+			setLeftSpeed(0);
+			setRightSpeed(0);
 		}
 		else{
 			alignmentPID.updatePID(Robot.visionCamera.getAngle());
@@ -133,12 +140,13 @@ public class DriveTrain extends SubsystemBase {
 			
 		setLeftSpeed(alignmentPID.getResult());
 		setRightSpeed(-alignmentPID.getResult());
-		if(Robot.visionCamera.getAngle()<1){
+		if(Math.abs(Robot.visionCamera.getAngle()-visionOffset)<visionAcceptablilityZone){
 			return true;
 		}
 		else{
 			return false;
 		}
+		
 		
 	}
 	public void Stop(){
@@ -171,8 +179,32 @@ public class DriveTrain extends SubsystemBase {
   public void periodic() {
 
   }
+	public void shiftVisionLeft(){
+		visionOffset = visionOffset +0.5;
+		alignmentPID.setSetPoint(visionOffset);
+		System.out.println(visionOffset);
+	}
+	public void shiftVisionRight(){
+		System.out.println(visionOffset);
+		visionOffset = visionOffset-0.5;
+		alignmentPID.setSetPoint(visionOffset);
+	}
   public void teleopPeriodic(){
-
-	arcadeDrive();
+	if(ButtonMap.startFiringSequence()){
+		RobotMap.blinkin.set(0.71);
+		RobotMap.visionRelay1.set(Value.kForward);
+		trackVisionTape();
+		if(ButtonMap.adjustTargetTrackingLeft()){
+			shiftVisionLeft();
+		}
+		else if(ButtonMap.adjustTargetTrackingRight()){
+			shiftVisionRight();
+		}
+	}
+	else{
+		RobotMap.blinkin.set(0.4);
+		RobotMap.visionRelay1.set(Value.kReverse);
+		arcadeDrive();
+	}
   }
 }
