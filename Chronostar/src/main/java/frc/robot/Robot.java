@@ -51,7 +51,7 @@ public class Robot extends TimedRobot {
 		camera2 = CameraServer.getInstance().startAutomaticCapture("VisionCamera2", "/dev/video1");
 		camera2.setResolution(320, 240);
 		camera2.setFPS(15);
-		RobotMap.visionRelay1.set(Value.kOn);
+		RobotMap.visionRelay1.set(Value.kReverse);
 	
 
 		server = CameraServer.getInstance().addSwitchedCamera("driverVisionCameras");
@@ -80,10 +80,11 @@ public class Robot extends TimedRobot {
       else if(!ButtonMap.switchCamera()){
         ableToSwitch = true;
       }
+      RobotMap.magazine.periodic();
+      RobotMap.hood.periodic();
     } catch(Exception e){
     }
     CommandScheduler.getInstance().run();
-    RobotMap.magazine.periodic();
   }
   @Override
   public void disabledInit() {
@@ -114,15 +115,6 @@ public class Robot extends TimedRobot {
   }
   @Override
   public void teleopPeriodic() {
-    /*if(ButtonMap.armUp()){
-      RobotMap.armMotor.set(0.2);
-    }
-    else if(ButtonMap.armDown()){
-      RobotMap.armMotor.set(-0.2);
-    }
-    else{
-      RobotMap.armMotor.set(0);
-    }*/
     RobotMap.drive.teleopPeriodic();
     RobotMap.shooter.teleopPeriodic();
     RobotMap.hood.teleopPeriodic();

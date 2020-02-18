@@ -49,6 +49,8 @@ public class RobotConfig {
 
         RobotMap.hoodMotor.setInverted(true);
         RobotMap.hoodMotor.setIdleMode(IdleMode.kBrake);
+        RobotMap.hoodMotor.setSmartCurrentLimit(12);
+        RobotMap.hood.inithood();
 
         RobotMap.magazineBelt.setNeutralMode(NeutralMode.Brake);
         RobotMap.magazineWheel.setNeutralMode(NeutralMode.Brake);
@@ -77,14 +79,12 @@ public class RobotConfig {
         RobotConfig.disableDriveTrainVoltageCompensation();
         RobotConfig.enableDriveCurrentLimiting();
         RobotConfig.setDriveMotorsCoast();
-        RobotMap.hood.inithood();
 
     }
     public void setAutoConfig(){
         RobotConfig.setDriveTrainVoltageCompensation();
         RobotConfig.enableDriveCurrentLimiting();
         RobotConfig.setDriveMotorsBrake();
-        RobotMap.hood.inithood();
 
 
     }

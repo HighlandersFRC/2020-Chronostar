@@ -38,7 +38,7 @@ public class Hood extends SubsystemBase {
 
   public void inithood(){
 
-    m_forwardLimit = RobotMap.hoodMotor.getForwardLimitSwitch(LimitSwitchPolarity.kNormallyClosed);
+    m_forwardLimit = RobotMap.hoodMotor.getForwardLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
     m_reverseLimit = RobotMap.hoodMotor.getReverseLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
 
     RobotMap.hoodMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
@@ -90,15 +90,15 @@ public class Hood extends SubsystemBase {
 
   @Override
   public void periodic() {
-    
-  }
-  public void teleopPeriodic(){
     if(m_reverseLimit.get() == true) {
       resetEncodermin();
     }
     if(m_forwardLimit.get() == true){
        resetEncodermax();
     }
+  }
+  public void teleopPeriodic(){
+
      setPoint = SmartDashboard.getNumber("Set Position", 0);
      if (setPoint <= minpoint){
        setPoint = minpoint;

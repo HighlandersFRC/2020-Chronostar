@@ -23,7 +23,7 @@ public class Shooter extends SubsystemBase {
    */
   private double kF = 0.05;
   private double kP = 0.25;
-  private double kI = 0.00001;
+  private double kI = 0.00005;
   private int offCount;
   private double kD = 10;
   private int iZone = 439;
