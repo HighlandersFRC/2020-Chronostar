@@ -92,7 +92,7 @@ public class DriveTrain extends SubsystemBase {
 	}
 	
 	public void arcadeDrive(){
-		RobotConfig.setDriveMotorsBrake();
+		RobotConfig.setAllMotorsCoast();
 		double leftPower;
 		double rightPower;
 		double differential;
