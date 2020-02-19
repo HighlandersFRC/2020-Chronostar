@@ -1,9 +1,9 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
+	/*----------------------------------------------------------------------------*/
+	/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
+	/* Open Source Software - may be modified and shared by FRC teams. The code   */
+	/* must be accompanied by the FIRST BSD license file in the root directory of */
+	/* the project.                                                               */
+	/*----------------------------------------------------------------------------*/
 
 package frc.robot.subsystems;
 
@@ -42,9 +42,9 @@ public class DriveTrain extends SubsystemBase {
 	private double visionAcceptablilityZone = 1.5;
 	private double visionDeadzone = 0.5;
 	private Odometry autoOdometry;
-  	public DriveTrain() {
+	public DriveTrain() {
 
-  	}
+	}
 	public void startAutoOdometry(boolean reversed, double x, double y){
 		autoOdometry = new Odometry(reversed, x, y);
 		autoOdometry.start();
@@ -59,16 +59,16 @@ public class DriveTrain extends SubsystemBase {
 		return autoOdometry.gettheta();
 	}
 	public void setDriveTrainX(double x){
-		 autoOdometry.setX(x);
+			autoOdometry.setX(x);
 	}
 	public void setDriveTrainY(double y){
-		 autoOdometry.setY(y);
+			autoOdometry.setY(y);
 	}
 	public void setDriveTrainHeading(double theta){
-		 autoOdometry.setTheta(theta);
+			autoOdometry.setTheta(theta);
 	}
 	public void setOdometryReversed(boolean reversed){
-		 autoOdometry.setReversed(reversed);
+			autoOdometry.setReversed(reversed);
 	}
 
 	public void initVelocityPIDs(){
@@ -83,14 +83,14 @@ public class DriveTrain extends SubsystemBase {
 		RobotMap.rightDriveLead.config_kI(profile, vKI, 0);
 		RobotMap.rightDriveLead.config_kD(profile, vKD, 0);
 	}
-	
+
 	public void initAlignmentPID(){
 		alignmentPID = new PID(aKP, aKD, aKI);
-		alignmentPID.setSetPoint(0);
+		alignmentPID.setSetPoint(visionOffset);
 		alignmentPID.setMaxOutput(6);
 		alignmentPID.setMinInput(-6);
 	}
-	
+
 	public void arcadeDrive(){
 		RobotConfig.setAllMotorsCoast();
 		double leftPower;
@@ -114,7 +114,7 @@ public class DriveTrain extends SubsystemBase {
 		SmartDashboard.putNumber("differential", differential);
 		leftPower = (throttel - (differential));
 		rightPower = (throttel + (differential));
-	
+
 		if(Math.abs(leftPower)>1) {
 			rightPower = Math.abs(rightPower/leftPower)*Math.signum(rightPower);
 			leftPower = Math.signum(leftPower);
@@ -129,7 +129,12 @@ public class DriveTrain extends SubsystemBase {
 	public boolean trackVisionTape(){
 		RobotConfig.setDriveMotorsBrake();
 		Robot.visionCamera.updateVision();
-
+		if(ButtonMap.adjustTargetTrackingLeft()){
+			shiftVisionLeft();
+		}
+		else if(ButtonMap.adjustTargetTrackingRight()){
+			shiftVisionRight();
+		}
 		if(Timer.getFPGATimestamp()-Robot.visionCamera.lastParseTime>0.25||Math.abs(Robot.visionCamera.getAngle()-visionOffset)<visionDeadzone){
 			alignmentPID.updatePID(visionOffset);
 			setLeftSpeed(0);
@@ -175,36 +180,29 @@ public class DriveTrain extends SubsystemBase {
 			talon.set(ControlMode.PercentOutput, 0);
 		}
 	}
+	@Override
+	public void periodic() {
 
-  @Override
-  public void periodic() {
-
-  }
+	}
 	public void shiftVisionLeft(){
 		visionOffset = visionOffset +0.5;
 		alignmentPID.setSetPoint(visionOffset);
 	}
-	public void shiftVisionRight(){
-		System.out.println(visionOffset);
+	public void shiftVisionRight(){		
 		visionOffset = visionOffset-0.5;
+		alignmentPID.setSetPoint(visionOffset);
 	}
-  public void teleopPeriodic(){
+	public void teleopPeriodic(){
 	if(ButtonMap.startFiringSequence()){
 		SmartDashboard.putNumber("offset", visionOffset);
 		RobotMap.blinkin.set(0.71);
 		RobotMap.visionRelay1.set(Value.kForward);
 		trackVisionTape();
-		if(ButtonMap.adjustTargetTrackingLeft()){
-			shiftVisionLeft();
-		}
-		else if(ButtonMap.adjustTargetTrackingRight()){
-			shiftVisionRight();
-		}
 	}
 	else{
 		RobotMap.blinkin.set(0.4);
 		RobotMap.visionRelay1.set(Value.kReverse);
 		arcadeDrive();
 	}
-  }
+	}
 }
