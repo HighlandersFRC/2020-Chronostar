@@ -35,9 +35,9 @@ public class DriveTrain extends SubsystemBase {
 	private double vKD = 0;
 	private int profile = 0;
 	private PID alignmentPID;
-	private double aKP = 0.15;
-	private double aKI = 0.001;
-	private double aKD;
+	private double aKP = 0.1;
+	private double aKI = 0.0000;
+	private double aKD = 0.00;
 	private double visionOffset = 0;
 	private double visionAcceptablilityZone = 1.5;
 	private double visionDeadzone = 0.5;
@@ -92,6 +92,7 @@ public class DriveTrain extends SubsystemBase {
 	}
 	
 	public void arcadeDrive(){
+		RobotConfig.setDriveMotorsBrake();
 		double leftPower;
 		double rightPower;
 		double differential;
@@ -182,15 +183,14 @@ public class DriveTrain extends SubsystemBase {
 	public void shiftVisionLeft(){
 		visionOffset = visionOffset +0.5;
 		alignmentPID.setSetPoint(visionOffset);
-		System.out.println(visionOffset);
 	}
 	public void shiftVisionRight(){
 		System.out.println(visionOffset);
 		visionOffset = visionOffset-0.5;
-		alignmentPID.setSetPoint(visionOffset);
 	}
   public void teleopPeriodic(){
 	if(ButtonMap.startFiringSequence()){
+		SmartDashboard.putNumber("offset", visionOffset);
 		RobotMap.blinkin.set(0.71);
 		RobotMap.visionRelay1.set(Value.kForward);
 		trackVisionTape();
