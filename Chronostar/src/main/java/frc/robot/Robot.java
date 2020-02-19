@@ -115,11 +115,13 @@ public class Robot extends TimedRobot {
   }
   @Override
   public void teleopPeriodic() {
+    
     RobotMap.drive.teleopPeriodic();
     RobotMap.shooter.teleopPeriodic();
     RobotMap.hood.teleopPeriodic();
     RobotMap.magazine.teleopPeriodic();
     RobotMap.intake.teleopPeriodic();
+    RobotMap.climber.periodic();
     Scheduler.getInstance().run();
   }
 

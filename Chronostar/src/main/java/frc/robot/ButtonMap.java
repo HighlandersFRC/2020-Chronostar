@@ -55,4 +55,7 @@ public class ButtonMap {
     public static boolean armDown(){
         return oi.operatorController.getYButton();
     }
+    public static boolean winchUp(){
+        return oi.driverController.getYButton();
+    }
 }
