@@ -58,4 +58,7 @@ public class ButtonMap {
     public static boolean winchUp(){
         return oi.driverController.getYButton();
     }
+    public static boolean safetyButton(){
+        return oi.operatorController.getStartButton();
+    }
 }

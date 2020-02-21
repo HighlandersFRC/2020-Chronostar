@@ -22,7 +22,9 @@ public class Climber extends SubsystemBase {
   @Override
   public void periodic() {
     if(ButtonMap.winchUp() == true){
-      RobotMap.winchMotor.set(-.50);
+      if(ButtonMap.safetyButton() == true){
+        RobotMap.winchMotor.set(-.50);
+      }
     }
     else{ 
       RobotMap.winchMotor.set(0.0);

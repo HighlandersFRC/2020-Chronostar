@@ -123,6 +123,18 @@ public class Robot extends TimedRobot {
     RobotMap.intake.teleopPeriodic();
     RobotMap.climber.periodic();
     Scheduler.getInstance().run();
+
+
+    if(ButtonMap.armUp() == true){
+      RobotMap.armMotor.set(-.25);
+    }
+    else if(ButtonMap.armDown() == true){
+      RobotMap.armMotor.set(.25);
+    }
+    else{
+      RobotMap.armMotor.set(0);
+    }
+
   }
 
   @Override
