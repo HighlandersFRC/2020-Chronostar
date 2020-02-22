@@ -32,11 +32,13 @@ public class Robot extends TimedRobot {
   private boolean ableToSwitch;
   private SerialPort cameraPort;
   public static VisionCamera visionCamera;
+  private CommandSuites commandSuites;
   public void robotInit() {
     robotConfig = new RobotConfig();
     robotConfig.setStartingConfig();
     RobotMap.visionRelay1.set(Value.kOn);
     m_oi = new OI();
+    commandSuites = new CommandSuites();
 
     try {
       cameraPort = new SerialPort(115200, Port.kUSB);
@@ -82,6 +84,7 @@ public class Robot extends TimedRobot {
       }
       RobotMap.magazine.periodic();
       RobotMap.hood.periodic();
+      RobotMap.shooter.periodic();
       
     } catch(Exception e){
     }
@@ -98,6 +101,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     robotConfig.setAutoConfig();
+    commandSuites.startAutoCommands();
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.start();
@@ -122,7 +126,7 @@ public class Robot extends TimedRobot {
     RobotMap.hood.teleopPeriodic();
     RobotMap.magazine.teleopPeriodic();
     RobotMap.intake.teleopPeriodic();
-    RobotMap.climber.periodic();
+    RobotMap.climber.teleopPeriodic();
     Scheduler.getInstance().run();
 
 

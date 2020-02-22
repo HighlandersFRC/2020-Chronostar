@@ -64,11 +64,16 @@ public class ButtonMap {
     public static boolean safetyButton(){
         return oi.operatorController.getStartButton()&&oi.operatorController.getBackButton();
     }
-
     public static boolean moveShooterPowerUp(){
         return oi.operatorController.getPOV() ==0;
     }
     public static boolean moveShooterPowerDown(){
         return oi.operatorController.getPOV() ==180;
+    }
+    public static boolean moveHoodDown(){
+        return oi.driverController.getPOV() == 270;
+    }
+    public static boolean moveHoodUP(){
+        return oi.driverController.getPOV() == 90;
     }
 }

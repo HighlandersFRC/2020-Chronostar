@@ -18,6 +18,7 @@ import frc.robot.ButtonMap;
 import frc.robot.Robot;
 import frc.robot.RobotConfig;
 import frc.robot.RobotMap;
+import frc.robot.commands.controls.InitiationLineFiringSequence;
 import frc.robot.sensors.DriveEncoder;
 import frc.robot.tools.controlLoops.PID;
 import frc.robot.tools.pathTools.Odometry;
@@ -42,6 +43,7 @@ public class DriveTrain extends SubsystemBase {
 	private double visionAcceptablilityZone = 1.5;
 	private double visionDeadzone = 0.5;
 	private Odometry autoOdometry;
+	public InitiationLineFiringSequence initiationLineFiringSequence;
 	public DriveTrain() {
 
 	}
@@ -129,16 +131,12 @@ public class DriveTrain extends SubsystemBase {
 	public boolean trackVisionTape(){
 		RobotConfig.setDriveMotorsBrake();
 		Robot.visionCamera.updateVision();
-		if(ButtonMap.adjustTargetTrackingLeft()){
-			shiftVisionLeft();
-		}
-		else if(ButtonMap.adjustTargetTrackingRight()){
-			shiftVisionRight();
-		}
+
 		if(Timer.getFPGATimestamp()-Robot.visionCamera.lastParseTime>0.25||Math.abs(Robot.visionCamera.getAngle()-visionOffset)<visionDeadzone){
 			alignmentPID.updatePID(visionOffset);
 			setLeftSpeed(0);
 			setRightSpeed(0);
+			return true;
 		}
 		else{
 			alignmentPID.updatePID(Robot.visionCamera.getAngle());
@@ -193,16 +191,18 @@ public class DriveTrain extends SubsystemBase {
 		alignmentPID.setSetPoint(visionOffset);
 	}
 	public void teleopPeriodic(){
-	if(ButtonMap.startFiringSequence()){
-		SmartDashboard.putNumber("offset", visionOffset);
-		RobotMap.blinkin.set(0.71);
-		RobotMap.visionRelay1.set(Value.kForward);
-		trackVisionTape();
-	}
-	else{
-		RobotMap.blinkin.set(0.4);
-		RobotMap.visionRelay1.set(Value.kReverse);
-		arcadeDrive();
-	}
+		if(ButtonMap.adjustTargetTrackingLeft()){
+			shiftVisionLeft();
+		}
+		else if(ButtonMap.adjustTargetTrackingRight()){
+			shiftVisionRight();
+		}
+		if(ButtonMap.startFiringSequence()){
+			initiationLineFiringSequence = new InitiationLineFiringSequence();
+			initiationLineFiringSequence.schedule();
+		}
+		else{
+			arcadeDrive();
+		}
 	}
 }

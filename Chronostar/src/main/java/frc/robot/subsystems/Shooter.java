@@ -57,7 +57,9 @@ public class Shooter extends SubsystemBase {
   public double getShooterVelocity(){
     return (RobotMap.shooterMaster.getSelectedSensorVelocity()/RobotStats.flyWheelTicsPerWheelRotation)*600;
   }
-
+  public boolean flyWheelSpeedClose(){
+    return RobotMap.shooterMaster.getClosedLoopError()<this.convertRPMToEncoderTicsPer100ms(100);
+  }
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Speed", this.getShooterVelocity());
