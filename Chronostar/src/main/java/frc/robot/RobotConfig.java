@@ -44,9 +44,6 @@ public class RobotConfig {
         RobotMap.drive.initVelocityPIDs();
         RobotMap.drive.initAlignmentPID();
 
-        RobotMap.shooterFollower.set(ControlMode.Follower, RobotMap.shooterMasterID);
-        RobotMap.shooterFollower.setInverted(InvertType.OpposeMaster);
-
         RobotMap.hoodMotor.setInverted(true);
         RobotMap.hoodMotor.setIdleMode(IdleMode.kBrake);
         RobotMap.hoodMotor.setSmartCurrentLimit(RobotStats.hoodCurrentLimit);
@@ -62,6 +59,10 @@ public class RobotConfig {
         
         RobotConfig.enableDriveCurrentLimiting();
         RobotConfig.setDriveTrainVoltageCompensation();
+        
+        RobotMap.shooterMaster.setInverted(true);
+        RobotMap.shooterFollower.set(ControlMode.Follower, RobotMap.shooterMasterID);
+        RobotMap.shooterFollower.setInverted(InvertType.OpposeMaster);
         
         RobotMap.shooterMaster.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
         RobotMap.shooterMaster.setSelectedSensorPosition(0,0,0);

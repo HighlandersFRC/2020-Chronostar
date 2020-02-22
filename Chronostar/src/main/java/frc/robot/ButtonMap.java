@@ -53,10 +53,10 @@ public class ButtonMap {
         return oi.driverController.getYButton();
     }
     public static boolean adjustTargetTrackingLeft(){
-        return oi.operatorController.getPOV() == 270;
+        return oi.driverController.getPOV() == 270;
     }
     public static boolean adjustTargetTrackingRight(){
-        return oi.operatorController.getPOV() == 90;
+        return oi.driverController.getPOV() == 90;
     }
     public static boolean moveShooterPowerUp(){
         return oi.operatorController.getPOV() ==0;
