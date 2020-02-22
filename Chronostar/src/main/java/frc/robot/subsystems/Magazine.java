@@ -33,7 +33,7 @@ public class Magazine extends SubsystemBase {
     SmartDashboard.putBoolean("beamBroken", !RobotMap.beamBreakOne.get());
     if (RobotMap.beamBreakOne.get() != lastState){
       if(RobotMap.beamBreakOne.get() == false){
-        new MagazineAutomation().schedule();
+        new MagazineAutomation(0.8, 0.55, 0.0, 0.2).schedule();
         magCount++;
       }
     }
