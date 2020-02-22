@@ -22,15 +22,15 @@ public class Arm extends SubsystemBase {
   /**
    * Creates a new arm.
    */
-  private double kf = .04;
-  private double kp = 0.000002;
-  private double ki = 0.00000001;
-  private double kd = 0.000007;
-  private float maxpoint = 22;
-  private float minpoint = 0;
-  private float maxvel = 15;
-  private float minvel = -15;
-  private float accel = 10;
+  private double kf = .4;
+  private double kp = 0.00001;
+  private double ki = 0.0000000;
+  private double kd = 0.00000;
+  private float maxpoint = 13.2f;
+  private float minpoint = -2.9f;
+  private float maxvel = 10;
+  private float minvel = 10;
+  private float accel = 3;
   private double allowederror = 0.1;
 
   private CANPIDController pidController = new CANPIDController(RobotMap.armMotor);
@@ -50,6 +50,7 @@ public class Arm extends SubsystemBase {
 
     RobotMap.armMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, maxpoint);
     RobotMap.armMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, minpoint);
+    
    //SmartDashboard.putBoolean("Forward Limit Enabled", m_forwardLimit.isLimitSwitchEnabled());
     //SmartDashboard.putBoolean("Reverse Limit Enabled", m_reverseLimit.isLimitSwitchEnabled());
     pidController = RobotMap.armMotor.getPIDController();
@@ -59,11 +60,12 @@ public class Arm extends SubsystemBase {
     pidController.setI(ki);
     pidController.setD(kd);
     pidController.setOutputRange(-1, 1);
-    pidController.setSmartMotionMaxVelocity(maxvel, 0);
-    pidController.setSmartMotionMinOutputVelocity(minvel, 0);
-    pidController.setSmartMotionMaxAccel(accel, 0);
-    pidController.setSmartMotionAllowedClosedLoopError(allowederror, 0);
-    SmartDashboard.putNumber("Set Position", 0);
+    pidController.setSmartMotionMaxVelocity(maxvel, 1);
+    pidController.setSmartMotionMinOutputVelocity(minvel, 1);
+    pidController.setSmartMotionMaxAccel(accel, 1);
+    pidController.setSmartMotionAllowedClosedLoopError(allowederror, 1);
+    SmartDashboard.putNumber("Set arm Position", 0);
+    
   }
   public Arm() {
 
@@ -83,17 +85,20 @@ public class Arm extends SubsystemBase {
    if(forwardLimit.get() == true){
       resetEncodermax();
    }
-    setPoint = SmartDashboard.getNumber("Set Position", 0);
+    setPoint = SmartDashboard.getNumber("Set arm Position", 0);
     if (setPoint <= minpoint){
       setPoint = minpoint;
     }
     if (setPoint >= maxpoint){
       setPoint = maxpoint;
     }
+    
     pidController.setReference(setPoint, ControlType.kSmartMotion);
     SmartDashboard.putNumber("arm target", setPoint);
     SmartDashboard.putNumber("arm pos", armEncoder.getPosition());
-    SmartDashboard.putNumber("Output", RobotMap.armMotor.getAppliedOutput());
+    SmartDashboard.putNumber("Arm Output", RobotMap.armMotor.getAppliedOutput());
+    SmartDashboard.putNumber("KF value", pidController.getFF());
+    SmartDashboard.putNumber("KP value", pidController.getP());
 
     
     // This method will be called once per scheduler run

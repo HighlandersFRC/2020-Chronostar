@@ -68,6 +68,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     robotConfig.setTeleopConfig();
+    RobotMap.arm.initarm();
     commandSuites.startTeleopCommands();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
@@ -75,7 +76,7 @@ public class Robot extends TimedRobot {
   }
   @Override
   public void teleopPeriodic() {
-    System.out.println(RobotMap.shooterMaster.getSelectedSensorPosition());
+    
     Scheduler.getInstance().run();
   }
 

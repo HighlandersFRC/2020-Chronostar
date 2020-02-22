@@ -38,7 +38,7 @@ public class Hood extends SubsystemBase {
 
   public void inithood(){
 
-    m_forwardLimit = RobotMap.hoodMotor.getForwardLimitSwitch(LimitSwitchPolarity.kNormallyClosed);
+    m_forwardLimit = RobotMap.hoodMotor.getForwardLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
     m_reverseLimit = RobotMap.hoodMotor.getReverseLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
     RobotMap.hoodMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
     RobotMap.hoodMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
