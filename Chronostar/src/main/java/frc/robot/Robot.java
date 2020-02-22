@@ -82,6 +82,7 @@ public class Robot extends TimedRobot {
       }
       RobotMap.magazine.periodic();
       RobotMap.hood.periodic();
+      
     } catch(Exception e){
     }
     CommandScheduler.getInstance().run();

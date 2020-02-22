@@ -27,17 +27,17 @@ public class ButtonMap {
     public static boolean startFiringSequence(){
         return oi.driverController.getBumper(Hand.kRight);
     }
-    public static boolean adjustTargetTrackingLeft(){
-        return oi.driverController.getXButton();
-    }
-    public static boolean adjustTargetTrackingRight(){
-        return oi.driverController.getBButton();
-    }
     public static boolean winchUp(){
         return oi.driverController.getYButton();
     }
     public static boolean winchDown(){
         return oi.driverController.getAButton();
+    }
+    public static boolean adjustTargetTrackingLeft(){
+        return oi.driverController.getPOV() == 270;
+    }
+    public static boolean adjustTargetTrackingRight(){
+        return oi.driverController.getPOV() == 90;
     }
     //operator controller
     public static boolean RunIntake(){
@@ -63,5 +63,12 @@ public class ButtonMap {
     }
     public static boolean safetyButton(){
         return oi.operatorController.getStartButton()&&oi.operatorController.getBackButton();
+    }
+
+    public static boolean moveShooterPowerUp(){
+        return oi.operatorController.getPOV() ==0;
+    }
+    public static boolean moveShooterPowerDown(){
+        return oi.operatorController.getPOV() ==180;
     }
 }
