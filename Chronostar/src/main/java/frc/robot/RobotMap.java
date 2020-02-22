@@ -13,9 +13,11 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import frc.robot.sensors.LidarLite;
 import frc.robot.sensors.Navx;
@@ -89,10 +91,21 @@ public class RobotMap {
   public static PathList pathList = new PathList();
   
   public static SupplyCurrentLimitConfiguration robotCurrentConfigurationEnabled = new SupplyCurrentLimitConfiguration(true, RobotStats.driveTrainMaxCurrent, RobotStats.driveTrainPeakThreshold, RobotStats.driveTrainPeakTime);
+
   public static SupplyCurrentLimitConfiguration robotCurrentConfigurationDisabled = new SupplyCurrentLimitConfiguration(false, RobotStats.driveTrainMaxCurrent, RobotStats.driveTrainPeakThreshold, RobotStats.driveTrainPeakTime);
+
   public static Counter lidarCounter = new Counter(9);
+
   public static LidarLite lidar1 = new LidarLite(lidarCounter);
   
+  public static DoubleSolenoid climberReleasePiston = new DoubleSolenoid(0, 1);
+  public static DoubleSolenoid.Value releaseArm = Value.kReverse;
+  public static DoubleSolenoid.Value constrainArm = Value.kForward;
+  
+  public static DoubleSolenoid winchRatchetPiston = new DoubleSolenoid(2,3);
+  public static DoubleSolenoid.Value winchRatchetRelease = Value.kReverse;
+  public static DoubleSolenoid.Value winchRatchetSet = Value.kForward;
+
 
   public static TalonFX driveMotors[] = {
     RobotMap.leftDriveLead,

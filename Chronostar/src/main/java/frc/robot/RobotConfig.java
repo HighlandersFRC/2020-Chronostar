@@ -72,6 +72,10 @@ public class RobotConfig {
         RobotMap.shooter.initShooterPID();
 
         RobotMap.armMotor.setIdleMode(IdleMode.kBrake);
+
+        RobotMap.armMotor.setIdleMode(IdleMode.kBrake);
+        RobotMap.climber.initClimber();
+
         RobotConfig.setShooterMotorsCoast();
         RobotConfig.setShooterMotorVoltageCompensation();
 
@@ -81,6 +85,7 @@ public class RobotConfig {
         RobotConfig.disableDriveTrainVoltageCompensation();
         RobotConfig.enableDriveCurrentLimiting();
         RobotConfig.setDriveMotorsCoast();
+        RobotMap.climber.initClimber();
 
     }
     public void setAutoConfig(){

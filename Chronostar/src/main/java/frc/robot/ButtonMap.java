@@ -33,6 +33,13 @@ public class ButtonMap {
     public static boolean adjustTargetTrackingRight(){
         return oi.driverController.getBButton();
     }
+    public static boolean winchUp(){
+        return oi.driverController.getYButton();
+    }
+    public static boolean winchDown(){
+        return oi.driverController.getAButton();
+    }
+    //operator controller
     public static boolean RunIntake(){
         return oi.operatorController.getBumper(Hand.kLeft);
     }
@@ -48,17 +55,13 @@ public class ButtonMap {
     public static boolean stopReverseMag(){
         return oi.operatorController.getBButtonReleased();
     }
-        
     public static boolean armUp(){
         return oi.operatorController.getAButton();
     }
     public static boolean armDown(){
         return oi.operatorController.getYButton();
     }
-    public static boolean winchUp(){
-        return oi.driverController.getYButton();
-    }
     public static boolean safetyButton(){
-        return oi.operatorController.getStartButton();
+        return oi.operatorController.getStartButton()&&oi.operatorController.getBackButton();
     }
 }
