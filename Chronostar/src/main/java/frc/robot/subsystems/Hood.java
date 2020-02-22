@@ -98,17 +98,5 @@ public class Hood extends SubsystemBase {
     }
   }
   public void teleopPeriodic(){
-
-     setPoint = SmartDashboard.getNumber("Set Position", 0);
-     if (setPoint <= minpoint){
-       setPoint = minpoint;
-     }
-     if (setPoint >= maxpoint){
-       setPoint = maxpoint;
-     }
-     setHoodPosition(setPoint);
-     SmartDashboard.putNumber("hood target", setPoint);
-     SmartDashboard.putNumber("hood pos", hoodEncoder.getPosition());
-     SmartDashboard.putNumber("Output", RobotMap.hoodMotor.getAppliedOutput());
   }
 }

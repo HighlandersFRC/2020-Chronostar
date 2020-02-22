@@ -60,7 +60,15 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-
+    SmartDashboard.putNumber("Speed", this.getShooterVelocity());
+    SmartDashboard.putBoolean("Close", Math.abs(this.getShooterVelocity()-shooterPower)<100);
+    if(Math.abs(this.getShooterVelocity()-shooterPower)>100){
+      offCount++;
+      SmartDashboard.putNumber("count", offCount);
+    }
+    else{
+      offCount = 0;
+    }
   }
   public void teleopPeriodic(){
     if(RobotMap.shooterMaster.getMotorOutputPercent()!=0 && RobotMap.shooterMaster.getSelectedSensorVelocity() ==0){
@@ -68,24 +76,9 @@ public class Shooter extends SubsystemBase {
       RobotMap.shooterMaster.set(ControlMode.PercentOutput, 0);
     }
     else{
-      shooterPower = SmartDashboard.getNumber("setVelocity", 0);
 
-      if(shooterPower>RobotStats.maxShooterRPM){
-        shooterPower = RobotStats.maxShooterRPM;
-      }
-      else if(shooterPower <0){
-        shooterPower = 0;
-      }
-      SmartDashboard.putNumber("Speed", this.getShooterVelocity());
-      SmartDashboard.putBoolean("Close", Math.abs(this.getShooterVelocity()-shooterPower)<100);
-      if(Math.abs(this.getShooterVelocity()-shooterPower)>100){
-        offCount++;
-        SmartDashboard.putNumber("count", offCount);
-      }
-      else{
-        offCount = 0;
-      }
-      setFlyWheelSpeed(shooterPower);
+    
+     
     }
   
     
