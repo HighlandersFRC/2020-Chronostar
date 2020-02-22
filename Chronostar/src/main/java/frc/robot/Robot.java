@@ -126,7 +126,7 @@ public class Robot extends TimedRobot {
     RobotMap.hood.teleopPeriodic();
     RobotMap.magazine.teleopPeriodic();
     RobotMap.intake.teleopPeriodic();
-    RobotMap.climber.teleopPeriodic();
+    //RobotMap.climber.teleopPeriodic();
     Scheduler.getInstance().run();
 
 

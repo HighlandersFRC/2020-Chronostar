@@ -22,10 +22,16 @@ public class ButtonMap {
         return -oi.driverController.getRawAxis(4);
     }
     public static boolean switchCamera(){
-        return oi.driverController.getTriggerAxis(Hand.kRight)>=0.3;
+        return oi.driverController.getTriggerAxis(Hand.kLeft)>=0.3;
     }
-    public static boolean startFiringSequence(){
+    public static boolean startInitiaionLineFiringSequence(){
+        return oi.driverController.getXButton();
+    }
+    public static boolean trackVisionTarget(){
         return oi.driverController.getBumper(Hand.kRight);
+    }
+    public static boolean turnOnLightRing(){
+        return oi.driverController.getStartButton();
     }
     public static boolean winchUp(){
         return oi.driverController.getYButton();

@@ -43,7 +43,8 @@ public class DriveTrain extends SubsystemBase {
 	private double visionAcceptablilityZone = 1.5;
 	private double visionDeadzone = 0.5;
 	private Odometry autoOdometry;
-	public InitiationLineFiringSequence initiationLineFiringSequence;
+	public InitiationLineFiringSequence initiationLineFiringSequence = new InitiationLineFiringSequence();
+	;
 	public DriveTrain() {
 
 	}
@@ -197,12 +198,29 @@ public class DriveTrain extends SubsystemBase {
 		else if(ButtonMap.adjustTargetTrackingRight()){
 			shiftVisionRight();
 		}
-		if(ButtonMap.startFiringSequence()){
-			initiationLineFiringSequence = new InitiationLineFiringSequence();
+		if(ButtonMap.startInitiaionLineFiringSequence()&&!initiationLineFiringSequence.isScheduled()){
+			RobotMap.visionRelay1.set(Value.kForward);
 			initiationLineFiringSequence.schedule();
 		}
 		else{
-			arcadeDrive();
+			if(initiationLineFiringSequence.isScheduled()){
+				RobotMap.visionRelay1.set(Value.kReverse);
+				initiationLineFiringSequence.cancel();
+			}
+			if(ButtonMap.trackVisionTarget()){
+				RobotMap.visionRelay1.set(Value.kForward);
+				trackVisionTape();
+			}
+			else{
+				arcadeDrive();
+				if(ButtonMap.turnOnLightRing()){
+					RobotMap.visionRelay1.set(Value.kForward);
+				}
+				else{
+					RobotMap.visionRelay1.set(Value.kReverse);
+				}
+			}
+
 		}
 	}
 }

@@ -33,6 +33,9 @@ public class Hood extends SubsystemBase {
   private double setPoint;
   private CANDigitalInput m_forwardLimit;
   private CANDigitalInput m_reverseLimit;
+  private double posCounter;
+  private boolean hoodUpLastState;
+  private boolean hoodDownLastState;
 
 
 
@@ -98,5 +101,23 @@ public class Hood extends SubsystemBase {
     }
   }
   public void teleopPeriodic(){
+
+    if(!RobotMap.drive.initiationLineFiringSequence.isScheduled()){
+      if(hoodDownLastState!=ButtonMap.moveHoodDown()&&ButtonMap.moveHoodDown()==true){
+        posCounter--;
+      }
+      if(hoodUpLastState!=ButtonMap.moveHoodUP()&&ButtonMap.moveHoodUP()==true){
+        posCounter++;
+      }
+      if(posCounter>6){
+        posCounter = 6;
+      }
+      else if(posCounter<0){
+        posCounter = 0;
+      }
+      setHoodPosition(posCounter*3);
+    }
+    hoodUpLastState = ButtonMap.moveHoodUP();
+    hoodDownLastState = ButtonMap.moveHoodDown();
   }
 }

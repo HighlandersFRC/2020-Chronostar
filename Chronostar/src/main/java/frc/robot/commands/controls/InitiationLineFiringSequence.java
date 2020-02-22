@@ -18,6 +18,7 @@ public class InitiationLineFiringSequence extends CommandBase {
    */
   private MagazineAutomation magazineAutomation;
   private boolean ableToFire;
+  private boolean forceEnd;
 
   public InitiationLineFiringSequence() {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -28,7 +29,7 @@ public class InitiationLineFiringSequence extends CommandBase {
   public void initialize() {
     new SequentialCommandGroup(new SetFlyWheelVelocity(4500), new SetHoodPosition(10.5)).schedule();
     ableToFire = false;
-    RobotMap.visionRelay1.set(Value.kForward);
+    forceEnd = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -37,11 +38,9 @@ public class InitiationLineFiringSequence extends CommandBase {
     if(!ableToFire){
       if(RobotMap.drive.trackVisionTape()&&RobotMap.shooter.flyWheelSpeedClose()){
         ableToFire = true;
+        magazineAutomation = new MagazineAutomation(0.8, .55, 1.0, 2.0);
+        magazineAutomation.schedule();
       }
-    }
-    else{
-      magazineAutomation = new MagazineAutomation(0.8, .55, 1.0, 1.0);
-      magazineAutomation.schedule();
     }
 
     
@@ -50,7 +49,7 @@ public class InitiationLineFiringSequence extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotMap.visionRelay1.set(Value.kReverse);
+    magazineAutomation.cancel();
     new SequentialCommandGroup(new SetFlyWheelVelocity(0), new SetHoodPosition(0)).schedule();
   }
 

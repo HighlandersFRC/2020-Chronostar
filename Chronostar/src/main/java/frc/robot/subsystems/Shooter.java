@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ButtonMap;
@@ -29,6 +30,9 @@ public class Shooter extends SubsystemBase {
   private int iZone = 439;
   private double shooterPower;
   private double offTime;
+  private boolean shooterUpLastState = false;
+  private boolean shooterDownLastState = false;
+  private int velCounter;
 
   public Shooter() {
 
@@ -41,6 +45,7 @@ public class Shooter extends SubsystemBase {
     RobotMap.shooterMaster.config_kD(0, kD);
     RobotMap.shooterMaster.config_IntegralZone(0, iZone);
     SmartDashboard.putNumber("setVelocity", 0);
+    velCounter = 0;
   }
   public void setFlyWheelSpeed(double velocity){
     if(velocity>RobotStats.maxShooterRPM){
@@ -78,8 +83,29 @@ public class Shooter extends SubsystemBase {
       RobotMap.shooterMaster.set(ControlMode.PercentOutput, 0);
     }
     else{
+      if(!RobotMap.drive.initiationLineFiringSequence.isScheduled()){
+        if(shooterDownLastState!=ButtonMap.moveShooterPowerDown()&&ButtonMap.moveShooterPowerDown()==true){
+          velCounter--;
+        }
+        if(shooterUpLastState!=ButtonMap.moveHoodUP()&&ButtonMap.moveShooterPowerUp()==true){
+          velCounter++;
+        }
+        if(velCounter>4){
+          velCounter = 4;
+        }
+        else if(velCounter<0){
+          velCounter = 0;
+        }
+        if(velCounter == 0){
+          setFlyWheelSpeed(0);
+        }
+        else{
+          setFlyWheelSpeed(velCounter*1000 + 3000 );
+        }
 
-    
+      }
+      shooterUpLastState = ButtonMap.moveShooterPowerUp();
+      shooterDownLastState = ButtonMap.moveShooterPowerDown();
      
     }
   
