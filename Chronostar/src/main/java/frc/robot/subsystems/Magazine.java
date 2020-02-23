@@ -30,13 +30,28 @@ public class Magazine extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putBoolean("beamBroken", !RobotMap.beamBreakOne.get());
+    SmartDashboard.putBoolean("1 beamBroken", !RobotMap.beamBreakOne.get());
+    SmartDashboard.putBoolean("2 beamBroken", !RobotMap.beamBreakTwo.get());
+    if(ButtonMap.reverseMag() == false){
+        if(RobotMap.beamBreakOne.get() == false){
+          if (RobotMap.beamBreakTwo.get() == false){
+            new MagazineAutomation(0.0, 0.75, 0.0, 0.15).schedule();
+          }
+          else{
+            new MagazineAutomation(0.9, 0.85, 0.0, 0.15).schedule();
+          }
+        }
+    }
+
     if (RobotMap.beamBreakOne.get() != lastState){
       if(RobotMap.beamBreakOne.get() == false){
-        new MagazineAutomation(0.8, 0.55, 0.0, 0.2).schedule();
         magCount++;
       }
     }
+  
+
+
+
     lastState = RobotMap.beamBreakOne.get();
     SmartDashboard.putNumber("balls in mag", magCount);
     
@@ -44,9 +59,9 @@ public class Magazine extends SubsystemBase {
     // This method will be called once per scheduler run
   }
   public void runMagazineSystem(){
-    RobotMap.magazineBelt.set(ControlMode.PercentOutput, 1);
+    RobotMap.magazineBelt.set(ControlMode.PercentOutput, 0.8);
     RobotMap.magazineWheel.set(ControlMode.PercentOutput, 1);
-    RobotMap.indexer.set(.6);
+    RobotMap.indexer.set(.7);
   }
   public void stopMagazineSystem(){
     RobotMap.magazineBelt.set(ControlMode.PercentOutput, 0);
@@ -66,20 +81,19 @@ public class Magazine extends SubsystemBase {
 
   public void teleopPeriodic(){
     SmartDashboard.putBoolean("beamBroken", !RobotMap.beamBreakOne.get());
-
-    if(ButtonMap.runMag() == true){
-      new ShootingSequence().schedule();
-    }
-
-    if(ButtonMap.runIndexer() == true){
-      RobotMap.indexer.set(.6);
-    }
-
     if(ButtonMap.reverseMag() == true){
       RobotMap.magazineWheel.set(ControlMode.PercentOutput, -.6);
       RobotMap.magazineBelt.set(ControlMode.PercentOutput, -1);
     }
     if(ButtonMap.stopReverseMag()){
+      RobotMap.magazineWheel.set(ControlMode.PercentOutput, 0);
+      RobotMap.magazineBelt.set(ControlMode.PercentOutput, 0);
+    }
+    if(ButtonMap.runFeedingMechanism() == true){
+      RobotMap.magazineWheel.set(ControlMode.PercentOutput, 1);
+      RobotMap.magazineBelt.set(ControlMode.PercentOutput, 0.6);
+    }
+    if(ButtonMap.stoprunFeedingMechanism()== true){
       RobotMap.magazineWheel.set(ControlMode.PercentOutput, 0);
       RobotMap.magazineBelt.set(ControlMode.PercentOutput, 0);
     }

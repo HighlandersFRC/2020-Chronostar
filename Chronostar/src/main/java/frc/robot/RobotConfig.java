@@ -43,7 +43,6 @@ public class RobotConfig {
 
         RobotMap.drive.initVelocityPIDs();
         RobotMap.drive.initAlignmentPID();
-
         RobotMap.hoodMotor.setInverted(true);
         RobotMap.hoodMotor.setIdleMode(IdleMode.kBrake);
         RobotMap.hoodMotor.setSmartCurrentLimit(RobotStats.hoodCurrentLimit);
@@ -72,9 +71,11 @@ public class RobotConfig {
         RobotMap.shooterMaster.configClosedLoopPeakOutput(0, RobotStats.maxShooterPercentVoltage);
         RobotMap.shooter.initShooterPID();
 
-        RobotMap.armMotor.setIdleMode(IdleMode.kBrake);
+        RobotMap.armMotor.restoreFactoryDefaults();
 
         RobotMap.armMotor.setIdleMode(IdleMode.kBrake);
+        RobotMap.armMotor.setInverted(true);
+
         RobotConfig.setShooterMotorsCoast();
         RobotConfig.setShooterMotorVoltageCompensation();
 
@@ -84,8 +85,6 @@ public class RobotConfig {
         RobotConfig.disableDriveTrainVoltageCompensation();
         RobotConfig.enableDriveCurrentLimiting();
         RobotConfig.setDriveMotorsCoast();
-        //RobotMap.climber.initClimber();
-
     }
     public void setAutoConfig(){
         RobotConfig.setDriveTrainVoltageCompensation();

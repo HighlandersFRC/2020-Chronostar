@@ -24,7 +24,7 @@ public class PathList {
   public PathList() {
     try{
       centerAutoTraj1 = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Center3Highgoal.wpilib.json"));
-      centerAutoPath1 = new PathSetup(centerAutoTraj1, false);
+      centerAutoPath1 = new PathSetup(centerAutoTraj1, true);
     }      
     
     catch(Exception e){

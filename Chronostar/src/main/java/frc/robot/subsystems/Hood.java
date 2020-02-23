@@ -36,7 +36,7 @@ public class Hood extends SubsystemBase {
   private double posCounter;
   private boolean hoodUpLastState;
   private boolean hoodDownLastState;
-
+  private double dPosition;
 
 
   public void inithood(){
@@ -68,7 +68,6 @@ public class Hood extends SubsystemBase {
     mpidController.setSmartMotionMaxAccel(10, 0);
     mpidController.setSmartMotionAllowedClosedLoopError(.1, 0);
 
-    SmartDashboard.putNumber("Set Position", 0);
   }
   public Hood() {
 
@@ -79,7 +78,11 @@ public class Hood extends SubsystemBase {
   public void resetEncodermax(){
     RobotMap.hoodMotor.getEncoder().setPosition(maxpoint);
   }
+  public boolean hoodClose(){
+    return Math.abs(RobotMap.hoodMotor.getEncoder().getPosition()-dPosition)<0.2&&Math.abs(RobotMap.hoodMotor.get())<0.01;
+  }
   public void setHoodPosition(double desiredPosition){
+    dPosition =desiredPosition;
     mpidController.setReference(desiredPosition, ControlType.kSmartMotion);
   }
   public double autoHoodPositionCloseDistance(double dist){
@@ -99,25 +102,9 @@ public class Hood extends SubsystemBase {
     if(m_forwardLimit.get() == true){
        resetEncodermax();
     }
+    SmartDashboard.putNumber("get Position", RobotMap.hoodMotor.getEncoder().getPosition());
+
   }
   public void teleopPeriodic(){
-
-    if(!RobotMap.drive.initiationLineFiringSequence.isScheduled()){
-      if(hoodDownLastState!=ButtonMap.moveHoodDown()&&ButtonMap.moveHoodDown()==true){
-        posCounter--;
-      }
-      if(hoodUpLastState!=ButtonMap.moveHoodUP()&&ButtonMap.moveHoodUP()==true){
-        posCounter++;
-      }
-      if(posCounter>6){
-        posCounter = 6;
-      }
-      else if(posCounter<0){
-        posCounter = 0;
-      }
-      setHoodPosition(posCounter*3);
-    }
-    hoodUpLastState = ButtonMap.moveHoodUP();
-    hoodDownLastState = ButtonMap.moveHoodDown();
   }
 }

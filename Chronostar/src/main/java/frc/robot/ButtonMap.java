@@ -24,9 +24,7 @@ public class ButtonMap {
     public static boolean switchCamera(){
         return oi.driverController.getTriggerAxis(Hand.kLeft)>=0.3;
     }
-    public static boolean startInitiaionLineFiringSequence(){
-        return oi.driverController.getXButton();
-    }
+
     public static boolean trackVisionTarget(){
         return oi.driverController.getBumper(Hand.kRight);
     }
@@ -49,12 +47,6 @@ public class ButtonMap {
     public static boolean RunIntake(){
         return oi.operatorController.getBumper(Hand.kLeft);
     }
-    public static boolean runMag(){
-        return oi.operatorController.getBumper(Hand.kRight);
-    }
-    public static boolean runIndexer(){
-        return oi.operatorController.getXButton();
-    }
     public static boolean reverseMag(){
         return oi.operatorController.getBButton();
     }
@@ -62,10 +54,10 @@ public class ButtonMap {
         return oi.operatorController.getBButtonReleased();
     }
     public static boolean armUp(){
-        return oi.operatorController.getAButton();
+        return oi.operatorController.getTriggerAxis(Hand.kLeft)>0.3;
     }
     public static boolean armDown(){
-        return oi.operatorController.getYButton();
+        return oi.operatorController.getTriggerAxis(Hand.kRight)>0.3;
     }
     public static boolean safetyButton(){
         return oi.operatorController.getStartButton()&&oi.operatorController.getBackButton();
@@ -77,9 +69,24 @@ public class ButtonMap {
         return oi.operatorController.getPOV() ==180;
     }
     public static boolean moveHoodDown(){
-        return oi.driverController.getPOV() == 270;
+        return oi.operatorController.getPOV() == 270;
     }
     public static boolean moveHoodUP(){
-        return oi.driverController.getPOV() == 90;
+        return oi.operatorController.getPOV() == 90;
+    }
+    public static boolean startInitiaionLineFiringSequence(){
+        return oi.operatorController.getXButtonPressed();
+    }
+    public static boolean startTrenchRunFiringSequence(){
+        return oi.operatorController.getAButtonPressed();
+    }
+    public static boolean startCloseUpFiringSequence(){
+        return oi.operatorController.getYButtonPressed();
+    }
+    public static boolean runFeedingMechanism(){
+        return oi.operatorController.getBumper(Hand.kRight);
+    }
+    public static boolean stoprunFeedingMechanism(){
+        return oi.operatorController.getBumperReleased(Hand.kRight);
     }
 }

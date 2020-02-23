@@ -80,33 +80,10 @@ public class Shooter extends SubsystemBase {
   public void teleopPeriodic(){
     if(RobotMap.shooterMaster.getMotorOutputPercent()!=0 && RobotMap.shooterMaster.getSelectedSensorVelocity() ==0){
       System.out.println("WARNING, ENCODER FALIURE");
-      RobotMap.shooterMaster.set(ControlMode.PercentOutput, 0);
+      //RobotMap.shooterMaster.set(ControlMode.PercentOutput, 0);
     }
     else{
-      if(!RobotMap.drive.initiationLineFiringSequence.isScheduled()){
-        if(shooterDownLastState!=ButtonMap.moveShooterPowerDown()&&ButtonMap.moveShooterPowerDown()==true){
-          velCounter--;
-        }
-        if(shooterUpLastState!=ButtonMap.moveHoodUP()&&ButtonMap.moveShooterPowerUp()==true){
-          velCounter++;
-        }
-        if(velCounter>4){
-          velCounter = 4;
-        }
-        else if(velCounter<0){
-          velCounter = 0;
-        }
-        if(velCounter == 0){
-          setFlyWheelSpeed(0);
-        }
-        else{
-          setFlyWheelSpeed(velCounter*1000 + 3000 );
-        }
-
-      }
-      shooterUpLastState = ButtonMap.moveShooterPowerUp();
-      shooterDownLastState = ButtonMap.moveShooterPowerDown();
-     
+    
     }
   
     
