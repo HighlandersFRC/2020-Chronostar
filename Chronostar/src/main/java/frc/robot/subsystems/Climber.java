@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ButtonMap;
 import frc.robot.RobotMap;
+import frc.robot.commands.controls.DeployClimber;
 
 public class Climber extends SubsystemBase {
   /**
@@ -33,18 +34,16 @@ public class Climber extends SubsystemBase {
 
   }
   public void teleopPeriodic(){
-    if(ButtonMap.safetyButton()){
+    if(ButtonMap.SafetyButton()) {
       saftey = true;
-      RobotMap.climberReleasePiston.set(RobotMap.releaseArm);
     }
     if(saftey){
-        if(ButtonMap.winchUp() == true){
-          RobotMap.winchRatchetPiston.set(RobotMap.winchRatchetSet);
-          RobotMap.winchMotor.set(-.50);
+        if(ButtonMap.deployClimber() == true){
+          new DeployClimber().schedule();
         }
         else if(ButtonMap.winchDown() == true){
-          RobotMap.winchRatchetPiston.set(RobotMap.winchRatchetRelease);
-          RobotMap.winchMotor.set(0.1);
+          RobotMap.winchRatchetPiston.set(RobotMap.winchRatchetSet);
+          RobotMap.winchMotor.set(-0.5);
         }
         else{
           RobotMap.winchRatchetPiston.set(RobotMap.winchRatchetSet);

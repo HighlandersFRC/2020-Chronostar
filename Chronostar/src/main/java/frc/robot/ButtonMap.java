@@ -27,7 +27,7 @@ public class ButtonMap {
     public static boolean startFiringSequence(){
         return oi.driverController.getBumper(Hand.kRight);
     }
-    public static boolean winchUp(){
+    public static boolean deployClimber(){
         return oi.driverController.getYButton();
     }
     public static boolean winchDown(){
@@ -61,8 +61,8 @@ public class ButtonMap {
     public static boolean armDown(){
         return oi.operatorController.getYButton();
     }
-    public static boolean safetyButton(){
-        return oi.operatorController.getStartButton()&&oi.operatorController.getBackButton();
+    public static boolean SafetyButton(){
+        return oi.operatorController.getStartButton() && oi.driverController.getStartButton();
     }
 
     public static boolean moveShooterPowerUp(){
