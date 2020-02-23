@@ -5,30 +5,25 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.autos;
+package frc.robot.commands.controls;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.RobotMap;
-import frc.robot.commands.controls.ConditionalSetFlyWheelVelocity;
-import frc.robot.commands.controls.ConditionalSetHoodPosition;
-import frc.robot.commands.controls.MagazineAutomation;
-import frc.robot.commands.controls.SetFlyWheelVelocity;
-import frc.robot.commands.controls.SetHoodPosition;
-import frc.robot.commands.controls.TimedMagazineRun;
-import frc.robot.tools.controlLoops.PurePursuitController;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class CenterHighGoalAuto extends SequentialCommandGroup {
+public class FireSequence extends SequentialCommandGroup {
   /**
-   * Creates a new CenterHighGoalAuto.
+   * Creates a new InitationLineBasicFire.
    */
-  public CenterHighGoalAuto() {
+  public FireSequence(double flywheelVelocity, double hoodPosition) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new ParallelCommandGroup(new ConditionalSetFlyWheelVelocity(4500), new ConditionalSetHoodPosition(10.5)),  new TimedMagazineRun(2.5), new SetFlyWheelVelocity(0), new SetHoodPosition(0),new PurePursuitController(RobotMap.pathList.centerAutoPath1, 2.5, 5.0, true, true));
+    super( new ParallelCommandGroup(new ConditionalSetFlyWheelVelocity(flywheelVelocity), new ConditionalSetHoodPosition(hoodPosition)),  new TimedMagazineRun(2.5), new SetFlyWheelVelocity(0), new SetHoodPosition(0));
+   /* super(new SetFlyWheelVelocity(4500), new SetHoodPosition(10.5), new WaitCommand(1.5),  new MagazineControl(.6, 1, 1 ) , new WaitCommand(1.5),
+    new MagazineControl(0, 0, 0), new SetFlyWheelVelocity(0), new SetHoodPosition(0));*/
+  
   }
 }

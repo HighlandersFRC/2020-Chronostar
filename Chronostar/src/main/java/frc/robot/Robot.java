@@ -19,6 +19,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.sensors.VisionCamera;
 
 public class Robot extends TimedRobot {
@@ -32,11 +34,14 @@ public class Robot extends TimedRobot {
   private boolean ableToSwitch;
   private SerialPort cameraPort;
   public static VisionCamera visionCamera;
+  private CommandSuites commandSuites;
+
   public void robotInit() {
     robotConfig = new RobotConfig();
     robotConfig.setStartingConfig();
     RobotMap.visionRelay1.set(Value.kOn);
     m_oi = new OI();
+    commandSuites = new CommandSuites();
 
     try {
       cameraPort = new SerialPort(115200, Port.kUSB);
@@ -45,68 +50,74 @@ public class Robot extends TimedRobot {
 
     }
     camera = CameraServer.getInstance().startAutomaticCapture("VisionCamera1", "/dev/video0");
-		camera.setResolution(320, 240);
-		camera.setFPS(15);
+    camera.setResolution(320, 240);
+    camera.setFPS(15);
 
-		camera2 = CameraServer.getInstance().startAutomaticCapture("VisionCamera2", "/dev/video1");
-		camera2.setResolution(320, 240);
-		camera2.setFPS(15);
-		RobotMap.visionRelay1.set(Value.kReverse);
-	
+    camera2 = CameraServer.getInstance().startAutomaticCapture("VisionCamera2", "/dev/video1");
+    camera2.setResolution(320, 240);
+    camera2.setFPS(15);
+    RobotMap.visionRelay1.set(Value.kReverse);
 
-		server = CameraServer.getInstance().addSwitchedCamera("driverVisionCameras");
-		server.setSource(camera);
-		Shuffleboard.update();
-		SmartDashboard.updateValues(); 
+    server = CameraServer.getInstance().addSwitchedCamera("driverVisionCameras");
+    server.setSource(camera);
+    Shuffleboard.update();
+    SmartDashboard.updateValues();
     CommandScheduler.getInstance().enable();
   }
+
   @Override
   public void robotPeriodic() {
-    try{
+    try {
       Robot.visionCamera.updateVision();
       SmartDashboard.putString("camString", Robot.visionCamera.getString());
       SmartDashboard.putNumber("lidarDist", RobotMap.lidar1.getDistance());
-      if(ButtonMap.switchCamera()&&ableToSwitch){
-        if(cameraBoolean){
+      if (ButtonMap.switchCamera() && ableToSwitch) {
+        if (cameraBoolean) {
           server.setSource(camera2);
           cameraBoolean = false;
-        }
-        else if(!cameraBoolean){
+        } else if (!cameraBoolean) {
           server.setSource(camera);
           cameraBoolean = true;
         }
         ableToSwitch = false;
-      }
-      else if(!ButtonMap.switchCamera()){
+      } else if (!ButtonMap.switchCamera()) {
         ableToSwitch = true;
       }
       RobotMap.magazine.periodic();
       RobotMap.hood.periodic();
-      
-    } catch(Exception e){
+      RobotMap.shooter.periodic();
+
+    } catch (Exception e) {
     }
     CommandScheduler.getInstance().run();
   }
+
   @Override
   public void disabledInit() {
   }
+
   @Override
   public void disabledPeriodic() {
 
     Scheduler.getInstance().run();
   }
+
   @Override
   public void autonomousInit() {
     robotConfig.setAutoConfig();
+    commandSuites.startAutoCommands();
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.start();
     }
   }
+
   @Override
   public void autonomousPeriodic() {
+    RobotMap.armMotor.set(.1);
     Scheduler.getInstance().run();
   }
+
   @Override
   public void teleopInit() {
     robotConfig.setTeleopConfig();
@@ -114,26 +125,26 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
   }
+
   @Override
   public void teleopPeriodic() {
-    
     RobotMap.drive.teleopPeriodic();
     RobotMap.shooter.teleopPeriodic();
     RobotMap.hood.teleopPeriodic();
     RobotMap.magazine.teleopPeriodic();
     RobotMap.intake.teleopPeriodic();
-    RobotMap.climber.periodic();
+    //RobotMap.climber.teleopPeriodic();
     Scheduler.getInstance().run();
 
 
     if(ButtonMap.armUp() == true){
-      RobotMap.armMotor.set(-.25);
+      RobotMap.armMotor.set(-.15);
     }
     else if(ButtonMap.armDown() == true){
-      RobotMap.armMotor.set(.25);
+      RobotMap.armMotor.set(.15);
     }
     else{
-      RobotMap.armMotor.set(0);
+      RobotMap.armMotor.set(.1);
     }
 
   }

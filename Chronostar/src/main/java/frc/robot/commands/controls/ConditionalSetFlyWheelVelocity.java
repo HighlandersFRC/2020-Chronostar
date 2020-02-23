@@ -8,18 +8,22 @@
 package frc.robot.commands.controls;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotMap;
 
 public class ConditionalSetFlyWheelVelocity extends CommandBase {
   /**
    * Creates a new ConditionalSetFlyWheelVelocity.
    */
-  public ConditionalSetFlyWheelVelocity() {
+  private double velocity;
+  public ConditionalSetFlyWheelVelocity(double desiredVelocity) {
+    velocity = desiredVelocity;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    RobotMap.shooter.setFlyWheelSpeed(velocity);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -35,6 +39,6 @@ public class ConditionalSetFlyWheelVelocity extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return Math.abs(RobotMap.shooter.getShooterVelocity()-velocity)<100;
   }
 }

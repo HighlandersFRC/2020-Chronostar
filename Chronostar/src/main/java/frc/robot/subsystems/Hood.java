@@ -33,7 +33,10 @@ public class Hood extends SubsystemBase {
   private double setPoint;
   private CANDigitalInput m_forwardLimit;
   private CANDigitalInput m_reverseLimit;
-
+  private double posCounter;
+  private boolean hoodUpLastState;
+  private boolean hoodDownLastState;
+  private double dPosition;
 
 
   public void inithood(){
@@ -65,7 +68,6 @@ public class Hood extends SubsystemBase {
     mpidController.setSmartMotionMaxAccel(10, 0);
     mpidController.setSmartMotionAllowedClosedLoopError(.1, 0);
 
-    SmartDashboard.putNumber("Set Position", 0);
   }
   public Hood() {
 
@@ -76,7 +78,11 @@ public class Hood extends SubsystemBase {
   public void resetEncodermax(){
     RobotMap.hoodMotor.getEncoder().setPosition(maxpoint);
   }
+  public boolean hoodClose(){
+    return Math.abs(RobotMap.hoodMotor.getEncoder().getPosition()-dPosition)<0.2&&Math.abs(RobotMap.hoodMotor.get())<0.01;
+  }
   public void setHoodPosition(double desiredPosition){
+    dPosition =desiredPosition;
     mpidController.setReference(desiredPosition, ControlType.kSmartMotion);
   }
   public double autoHoodPositionCloseDistance(double dist){
@@ -96,19 +102,9 @@ public class Hood extends SubsystemBase {
     if(m_forwardLimit.get() == true){
        resetEncodermax();
     }
+    SmartDashboard.putNumber("get Position", RobotMap.hoodMotor.getEncoder().getPosition());
+
   }
   public void teleopPeriodic(){
-
-     setPoint = SmartDashboard.getNumber("Set Position", 0);
-     if (setPoint <= minpoint){
-       setPoint = minpoint;
-     }
-     if (setPoint >= maxpoint){
-       setPoint = maxpoint;
-     }
-     setHoodPosition(setPoint);
-     SmartDashboard.putNumber("hood target", setPoint);
-     SmartDashboard.putNumber("hood pos", hoodEncoder.getPosition());
-     SmartDashboard.putNumber("Output", RobotMap.hoodMotor.getAppliedOutput());
   }
 }

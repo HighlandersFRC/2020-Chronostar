@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ButtonMap;
@@ -29,6 +30,9 @@ public class Shooter extends SubsystemBase {
   private int iZone = 439;
   private double shooterPower;
   private double offTime;
+  private boolean shooterUpLastState = false;
+  private boolean shooterDownLastState = false;
+  private int velCounter;
 
   public Shooter() {
 
@@ -41,6 +45,7 @@ public class Shooter extends SubsystemBase {
     RobotMap.shooterMaster.config_kD(0, kD);
     RobotMap.shooterMaster.config_IntegralZone(0, iZone);
     SmartDashboard.putNumber("setVelocity", 0);
+    velCounter = 0;
   }
   public void setFlyWheelSpeed(double velocity){
     if(velocity>RobotStats.maxShooterRPM){
@@ -57,35 +62,28 @@ public class Shooter extends SubsystemBase {
   public double getShooterVelocity(){
     return (RobotMap.shooterMaster.getSelectedSensorVelocity()/RobotStats.flyWheelTicsPerWheelRotation)*600;
   }
-
+  public boolean flyWheelSpeedClose(){
+    return RobotMap.shooterMaster.getClosedLoopError()<this.convertRPMToEncoderTicsPer100ms(100);
+  }
   @Override
   public void periodic() {
-
+    SmartDashboard.putNumber("Speed", this.getShooterVelocity());
+    SmartDashboard.putBoolean("Close", Math.abs(this.getShooterVelocity()-shooterPower)<100);
+    if(Math.abs(this.getShooterVelocity()-shooterPower)>100){
+      offCount++;
+      SmartDashboard.putNumber("count", offCount);
+    }
+    else{
+      offCount = 0;
+    }
   }
   public void teleopPeriodic(){
     if(RobotMap.shooterMaster.getMotorOutputPercent()!=0 && RobotMap.shooterMaster.getSelectedSensorVelocity() ==0){
       System.out.println("WARNING, ENCODER FALIURE");
-      RobotMap.shooterMaster.set(ControlMode.PercentOutput, 0);
+      //RobotMap.shooterMaster.set(ControlMode.PercentOutput, 0);
     }
     else{
-      shooterPower = SmartDashboard.getNumber("setVelocity", 0);
-
-      if(shooterPower>RobotStats.maxShooterRPM){
-        shooterPower = RobotStats.maxShooterRPM;
-      }
-      else if(shooterPower <0){
-        shooterPower = 0;
-      }
-      SmartDashboard.putNumber("Speed", this.getShooterVelocity());
-      SmartDashboard.putBoolean("Close", Math.abs(this.getShooterVelocity()-shooterPower)<100);
-      if(Math.abs(this.getShooterVelocity()-shooterPower)>100){
-        offCount++;
-        SmartDashboard.putNumber("count", offCount);
-      }
-      else{
-        offCount = 0;
-      }
-      setFlyWheelSpeed(shooterPower);
+    
     }
   
     

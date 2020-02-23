@@ -15,10 +15,9 @@ import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.SerialPort.Port;
+import edu.wpi.first.wpilibj.SPI.Port;
 import frc.robot.sensors.LidarLite;
 import frc.robot.sensors.Navx;
 import frc.robot.subsystems.Climber;
@@ -41,6 +40,7 @@ public class RobotMap {
   public static Relay visionRelay1 = new Relay(0);
 
   public static int beamBreak1Port = 0;
+  public static int beamBreak2Port = 1;
 
   public static int rightDriveLeadID = 1;
   public static int leftDriveLeadID = 3;
@@ -87,7 +87,7 @@ public class RobotMap {
 
   public static Spark blinkin = new Spark(0);
   public static DigitalInput beamBreakOne = new DigitalInput(beamBreak1Port);
-
+  public static DigitalInput beamBreakTwo = new DigitalInput(beamBreak2Port);
   public static PathList pathList = new PathList();
   
   public static SupplyCurrentLimitConfiguration robotCurrentConfigurationEnabled = new SupplyCurrentLimitConfiguration(true, RobotStats.driveTrainMaxCurrent, RobotStats.driveTrainPeakThreshold, RobotStats.driveTrainPeakTime);

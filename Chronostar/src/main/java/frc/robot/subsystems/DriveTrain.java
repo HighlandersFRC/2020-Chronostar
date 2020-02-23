@@ -1,9 +1,9 @@
-	/*----------------------------------------------------------------------------*/
-	/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
-	/* Open Source Software - may be modified and shared by FRC teams. The code   */
-	/* must be accompanied by the FIRST BSD license file in the root directory of */
-	/* the project.                                                               */
-	/*----------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
 
 package frc.robot.subsystems;
 
@@ -18,6 +18,8 @@ import frc.robot.ButtonMap;
 import frc.robot.Robot;
 import frc.robot.RobotConfig;
 import frc.robot.RobotMap;
+import frc.robot.commands.controls.FireSequence;
+import frc.robot.commands.controls.InitiationLineFiringSequence;
 import frc.robot.sensors.DriveEncoder;
 import frc.robot.tools.controlLoops.PID;
 import frc.robot.tools.pathTools.Odometry;
@@ -25,10 +27,12 @@ import frc.robot.tools.pathTools.Odometry;
 public class DriveTrain extends SubsystemBase {
 
 	private double deadZone = 0.01;
-	private double turn =0;
+	private double turn = 0;
 	private double throttel = 0;
-	private static DriveEncoder leftMainDrive = new DriveEncoder(RobotMap.leftDriveLead,RobotMap.leftDriveLead.getSelectedSensorPosition(0));
-	private static DriveEncoder rightMainDrive = new DriveEncoder(RobotMap.rightDriveLead,RobotMap.rightDriveLead.getSelectedSensorPosition(0));
+	private static DriveEncoder leftMainDrive = new DriveEncoder(RobotMap.leftDriveLead,
+			RobotMap.leftDriveLead.getSelectedSensorPosition(0));
+	private static DriveEncoder rightMainDrive = new DriveEncoder(RobotMap.rightDriveLead,
+			RobotMap.rightDriveLead.getSelectedSensorPosition(0));
 	private double vKF = 0.0455925;
 	private double vKP = 0.21;
 	private double vKI = 0.000000;
@@ -38,10 +42,14 @@ public class DriveTrain extends SubsystemBase {
 	private double aKP = 0.1;
 	private double aKI = 0.0000;
 	private double aKD = 0.00;
-	private double visionOffset = -14.5;
+	private double visionOffset = -12.5;
 	private double visionAcceptablilityZone = 1.5;
 	private double visionDeadzone = 0.5;
 	private Odometry autoOdometry;
+	private double desVel;
+	private double desPos;
+	public FireSequence initLineFiringSequence;
+	;
 	public DriveTrain() {
 
 	}
@@ -91,6 +99,7 @@ public class DriveTrain extends SubsystemBase {
 		alignmentPID.setMinInput(-6);
 	}
 
+
 	public void arcadeDrive(){
 		RobotConfig.setAllMotorsCoast();
 		double leftPower;
@@ -126,19 +135,16 @@ public class DriveTrain extends SubsystemBase {
 		RobotMap.leftDriveLead.set(ControlMode.PercentOutput, leftPower);
 		RobotMap.rightDriveLead.set(ControlMode.PercentOutput, rightPower);
 	}
+
 	public boolean trackVisionTape(){
 		RobotConfig.setDriveMotorsBrake();
 		Robot.visionCamera.updateVision();
-		if(ButtonMap.adjustTargetTrackingLeft()){
-			shiftVisionLeft();
-		}
-		else if(ButtonMap.adjustTargetTrackingRight()){
-			shiftVisionRight();
-		}
+
 		if(Timer.getFPGATimestamp()-Robot.visionCamera.lastParseTime>0.25||Math.abs(Robot.visionCamera.getAngle()-visionOffset)<visionDeadzone){
 			alignmentPID.updatePID(visionOffset);
 			setLeftSpeed(0);
 			setRightSpeed(0);
+			return true;
 		}
 		else{
 			alignmentPID.updatePID(Robot.visionCamera.getAngle());
@@ -193,16 +199,38 @@ public class DriveTrain extends SubsystemBase {
 		alignmentPID.setSetPoint(visionOffset);
 	}
 	public void teleopPeriodic(){
-	if(ButtonMap.startFiringSequence()){
-		SmartDashboard.putNumber("offset", visionOffset);
-		RobotMap.blinkin.set(0.71);
-		RobotMap.visionRelay1.set(Value.kForward);
-		trackVisionTape();
+		if(ButtonMap.adjustTargetTrackingLeft()){
+			shiftVisionLeft();
+		}
+		else if(ButtonMap.adjustTargetTrackingRight()){
+			shiftVisionRight();
+		}
+		if(ButtonMap.startInitiaionLineFiringSequence()){
+			initLineFiringSequence = new FireSequence(4500, 10.5);
+			initLineFiringSequence.schedule();
+		}
+		else if(ButtonMap.startTrenchRunFiringSequence()){
+			initLineFiringSequence = new FireSequence(5500, 13.5);
+			initLineFiringSequence.schedule();
+		}
+		else if(ButtonMap.startCloseUpFiringSequence()){
+			initLineFiringSequence = new FireSequence(4500, 0);
+			initLineFiringSequence.schedule();
+		}
+		if(ButtonMap.trackVisionTarget()){
+			RobotMap.visionRelay1.set(Value.kForward);
+			trackVisionTape();
+		}
+		else{
+			arcadeDrive();
+			if(ButtonMap.turnOnLightRing()){
+				RobotMap.visionRelay1.set(Value.kForward);
+			}
+			else{
+				RobotMap.visionRelay1.set(Value.kReverse);
+			}
+		}
+
+		}
 	}
-	else{
-		RobotMap.blinkin.set(0.4);
-		RobotMap.visionRelay1.set(Value.kReverse);
-		arcadeDrive();
-	}
-	}
-}
+
