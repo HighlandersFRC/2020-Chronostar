@@ -19,7 +19,6 @@ import frc.robot.Robot;
 import frc.robot.RobotConfig;
 import frc.robot.RobotMap;
 import frc.robot.commands.controls.FireSequence;
-import frc.robot.commands.controls.InitiationLineFiringSequence;
 import frc.robot.sensors.DriveEncoder;
 import frc.robot.tools.controlLoops.PID;
 import frc.robot.tools.pathTools.Odometry;
@@ -49,7 +48,7 @@ public class DriveTrain extends SubsystemBase {
 	private double desVel;
 	private double desPos;
 	public FireSequence initLineFiringSequence;
-	;
+	
 	public DriveTrain() {
 
 	}

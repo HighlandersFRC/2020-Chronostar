@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ButtonMap;
 import frc.robot.RobotMap;
@@ -17,6 +18,7 @@ public class Climber extends SubsystemBase {
   /**
    * Creates a new Climber.
    */
+  private DeployClimber deployClimber;
   private boolean saftey = false;
   public Climber() {
 
@@ -31,27 +33,28 @@ public class Climber extends SubsystemBase {
   public void initClimber(){
     saftey = false;
     RobotMap.climberReleasePiston.set(RobotMap.constrainArm);
-
+    deployClimber = new DeployClimber();
   }
   public void teleopPeriodic(){
     if(ButtonMap.SafetyButton()) {
       saftey = true;
     }
     if(saftey){
-        if(ButtonMap.deployClimber() == true){
-          new DeployClimber().schedule();
-        }
-        else if(ButtonMap.winchDown() == true){
-          RobotMap.winchRatchetPiston.set(RobotMap.winchRatchetSet);
-          RobotMap.winchMotor.set(-0.5);
+      if(ButtonMap.deployClimber() == true&&!deployClimber.isFinished()){
+        
+        deployClimber.schedule();
+      }
+      if(RobotMap.climberReleasePiston.get() == RobotMap.constrainArm){
+        if(ButtonMap.winchDown() == true){
+          RobotMap.winchMotor.set(-0.3);
         }
         else{
-          RobotMap.winchRatchetPiston.set(RobotMap.winchRatchetSet);
           RobotMap.winchMotor.set(0);
         }
+      }
+
     }
-    else{ 
-      RobotMap.winchMotor.set(0.0);
-    }
+
+    SmartDashboard.putBoolean("Climber Safety", saftey);
   }
 }

@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSink;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Relay.Value;
@@ -39,7 +40,6 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     robotConfig = new RobotConfig();
     robotConfig.setStartingConfig();
-    RobotMap.visionRelay1.set(Value.kOn);
     m_oi = new OI();
     commandSuites = new CommandSuites();
 
@@ -114,7 +114,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    RobotMap.armMotor.set(.1);
     Scheduler.getInstance().run();
   }
 
@@ -124,6 +123,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    RobotMap.climber.initClimber();
   }
 
   @Override
@@ -133,7 +133,7 @@ public class Robot extends TimedRobot {
     RobotMap.hood.teleopPeriodic();
     RobotMap.magazine.teleopPeriodic();
     RobotMap.intake.teleopPeriodic();
-    //RobotMap.climber.teleopPeriodic();
+    RobotMap.climber.teleopPeriodic();
     Scheduler.getInstance().run();
 
 
@@ -144,8 +144,10 @@ public class Robot extends TimedRobot {
       RobotMap.armMotor.set(.15);
     }
     else{
-      RobotMap.armMotor.set(.1);
+      RobotMap.armMotor.set(0);
     }
+
+
 
   }
 

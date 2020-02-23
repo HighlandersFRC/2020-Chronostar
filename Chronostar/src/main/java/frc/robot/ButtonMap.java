@@ -31,7 +31,7 @@ public class ButtonMap {
     public static boolean turnOnLightRing(){
         return oi.driverController.getStartButton();
     }
-    public static boolean winchUp(){
+    public static boolean deployClimber(){
         return oi.driverController.getYButton();
     }
     public static boolean winchDown(){

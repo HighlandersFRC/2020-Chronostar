@@ -14,6 +14,8 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax.IdleMode;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+
 /**
  * Add your docs here.
  */
@@ -75,10 +77,12 @@ public class RobotConfig {
 
         RobotMap.armMotor.setIdleMode(IdleMode.kBrake);
         RobotMap.armMotor.setInverted(true);
-
+        RobotMap.climberReleasePiston.set(RobotMap.constrainArm);
+        RobotMap.winchRatchetPiston.set(RobotMap.winchRatchetSet);
+        RobotMap.winchMotor.setIdleMode(IdleMode.kCoast);
         RobotConfig.setShooterMotorsCoast();
         RobotConfig.setShooterMotorVoltageCompensation();
-
+        RobotMap.climber.initClimber();
 
     }
     public void setTeleopConfig(){
