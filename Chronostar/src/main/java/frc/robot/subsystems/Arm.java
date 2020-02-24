@@ -22,12 +22,13 @@ public class Arm extends SubsystemBase {
   /**
    * Creates a new arm.
    */
-  private double kf = .4;
-  private double kp = 0.00001;
+  private double kf = .04;
+  private double kp = 0.00000;
   private double ki = 0.0000000;
   private double kd = 0.00000;
-  private float maxpoint = 13.2f;
-  private float minpoint = -2.9f;
+  private float maxPoint = 14.5f;
+  private float minPoint = -2;
+  private float maxControlPoint = 13.5f;
   private float maxvel = 10;
   private float minvel = 10;
   private float accel = 3;
@@ -35,7 +36,7 @@ public class Arm extends SubsystemBase {
 
   private CANPIDController ArmPidController = new CANPIDController(RobotMap.armMotor);
   private CANEncoder armEncoder;
-  private double setPoint;
+  private double ArmSetPoint;
   private CANDigitalInput forwardLimit;
   private CANDigitalInput reverseLimit;
 
@@ -44,13 +45,14 @@ public class Arm extends SubsystemBase {
   public void initarm(){
 
     RobotMap.armMotor.restoreFactoryDefaults();
-    forwardLimit = RobotMap.armMotor.getForwardLimitSwitch(LimitSwitchPolarity.kNormallyClosed);
+    RobotMap.armMotor.setInverted(true);
+    forwardLimit = RobotMap.armMotor.getForwardLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
     reverseLimit = RobotMap.armMotor.getReverseLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
-    RobotMap.armMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
+    //RobotMap.armMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
     RobotMap.armMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
 
-    RobotMap.armMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, maxpoint);
-    RobotMap.armMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, minpoint);
+    RobotMap.armMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, maxPoint);
+    RobotMap.armMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, minPoint);
     
    //SmartDashboard.putBoolean("Forward Limit Enabled", m_forwardLimit.isLimitSwitchEnabled());
     //SmartDashboard.putBoolean("Reverse Limit Enabled", m_reverseLimit.isLimitSwitchEnabled());
@@ -60,11 +62,11 @@ public class Arm extends SubsystemBase {
     ArmPidController.setP(kp);
     ArmPidController.setI(ki);
     ArmPidController.setD(kd);
-    ArmPidController.setOutputRange(-1, 1);
-    ArmPidController.setSmartMotionMaxVelocity(maxvel, 1);
-    ArmPidController.setSmartMotionMinOutputVelocity(minvel, 1);
-    ArmPidController.setSmartMotionMaxAccel(accel, 1);
-    ArmPidController.setSmartMotionAllowedClosedLoopError(allowederror, 1);
+    ArmPidController.setOutputRange(-1,1);
+    ArmPidController.setSmartMotionMaxVelocity(5, 0);
+    ArmPidController.setSmartMotionMinOutputVelocity(-5, 0);
+    ArmPidController.setSmartMotionMaxAccel(3, 0);
+    ArmPidController.setSmartMotionAllowedClosedLoopError(0.1, 1);
     SmartDashboard.putNumber("Set arm Position", 0);
     
   }
@@ -72,34 +74,40 @@ public class Arm extends SubsystemBase {
 
   }
   public void resetEncodermin(){
-    RobotMap.armMotor.getEncoder().setPosition(minpoint);
+    RobotMap.armMotor.getEncoder().setPosition(minPoint);
   }
   public void resetEncodermax(){
-    RobotMap.armMotor.getEncoder().setPosition(maxpoint);
+    RobotMap.armMotor.getEncoder().setPosition(maxPoint);
   }
 
   @Override
   public void periodic() {
    if(reverseLimit.get() == true) {
-     resetEncodermin();
+     //resetEncodermin();
    }
    if(forwardLimit.get() == true){
-      resetEncodermax();
+      //resetEncodermax();
    }
-    setPoint = SmartDashboard.getNumber("Set arm Position", 0);
-    if (setPoint <= minpoint){
-      setPoint = minpoint;
+    ArmSetPoint = SmartDashboard.getNumber("Set arm Position", 0);
+    if (ArmSetPoint <= minPoint){
+      ArmSetPoint = minPoint;
     }
-    if (setPoint >= maxpoint){
-      setPoint = maxpoint;
+    if (ArmSetPoint >= maxPoint){
+      ArmSetPoint = maxPoint;
     }
-    
-    ArmPidController.setReference(setPoint, ControlType.kSmartMotion);
-    SmartDashboard.putNumber("arm target", setPoint);
+    if (armEncoder.getPosition() >= maxControlPoint && ArmSetPoint >= maxControlPoint){
+      RobotMap.armMotor.set(0.05);
+    }
+    else{
+      ArmPidController.setReference(ArmSetPoint, ControlType.kSmartMotion);
+    }
+    SmartDashboard.putNumber("arm target", ArmSetPoint);
     SmartDashboard.putNumber("arm pos", armEncoder.getPosition());
     SmartDashboard.putNumber("Arm Output", RobotMap.armMotor.getAppliedOutput());
     SmartDashboard.putNumber("KF value", ArmPidController.getFF());
     SmartDashboard.putNumber("KP value", ArmPidController.getP());
+    SmartDashboard.putBoolean("arm forward limit", forwardLimit.get());
+    SmartDashboard.putBoolean("arm revers limit", reverseLimit.get());
 
     
     // This method will be called once per scheduler run

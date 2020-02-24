@@ -50,7 +50,7 @@ public class RobotConfig {
         RobotMap.hoodMotor.setInverted(true);
         RobotMap.hoodMotor.setIdleMode(IdleMode.kBrake);
 
-        RobotMap.armMotor.setInverted(true);
+        
 
         RobotMap.magazineBelt.setNeutralMode(NeutralMode.Brake);
         RobotMap.magazineWheel.setNeutralMode(NeutralMode.Brake);

@@ -45,8 +45,6 @@ public class Hood extends SubsystemBase {
 
     RobotMap.hoodMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, maxpoint);
     RobotMap.hoodMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, minpoint);
-   //SmartDashboard.putBoolean("Forward Limit Enabled", m_forwardLimit.isLimitSwitchEnabled());
-    //SmartDashboard.putBoolean("Reverse Limit Enabled", m_reverseLimit.isLimitSwitchEnabled());
     mpidController = RobotMap.hoodMotor.getPIDController();
     hoodEncoder = RobotMap.hoodMotor.getEncoder();
     mpidController.setFF(kf);
