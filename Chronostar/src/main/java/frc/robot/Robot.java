@@ -40,6 +40,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     robotConfig = new RobotConfig();
     robotConfig.setStartingConfig();
+    RobotMap.hood.inithood();
+    RobotMap.arm.initarm();
     m_oi = new OI();
     commandSuites = new CommandSuites();
 
@@ -90,6 +92,7 @@ public class Robot extends TimedRobot {
     } catch (Exception e) {
     }
     CommandScheduler.getInstance().run();
+    RobotMap.arm.periodic();
   }
 
   @Override
@@ -120,6 +123,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     robotConfig.setTeleopConfig();
+    RobotMap.arm.initarm();
+    commandSuites.startTeleopCommands();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
