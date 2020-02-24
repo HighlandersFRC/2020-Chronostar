@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 import frc.robot.ButtonMap;
 import frc.robot.RobotMap;
+import frc.robot.sensors.LidarLite;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANPIDController;
@@ -77,9 +78,23 @@ public class Hood extends SubsystemBase {
   public boolean hoodClose(){
     return Math.abs(RobotMap.hoodMotor.getEncoder().getPosition()-dPosition)<0.2&&Math.abs(RobotMap.hoodMotor.get())<0.01;
   }
+  public double getOptimalPosition(){
+    double dist = RobotMap.lidar1.getDistance();
+    if(dist>=1.9 &&dist <=20){
+      return  0.0068*Math.pow(dist,3) - 0.3105*Math.pow(dist, 2) + 4.6148*dist - 7.5881;
+    }
+    else{
+      return -1;
+    }
+  }
   public void setHoodPosition(double desiredPosition){
     dPosition =desiredPosition;
-    mpidController.setReference(desiredPosition, ControlType.kSmartMotion);
+    if(desiredPosition == 0){
+      mpidController.setReference(-0.5, ControlType.kSmartMotion);
+    }
+    else{
+      mpidController.setReference(desiredPosition, ControlType.kSmartMotion);
+    }
   }
   public double autoHoodPositionCloseDistance(double dist){
     return 0;

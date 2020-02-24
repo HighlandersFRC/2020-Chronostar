@@ -18,6 +18,7 @@ import frc.robot.ButtonMap;
 import frc.robot.Robot;
 import frc.robot.RobotConfig;
 import frc.robot.RobotMap;
+import frc.robot.commands.controls.AutoFiringSequence;
 import frc.robot.commands.controls.FireSequence;
 import frc.robot.sensors.DriveEncoder;
 import frc.robot.tools.controlLoops.PID;
@@ -41,14 +42,15 @@ public class DriveTrain extends SubsystemBase {
 	private double aKP = 0.1;
 	private double aKI = 0.0000;
 	private double aKD = 0.00;
-	private double visionOffset = -12.5;
-	private double visionAcceptablilityZone = 1.5;
-	private double visionDeadzone = 0.5;
+	private double visionOffset = -14.0;
+	private double visionAcceptablilityZone = 0.5;
+	private double visionDeadzone = 0.25;
 	private Odometry autoOdometry;
 	private double desVel;
+	private FireSequence fireSequence;
+	private AutoFiringSequence autoFiringSequence;
 	private double desPos;
-	public FireSequence initLineFiringSequence;
-	
+	private boolean driveTrainBeingUsed;
 	public DriveTrain() {
 
 	}
@@ -89,6 +91,7 @@ public class DriveTrain extends SubsystemBase {
 		RobotMap.rightDriveLead.config_kP(profile, vKP, 0);
 		RobotMap.rightDriveLead.config_kI(profile, vKI, 0);
 		RobotMap.rightDriveLead.config_kD(profile, vKD, 0);
+
 	}
 
 	public void initAlignmentPID(){
@@ -100,42 +103,47 @@ public class DriveTrain extends SubsystemBase {
 
 
 	public void arcadeDrive(){
-		RobotConfig.setAllMotorsCoast();
-		double leftPower;
-		double rightPower;
-		double differential;
-		if(Math.abs(ButtonMap.getDriveThrottle())>deadZone){
-			throttel = Math.tanh(ButtonMap.getDriveThrottle())*(4/Math.PI); 
-		}
-		else{
-			throttel = 0;
-		}
-
-		if(Math.abs(ButtonMap.getRotation())>deadZone){
+		if(!driveTrainBeingUsed){
+			RobotConfig.setAllMotorsCoast();
+			double leftPower;
+			double rightPower;
+			double differential;
+			if(Math.abs(ButtonMap.getDriveThrottle())>deadZone){
+				throttel = Math.tanh(ButtonMap.getDriveThrottle())*(4/Math.PI); 
+			}
+			else{
+				throttel = 0;
+			}
+	
+			if(Math.abs(ButtonMap.getRotation())>deadZone){
+				turn = ButtonMap.getRotation();
+			}
+			else{
+				turn = 0;
+			}
 			turn = ButtonMap.getRotation();
+			differential = turn;
+			SmartDashboard.putNumber("differential", differential);
+			leftPower = (throttel - (differential));
+			rightPower = (throttel + (differential));
+	
+			if(Math.abs(leftPower)>1) {
+				rightPower = Math.abs(rightPower/leftPower)*Math.signum(rightPower);
+				leftPower = Math.signum(leftPower);
+			}
+			else if(Math.abs(rightPower)>1) {
+				leftPower = Math.abs(leftPower/rightPower)*Math.signum(leftPower);
+				rightPower = Math.signum(rightPower);
+			}
+			RobotMap.leftDriveLead.set(ControlMode.PercentOutput, leftPower);
+			RobotMap.rightDriveLead.set(ControlMode.PercentOutput, rightPower);
 		}
-		else{
-			turn = 0;
-		}
-		turn = ButtonMap.getRotation();
-		differential = turn;
-		SmartDashboard.putNumber("differential", differential);
-		leftPower = (throttel - (differential));
-		rightPower = (throttel + (differential));
 
-		if(Math.abs(leftPower)>1) {
-			rightPower = Math.abs(rightPower/leftPower)*Math.signum(rightPower);
-			leftPower = Math.signum(leftPower);
-		}
-		else if(Math.abs(rightPower)>1) {
-			leftPower = Math.abs(leftPower/rightPower)*Math.signum(leftPower);
-			rightPower = Math.signum(rightPower);
-		}
-		RobotMap.leftDriveLead.set(ControlMode.PercentOutput, leftPower);
-		RobotMap.rightDriveLead.set(ControlMode.PercentOutput, rightPower);
 	}
 
-	public boolean trackVisionTape(){
+	public double trackVisionTape(){
+		driveTrainBeingUsed = true;
+		SmartDashboard.putNumber("offset", visionOffset);
 		RobotConfig.setDriveMotorsBrake();
 		Robot.visionCamera.updateVision();
 
@@ -143,7 +151,6 @@ public class DriveTrain extends SubsystemBase {
 			alignmentPID.updatePID(visionOffset);
 			setLeftSpeed(0);
 			setRightSpeed(0);
-			return true;
 		}
 		else{
 			alignmentPID.updatePID(Robot.visionCamera.getAngle());
@@ -151,12 +158,7 @@ public class DriveTrain extends SubsystemBase {
 			
 		setLeftSpeed(alignmentPID.getResult());
 		setRightSpeed(-alignmentPID.getResult());
-		if(Math.abs(Robot.visionCamera.getAngle()-visionOffset)<visionAcceptablilityZone){
-			return true;
-		}
-		else{
-			return false;
-		}
+		return Math.abs(Robot.visionCamera.getAngle()-visionOffset);
 		
 		
 	}
@@ -187,7 +189,6 @@ public class DriveTrain extends SubsystemBase {
 	}
 	@Override
 	public void periodic() {
-
 	}
 	public void shiftVisionLeft(){
 		visionOffset = visionOffset +0.5;
@@ -205,31 +206,27 @@ public class DriveTrain extends SubsystemBase {
 			shiftVisionRight();
 		}
 		if(ButtonMap.startInitiaionLineFiringSequence()){
-			initLineFiringSequence = new FireSequence(4500, 10.5);
-			initLineFiringSequence.schedule();
+			fireSequence = new FireSequence(4500, 10.5);
+			fireSequence.schedule();
 		}
 		else if(ButtonMap.startTrenchRunFiringSequence()){
-			initLineFiringSequence = new FireSequence(5500, 13.5);
-			initLineFiringSequence.schedule();
+			fireSequence = new FireSequence(5500, 13.5);
+			fireSequence.schedule();
 		}
 		else if(ButtonMap.startCloseUpFiringSequence()){
-			initLineFiringSequence = new FireSequence(4500, 0);
-			initLineFiringSequence.schedule();
+			fireSequence = new FireSequence(4500, 0);
+			fireSequence.schedule();
 		}
-		if(ButtonMap.trackVisionTarget()){
-			RobotMap.visionRelay1.set(Value.kForward);
-			trackVisionTape();
+		else if(ButtonMap.autoRangingShot()){
+			autoFiringSequence = new AutoFiringSequence();
+			autoFiringSequence.schedule();
+			
 		}
 		else{
 			arcadeDrive();
-			if(ButtonMap.turnOnLightRing()){
-				RobotMap.visionRelay1.set(Value.kForward);
-			}
-			else{
-				RobotMap.visionRelay1.set(Value.kReverse);
-			}
 		}
-
-		}
+		driveTrainBeingUsed = false;
 	}
+		
+}
 
