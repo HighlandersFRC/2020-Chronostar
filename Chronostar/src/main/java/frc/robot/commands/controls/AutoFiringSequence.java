@@ -5,23 +5,22 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.autos;
+package frc.robot.commands.controls;
 
+import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.controls.InitiationLineFiringSequence;
-import frc.robot.tools.controlLoops.PurePursuitController;
 import frc.robot.RobotMap;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class VisionCenterHighGoal extends SequentialCommandGroup {
+public class AutoFiringSequence extends SequentialCommandGroup {
   /**
-   * Creates a new VisionCenterHighGoal.
+   * Creates a new AutoFiringSequence.
    */
-  public VisionCenterHighGoal() {
+  public AutoFiringSequence() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new InitiationLineFiringSequence(), new PurePursuitController(RobotMap.pathList.centerAutoPath1, 2.5, 5.0, true, false));
+    super( new TrackVisionTarget(), new FireSequence(5500, RobotMap.hood.getOptimalPosition()));
   }
 }

@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.DigitalSource;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class LidarLite {
 
-private static final int distOffset = -18;
+private static final int distOffset = -28;
 private Counter counter;
     public LidarLite (Counter lidarCounter) {
         counter = lidarCounter;

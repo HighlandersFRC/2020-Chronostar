@@ -97,7 +97,7 @@ public class RobotMap {
 
   public static SupplyCurrentLimitConfiguration robotCurrentConfigurationDisabled = new SupplyCurrentLimitConfiguration(false, RobotStats.driveTrainMaxCurrent, RobotStats.driveTrainPeakThreshold, RobotStats.driveTrainPeakTime);
 
-  public static Counter lidarCounter = new Counter(9);
+  public static Counter lidarCounter = new Counter(2);
 
   public static LidarLite lidar1 = new LidarLite(lidarCounter);
   

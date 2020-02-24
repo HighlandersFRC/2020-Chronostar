@@ -9,53 +9,38 @@ package frc.robot.commands.controls;
 
 import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotMap;
 
-public class InitiationLineFiringSequence extends CommandBase {
+public class TrackVisionTarget extends CommandBase {
   /**
-   * Creates a new FiringSequence.
+   * Creates a new TrackVisionTarget.
    */
-  private MagazineAutomation magazineAutomation;
-  private boolean ableToFire;
-  private boolean forceEnd;
-
-  public InitiationLineFiringSequence() {
+  public TrackVisionTarget() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    new SequentialCommandGroup(new SetFlyWheelVelocity(4500), new SetHoodPosition(10.5)).schedule();
-    ableToFire = false;
-    forceEnd = false;
+    RobotMap.visionRelay1.set(Value.kForward);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(!ableToFire){
-      if(RobotMap.drive.trackVisionTape()&&RobotMap.shooter.flyWheelSpeedClose()){
-        ableToFire = true;
-        magazineAutomation = new MagazineAutomation(0.8, .55, 1.0, 2.0);
-        magazineAutomation.schedule();
-      }
-    }
-
     
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    magazineAutomation.cancel();
-    new SequentialCommandGroup(new SetFlyWheelVelocity(0), new SetHoodPosition(0)).schedule();
+    RobotMap.visionRelay1.set(Value.kReverse);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return ableToFire && magazineAutomation.isFinished();
+    return RobotMap.drive.trackVisionTape()<0.5;
+
   }
 }

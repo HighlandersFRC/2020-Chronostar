@@ -71,6 +71,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     try {
       Robot.visionCamera.updateVision();
+      SmartDashboard.putNumber("optimalDist", RobotMap.hood.getOptimalPosition());
       SmartDashboard.putString("camString", Robot.visionCamera.getString());
       SmartDashboard.putNumber("lidarDist", RobotMap.lidar1.getDistance());
       if (ButtonMap.switchCamera() && ableToSwitch) {
@@ -149,7 +150,7 @@ public class Robot extends TimedRobot {
       RobotMap.armMotor.set(.15);
     }
     else{
-      RobotMap.armMotor.set(.1);
+      RobotMap.armMotor.set(0.1);
     }
 
 
