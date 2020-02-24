@@ -22,21 +22,17 @@ public class Hood extends SubsystemBase {
   /**
    * Creates a new Hood.
    */
-  private double kf = .05;
-  private double kp = 0.000001;
-  private double ki = 0.00000001;
-  private double kd = 0.00007;
+  private double kf = .02;
+  private double kp = 0.0002;
+  private double ki = 0.00001;
+  private double kd = 0.0002;
   private float maxpoint = 22;
   private float minpoint = 0;
   private CANPIDController mpidController = new CANPIDController(RobotMap.hoodMotor);
-  private CANEncoder hoodEncoder;
-  private double setPoint;
   private CANDigitalInput m_forwardLimit;
   private CANDigitalInput m_reverseLimit;
-  private double posCounter;
-  private boolean hoodUpLastState;
-  private boolean hoodDownLastState;
   private double dPosition;
+  private CANEncoder hoodEncoder;
 
 
   public void inithood(){
@@ -52,7 +48,7 @@ public class Hood extends SubsystemBase {
 
     //SmartDashboard.putBoolean("Forward Limit Enabled", m_forwardLimit.isLimitSwitchEnabled());
     //SmartDashboard.putBoolean("Reverse Limit Enabled", m_reverseLimit.isLimitSwitchEnabled());
-
+    RobotMap.hoodMotor.enableVoltageCompensation(11.3);
     mpidController = RobotMap.hoodMotor.getPIDController();
 
     hoodEncoder = RobotMap.hoodMotor.getEncoder();
@@ -61,11 +57,11 @@ public class Hood extends SubsystemBase {
     mpidController.setP(kp);
     mpidController.setI(ki);
     mpidController.setD(kd);
-
+    mpidController.setIZone(.2);
     mpidController.setOutputRange(-1, 1);
-    mpidController.setSmartMotionMaxVelocity(15, 0);
-    mpidController.setSmartMotionMinOutputVelocity(-15, 0);
-    mpidController.setSmartMotionMaxAccel(10, 0);
+    mpidController.setSmartMotionMaxVelocity(100, 0);
+    mpidController.setSmartMotionMinOutputVelocity(-100, 0);
+    mpidController.setSmartMotionMaxAccel(80, 0);
     mpidController.setSmartMotionAllowedClosedLoopError(.1, 0);
 
   }

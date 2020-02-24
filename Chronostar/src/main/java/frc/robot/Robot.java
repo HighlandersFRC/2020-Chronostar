@@ -144,7 +144,7 @@ public class Robot extends TimedRobot {
       RobotMap.armMotor.set(.15);
     }
     else{
-      RobotMap.armMotor.set(0);
+      RobotMap.armMotor.set(.1);
     }
 
 
