@@ -40,7 +40,7 @@ public class DriveTrain extends SubsystemBase {
 	private int profile = 0;
 	private PID alignmentPID;
 	private double aKP = 0.1;
-	private double aKI = 0.0000;
+	private double aKI = 0.0001;
 	private double aKD = 0.00;
 	private double visionOffset = -14.0;
 	private double visionAcceptablilityZone = 0.5;

@@ -46,9 +46,6 @@ public class Hood extends SubsystemBase {
 
     RobotMap.hoodMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, maxpoint);
     RobotMap.hoodMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, minpoint);
-
-    //SmartDashboard.putBoolean("Forward Limit Enabled", m_forwardLimit.isLimitSwitchEnabled());
-    //SmartDashboard.putBoolean("Reverse Limit Enabled", m_reverseLimit.isLimitSwitchEnabled());
     RobotMap.hoodMotor.enableVoltageCompensation(11.3);
     mpidController = RobotMap.hoodMotor.getPIDController();
 
@@ -81,7 +78,7 @@ public class Hood extends SubsystemBase {
   public double getOptimalPosition(){
     double dist = RobotMap.lidar1.getDistance();
     if(dist>=1.9 &&dist <=20){
-      return -0.0005*Math.pow(dist,4) + 0.029*Math.pow(dist,3) - 0.6337*Math.pow(dist,2) + 6.4021*dist - 10.066;  
+      return -0.0003*Math.pow(dist,4) + 0.0188*Math.pow(dist,3) - 0.496*Math.pow(dist,2) + 5.7229*dist - 9.2089;
     }
     else{
       return -1;
