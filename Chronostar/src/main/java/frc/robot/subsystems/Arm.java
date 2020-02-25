@@ -23,7 +23,7 @@ public class Arm extends SubsystemBase {
    * Creates a new arm.
    */
   private double kf = .04;
-  private double kp = 0.00000;
+  private double kp = 0.0000001;
   private double ki = 0.0000000;
   private double kd = 0.00000;
   private float maxPoint = 14.5f;
@@ -39,12 +39,12 @@ public class Arm extends SubsystemBase {
   private double ArmSetPoint;
   private CANDigitalInput forwardLimit;
   private CANDigitalInput reverseLimit;
+  ;
 
 
 
   public void initarm(){
 
-    RobotMap.armMotor.restoreFactoryDefaults();
     RobotMap.armMotor.setInverted(true);
     forwardLimit = RobotMap.armMotor.getForwardLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
     reverseLimit = RobotMap.armMotor.getReverseLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
@@ -68,6 +68,7 @@ public class Arm extends SubsystemBase {
     ArmPidController.setSmartMotionMaxAccel(3, 0);
     ArmPidController.setSmartMotionAllowedClosedLoopError(0.1, 1);
     SmartDashboard.putNumber("Set arm Position", 0);
+    ArmSetPoint = maxPoint;
     
   }
   public Arm() {
@@ -79,6 +80,9 @@ public class Arm extends SubsystemBase {
   public void resetEncodermax(){
     RobotMap.armMotor.getEncoder().setPosition(maxPoint);
   }
+  public void SetArmPosition(double SetArmPos){
+    SetArmPos = ArmSetPoint;
+  }
 
   @Override
   public void periodic() {
@@ -86,9 +90,8 @@ public class Arm extends SubsystemBase {
      //resetEncodermin();
    }
    if(forwardLimit.get() == true){
-      //resetEncodermax();
+      resetEncodermax();
    }
-    ArmSetPoint = SmartDashboard.getNumber("Set arm Position", 0);
     if (ArmSetPoint <= minPoint){
       ArmSetPoint = minPoint;
     }

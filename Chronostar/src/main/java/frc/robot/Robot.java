@@ -142,7 +142,7 @@ public class Robot extends TimedRobot {
     RobotMap.climber.teleopPeriodic();
     Scheduler.getInstance().run();
 
-
+/*
     if(ButtonMap.armUp() == true){
       RobotMap.armMotor.set(-.15);
     }
@@ -153,7 +153,7 @@ public class Robot extends TimedRobot {
       RobotMap.armMotor.set(0.1);
     }
 
-
+*/
 
   }
 

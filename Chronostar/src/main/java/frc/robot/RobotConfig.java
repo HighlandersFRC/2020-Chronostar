@@ -75,8 +75,6 @@ public class RobotConfig {
         RobotMap.shooterMaster.configClosedLoopPeakOutput(0, RobotStats.maxShooterPercentVoltage);
         RobotMap.shooter.initShooterPID();
 
-        RobotMap.armMotor.restoreFactoryDefaults();
-
         RobotMap.armMotor.setIdleMode(IdleMode.kBrake);
         RobotMap.armMotor.setInverted(true);
         RobotMap.climberReleasePiston.set(RobotMap.constrainArm);

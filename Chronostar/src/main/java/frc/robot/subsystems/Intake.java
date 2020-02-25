@@ -24,16 +24,20 @@ public class Intake extends SubsystemBase {
     // This method will be called once per scheduler run
   }
   public void teleopPeriodic(){
-    if(ButtonMap.RunIntake()){
-      RobotMap.intakeMotor.set(0.6);
-    }
-    else if(ButtonMap.reverseMag()){
-      RobotMap.intakeMotor.set(-0.6);
+    if(RobotMap.magazine.stuck == false){
+      if(ButtonMap.RunIntake()){
+        RobotMap.intakeMotor.set(0.6);
+      }
+      else if(ButtonMap.reverseMag()){
+        RobotMap.intakeMotor.set(-0.6);
 
+      }
+      else{
+        RobotMap.intakeMotor.set(0);
+      }
     }
     else{
-      RobotMap.intakeMotor.set(0);
+      RobotMap.intakeMotor.set(-0.5);
     }
-
   }
 }

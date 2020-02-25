@@ -23,37 +23,49 @@ public class Magazine extends SubsystemBase {
    * Creates a new Magazine.
    */
   private boolean lastState;
+  public Boolean stuck;
   private double magCount;
+  private double catchCount;
+  private double tryCount;
   public Magazine() {
 
   }
 
   @Override
   public void periodic() {
-    SmartDashboard.putBoolean("1 beamBroken", !RobotMap.beamBreakOne.get());
-    SmartDashboard.putBoolean("2 beamBroken", !RobotMap.beamBreakTwo.get());
     if(ButtonMap.reverseMag() == false){
         if(RobotMap.beamBreakOne.get() == false){
-          if (RobotMap.beamBreakTwo.get() == false){
-            new MagazineAutomation(0.0, 0.75, 0.0, 0.15).schedule();
+          if(catchCount <= 100){
+            if (RobotMap.beamBreakTwo.get() == false){
+             new MagazineAutomation(0.0, 0.75, 0.0, 0.15).schedule();
+            }
+           else{
+             new MagazineAutomation(0.9, 0.85, 0.0, 0.15).schedule();
+            }
           }
           else{
-            new MagazineAutomation(0.9, 0.85, 0.0, 0.15).schedule();
+            if (tryCount <= 25){
+             stuck = true;
+             tryCount++;
+            }
+            else{
+               catchCount = 0;
+               tryCount = 0;
+               stuck = false;
+            }
           }
+          catchCount++;
+        }
+        else{
+            catchCount = 0;
+            stuck = false;
         }
     }
-
-    if (RobotMap.beamBreakOne.get() != lastState){
-      if(RobotMap.beamBreakOne.get() == false){
-        magCount++;
-      }
-    }
-  
-
-
-
     lastState = RobotMap.beamBreakOne.get();
     SmartDashboard.putNumber("balls in mag", magCount);
+    SmartDashboard.putNumber("catch Count", catchCount);
+    SmartDashboard.putBoolean("1 beamBroken", !RobotMap.beamBreakOne.get());
+    SmartDashboard.putBoolean("2 beamBroken", !RobotMap.beamBreakTwo.get());
     
 
     // This method will be called once per scheduler run

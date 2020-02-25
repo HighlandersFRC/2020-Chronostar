@@ -84,8 +84,6 @@ public class RobotMap {
 
   public static CANSparkMax armMotor = new CANSparkMax(armID, MotorType.kBrushless);
 
-  public static DigitalInput beamBreakOne = new DigitalInput(beamBreak1Port);
-
   public static CANSparkMax winchMotor = new CANSparkMax(climberMotorId, MotorType.kBrushless);
 
   public static Spark blinkin = new Spark(0);
