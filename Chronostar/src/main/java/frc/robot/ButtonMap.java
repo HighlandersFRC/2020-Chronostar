@@ -24,8 +24,14 @@ public class ButtonMap {
     public static boolean switchCamera(){
         return oi.driverController.getTriggerAxis(Hand.kLeft)>=0.3;
     }
-    public static boolean trackVisionTarget(){
+    public static boolean manualTarget(){
         return oi.driverController.getBumper(Hand.kRight);
+    }
+    public static boolean manualAdjustLeft(){
+        return oi.driverController.getXButton();
+    }
+    public static boolean manualAdjustRight(){
+        return oi.driverController.getBButton();
     }
     public static boolean turnOnLightRing(){
         return oi.driverController.getStartButton();
@@ -87,5 +93,11 @@ public class ButtonMap {
     }
     public static boolean stopAutoRangingShot(){
         return oi.operatorController.getBackButtonReleased();
+    }
+    public static boolean enableArmControl(){
+        return oi.operatorController.getStickButton(Hand.kRight);
+    }
+    public static double armOutput(){
+        return oi.operatorController.getRawAxis(5);
     }
 }

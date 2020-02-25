@@ -241,7 +241,25 @@ public class DriveTrain extends SubsystemBase {
 
 		}
 		else{
-			arcadeDrive();
+			if(!ButtonMap.manualTarget()){
+				arcadeDrive();
+			}
+			else{
+				if(ButtonMap.manualAdjustLeft()){
+					this.setLeftSpeed(-1);
+					this.setRightSpeed(1);
+				}
+				else if(ButtonMap.manualAdjustRight()){
+					this.setLeftSpeed(1);
+					this.setRightSpeed(-1);
+
+				}
+				else{
+					this.setLeftPercent(0);
+					this.setRightPercent(0);
+				}
+			}
+			
 		}
 		/*if(ButtonMap.autoRangingShot()){
 			fireSequence = new FireSequence(5500, SmartDashboard.getNumber("setPos",0 ));
