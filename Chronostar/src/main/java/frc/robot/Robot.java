@@ -89,11 +89,11 @@ public class Robot extends TimedRobot {
       RobotMap.magazine.periodic();
       RobotMap.hood.periodic();
       RobotMap.shooter.periodic();
+      RobotMap.arm.periodic();
 
     } catch (Exception e) {
     }
     CommandScheduler.getInstance().run();
-    RobotMap.arm.periodic();
   }
 
   @Override

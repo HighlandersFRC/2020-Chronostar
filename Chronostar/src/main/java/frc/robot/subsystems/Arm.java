@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 import frc.robot.ButtonMap;
+import frc.robot.OI;
 import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -102,6 +103,13 @@ public class Arm extends SubsystemBase {
     if (armEncoder.getPosition() >= maxControlPoint && ArmSetPoint >= maxControlPoint){
       RobotMap.armMotor.set(0.05);
     }
+    if(ButtonMap.enableArmControl() == true){
+      ArmSetPoint = (ArmSetPoint+ButtonMap.armOutput()*0.08);
+    }
+
+
+
+
     else{
       ArmPidController.setReference(ArmSetPoint, ControlType.kSmartMotion);
     }
