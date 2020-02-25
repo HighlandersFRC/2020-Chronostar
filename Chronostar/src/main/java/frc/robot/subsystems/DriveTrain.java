@@ -40,7 +40,7 @@ public class DriveTrain extends SubsystemBase {
 	private int profile = 0;
 	private PID alignmentPID;
 	private double aKP = 0.1;
-	private double aKI = 0.0000;
+	private double aKI = 0.0001;
 	private double aKD = 0.00;
 	private double visionOffset = -14.0;
 	private double visionAcceptablilityZone = 0.5;
@@ -142,24 +142,30 @@ public class DriveTrain extends SubsystemBase {
 	}
 
 	public double trackVisionTape(){
-		driveTrainBeingUsed = true;
-		SmartDashboard.putNumber("offset", visionOffset);
-		RobotConfig.setDriveMotorsBrake();
-		Robot.visionCamera.updateVision();
+		try{
+			driveTrainBeingUsed = true;
+			SmartDashboard.putNumber("offset", visionOffset);
+			RobotConfig.setDriveMotorsBrake();
+			Robot.visionCamera.updateVision();
+	
+			if(Timer.getFPGATimestamp()-Robot.visionCamera.lastParseTime>0.25){
+				alignmentPID.updatePID(visionOffset);
+				setLeftSpeed(0);
+				setRightSpeed(0);
+				return 0;
+			}
+			else{
+				alignmentPID.updatePID(Robot.visionCamera.getAngle());
+			}
+				
+			setLeftSpeed(alignmentPID.getResult());
+			setRightSpeed(-alignmentPID.getResult());
+			return Math.abs(Robot.visionCamera.getAngle()-visionOffset);	
+		}
+		catch(Exception e){
+			return 0;
+		}
 
-		if(Timer.getFPGATimestamp()-Robot.visionCamera.lastParseTime>0.25||Math.abs(Robot.visionCamera.getAngle()-visionOffset)<visionDeadzone){
-			alignmentPID.updatePID(visionOffset);
-			setLeftSpeed(0);
-			setRightSpeed(0);
-		}
-		else{
-			alignmentPID.updatePID(Robot.visionCamera.getAngle());
-		}
-			
-		setLeftSpeed(alignmentPID.getResult());
-		setRightSpeed(-alignmentPID.getResult());
-		return Math.abs(Robot.visionCamera.getAngle()-visionOffset);
-		
 		
 	}
 	public void Stop(){
@@ -214,7 +220,7 @@ public class DriveTrain extends SubsystemBase {
 			fireSequence.schedule();
 		}
 		else if(ButtonMap.startCloseUpFiringSequence()){
-			fireSequence = new FireSequence(4500, 0);
+			fireSequence = new FireSequence(4000, 0);
 			fireSequence.schedule();
 		}
 		else if(ButtonMap.autoRangingShot()){

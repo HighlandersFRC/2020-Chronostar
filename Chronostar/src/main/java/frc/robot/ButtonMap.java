@@ -44,7 +44,7 @@ public class ButtonMap {
     }
     //operator controller
     public static boolean RunIntake(){
-        return oi.driverController.getBumper(Hand.kLeft);
+        return oi.operatorController.getBumper(Hand.kLeft);
     }
     public static boolean reverseMag(){
         return oi.operatorController.getBButton();
@@ -64,15 +64,6 @@ public class ButtonMap {
     public static boolean moveShooterPowerUp(){
         return oi.operatorController.getPOV() ==0;
     }
-    public static boolean moveShooterPowerDown(){
-        return oi.operatorController.getPOV() ==180;
-    }
-    public static boolean moveHoodDown(){
-        return oi.operatorController.getPOV() == 270;
-    }
-    public static boolean moveHoodUP(){
-        return oi.operatorController.getPOV() == 90;
-    }
     public static boolean startInitiaionLineFiringSequence(){
         return oi.operatorController.getXButtonPressed();
     }
@@ -89,6 +80,6 @@ public class ButtonMap {
         return oi.operatorController.getBumperReleased(Hand.kRight);
     }
     public static boolean autoRangingShot(){
-        return oi.driverController.getBackButton();
+        return oi.operatorController.getBackButton();
     }
 }
