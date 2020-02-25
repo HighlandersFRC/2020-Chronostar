@@ -50,6 +50,8 @@ public class RobotConfig {
         RobotMap.hoodMotor.setSmartCurrentLimit(RobotStats.hoodCurrentLimit);
         RobotMap.hood.inithood();
 
+        
+
         RobotMap.magazineBelt.setNeutralMode(NeutralMode.Brake);
         RobotMap.magazineWheel.setNeutralMode(NeutralMode.Brake);
 
