@@ -23,7 +23,7 @@ public class Arm extends SubsystemBase {
    * Creates a new arm.
    */
   private double kf = .04;
-  private double kp = 0.0000001;
+  private double kp = 0.00000001;
   private double ki = 0.0000000;
   private double kd = 0.00000;
   private float maxPoint = 14.5f;
@@ -82,13 +82,11 @@ public class Arm extends SubsystemBase {
   }
   public void SetArmPosition(double SetArmPos){
     SetArmPos = ArmSetPoint;
+    ArmPidController.setReference(SetArmPos, ControlType.kSmartMotion);
   }
 
   @Override
   public void periodic() {
-   if(reverseLimit.get() == true) {
-     //resetEncodermin();
-   }
    if(forwardLimit.get() == true){
       resetEncodermax();
    }
@@ -97,6 +95,9 @@ public class Arm extends SubsystemBase {
     }
     if (ArmSetPoint >= maxPoint){
       ArmSetPoint = maxPoint;
+    }
+    if(ButtonMap.deployClimber() == true){
+      ArmSetPoint = 3;
     }
     if (armEncoder.getPosition() >= maxControlPoint && ArmSetPoint >= maxControlPoint){
       RobotMap.armMotor.set(0.05);

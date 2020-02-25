@@ -73,6 +73,9 @@ public class ButtonMap {
     public static boolean startCloseUpFiringSequence(){
         return oi.operatorController.getYButtonPressed();
     }
+    public static boolean stopManualFiringSequence(){
+        return oi.operatorController.getAButtonReleased()||oi.operatorController.getXButtonReleased()||oi.operatorController.getYButtonReleased();
+    }
     public static boolean runFeedingMechanism(){
         return oi.operatorController.getBumper(Hand.kRight);
     }
@@ -80,6 +83,9 @@ public class ButtonMap {
         return oi.operatorController.getBumperReleased(Hand.kRight);
     }
     public static boolean autoRangingShot(){
-        return oi.operatorController.getBackButton();
+        return oi.operatorController.getBackButtonPressed();
+    }
+    public static boolean stopAutoRangingShot(){
+        return oi.operatorController.getBackButtonReleased();
     }
 }

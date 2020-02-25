@@ -17,6 +17,7 @@ import frc.robot.commands.controls.MagazineAutomation;
 import frc.robot.commands.controls.SetFlyWheelVelocity;
 import frc.robot.commands.controls.SetHoodPosition;
 import frc.robot.commands.controls.TimedMagazineRun;
+import frc.robot.commands.controls.TrackVisionTarget;
 import frc.robot.tools.controlLoops.PurePursuitController;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -29,6 +30,6 @@ public class CenterHighGoalAuto extends SequentialCommandGroup {
   public CenterHighGoalAuto() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new ParallelCommandGroup(new ConditionalSetFlyWheelVelocity(4500), new ConditionalSetHoodPosition(10.5)),  new TimedMagazineRun(2.5), new SetFlyWheelVelocity(0), new SetHoodPosition(0),new PurePursuitController(RobotMap.pathList.centerAutoPath1, 2.5, 5.0, true, true));
+    super(new ParallelCommandGroup(new ConditionalSetFlyWheelVelocity(4500), new ConditionalSetHoodPosition(10.5), new TrackVisionTarget()),  new TimedMagazineRun(2.5), new SetFlyWheelVelocity(0), new SetHoodPosition(0),new PurePursuitController(RobotMap.pathList.centerAutoPath1, 2.5, 5.0, true, true));
   }
 }

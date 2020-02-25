@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ButtonMap;
 import frc.robot.Robot;
@@ -20,6 +21,8 @@ import frc.robot.RobotConfig;
 import frc.robot.RobotMap;
 import frc.robot.commands.controls.AutoFiringSequence;
 import frc.robot.commands.controls.FireSequence;
+import frc.robot.commands.controls.SetFlyWheelVelocity;
+import frc.robot.commands.controls.SetHoodPosition;
 import frc.robot.sensors.DriveEncoder;
 import frc.robot.tools.controlLoops.PID;
 import frc.robot.tools.pathTools.Odometry;
@@ -99,6 +102,7 @@ public class DriveTrain extends SubsystemBase {
 		alignmentPID.setSetPoint(visionOffset);
 		alignmentPID.setMaxOutput(6);
 		alignmentPID.setMinInput(-6);
+		//SmartDashboard.putNumber("setPos", 0);
 	}
 
 
@@ -223,14 +227,26 @@ public class DriveTrain extends SubsystemBase {
 			fireSequence = new FireSequence(4000, 0);
 			fireSequence.schedule();
 		}
+		else if(ButtonMap.stopManualFiringSequence()){
+			fireSequence.cancel();
+			new SequentialCommandGroup(new SetFlyWheelVelocity(0), new SetHoodPosition(0)).schedule();
+		}
 		else if(ButtonMap.autoRangingShot()){
 			autoFiringSequence = new AutoFiringSequence();
-			autoFiringSequence.schedule();
-			
+			autoFiringSequence.schedule();	
+		}
+		else if(ButtonMap.stopAutoRangingShot()){
+			autoFiringSequence.cancel();
+			new SequentialCommandGroup(new SetFlyWheelVelocity(0), new SetHoodPosition(0)).schedule();
+
 		}
 		else{
 			arcadeDrive();
 		}
+		/*if(ButtonMap.autoRangingShot()){
+			fireSequence = new FireSequence(5500, SmartDashboard.getNumber("setPos",0 ));
+			fireSequence.schedule();
+		}*/
 		driveTrainBeingUsed = false;
 	}
 		
