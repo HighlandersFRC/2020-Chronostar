@@ -25,7 +25,7 @@ public class Intake extends SubsystemBase {
   }
   public void teleopPeriodic(){
     if(ButtonMap.RunIntake()){
-      RobotMap.intakeMotor.set(0.6);
+      RobotMap.intakeMotor.set(0.7);
     }
     else if(ButtonMap.reverseMag()){
       RobotMap.intakeMotor.set(-0.6);

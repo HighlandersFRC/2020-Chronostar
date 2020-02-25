@@ -81,7 +81,7 @@ public class Hood extends SubsystemBase {
   public double getOptimalPosition(){
     double dist = RobotMap.lidar1.getDistance();
     if(dist>=1.9 &&dist <=20){
-      return  0.0068*Math.pow(dist,3) - 0.3105*Math.pow(dist, 2) + 4.6148*dist - 7.5881;
+      return -0.0005*Math.pow(dist,4) + 0.029*Math.pow(dist,3) - 0.6337*Math.pow(dist,2) + 6.4021*dist - 10.066;  
     }
     else{
       return -1;

@@ -19,6 +19,7 @@ public class TrackVisionTarget extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
@@ -40,7 +41,7 @@ public class TrackVisionTarget extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotMap.drive.trackVisionTape()<0.5;
+    return     RobotMap.drive.trackVisionTape()<0.25;
 
   }
 }
