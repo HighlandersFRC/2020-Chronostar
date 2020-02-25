@@ -88,4 +88,13 @@ public class ButtonMap {
     public static boolean stopAutoRangingShot(){
         return oi.operatorController.getBackButtonReleased();
     }
+    public static boolean crossLine(){
+        return oi.autoChooser.getRawButton(1);
+    }
+    public static boolean crossLineShoot(){
+        return oi.autoChooser.getRawButton(2);
+    }
+    public static boolean rightAdvancedAuto(){
+        return oi.autoChooser.getRawButton(3);
+    }
 }

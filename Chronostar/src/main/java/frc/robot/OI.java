@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 
 /**
@@ -16,5 +17,5 @@ import edu.wpi.first.wpilibj.XboxController;
 public class OI {
     public XboxController driverController = new XboxController(0);
     public XboxController operatorController = new XboxController(1);
-
+    public Joystick autoChooser = new Joystick(2);
 }

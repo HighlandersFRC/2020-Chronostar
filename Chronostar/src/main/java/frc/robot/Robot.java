@@ -125,7 +125,6 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     robotConfig.setTeleopConfig();
     RobotMap.arm.initarm();
-    commandSuites.startTeleopCommands();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
