@@ -235,8 +235,8 @@ public class PurePursuitController extends CommandBase {
 		double leftVelocity;
 		double rightVelocity;
 		double v;
-		if(closestSegment <5){
-			v = 0.25+targetVelocity;		
+		if(closestSegment <10){
+			v = 1.2;
 		}
 		else{
 			v = targetVelocity;
@@ -244,14 +244,10 @@ public class PurePursuitController extends CommandBase {
 		double c = curvature;
 		if(chosenPath.getReversed()){
 			v = -v;
+			c=c;
 		}
 		else{
-			c = c;
-		}
-		if(useOutsideOdometry){
-			if(odometryDirection!= chosenPath.getReversed()){
-				c = -c;
-			}
+			c = -c;
 		}
 
 		leftVelocity = v*(2+(c*RobotStats.robotBaseDistance))/2;

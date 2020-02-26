@@ -21,12 +21,12 @@ public class CommandSuites {
     public CommandSuites(){
     }
     public void startAutoCommands(){
-        if(ButtonMap.crossLine()){
+        if(ButtonMap.crossLineShoot()){
             RobotMap.drive.startAutoOdometry(true, 10, -8);
             centerHighGoalAuto = new CenterHighGoalAuto();
             centerHighGoalAuto.schedule();
         }
-        else if(ButtonMap.crossLineShoot()){
+        else if(ButtonMap.crossLine()){
             RobotMap.drive.startAutoOdometry(true, 10, -8);
             crossLine = new CrossLine();
             crossLine.schedule();
@@ -35,6 +35,11 @@ public class CommandSuites {
             RobotMap.drive.startAutoOdometry(true, 10, -2.4);
             rightAdvancedAuto = new RightAdvancedAuto();
             rightAdvancedAuto.schedule();
+        }
+        else{
+            RobotMap.drive.startAutoOdometry(true, 10, -8);
+            centerHighGoalAuto = new CenterHighGoalAuto();
+            centerHighGoalAuto.schedule();
         }
 
     }

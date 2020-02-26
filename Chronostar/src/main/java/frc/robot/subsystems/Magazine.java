@@ -35,7 +35,7 @@ public class Magazine extends SubsystemBase {
   public void periodic() {
     if(ButtonMap.reverseMag() == false){
         if(RobotMap.beamBreakOne.get() == false){
-          if(catchCount <= 100){
+          if(catchCount <= 50){
             if (RobotMap.beamBreakTwo.get() == false){
              new MagazineAutomation(0.0, 0.75, 0.0, 0.15).schedule();
             }

@@ -10,7 +10,9 @@ package frc.robot.commands.autos;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.controls.AutoFiringSequence;
+import frc.robot.commands.controls.FireSequence;
 import frc.robot.commands.controls.SetIntakeSpeed;
+import frc.robot.commands.controls.TrackVisionTarget;
 import frc.robot.tools.controlLoops.PurePursuitController;
 import frc.robot.tools.pathTools.PathList;
 
@@ -24,7 +26,6 @@ public class RightAdvancedAuto extends SequentialCommandGroup {
   public RightAdvancedAuto() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new AutoFiringSequence(), new ParallelCommandGroup(new SetIntakeSpeed(0.5), new PurePursuitController(PathList.rightAutoPath1, 1.0, 4.0,true, true )),
-    new ParallelCommandGroup(new SetIntakeSpeed(0.0), new PurePursuitController(PathList.rightAutoPath1, 1.0, 4.0,true, true), new AutoFiringSequence()));
+    super(new TrackVisionTarget(), new FireSequence(4500, 10, 1.0), new PurePursuitController(PathList.rightAutoPath1, 2.5, 4.0,true, true ),new PurePursuitController(PathList.rightAutoPath2, 2.5, 4.0,true, true ), new TrackVisionTarget(), new FireSequence(4500, 10, 1.0));
   }
 }

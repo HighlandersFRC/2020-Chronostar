@@ -100,18 +100,16 @@ public class Arm extends SubsystemBase {
     if(ButtonMap.deployClimber() == true){
       ArmSetPoint = 3;
     }
-    if (armEncoder.getPosition() >= maxControlPoint && ArmSetPoint >= maxControlPoint){
-      RobotMap.armMotor.set(0.05);
+    else if (armEncoder.getPosition() >= maxControlPoint && ArmSetPoint >= maxControlPoint){
+      RobotMap.armMotor.set(0.2);
     }
-    if(ButtonMap.enableArmControl() == true){
+    else if(ButtonMap.enableArmControl() == true){
       ArmSetPoint = (ArmSetPoint+ButtonMap.armOutput()*0.08);
+      ArmPidController.setReference(ArmSetPoint, ControlType.kSmartMotion);
     }
-
-
-
-
     else{
       ArmPidController.setReference(ArmSetPoint, ControlType.kSmartMotion);
+      //RobotMap.armMotor.set(0.2);
     }
     SmartDashboard.putNumber("arm target", ArmSetPoint);
     SmartDashboard.putNumber("arm pos", armEncoder.getPosition());

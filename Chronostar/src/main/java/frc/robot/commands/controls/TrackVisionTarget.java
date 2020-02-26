@@ -33,8 +33,7 @@ public class TrackVisionTarget extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println(RobotMap.drive.trackVisionTape());
-    if(RobotMap.drive.trackVisionTape()>1.0){
+    if(RobotMap.drive.trackVisionTape()>1.5){
       latestLockTime = Timer.getFPGATimestamp();
     }
 

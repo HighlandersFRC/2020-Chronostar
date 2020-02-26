@@ -108,9 +108,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    RobotMap.arm.initarm();
     robotConfig.setAutoConfig();
     commandSuites.startAutoCommands();
-
     if (m_autonomousCommand != null) {
       m_autonomousCommand.start();
     }
@@ -118,6 +118,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
+    RobotMap.intake.autonomousPeriodic();
     Scheduler.getInstance().run();
   }
 
@@ -141,18 +142,9 @@ public class Robot extends TimedRobot {
     RobotMap.climber.teleopPeriodic();
     Scheduler.getInstance().run();
 
-/*
-    if(ButtonMap.armUp() == true){
-      RobotMap.armMotor.set(-.15);
-    }
-    else if(ButtonMap.armDown() == true){
-      RobotMap.armMotor.set(.15);
-    }
-    else{
-      RobotMap.armMotor.set(0.1);
-    }
 
-*/
+
+
 
   }
 

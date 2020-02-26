@@ -27,6 +27,13 @@ public class ButtonMap {
     public static boolean manualTarget(){
         return oi.driverController.getBumper(Hand.kRight);
     }
+    public static boolean autoTarget(){
+        return oi.driverController.getBumperPressed(Hand.kLeft);
+    }
+    public static boolean endAutoTarget(){
+        return oi.driverController.getBumperReleased(Hand.kLeft);
+    }
+    
     public static boolean manualAdjustLeft(){
         return oi.driverController.getXButton();
     }
@@ -102,5 +109,11 @@ public class ButtonMap {
     }
     public static boolean rightAdvancedAuto(){
         return oi.autoChooser.getRawButton(3);
+    }
+    public static boolean enableArmControl(){
+        return oi.operatorController.getStickButton(Hand.kRight);
+    }
+    public static double armOutput(){
+        return oi.operatorController.getRawAxis(5);
     }
 }

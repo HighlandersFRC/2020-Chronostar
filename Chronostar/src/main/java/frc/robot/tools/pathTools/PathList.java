@@ -32,7 +32,7 @@ public class PathList {
       rightAutoTraj1 = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Right3Highgoal1.wpilib.json"));
       rightAutoPath1 = new PathSetup(rightAutoTraj1, true);
       rightAutoTraj2 = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Right3HighGoal2.wpilib.json"));
-      rightAutoPath2 = new PathSetup(rightAutoTraj2, true);
+      rightAutoPath2 = new PathSetup(rightAutoTraj2, false);
     }      
     
     catch(Exception e){

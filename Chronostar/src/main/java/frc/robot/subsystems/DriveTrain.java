@@ -23,6 +23,7 @@ import frc.robot.commands.controls.AutoFiringSequence;
 import frc.robot.commands.controls.FireSequence;
 import frc.robot.commands.controls.SetFlyWheelVelocity;
 import frc.robot.commands.controls.SetHoodPosition;
+import frc.robot.commands.controls.TrackVisionTarget;
 import frc.robot.sensors.DriveEncoder;
 import frc.robot.tools.controlLoops.PID;
 import frc.robot.tools.pathTools.Odometry;
@@ -38,7 +39,7 @@ public class DriveTrain extends SubsystemBase {
 			RobotMap.rightDriveLead.getSelectedSensorPosition(0));
 	private double vKF = 0.0455925;
 	private double vKP = 0.21;
-	private double vKI = 0.000000;
+	private double vKI = 0.000002;
 	private double vKD = 0;
 	private int profile = 0;
 	private PID alignmentPID;
@@ -52,6 +53,7 @@ public class DriveTrain extends SubsystemBase {
 	private double desVel;
 	private FireSequence fireSequence;
 	private AutoFiringSequence autoFiringSequence;
+	private TrackVisionTarget trackVisionTarget;
 	private double desPos;
 	private boolean driveTrainBeingUsed;
 	public DriveTrain() {
@@ -216,15 +218,15 @@ public class DriveTrain extends SubsystemBase {
 			shiftVisionRight();
 		}
 		if(ButtonMap.startInitiaionLineFiringSequence()){
-			fireSequence = new FireSequence(4500, 10.5);
+			fireSequence = new FireSequence(4500, 10.5, 2.5);
 			fireSequence.schedule();
 		}
 		else if(ButtonMap.startTrenchRunFiringSequence()){
-			fireSequence = new FireSequence(5500, 13.5);
+			fireSequence = new FireSequence(5500, 13.5, 2.5);
 			fireSequence.schedule();
 		}
 		else if(ButtonMap.startCloseUpFiringSequence()){
-			fireSequence = new FireSequence(4000, 0);
+			fireSequence = new FireSequence(4000, 0, 2.5);
 			fireSequence.schedule();
 		}
 		else if(ButtonMap.stopManualFiringSequence()){
@@ -232,7 +234,7 @@ public class DriveTrain extends SubsystemBase {
 			new SequentialCommandGroup(new SetFlyWheelVelocity(0), new SetHoodPosition(0)).schedule();
 		}
 		else if(ButtonMap.autoRangingShot()){
-			autoFiringSequence = new AutoFiringSequence();
+			autoFiringSequence = new AutoFiringSequence(2.5);
 			autoFiringSequence.schedule();	
 		}
 		else if(ButtonMap.stopAutoRangingShot()){
@@ -240,9 +242,18 @@ public class DriveTrain extends SubsystemBase {
 			new SequentialCommandGroup(new SetFlyWheelVelocity(0), new SetHoodPosition(0)).schedule();
 
 		}
+		else if(ButtonMap.autoTarget()){
+			trackVisionTarget =	new TrackVisionTarget();
+			trackVisionTarget.schedule();
+		}
+		else if(ButtonMap.endAutoTarget()){
+			trackVisionTarget.cancel();
+			
+		}
 		else{
 			if(!ButtonMap.manualTarget()){
 				arcadeDrive();
+				
 			}
 			else{
 				if(ButtonMap.manualAdjustLeft()){

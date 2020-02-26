@@ -18,9 +18,9 @@ public class AutoFiringSequence extends SequentialCommandGroup {
   /**
    * Creates a new AutoFiringSequence.
    */
-  public AutoFiringSequence() {
+  public AutoFiringSequence(double time) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new SetHoodPosition(10), new SetFlyWheelVelocity(4000), new TrackVisionTarget(), new FireSequence(5500, RobotMap.hood.getOptimalPosition()));
+    super(new SetHoodPosition(10), new SetFlyWheelVelocity(4000), new TrackVisionTarget(), new FireSequence(5500, RobotMap.hood.getOptimalPosition(), time));
   }
 }
