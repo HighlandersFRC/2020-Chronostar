@@ -104,7 +104,7 @@ public class DriveTrain extends SubsystemBase {
 		alignmentPID.setSetPoint(visionOffset);
 		alignmentPID.setMaxOutput(6);
 		alignmentPID.setMinInput(-6);
-		//SmartDashboard.putNumber("setPos", 0);
+		SmartDashboard.putNumber("setPos", 0);
 	}
 
 
@@ -273,7 +273,7 @@ public class DriveTrain extends SubsystemBase {
 			
 		}
 		/*if(ButtonMap.autoRangingShot()){
-			fireSequence = new FireSequence(5500, SmartDashboard.getNumber("setPos",0 ));
+			fireSequence = new FireSequence(5500, SmartDashboard.getNumber("setPos",0 ), 2.5);
 			fireSequence.schedule();
 		}*/
 		driveTrainBeingUsed = false;

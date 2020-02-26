@@ -23,10 +23,10 @@ public class Arm extends SubsystemBase {
   /**
    * Creates a new arm.
    */
-  private double kf = .04;
-  private double kp = 0.00000001;
-  private double ki = 0.0000000;
-  private double kd = 0.00000;
+  private double kf = .02;
+  private double kp = 0.00000000002;
+  private double ki = 0.00000000001;
+  private double kd = 0.00;
   private float maxPoint = 14.5f;
   private float minPoint = -2;
   private float maxControlPoint = 13.5f;
@@ -67,8 +67,8 @@ public class Arm extends SubsystemBase {
     ArmPidController.setSmartMotionMaxVelocity(5, 0);
     ArmPidController.setSmartMotionMinOutputVelocity(-5, 0);
     ArmPidController.setSmartMotionMaxAccel(3, 0);
-    ArmPidController.setSmartMotionAllowedClosedLoopError(0.1, 1);
-    SmartDashboard.putNumber("Set arm Position", 0);
+    ArmPidController.setSmartMotionAllowedClosedLoopError(0.2, 1);
+    //SmartDashboard.putNumber("Set arm Position", 0);
     ArmSetPoint = maxPoint;
     
   }
@@ -111,13 +111,13 @@ public class Arm extends SubsystemBase {
       ArmPidController.setReference(ArmSetPoint, ControlType.kSmartMotion);
       //RobotMap.armMotor.set(0.2);
     }
-    SmartDashboard.putNumber("arm target", ArmSetPoint);
+    /*SmartDashboard.putNumber("arm target", ArmSetPoint);
     SmartDashboard.putNumber("arm pos", armEncoder.getPosition());
     SmartDashboard.putNumber("Arm Output", RobotMap.armMotor.getAppliedOutput());
     SmartDashboard.putNumber("KF value", ArmPidController.getFF());
     SmartDashboard.putNumber("KP value", ArmPidController.getP());
     SmartDashboard.putBoolean("arm forward limit", forwardLimit.get());
-    SmartDashboard.putBoolean("arm revers limit", reverseLimit.get());
+    SmartDashboard.putBoolean("arm revers limit", reverseLimit.get());*/
 
     
     // This method will be called once per scheduler run

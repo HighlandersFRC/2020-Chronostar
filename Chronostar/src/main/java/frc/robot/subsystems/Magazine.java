@@ -62,10 +62,10 @@ public class Magazine extends SubsystemBase {
         }
     }
     lastState = RobotMap.beamBreakOne.get();
-    SmartDashboard.putNumber("balls in mag", magCount);
+    /*SmartDashboard.putNumber("balls in mag", magCount);
     SmartDashboard.putNumber("catch Count", catchCount);
     SmartDashboard.putBoolean("1 beamBroken", !RobotMap.beamBreakOne.get());
-    SmartDashboard.putBoolean("2 beamBroken", !RobotMap.beamBreakTwo.get());
+    SmartDashboard.putBoolean("2 beamBroken", !RobotMap.beamBreakTwo.get());*/
     
 
     // This method will be called once per scheduler run

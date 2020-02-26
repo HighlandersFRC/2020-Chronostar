@@ -196,13 +196,13 @@ public class PurePursuitController extends CommandBase {
 		}
 		distToEndVector.setX(chosenPath.getMainPath().getStates().get(chosenPath.getMainPath().getStates().size()-1).poseMeters.getTranslation().getX()-odometry.getX());
 		distToEndVector.setY(chosenPath.getMainPath().getStates().get(chosenPath.getMainPath().getStates().size()-1).poseMeters.getTranslation().getY()-odometry.getY());
-		SmartDashboard.putNumber("distoend", distToEndVector.length());
+		/*SmartDashboard.putNumber("distoend", distToEndVector.length());
 		SmartDashboard.putNumber("x", odometry.getX());
 		SmartDashboard.putNumber("closestSegment", chosenPath.getMainPath().getStates().size()-closestSegment);
 		SmartDashboard.putNumber("y",odometry.getY());
 		SmartDashboard.putNumber("theta", odometry.gettheta());
 		SmartDashboard.putNumber("LAX", lookAheadPoint.getXPos());
-		SmartDashboard.putNumber("LAY", lookAheadPoint.getYPos());
+		SmartDashboard.putNumber("LAY", lookAheadPoint.getYPos());*/
 		startingNumberLA = (int)partialPointIndex;
 		lastLookAheadPoint = lookAheadPoint;
 		findRobotCurvature();

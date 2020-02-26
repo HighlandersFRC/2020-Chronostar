@@ -55,6 +55,6 @@ public class Climber extends SubsystemBase {
 
     }
 
-    SmartDashboard.putBoolean("Climber Safety", saftey);
+    //SmartDashboard.putBoolean("Climber Safety", saftey);
   }
 }

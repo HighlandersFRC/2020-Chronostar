@@ -78,7 +78,7 @@ public class Hood extends SubsystemBase {
   public double getOptimalPosition(){
     double dist = RobotMap.lidar1.getDistance();
     if(dist>=1.9 &&dist <=25){
-      return 0.0075*Math.pow(dist,3) -0.3353*Math.pow(dist,2) +4.8974*dist - 8.1235;
+      return 0.0057*Math.pow(dist,3) - 0.2856*Math.pow(dist,2)+ 4.5337*dist - 7.5517;
     }
     else{
       return -1;
@@ -110,7 +110,7 @@ public class Hood extends SubsystemBase {
     if(m_forwardLimit.get() == true){
        resetEncodermax();
     }
-    SmartDashboard.putNumber("get Position", RobotMap.hoodMotor.getEncoder().getPosition());
+    //SmartDashboard.putNumber("get Position", RobotMap.hoodMotor.getEncoder().getPosition());
 
   }
   public void teleopPeriodic(){

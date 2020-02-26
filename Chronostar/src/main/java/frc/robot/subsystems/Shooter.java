@@ -24,9 +24,9 @@ public class Shooter extends SubsystemBase {
    */
   private double kF = 0.05;
   private double kP = 0.25;
-  private double kI = 0.00005;
+  private double kI = 0.0001;
   private int offCount;
-  private double kD = 10;
+  private double kD = 0;
   private int iZone = 439;
   private double shooterPower;
   private double offTime;
@@ -44,7 +44,7 @@ public class Shooter extends SubsystemBase {
     RobotMap.shooterMaster.config_kI(0, kI);
     RobotMap.shooterMaster.config_kD(0, kD);
     RobotMap.shooterMaster.config_IntegralZone(0, iZone);
-    SmartDashboard.putNumber("setVelocity", 0);
+    //SmartDashboard.putNumber("setVelocity", 0);
     velCounter = 0;
   }
   public void setFlyWheelSpeed(double velocity){
@@ -68,10 +68,10 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Speed", this.getShooterVelocity());
-    SmartDashboard.putBoolean("Close", Math.abs(this.getShooterVelocity()-shooterPower)<100);
+    //SmartDashboard.putBoolean("Close", Math.abs(this.getShooterVelocity()-shooterPower)<100);
     if(Math.abs(this.getShooterVelocity()-shooterPower)>100){
       offCount++;
-      SmartDashboard.putNumber("count", offCount);
+      //SmartDashboard.putNumber("count", offCount);
     }
     else{
       offCount = 0;
