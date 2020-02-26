@@ -21,7 +21,7 @@ public class CommandSuites {
     public CommandSuites(){
     }
     public void startAutoCommands(){
-        if(ButtonMap.crossLineShoot()){
+       if(ButtonMap.crossLineShoot()){
             RobotMap.drive.startAutoOdometry(true, 10, -8);
             centerHighGoalAuto = new CenterHighGoalAuto();
             centerHighGoalAuto.schedule();

@@ -26,6 +26,6 @@ public class RightAdvancedAuto extends SequentialCommandGroup {
   public RightAdvancedAuto() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new TrackVisionTarget(), new FireSequence(4500, 10, 1.0), new PurePursuitController(PathList.rightAutoPath1, 2.5, 4.0,true, true ),new PurePursuitController(PathList.rightAutoPath2, 2.5, 4.0,true, true ), new TrackVisionTarget(), new FireSequence(4500, 10, 1.0));
+    super(new TrackVisionTarget(), new FireSequence(4500, 10, 1.0), new PurePursuitController(PathList.rightAutoPath1, 2.5, 4.0,true, true ),new PurePursuitController(PathList.rightAutoPath2, 2.5, 4.0,true, true ), new TrackVisionTarget(), new FireSequence(5500, 13.5, 1.0));
   }
 }
