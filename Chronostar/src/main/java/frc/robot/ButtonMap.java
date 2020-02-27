@@ -22,7 +22,7 @@ public class ButtonMap {
         return -oi.driverController.getRawAxis(4);
     }
     public static boolean switchCamera(){
-        return oi.driverController.getTriggerAxis(Hand.kLeft)>=0.3;
+        return oi.driverController.getTriggerAxis(Hand.kLeft)>=0.15;
     }
     public static boolean manualTarget(){
         return oi.driverController.getBumper(Hand.kRight);
@@ -56,7 +56,7 @@ public class ButtonMap {
     }
     //operator controller
     public static boolean RunIntake(){
-        return oi.operatorController.getTriggerAxis(Hand.kLeft)>=0.3;
+        return oi.operatorController.getTriggerAxis(Hand.kLeft)>=0.15;
     }
     public static boolean reverseMag(){
         return oi.operatorController.getBButton();
