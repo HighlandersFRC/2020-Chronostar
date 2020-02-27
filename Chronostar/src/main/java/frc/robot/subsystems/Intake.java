@@ -16,7 +16,6 @@ public class Intake extends SubsystemBase {
    * Creates a new Intake.
    */
   public Intake() {
-
   }
 
   @Override
@@ -38,7 +37,6 @@ public class Intake extends SubsystemBase {
       }
       else if(ButtonMap.reverseMag()){
         RobotMap.intakeMotor.set(-0.6);
-
       }
       else{
         RobotMap.intakeMotor.set(0);

@@ -49,7 +49,7 @@ public class Robot extends TimedRobot {
       cameraPort = new SerialPort(115200, Port.kUSB);
       visionCamera = new VisionCamera(cameraPort);
     } catch (Exception e) {
-
+      System.err.println("cameras faild to connect");
     }
     camera = CameraServer.getInstance().startAutomaticCapture("VisionCamera1", "/dev/video0");
     camera.setResolution(320, 240);
@@ -141,11 +141,6 @@ public class Robot extends TimedRobot {
     RobotMap.intake.teleopPeriodic();
     RobotMap.climber.teleopPeriodic();
     Scheduler.getInstance().run();
-
-
-
-
-
   }
 
   @Override

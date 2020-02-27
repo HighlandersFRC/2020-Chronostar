@@ -82,7 +82,6 @@ public class RobotConfig {
         RobotConfig.setShooterMotorsCoast();
         RobotConfig.setShooterMotorVoltageCompensation();
         RobotMap.climber.initClimber();
-
     }
 
     public void setTeleopConfig() {
@@ -95,8 +94,6 @@ public class RobotConfig {
         RobotConfig.setDriveTrainVoltageCompensation();
         RobotConfig.enableDriveCurrentLimiting();
         RobotConfig.setDriveMotorsBrake();
-
-
     }
     public static void setAllMotorsBrake() {
 		for(TalonFX talon:RobotMap.allFalcons){

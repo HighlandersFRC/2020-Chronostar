@@ -33,7 +33,6 @@ public class ButtonMap {
     public static boolean endAutoTarget(){
         return oi.driverController.getBumperReleased(Hand.kLeft);
     }
-    
     public static boolean manualAdjustLeft(){
         return oi.driverController.getXButton();
     }
@@ -57,7 +56,7 @@ public class ButtonMap {
     }
     //operator controller
     public static boolean RunIntake(){
-        return oi.operatorController.getBumper(Hand.kLeft);
+        return oi.operatorController.getTriggerAxis(Hand.kLeft)>=0.3;
     }
     public static boolean reverseMag(){
         return oi.operatorController.getBButton();
@@ -65,17 +64,8 @@ public class ButtonMap {
     public static boolean stopReverseMag(){
         return oi.operatorController.getBButtonReleased();
     }
-    public static boolean armUp(){
-        return oi.operatorController.getTriggerAxis(Hand.kLeft)>0.3;
-    }
-    public static boolean armDown(){
-        return oi.operatorController.getTriggerAxis(Hand.kRight)>0.3;
-    }
-    public static boolean SafetyButton(){
+     public static boolean SafetyButton(){
         return oi.operatorController.getStartButton() && oi.driverController.getStartButton();
-    }
-    public static boolean moveShooterPowerUp(){
-        return oi.operatorController.getPOV() ==0;
     }
     public static boolean startInitiaionLineFiringSequence(){
         return oi.operatorController.getXButtonPressed();
@@ -100,6 +90,12 @@ public class ButtonMap {
     }
     public static boolean stopAutoRangingShot(){
         return oi.operatorController.getBackButtonReleased();
+    }
+    public static boolean armHigh(){
+        return oi.operatorController.getPOV()== 0;
+    }
+    public static boolean armLow(){
+        return oi.operatorController.getPOV()== 180;
     }
     public static boolean crossLine(){
         return oi.autoChooser.getRawButton(1);

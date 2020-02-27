@@ -82,10 +82,5 @@ public class Shooter extends SubsystemBase {
       System.out.println("WARNING, ENCODER FALIURE");
       //RobotMap.shooterMaster.set(ControlMode.PercentOutput, 0);
     }
-    else{
-    
-    }
-  
-    
   }
 }

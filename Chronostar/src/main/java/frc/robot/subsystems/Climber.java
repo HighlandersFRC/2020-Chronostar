@@ -21,13 +21,10 @@ public class Climber extends SubsystemBase {
   private DeployClimber deployClimber;
   private boolean saftey = false;
   public Climber() {
-
   }
 
   @Override
   public void periodic() {
-
-    
     // This method will be called once per scheduler run
   }
   public void initClimber(){
@@ -41,20 +38,17 @@ public class Climber extends SubsystemBase {
     }
     if(saftey){
       if(ButtonMap.deployClimber() == true&&!deployClimber.isFinished()){
-        
         deployClimber.schedule();
       }
       if(RobotMap.climberReleasePiston.get() == RobotMap.constrainArm){
         if(ButtonMap.winchDown() == true){
-          RobotMap.winchMotor.set(-0.3);
+          RobotMap.winchMotor.set(-0.4);
         }
         else{
           RobotMap.winchMotor.set(0);
         }
       }
-
     }
-
-    //SmartDashboard.putBoolean("Climber Safety", saftey);
+    SmartDashboard.putBoolean("Climber Safety", saftey);
   }
 }

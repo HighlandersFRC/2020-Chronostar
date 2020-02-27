@@ -58,7 +58,6 @@ public class RobotMap {
   public static int indexerID = 9;
   public static int magazineWheelID = 10;
 
-  
   public static int intakeMotorID = 12;
 
   public static int climberMotorId = 13;

@@ -40,17 +40,13 @@ public class Hood extends SubsystemBase {
 
     m_forwardLimit = RobotMap.hoodMotor.getForwardLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
     m_reverseLimit = RobotMap.hoodMotor.getReverseLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
-
     RobotMap.hoodMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
     RobotMap.hoodMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
-
     RobotMap.hoodMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, maxpoint);
     RobotMap.hoodMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, minpoint);
     RobotMap.hoodMotor.enableVoltageCompensation(11.3);
     mpidController = RobotMap.hoodMotor.getPIDController();
-
     hoodEncoder = RobotMap.hoodMotor.getEncoder();
-
     mpidController.setFF(kf);
     mpidController.setP(kp);
     mpidController.setI(ki);
@@ -61,10 +57,8 @@ public class Hood extends SubsystemBase {
     mpidController.setSmartMotionMinOutputVelocity(-100, 0);
     mpidController.setSmartMotionMaxAccel(80, 0);
     mpidController.setSmartMotionAllowedClosedLoopError(.1, 0);
-
   }
   public Hood() {
-
   }
   public void resetEncodermin(){
     RobotMap.hoodMotor.getEncoder().setPosition(minpoint);
@@ -95,11 +89,9 @@ public class Hood extends SubsystemBase {
   }
   public double autoHoodPositionCloseDistance(double dist){
     return 0;
-
   }
   public double autoHoodPositionFarDistance(double dist){
     return 0;
-
   }
 
   @Override
@@ -111,7 +103,6 @@ public class Hood extends SubsystemBase {
        resetEncodermax();
     }
     //SmartDashboard.putNumber("get Position", RobotMap.hoodMotor.getEncoder().getPosition());
-
   }
   public void teleopPeriodic(){
   }

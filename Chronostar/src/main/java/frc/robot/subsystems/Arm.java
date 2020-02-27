@@ -51,11 +51,9 @@ public class Arm extends SubsystemBase {
     reverseLimit = RobotMap.armMotor.getReverseLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
     //RobotMap.armMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
     RobotMap.armMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
-
     RobotMap.armMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, maxPoint);
     RobotMap.armMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, minPoint);
-    
-   //SmartDashboard.putBoolean("Forward Limit Enabled", m_forwardLimit.isLimitSwitchEnabled());
+    //SmartDashboard.putBoolean("Forward Limit Enabled", m_forwardLimit.isLimitSwitchEnabled());
     //SmartDashboard.putBoolean("Reverse Limit Enabled", m_reverseLimit.isLimitSwitchEnabled());
     ArmPidController = RobotMap.armMotor.getPIDController();
     armEncoder = RobotMap.armMotor.getEncoder();
@@ -70,10 +68,8 @@ public class Arm extends SubsystemBase {
     ArmPidController.setSmartMotionAllowedClosedLoopError(0.2, 1);
     //SmartDashboard.putNumber("Set arm Position", 0);
     ArmSetPoint = maxPoint;
-    
   }
   public Arm() {
-
   }
   public void resetEncodermin(){
     RobotMap.armMotor.getEncoder().setPosition(minPoint);
@@ -97,14 +93,20 @@ public class Arm extends SubsystemBase {
     if (ArmSetPoint >= maxPoint){
       ArmSetPoint = maxPoint;
     }
+
     if(ButtonMap.deployClimber() == true){
       ArmSetPoint = 3;
     }
+    else if(ButtonMap.armLow()){
+      ArmSetPoint = maxPoint;
+    }
+    else if(ButtonMap.armHigh()){
+      ArmSetPoint = 10;
+    }
     else if(ButtonMap.enableArmControl() == true){
       ArmSetPoint = (ArmSetPoint+ButtonMap.armOutput()*0.08);
-      ArmPidController.setReference(ArmSetPoint, ControlType.kSmartMotion);
     }
-    else if (armEncoder.getPosition() >= maxControlPoint && ArmSetPoint >= maxControlPoint){
+    if(armEncoder.getPosition() >= maxControlPoint && ArmSetPoint >= maxControlPoint){
       RobotMap.armMotor.set(0.2);
     }
     else{
@@ -117,8 +119,6 @@ public class Arm extends SubsystemBase {
     SmartDashboard.putNumber("KP value", ArmPidController.getP());
     SmartDashboard.putBoolean("arm forward limit", forwardLimit.get());
     SmartDashboard.putBoolean("arm revers limit", reverseLimit.get());*/
-
-    
     // This method will be called once per scheduler run
   }
 }

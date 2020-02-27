@@ -28,7 +28,6 @@ public class Magazine extends SubsystemBase {
   private double catchCount;
   private double tryCount;
   public Magazine() {
-
   }
 
   @Override
@@ -66,8 +65,6 @@ public class Magazine extends SubsystemBase {
     SmartDashboard.putNumber("catch Count", catchCount);
     SmartDashboard.putBoolean("1 beamBroken", !RobotMap.beamBreakOne.get());
     SmartDashboard.putBoolean("2 beamBroken", !RobotMap.beamBreakTwo.get());*/
-    
-
     // This method will be called once per scheduler run
   }
   public void runMagazineSystem(){
@@ -80,7 +77,6 @@ public class Magazine extends SubsystemBase {
     RobotMap.magazineWheel.set(ControlMode.PercentOutput, 0);
     RobotMap.indexer.set(0);
   }
-
   public void setWheelSpeed(double wheelSpeed){
     RobotMap.magazineWheel.set(ControlMode.PercentOutput, wheelSpeed);
   }
