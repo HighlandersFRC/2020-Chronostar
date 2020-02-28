@@ -105,9 +105,18 @@ public class Arm extends SubsystemBase {
     }
     else if(ButtonMap.enableArmControl() == true){
       ArmSetPoint = (ArmSetPoint+ButtonMap.armOutput()*0.08);
+     // RobotMap.armMotor.set(ButtonMap.armOutput()*0.4);
+     // ArmSetPoint = RobotMap.armMotor.getEncoder().getPosition();
     }
+
     if(armEncoder.getPosition() >= maxControlPoint && ArmSetPoint >= maxControlPoint){
-      RobotMap.armMotor.set(0.2);
+      if(ButtonMap.RunIntake()){
+        RobotMap.armMotor.set(0.3);
+
+      }
+      else{
+        RobotMap.armMotor.set(0.1);
+      }
     }
     else{
       ArmPidController.setReference(ArmSetPoint, ControlType.kSmartMotion);

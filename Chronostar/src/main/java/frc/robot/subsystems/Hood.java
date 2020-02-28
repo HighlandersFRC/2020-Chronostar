@@ -115,7 +115,7 @@ public class Hood extends SubsystemBase {
     if(m_forwardLimit.get() == true){
        resetEncodermax();
     }
-    //SmartDashboard.putNumber("get Position", RobotMap.hoodMotor.getEncoder().getPosition());
+    SmartDashboard.putNumber("get Position", RobotMap.hoodMotor.getEncoder().getPosition());
   }
   public void teleopPeriodic(){
   }
