@@ -103,12 +103,14 @@ public class Arm extends SubsystemBase {
     else if(ButtonMap.armHigh()){
       ArmSetPoint = 10;
     }
-    else if(ButtonMap.enableArmControl() == true){
-      ArmSetPoint = (ArmSetPoint+ButtonMap.armOutput()*0.08);
+    else if(ButtonMap.armUp()){
+      ArmSetPoint = (ArmSetPoint+0.05);
      // RobotMap.armMotor.set(ButtonMap.armOutput()*0.4);
      // ArmSetPoint = RobotMap.armMotor.getEncoder().getPosition();
     }
-
+    else if(ButtonMap.armDown()){
+      ArmSetPoint = (ArmSetPoint - 0.05);
+    }
     if(armEncoder.getPosition() >= maxControlPoint && ArmSetPoint >= maxControlPoint){
       if(ButtonMap.RunIntake()){
         RobotMap.armMotor.set(0.3);

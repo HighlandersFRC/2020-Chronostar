@@ -75,7 +75,7 @@ public class Hood extends SubsystemBase {
     double lidarDist = RobotMap.lidar1.getDistance();
     double camDist = Robot.visionCamera.getDistance();
     double dist;
-    if(Math.abs(Timer.getFPGATimestamp()-Robot.visionCamera.lastParseTime)>0.5){
+    /*if(Math.abs(Timer.getFPGATimestamp()-Robot.visionCamera.lastParseTime)>0.5){
         dist = lidarDist;
     }
     else if(Math.abs(lidarDist-camDist)>2){
@@ -83,7 +83,8 @@ public class Hood extends SubsystemBase {
     }
     else{
       dist = lidarDist;
-    }
+    }*/
+    dist = lidarDist;
     if(dist>=1.9 &&dist <=25){
       return 0.0057*Math.pow(dist,3) - 0.2856*Math.pow(dist,2)+ 4.5337*dist - 7.5517;
     }

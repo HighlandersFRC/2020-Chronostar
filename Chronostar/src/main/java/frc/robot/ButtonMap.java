@@ -58,6 +58,12 @@ public class ButtonMap {
     public static boolean RunIntake(){
         return oi.operatorController.getTriggerAxis(Hand.kLeft)>=0.15;
     }
+    public static boolean armUp(){
+        return oi.operatorController.getBumper(Hand.kLeft);
+    }
+    public static boolean armDown(){
+        return oi.operatorController.getBumper(Hand.kRight);
+    }
     public static boolean reverseMag(){
         return oi.operatorController.getBButton();
     }
@@ -79,12 +85,6 @@ public class ButtonMap {
     public static boolean stopManualFiringSequence(){
         return oi.operatorController.getAButtonReleased()||oi.operatorController.getXButtonReleased()||oi.operatorController.getYButtonReleased();
     }
-    public static boolean runFeedingMechanism(){
-        return oi.operatorController.getBumper(Hand.kRight);
-    }
-    public static boolean stoprunFeedingMechanism(){
-        return oi.operatorController.getBumperReleased(Hand.kRight);
-    }
     public static boolean autoRangingShot(){
         return oi.operatorController.getBackButtonPressed();
     }
@@ -105,9 +105,6 @@ public class ButtonMap {
     }
     public static boolean rightAdvancedAuto(){
         return oi.autoChooser.getRawButton(3);
-    }
-    public static boolean enableArmControl(){
-        return oi.operatorController.getStickButton(Hand.kRight);
     }
     public static double armOutput(){
         return oi.operatorController.getRawAxis(5);
