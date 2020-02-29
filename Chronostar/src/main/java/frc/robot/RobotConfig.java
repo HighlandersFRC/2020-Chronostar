@@ -50,6 +50,7 @@ public class RobotConfig {
         RobotMap.hoodMotor.setIdleMode(IdleMode.kBrake);
         RobotMap.hoodMotor.setSmartCurrentLimit(RobotStats.hoodCurrentLimit);
         RobotMap.hood.inithood();
+        RobotMap.hoodMotor.setInverted(true);
 
         RobotMap.magazineBelt.setNeutralMode(NeutralMode.Brake);
         RobotMap.magazineWheel.setNeutralMode(NeutralMode.Brake);

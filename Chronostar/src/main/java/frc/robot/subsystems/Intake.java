@@ -45,5 +45,6 @@ public class Intake extends SubsystemBase {
     else{
       RobotMap.intakeMotor.set(-0.5);
     }
+    
   }
 }

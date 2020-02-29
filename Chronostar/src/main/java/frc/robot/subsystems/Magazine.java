@@ -92,18 +92,13 @@ public class Magazine extends SubsystemBase {
     if(ButtonMap.reverseMag() == true){
       RobotMap.magazineWheel.set(ControlMode.PercentOutput, -.6);
       RobotMap.magazineBelt.set(ControlMode.PercentOutput, -1);
+      RobotMap.indexer.set( -.6);
     }
     if(ButtonMap.stopReverseMag()){
       RobotMap.magazineWheel.set(ControlMode.PercentOutput, 0);
       RobotMap.magazineBelt.set(ControlMode.PercentOutput, 0);
-    }
-    if(ButtonMap.runFeedingMechanism() == true){
-      RobotMap.magazineWheel.set(ControlMode.PercentOutput, 1);
-      RobotMap.magazineBelt.set(ControlMode.PercentOutput, 0.6);
-    }
-    if(ButtonMap.stoprunFeedingMechanism()== true){
-      RobotMap.magazineWheel.set(ControlMode.PercentOutput, 0);
-      RobotMap.magazineBelt.set(ControlMode.PercentOutput, 0);
+      RobotMap.indexer.set(0);
+
     }
   }
 }

@@ -7,8 +7,10 @@
 
 package frc.robot.subsystems;
 import frc.robot.ButtonMap;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.sensors.LidarLite;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANPIDController;
@@ -70,7 +72,19 @@ public class Hood extends SubsystemBase {
     return Math.abs(RobotMap.hoodMotor.getEncoder().getPosition()-dPosition)<0.2&&Math.abs(RobotMap.hoodMotor.get())<0.01;
   }
   public double getOptimalPosition(){
-    double dist = RobotMap.lidar1.getDistance();
+    double lidarDist = RobotMap.lidar1.getDistance();
+    double camDist = Robot.visionCamera.getDistance();
+    double dist;
+    /*if(Math.abs(Timer.getFPGATimestamp()-Robot.visionCamera.lastParseTime)>0.5){
+        dist = lidarDist;
+    }
+    else if(Math.abs(lidarDist-camDist)>2){
+      dist = camDist;
+    }
+    else{
+      dist = lidarDist;
+    }*/
+    dist = lidarDist;
     if(dist>=1.9 &&dist <=25){
       return 0.0057*Math.pow(dist,3) - 0.2856*Math.pow(dist,2)+ 4.5337*dist - 7.5517;
     }
@@ -102,7 +116,7 @@ public class Hood extends SubsystemBase {
     if(m_forwardLimit.get() == true){
        resetEncodermax();
     }
-    //SmartDashboard.putNumber("get Position", RobotMap.hoodMotor.getEncoder().getPosition());
+    SmartDashboard.putNumber("get Position", RobotMap.hoodMotor.getEncoder().getPosition());
   }
   public void teleopPeriodic(){
   }
