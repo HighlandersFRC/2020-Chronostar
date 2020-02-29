@@ -122,7 +122,7 @@ public class DriveTrain extends SubsystemBase {
 			}
 	
 			if(Math.abs(ButtonMap.getRotation())>deadZone){
-				turn = ButtonMap.getRotation();
+				turn = ButtonMap.getRotation()*0.75;
 			}
 			else{
 				turn = 0;

@@ -104,8 +104,8 @@ public class Arm extends SubsystemBase {
       ArmSetPoint = 10;
     }
     else if(ButtonMap.armUp()){
-      ArmSetPoint = (ArmSetPoint+0.05);
-     // RobotMap.armMotor.set(ButtonMap.armOutput()*0.4);
+      //ArmSetPoint = (ArmSetPoint+0.05);
+      ArmSetPoint = ArmSetPoint+ButtonMap.armOutput()*0.05;
      // ArmSetPoint = RobotMap.armMotor.getEncoder().getPosition();
     }
     else if(ButtonMap.armDown()){

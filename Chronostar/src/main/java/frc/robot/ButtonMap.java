@@ -59,10 +59,10 @@ public class ButtonMap {
         return oi.operatorController.getTriggerAxis(Hand.kLeft)>=0.15;
     }
     public static boolean armUp(){
-        return oi.operatorController.getBumper(Hand.kLeft);
+        return oi.operatorController.getBumper(Hand.kRight);
     }
     public static boolean armDown(){
-        return oi.operatorController.getBumper(Hand.kRight);
+        return oi.operatorController.getBumper(Hand.kLeft);
     }
     public static boolean reverseMag(){
         return oi.operatorController.getBButton();
@@ -71,7 +71,7 @@ public class ButtonMap {
         return oi.operatorController.getBButtonReleased();
     }
      public static boolean SafetyButton(){
-        return oi.operatorController.getStartButton() && oi.driverController.getStartButton();
+        return oi.driverController.getStartButton();
     }
     public static boolean startInitiaionLineFiringSequence(){
         return oi.operatorController.getXButtonPressed();
