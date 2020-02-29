@@ -36,7 +36,7 @@ public class Magazine extends SubsystemBase {
         if(RobotMap.beamBreakOne.get() == false){
           if(catchCount <= 50){
             if (RobotMap.beamBreakTwo.get() == false){
-             new MagazineAutomation(0.0, 0.75, 0.0, 0.15).schedule();
+             new MagazineAutomation(0.15, 0.75, 0.0, 0.15).schedule();
             }
            else{
              new MagazineAutomation(0.9, 0.85, 0.0, 0.15).schedule();
@@ -48,6 +48,7 @@ public class Magazine extends SubsystemBase {
              tryCount++;
             }
             else{
+               new MagazineAutomation(-0.8, -0.2, 0.0, 0.1).schedule();
                catchCount = 0;
                tryCount = 0;
                stuck = false;

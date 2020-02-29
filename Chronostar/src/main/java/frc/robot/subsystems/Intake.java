@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ButtonMap;
 import frc.robot.RobotMap;
+import frc.robot.commands.controls.MagazineAutomation;
 
 public class Intake extends SubsystemBase {
   /**

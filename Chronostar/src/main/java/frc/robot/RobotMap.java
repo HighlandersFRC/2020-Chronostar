@@ -42,6 +42,9 @@ public class RobotMap {
 
   public static int beamBreak1Port = 0;
   public static int beamBreak2Port = 1;
+  public static int beamBreak3Port = 3;
+  public static int beamBreak4Port = 4;
+
 
   public static int rightDriveLeadID = 1;
   public static int leftDriveLeadID = 3;
@@ -88,6 +91,8 @@ public class RobotMap {
   public static Spark blinkin = new Spark(0);
   public static DigitalInput beamBreakOne = new DigitalInput(beamBreak1Port);
   public static DigitalInput beamBreakTwo = new DigitalInput(beamBreak2Port);
+  public static DigitalInput beamBreakThree = new DigitalInput(beamBreak3Port);
+  public static DigitalInput beamBreakFour = new DigitalInput(beamBreak4Port);
   public static PathList pathList = new PathList();
   
   public static SupplyCurrentLimitConfiguration robotCurrentConfigurationEnabled = new SupplyCurrentLimitConfiguration(true, RobotStats.driveTrainMaxCurrent, RobotStats.driveTrainPeakThreshold, RobotStats.driveTrainPeakTime);

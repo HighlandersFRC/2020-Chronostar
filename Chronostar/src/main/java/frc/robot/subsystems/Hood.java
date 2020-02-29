@@ -86,7 +86,7 @@ public class Hood extends SubsystemBase {
     }*/
     dist = lidarDist;
     if(dist>=1.9 &&dist <=25){
-      return 0.0057*Math.pow(dist,3) - 0.2856*Math.pow(dist,2)+ 4.5337*dist - 7.5517;
+      return 0.0076*Math.pow(dist,3) - 0.3358*Math.pow(dist,2)+ 4.8685*dist - 8.048;
     }
     else{
       return -1;
