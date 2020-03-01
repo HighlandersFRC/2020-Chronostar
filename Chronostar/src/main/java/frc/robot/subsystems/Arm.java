@@ -23,16 +23,16 @@ public class Arm extends SubsystemBase {
   /**
    * Creates a new arm.
    */
-  private double kf = .02;
-  private double kp = 0.00000000002;
-  private double ki = 0.00000000001;
+  private double kf = .12;
+  private double kp = 0.0002;
+  private double ki = 0.0000000000;
   private double kd = 0.00;
   private float maxPoint = 14.5f;
   private float minPoint = -2;
   private float maxControlPoint = 13.5f;
-  private float maxvel = 10;
-  private float minvel = 10;
-  private float accel = 3;
+  private float maxvel = 20;
+  private float minvel = 20;
+  private float accel = 9;
   private double allowederror = 0.1;
 
   private CANPIDController ArmPidController = new CANPIDController(RobotMap.armMotor);
@@ -101,15 +101,10 @@ public class Arm extends SubsystemBase {
       ArmSetPoint = maxPoint;
     }
     else if(ButtonMap.armHigh()){
-      ArmSetPoint = 10;
+      ArmSetPoint = 0;
     }
-    else if(ButtonMap.armUp()){
-      //ArmSetPoint = (ArmSetPoint+0.05);
-      ArmSetPoint = ArmSetPoint+ButtonMap.armOutput()*0.05;
-     // ArmSetPoint = RobotMap.armMotor.getEncoder().getPosition();
-    }
-    else if(ButtonMap.armDown()){
-      ArmSetPoint = (ArmSetPoint - 0.05);
+    else if(Math.abs(ButtonMap.armOutput())>0.2){
+      ArmSetPoint = (ArmSetPoint+ButtonMap.armOutput()*0.08);
     }
     if(armEncoder.getPosition() >= maxControlPoint && ArmSetPoint >= maxControlPoint){
       if(ButtonMap.RunIntake()){

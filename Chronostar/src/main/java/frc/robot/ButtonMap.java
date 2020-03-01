@@ -55,6 +55,9 @@ public class ButtonMap {
         return oi.driverController.getPOV() == 90;
     }
     //operator controller
+    public static boolean enableArmControl(){
+        return oi.operatorController.getStickButton(Hand.kRight);
+    }
     public static boolean RunIntake(){
         return oi.operatorController.getTriggerAxis(Hand.kLeft)>=0.15;
     }
