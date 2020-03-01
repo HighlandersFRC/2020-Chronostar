@@ -46,7 +46,7 @@ public class DriveTrain extends SubsystemBase {
 	private double aKP = 0.1;
 	private double aKI = 0.0001;
 	private double aKD = 0.00;
-	private double visionOffset = -14.0;
+	private double visionOffset = -12.5;
 	private double visionAcceptablilityZone = 0.5;
 	private double visionDeadzone = 0.25;
 	private Odometry autoOdometry;
