@@ -21,8 +21,8 @@ public class DeployClimber extends SequentialCommandGroup {
   public DeployClimber() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new ArmSetPosition(0), new WaitCommand(2), new SetPiston(RobotMap.winchRatchetPiston, RobotMap.winchRatchetRelease), new SetPiston(RobotMap.climberReleasePiston, RobotMap.releaseArm), new WaitCommand(.3), new WachetSpeed(.5),
-     new WaitCommand(2.75), new WachetSpeed(0),new WaitCommand(.2), new SetPiston(RobotMap.winchRatchetPiston, RobotMap.winchRatchetSet), new SetPiston(RobotMap.climberReleasePiston, RobotMap.constrainArm));
+    super(new ArmSetPosition(0), new WaitCommand(2), new SetPiston(RobotMap.winchRatchetPiston, RobotMap.winchRatchetRelease), new SetPiston(RobotMap.climberReleasePiston, RobotMap.releaseArm), new WaitCommand(.2), new WachetSpeed(.7),
+     new WaitCommand(2), new WachetSpeed(0),new WaitCommand(.2), new SetPiston(RobotMap.winchRatchetPiston, RobotMap.winchRatchetSet), new SetPiston(RobotMap.climberReleasePiston, RobotMap.constrainArm));
   }
 
 }

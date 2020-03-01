@@ -20,8 +20,6 @@ public class Climber extends SubsystemBase {
    */
   private DeployClimber deployClimber;
   private boolean saftey = false;
-  public double encoderTics;
-  public double targetEncoderTics;
   public Climber() {
   }
 
@@ -33,11 +31,8 @@ public class Climber extends SubsystemBase {
     saftey = false;
     RobotMap.climberReleasePiston.set(RobotMap.constrainArm);
     deployClimber = new DeployClimber();
-    targetEncoderTics = 0;
   }
   public void teleopPeriodic(){
-    encoderTics = RobotMap.winchMotor.getEncoder().getPosition();
-
     if(ButtonMap.SafetyButton()) {
       saftey = true;
     }
