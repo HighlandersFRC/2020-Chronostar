@@ -26,9 +26,9 @@ public class Hood extends SubsystemBase {
    * Creates a new Hood.
    */
   private double kf = .02;
-  private double kp = 0.0002;
-  private double ki = 0.00001;
-  private double kd = 0.0002;
+  private double kp = 0.00012;
+  private double ki = 0.0032;
+  private double kd = 0.08;
   private float maxpoint = 22;
   private float minpoint = 0;
   private CANPIDController mpidController = new CANPIDController(RobotMap.hoodMotor);
@@ -55,9 +55,9 @@ public class Hood extends SubsystemBase {
     mpidController.setD(kd);
     mpidController.setIZone(.2);
     mpidController.setOutputRange(-1, 1);
-    mpidController.setSmartMotionMaxVelocity(100, 0);
-    mpidController.setSmartMotionMinOutputVelocity(-100, 0);
-    mpidController.setSmartMotionMaxAccel(80, 0);
+    mpidController.setSmartMotionMaxVelocity(160, 0);
+    mpidController.setSmartMotionMinOutputVelocity(-160, 0);
+    mpidController.setSmartMotionMaxAccel(160, 0);
     mpidController.setSmartMotionAllowedClosedLoopError(.1, 0);
   }
   public Hood() {
@@ -94,12 +94,8 @@ public class Hood extends SubsystemBase {
   }
   public void setHoodPosition(double desiredPosition){
     dPosition =desiredPosition;
-    if(desiredPosition == 0){
-      mpidController.setReference(-0.5, ControlType.kSmartMotion);
-    }
-    else{
-      mpidController.setReference(desiredPosition, ControlType.kSmartMotion);
-    }
+    mpidController.setReference(desiredPosition, ControlType.kSmartMotion);
+    
   }
   public double autoHoodPositionCloseDistance(double dist){
     return 0;
