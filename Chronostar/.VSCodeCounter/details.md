@@ -1,10 +1,10 @@
 # Details
 
-Date : 2020-02-27 21:59:16
+Date : 2020-03-04 17:24:10
 
-Directory c:\Users\User\Documents\GitHub\2020-Chronostar\Chronostar\src\main
+Directory c:\Users\Simon Hempel\Documents\2020-Chronostar\Chronostar\src\main
 
-Total : 53 files,  2493 codes, 530 comments, 427 blanks, all 3450 lines
+Total : 53 files,  2505 codes, 540 comments, 431 blanks, all 3476 lines
 
 [summary](results.md)
 
@@ -14,13 +14,13 @@ Total : 53 files,  2493 codes, 530 comments, 427 blanks, all 3450 lines
 | [src/main/deploy/Center3Highgoal.wpilib.json](/src/main/deploy/Center3Highgoal.wpilib.json) | JSON | 1 | 0 | 0 | 1 |
 | [src/main/deploy/Right3HighGoal2.wpilib.json](/src/main/deploy/Right3HighGoal2.wpilib.json) | JSON | 1 | 0 | 0 | 1 |
 | [src/main/deploy/Right3Highgoal1.wpilib.json](/src/main/deploy/Right3Highgoal1.wpilib.json) | JSON | 1 | 0 | 0 | 1 |
-| [src/main/java/frc/robot/ButtonMap.java](/src/main/java/frc/robot/ButtonMap.java) | Java | 101 | 11 | 4 | 116 |
+| [src/main/java/frc/robot/ButtonMap.java](/src/main/java/frc/robot/ButtonMap.java) | Java | 98 | 11 | 4 | 113 |
 | [src/main/java/frc/robot/CommandSuites.java](/src/main/java/frc/robot/CommandSuites.java) | Java | 33 | 9 | 6 | 48 |
 | [src/main/java/frc/robot/Main.java](/src/main/java/frc/robot/Main.java) | Java | 9 | 16 | 5 | 30 |
 | [src/main/java/frc/robot/OI.java](/src/main/java/frc/robot/OI.java) | Java | 8 | 10 | 4 | 22 |
 | [src/main/java/frc/robot/Robot.java](/src/main/java/frc/robot/Robot.java) | Java | 126 | 6 | 18 | 150 |
-| [src/main/java/frc/robot/RobotConfig.java](/src/main/java/frc/robot/RobotConfig.java) | Java | 121 | 9 | 21 | 151 |
-| [src/main/java/frc/robot/RobotMap.java](/src/main/java/frc/robot/RobotMap.java) | Java | 104 | 6 | 35 | 145 |
+| [src/main/java/frc/robot/RobotConfig.java](/src/main/java/frc/robot/RobotConfig.java) | Java | 122 | 9 | 21 | 152 |
+| [src/main/java/frc/robot/RobotMap.java](/src/main/java/frc/robot/RobotMap.java) | Java | 108 | 6 | 36 | 150 |
 | [src/main/java/frc/robot/RobotStats.java](/src/main/java/frc/robot/RobotStats.java) | Java | 18 | 9 | 4 | 31 |
 | [src/main/java/frc/robot/commands/autos/CenterHighGoalAuto.java](/src/main/java/frc/robot/commands/autos/CenterHighGoalAuto.java) | Java | 18 | 14 | 4 | 36 |
 | [src/main/java/frc/robot/commands/autos/CrossLine.java](/src/main/java/frc/robot/commands/autos/CrossLine.java) | Java | 9 | 14 | 4 | 27 |
@@ -49,12 +49,12 @@ Total : 53 files,  2493 codes, 530 comments, 427 blanks, all 3450 lines
 | [src/main/java/frc/robot/sensors/LidarLite.java](/src/main/java/frc/robot/sensors/LidarLite.java) | Java | 24 | 9 | 5 | 38 |
 | [src/main/java/frc/robot/sensors/Navx.java](/src/main/java/frc/robot/sensors/Navx.java) | Java | 70 | 0 | 7 | 77 |
 | [src/main/java/frc/robot/sensors/VisionCamera.java](/src/main/java/frc/robot/sensors/VisionCamera.java) | Java | 110 | 0 | 13 | 123 |
-| [src/main/java/frc/robot/subsystems/Arm.java](/src/main/java/frc/robot/subsystems/Arm.java) | Java | 94 | 21 | 10 | 125 |
+| [src/main/java/frc/robot/subsystems/Arm.java](/src/main/java/frc/robot/subsystems/Arm.java) | Java | 102 | 23 | 11 | 136 |
 | [src/main/java/frc/robot/subsystems/Climber.java](/src/main/java/frc/robot/subsystems/Climber.java) | Java | 40 | 10 | 5 | 55 |
 | [src/main/java/frc/robot/subsystems/DriveTrain.java](/src/main/java/frc/robot/subsystems/DriveTrain.java) | Java | 246 | 10 | 28 | 284 |
-| [src/main/java/frc/robot/subsystems/Hood.java](/src/main/java/frc/robot/subsystems/Hood.java) | Java | 93 | 10 | 7 | 110 |
-| [src/main/java/frc/robot/subsystems/Intake.java](/src/main/java/frc/robot/subsystems/Intake.java) | Java | 35 | 10 | 5 | 50 |
-| [src/main/java/frc/robot/subsystems/Magazine.java](/src/main/java/frc/robot/subsystems/Magazine.java) | Java | 89 | 14 | 6 | 109 |
+| [src/main/java/frc/robot/subsystems/Hood.java](/src/main/java/frc/robot/subsystems/Hood.java) | Java | 99 | 18 | 7 | 124 |
+| [src/main/java/frc/robot/subsystems/Intake.java](/src/main/java/frc/robot/subsystems/Intake.java) | Java | 36 | 10 | 6 | 52 |
+| [src/main/java/frc/robot/subsystems/Magazine.java](/src/main/java/frc/robot/subsystems/Magazine.java) | Java | 84 | 14 | 7 | 105 |
 | [src/main/java/frc/robot/subsystems/Shooter.java](/src/main/java/frc/robot/subsystems/Shooter.java) | Java | 67 | 13 | 7 | 87 |
 | [src/main/java/frc/robot/tools/controlLoops/CascadingPIDTurn.java](/src/main/java/frc/robot/tools/controlLoops/CascadingPIDTurn.java) | Java | 49 | 10 | 11 | 70 |
 | [src/main/java/frc/robot/tools/controlLoops/PID.java](/src/main/java/frc/robot/tools/controlLoops/PID.java) | Java | 93 | 1 | 14 | 108 |
