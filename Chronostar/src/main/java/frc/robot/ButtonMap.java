@@ -25,13 +25,13 @@ public class ButtonMap {
         return oi.driverController.getTriggerAxis(Hand.kLeft)>=0.15;
     }
     public static boolean manualTarget(){
-        return oi.driverController.getBumper(Hand.kRight);
+        return oi.driverController.getBumper(Hand.kLeft);
     }
     public static boolean autoTarget(){
-        return oi.driverController.getBumperPressed(Hand.kLeft);
+        return oi.driverController.getBumperPressed(Hand.kRight);
     }
     public static boolean endAutoTarget(){
-        return oi.driverController.getBumperReleased(Hand.kLeft);
+        return oi.driverController.getBumperReleased(Hand.kRight);
     }
     public static boolean manualAdjustLeft(){
         return oi.driverController.getXButton();

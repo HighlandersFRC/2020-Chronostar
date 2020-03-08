@@ -33,6 +33,7 @@ public class DriveTrain extends SubsystemBase {
 	private double deadZone = 0.01;
 	private double turn = 0;
 	private double throttel = 0;
+	private double trackTapeThrottel;
 	private static DriveEncoder leftMainDrive = new DriveEncoder(RobotMap.leftDriveLead,
 			RobotMap.leftDriveLead.getSelectedSensorPosition(0));
 	private static DriveEncoder rightMainDrive = new DriveEncoder(RobotMap.rightDriveLead,
@@ -43,8 +44,8 @@ public class DriveTrain extends SubsystemBase {
 	private double vKD = 0;
 	private int profile = 0;
 	private PID alignmentPID;
-	private double aKP = 0.1;
-	private double aKI = 0.0001;
+	private double aKP = 0.13;
+	private double aKI = 0.0000;
 	private double aKD = 0.00;
 	private double visionOffset = -12.5;
 	private double visionAcceptablilityZone = 0.5;
@@ -102,8 +103,8 @@ public class DriveTrain extends SubsystemBase {
 	public void initAlignmentPID(){
 		alignmentPID = new PID(aKP, aKD, aKI);
 		alignmentPID.setSetPoint(visionOffset);
-		alignmentPID.setMaxOutput(6);
-		alignmentPID.setMinInput(-6);
+		alignmentPID.setMaxOutput(8);
+		alignmentPID.setMinInput(-8);
 		SmartDashboard.putNumber("setPos", 0);
 	}
 
@@ -149,6 +150,17 @@ public class DriveTrain extends SubsystemBase {
 
 	public double trackVisionTape(){
 		try{
+			if(RobotState.isOperatorControl()){
+				if(Math.abs(ButtonMap.getDriveThrottle())>deadZone){
+					trackTapeThrottel = Math.tanh(ButtonMap.getDriveThrottle())*(4/Math.PI); 
+				}
+				else{
+					trackTapeThrottel = 0;
+				}
+			}
+			else{
+				trackTapeThrottel = 0;
+			}
 			driveTrainBeingUsed = true;
 			SmartDashboard.putNumber("offset", visionOffset);
 			RobotConfig.setDriveMotorsBrake();
@@ -164,8 +176,8 @@ public class DriveTrain extends SubsystemBase {
 				alignmentPID.updatePID(Robot.visionCamera.getAngle());
 			}
 				
-			setLeftSpeed(alignmentPID.getResult());
-			setRightSpeed(-alignmentPID.getResult());
+			setLeftSpeed((trackTapeThrottel*6)+alignmentPID.getResult());
+			setRightSpeed((trackTapeThrottel*6)-alignmentPID.getResult());
 			return Math.abs(Robot.visionCamera.getAngle()-visionOffset);	
 		}
 		catch(Exception e){
@@ -218,15 +230,15 @@ public class DriveTrain extends SubsystemBase {
 			shiftVisionRight();
 		}
 		if(ButtonMap.startInitiaionLineFiringSequence()){
-			fireSequence = new FireSequence(4500, 10.5, 2.5);
+			fireSequence = new FireSequence(4500, 10.5, 2.7);
 			fireSequence.schedule();
 		}
 		else if(ButtonMap.startTrenchRunFiringSequence()){
-			fireSequence = new FireSequence(5500, 13.5, 2.5);
+			fireSequence = new FireSequence(5500, 13.5, 2.7);
 			fireSequence.schedule();
 		}
 		else if(ButtonMap.startCloseUpFiringSequence()){
-			fireSequence = new FireSequence(4000, 0, 2.5);
+			fireSequence = new FireSequence(4000, 0, 2.7);
 			fireSequence.schedule();
 		}
 		else if(ButtonMap.stopManualFiringSequence()){
@@ -234,7 +246,7 @@ public class DriveTrain extends SubsystemBase {
 			new SequentialCommandGroup(new SetFlyWheelVelocity(0), new SetHoodPosition(0)).schedule();
 		}
 		else if(ButtonMap.autoRangingShot()){
-			autoFiringSequence = new AutoFiringSequence(2.5);
+			autoFiringSequence = new AutoFiringSequence(2.7);
 			autoFiringSequence.schedule();	
 		}
 		else if(ButtonMap.stopAutoRangingShot()){

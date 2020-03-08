@@ -74,6 +74,7 @@ public class Robot extends TimedRobot {
       Robot.visionCamera.updateVision();
       SmartDashboard.putNumber("optimalDist", RobotMap.hood.getOptimalPosition());
       SmartDashboard.putString("camString", Robot.visionCamera.getString());
+      SmartDashboard.putNumber("camDist", Robot.visionCamera.getDistance());
       SmartDashboard.putNumber("lidarDist", RobotMap.lidar1.getDistance());
       if (ButtonMap.switchCamera() && ableToSwitch) {
         if (cameraBoolean) {
