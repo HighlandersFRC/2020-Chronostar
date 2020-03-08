@@ -14,8 +14,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import frc.robot.ButtonMap;
 import frc.robot.RobotMap;
+import frc.robot.commands.controls.FeederBeltAutomation;
+import frc.robot.commands.controls.FeederWheelsAutomation;
 import frc.robot.commands.controls.MagazineAutomation;
 import frc.robot.commands.controls.MagazineControl;
+import frc.robot.commands.controls.RunBeltBurst;
 import frc.robot.commands.controls.ShootingSequence;
 
 public class Magazine extends SubsystemBase {
@@ -23,24 +26,37 @@ public class Magazine extends SubsystemBase {
    * Creates a new Magazine.
    */
   private boolean lastState;
+  private boolean lastState2;
   public Boolean stuck;
+  public Boolean Shooting;
   private double magCount;
   private double catchCount;
   private double tryCount;
+  private RunBeltBurst runBeltBurst = new RunBeltBurst();
+
+  public void initMagazine(){
+    Shooting = false;
+  }
   public Magazine() {
   }
-
   @Override
   public void periodic() {
-    if(ButtonMap.reverseMag() == false){
+    if((ButtonMap.reverseMag() == false) && Shooting == false){
+        if ((RobotMap.beamBreakThree.get() == false) && (RobotMap.beamBreakTwo.get() == true) && (!runBeltBurst.isScheduled())){
+         // new FeederBeltAutomation(.6, .1).schedule();
+          runBeltBurst = new RunBeltBurst();
+          runBeltBurst.schedule();
+        }
+        if(RobotMap.beamBreakTwo.get() == false){
+          runBeltBurst.cancel();
+          new FeederBeltAutomation(0, .05).schedule();
+          new FeederWheelsAutomation(0, 0.05).schedule();
+        }
+
         if(RobotMap.beamBreakOne.get() == false){
           if(catchCount <= 50){
-            if (RobotMap.beamBreakTwo.get() == false){
-             new MagazineAutomation(0.15, 0.75, 0.0, 0.15).schedule();
-            }
-           else{
-             new MagazineAutomation(0.9, 0.85, 0.0, 0.15).schedule();
-            }
+            new FeederBeltAutomation(.6, .15).schedule();;
+            System.err.println("1");
           }
           else{
             if (tryCount <= 25){
@@ -48,7 +64,7 @@ public class Magazine extends SubsystemBase {
              tryCount++;
             }
             else{
-               new MagazineAutomation(-0.8, -0.2, 0.0, 0.1).schedule();
+               new FeederBeltAutomation(-0.8, .1);
                catchCount = 0;
                tryCount = 0;
                stuck = false;
@@ -62,24 +78,25 @@ public class Magazine extends SubsystemBase {
         }
     }
     lastState = RobotMap.beamBreakOne.get();
-    /*SmartDashboard.putNumber("balls in mag", magCount);
-    SmartDashboard.putNumber("catch Count", catchCount);
+    lastState2 = RobotMap.beamBreakThree.get();
+   // SmartDashboard.putNumber("balls in mag", magCount);
+    //SmartDashboard.putNumber("catch Count", catchCount);
     SmartDashboard.putBoolean("1 beamBroken", !RobotMap.beamBreakOne.get());
-    SmartDashboard.putBoolean("2 beamBroken", !RobotMap.beamBreakTwo.get());*/
+    SmartDashboard.putBoolean("2 beamBroken", !RobotMap.beamBreakTwo.get());
+    SmartDashboard.putBoolean("3 beamBroken", !RobotMap.beamBreakThree.get());
     // This method will be called once per scheduler run
   }
   public void runMagazineSystem(){
-    RobotMap.magazineBelt.set(ControlMode.PercentOutput, 0.8);
-    RobotMap.magazineWheel.set(ControlMode.PercentOutput, 1);
-    RobotMap.indexer.set(.7);
+
+    RobotMap.magazineBelt.set(ControlMode.PercentOutput, 0.2);
+    RobotMap.indexer.set(-1);
   }
   public void stopMagazineSystem(){
     RobotMap.magazineBelt.set(ControlMode.PercentOutput, 0);
-    RobotMap.magazineWheel.set(ControlMode.PercentOutput, 0);
     RobotMap.indexer.set(0);
   }
-  public void setWheelSpeed(double wheelSpeed){
-    RobotMap.magazineWheel.set(ControlMode.PercentOutput, wheelSpeed);
+  public void overrideFeeding(boolean simonIsBad){
+    Shooting = simonIsBad;
   }
   public void setBeltSpeed(double beltSpeed){
     RobotMap.magazineBelt.set(ControlMode.PercentOutput, beltSpeed);
@@ -91,12 +108,10 @@ public class Magazine extends SubsystemBase {
   public void teleopPeriodic(){
     SmartDashboard.putBoolean("beamBroken", !RobotMap.beamBreakOne.get());
     if(ButtonMap.reverseMag() == true){
-      RobotMap.magazineWheel.set(ControlMode.PercentOutput, -.6);
       RobotMap.magazineBelt.set(ControlMode.PercentOutput, -1);
-      RobotMap.indexer.set( -.6);
+      RobotMap.indexer.set( .6);
     }
     if(ButtonMap.stopReverseMag()){
-      RobotMap.magazineWheel.set(ControlMode.PercentOutput, 0);
       RobotMap.magazineBelt.set(ControlMode.PercentOutput, 0);
       RobotMap.indexer.set(0);
 

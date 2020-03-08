@@ -25,6 +25,6 @@ public class RobotStats {
     public static final double driveTrainPeakTime = 10;
     public static final double voltageCompensationValue = 11.7;
     public static final int hoodCurrentLimit = 12;
-    public static final int indexerCurrentLimit = 15;
+    public static final int indexerCurrentLimit = 29;
 
 }

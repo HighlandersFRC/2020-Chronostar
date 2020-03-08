@@ -7,47 +7,38 @@
 
 package frc.robot.commands.controls;
 
-import org.ejml.data.DEigenpair;
-
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotMap;
 
-public class TimedMagazineRun extends CommandBase {
+public class SetWheelsSpeed extends CommandBase {
   /**
-   * Creates a new timedMagazineRun.
+   * Creates a new setWheelsSpeed.
    */
-  private double desiredRunTime;
-  private double startTime;
-
-  public TimedMagazineRun(double runTime) {
-    desiredRunTime = runTime;
+  private double speed; 
+  public SetWheelsSpeed(double wheelSpeed) {
+    speed = wheelSpeed;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotMap.magazine.overrideFeeding(true);
-    startTime = Timer.getFPGATimestamp();
+    RobotMap.magazine.setIndexerSpeed(speed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotMap.magazine.runMagazineSystem();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotMap.magazine.stopMagazineSystem();
-    RobotMap.magazine.overrideFeeding(false);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(Timer.getFPGATimestamp()-startTime)>desiredRunTime;
+    return true;
   }
 }
