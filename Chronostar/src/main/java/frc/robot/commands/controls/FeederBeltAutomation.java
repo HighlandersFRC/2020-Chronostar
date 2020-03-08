@@ -7,23 +7,19 @@
 
 package frc.robot.commands.controls;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class FireSequence extends SequentialCommandGroup {
+public class FeederBeltAutomation extends SequentialCommandGroup {
   /**
-   * Creates a new InitationLineBasicFire.
+   * Creates a new FeewerBeltAutomation.
    */
-  public FireSequence(double flywheelVelocity, double hoodPosition, double time) {
+  public FeederBeltAutomation(double beltSpeed,double time ) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new ParallelCommandGroup(new ConditionalSetFlyWheelVelocity(flywheelVelocity), new ConditionalSetHoodPosition(hoodPosition)),  new TimedMagazineRun(time), new SetFlyWheelVelocity(0), new SetHoodPosition(0));
-   /* super(new SetFlyWheelVelocity(4500), new SetHoodPosition(10.5), new WaitCommand(1.5),  new MagazineControl(.6, 1, 1 ) , new WaitCommand(1.5),
-    new MagazineControl(0, 0, 0), new SetFlyWheelVelocity(0), new SetHoodPosition(0));*/
-  
+    super(new SetBeltSpeed(beltSpeed), new WaitCommand(time), new SetBeltSpeed(0));
   }
 }

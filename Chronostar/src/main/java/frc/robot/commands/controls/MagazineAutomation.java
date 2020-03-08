@@ -17,8 +17,8 @@ public class MagazineAutomation extends SequentialCommandGroup {
   /**
    * Creates a new MagazineAutomation.
    */
-  public MagazineAutomation(double wheel, double belt, double indexer, double time) {
-    super(new MagazineControl(wheel,belt,indexer), new WaitCommand(time), new MagazineControl(0,0,0));
+  public MagazineAutomation(double belt, double topWheels, double time) {
+    super(new MagazineControl(belt,topWheels), new WaitCommand(time), new MagazineControl(0,0));
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
   }

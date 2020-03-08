@@ -53,9 +53,8 @@ public class RobotConfig {
         RobotMap.hoodMotor.setInverted(true);
 
         RobotMap.magazineBelt.setNeutralMode(NeutralMode.Brake);
-        RobotMap.magazineWheel.setNeutralMode(NeutralMode.Brake);
 
-        RobotMap.indexer.setIdleMode(IdleMode.kBrake);
+        RobotMap.indexer.setIdleMode(IdleMode.kCoast);
         RobotMap.indexer.setSmartCurrentLimit(RobotStats.indexerCurrentLimit);
 
         RobotMap.intakeMotor.setIdleMode(IdleMode.kCoast);

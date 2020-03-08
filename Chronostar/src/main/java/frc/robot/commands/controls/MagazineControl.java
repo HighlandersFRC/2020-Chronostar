@@ -14,21 +14,18 @@ public class MagazineControl extends CommandBase {
   /**
    * Creates a new MagazineControl.
    */
-  private double Speed1;
   private double Speed2;
   private double Speed3;
 
-  public MagazineControl(double Wheel, double belt, double indexer) {
-    Speed1 = Wheel;
+  public MagazineControl(double belt, double topWheels) {
     Speed2 = belt;
-    Speed3 = indexer;
+    Speed3 = topWheels;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotMap.magazine.setWheelSpeed(Speed1);
     RobotMap.magazine.setBeltSpeed(Speed2);
     RobotMap.magazine.setIndexerSpeed(Speed3);
   }

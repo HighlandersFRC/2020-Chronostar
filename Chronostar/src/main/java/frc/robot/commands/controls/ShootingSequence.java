@@ -18,8 +18,8 @@ public class ShootingSequence extends SequentialCommandGroup {
    * Creates a new ShootingSequence.
    */
   public ShootingSequence() {
-    super(new MagazineControl(.9,0.55,1), new WaitCommand(.2), new MagazineControl(.9,0.55,1), new WaitCommand(.2), new MagazineControl(.9,0.55,1),
-    new WaitCommand(.2), new MagazineControl(.9,0.55,1), new WaitCommand(.2), new MagazineControl(.9,0.55,1), new WaitCommand(.5), new MagazineControl(0,0,0) );
+    super(new MagazineControl(0.55,1), new WaitCommand(.2), new MagazineControl(0.55,1), new WaitCommand(.2), new MagazineControl(0.55,1),
+    new WaitCommand(.2), new MagazineControl(0.55,1), new WaitCommand(.2), new MagazineControl(0.55,1), new WaitCommand(.5), new MagazineControl(0,0) );
 
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
