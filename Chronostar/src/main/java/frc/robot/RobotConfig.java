@@ -57,7 +57,7 @@ public class RobotConfig {
         RobotMap.indexer.setIdleMode(IdleMode.kCoast);
         RobotMap.indexer.setSmartCurrentLimit(RobotStats.indexerCurrentLimit);
 
-        RobotMap.intakeMotor.setIdleMode(IdleMode.kCoast);
+        RobotMap.intakeMotor.setNeutralMode(NeutralMode.Coast);
 
         RobotConfig.enableDriveCurrentLimiting();
         RobotConfig.setDriveTrainVoltageCompensation();

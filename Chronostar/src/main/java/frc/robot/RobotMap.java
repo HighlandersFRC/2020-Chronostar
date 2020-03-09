@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.SPI.Port;
 import frc.robot.sensors.LidarLite;
@@ -81,7 +82,7 @@ public class RobotMap {
 
   public static CANSparkMax hoodMotor = new CANSparkMax(hoodID, MotorType.kBrushless);
 
-  public static CANSparkMax intakeMotor = new CANSparkMax(intakeMotorID, MotorType.kBrushless);
+  public static TalonFX intakeMotor = new TalonFX(intakeMotorID);
 
   public static CANSparkMax armMotor = new CANSparkMax(armID, MotorType.kBrushless);
 
