@@ -21,6 +21,6 @@ public class RunBeltBurst extends SequentialCommandGroup {
   public RunBeltBurst() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super( new WaitCommand(0.2), new ParallelCommandGroup( new FeederWheelsAutomation(-0.9, .1), new FeederBeltAutomation(0.6, 0.15)));
+    super( new WaitCommand(0.2), new ParallelCommandGroup( new FeederWheelsAutomation(-0.68, .1), new FeederBeltAutomation(0.6, 0.15)));
   }
 }

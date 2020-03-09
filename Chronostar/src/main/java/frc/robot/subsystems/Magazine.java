@@ -88,7 +88,7 @@ public class Magazine extends SubsystemBase {
   }
   public void runMagazineSystem(){
 
-    RobotMap.magazineBelt.set(ControlMode.PercentOutput, 0.25);
+    RobotMap.magazineBelt.set(ControlMode.PercentOutput, 0.35);
     RobotMap.indexer.set(-1);
   }
   public void stopMagazineSystem(){
