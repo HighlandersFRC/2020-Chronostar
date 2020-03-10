@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ButtonMap;
 import frc.robot.RobotMap;
@@ -25,26 +27,26 @@ public class Intake extends SubsystemBase {
   }
   public void autonomousPeriodic(){
     if(RobotMap.magazine.stuck){
-      RobotMap.intakeMotor.set(-0.5);
+      RobotMap.intakeMotor.set(ControlMode.PercentOutput,-0.4);
     }
     else{
-      RobotMap.intakeMotor.set(0.6);
+      RobotMap.intakeMotor.set(ControlMode.PercentOutput,0.4);
     }
   }
   public void teleopPeriodic(){
     if(RobotMap.magazine.stuck == false){
       if(ButtonMap.RunIntake()){
-        RobotMap.intakeMotor.set(0.6);
+        RobotMap.intakeMotor.set(ControlMode.PercentOutput,0.4);
       }
       else if(ButtonMap.reverseMag()){
-        RobotMap.intakeMotor.set(-0.6);
+        RobotMap.intakeMotor.set(ControlMode.PercentOutput,-0.4);
       }
       else{
-        RobotMap.intakeMotor.set(0);
+        RobotMap.intakeMotor.set(ControlMode.PercentOutput,0);
       }
     }
     else{
-      RobotMap.intakeMotor.set(-0.5);
+      RobotMap.intakeMotor.set(ControlMode.PercentOutput,-0.5);
     }
     
   }
