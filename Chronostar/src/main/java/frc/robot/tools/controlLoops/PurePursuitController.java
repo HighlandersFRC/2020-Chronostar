@@ -235,8 +235,8 @@ public class PurePursuitController extends CommandBase {
 		double leftVelocity;
 		double rightVelocity;
 		double v;
-		if(closestSegment <10){
-			v = 1.2;
+		if(closestSegment <3){
+			v = 0.1+targetVelocity;
 		}
 		else{
 			v = targetVelocity;

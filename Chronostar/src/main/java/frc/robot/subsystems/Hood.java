@@ -57,7 +57,7 @@ public class Hood extends SubsystemBase {
     mpidController.setOutputRange(-1, 1);
     mpidController.setSmartMotionMaxVelocity(160, 0);
     mpidController.setSmartMotionMinOutputVelocity(-160, 0);
-    mpidController.setSmartMotionMaxAccel(160, 0);
+    mpidController.setSmartMotionMaxAccel(100, 0);
     mpidController.setSmartMotionAllowedClosedLoopError(.1, 0);
   }
   public Hood() {

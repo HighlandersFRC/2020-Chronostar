@@ -21,6 +21,6 @@ public class CrossLine extends SequentialCommandGroup {
   public CrossLine() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new PurePursuitController(RobotMap.pathList.centerAutoPath1, 2.5, 5.0, true, true));
+    super(new PurePursuitController(RobotMap.pathList.center3AutoPath1, 2.5, 5.0, true, true));
   }
 }

@@ -9,27 +9,23 @@ package frc.robot.commands.autos;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.RobotMap;
-import frc.robot.commands.controls.ConditionalSetFlyWheelVelocity;
-import frc.robot.commands.controls.ConditionalSetHoodPosition;
-import frc.robot.commands.controls.MagazineAutomation;
+import frc.robot.commands.controls.FireSequence;
 import frc.robot.commands.controls.SetFlyWheelVelocity;
 import frc.robot.commands.controls.SetHoodPosition;
-import frc.robot.commands.controls.TimedMagazineRun;
 import frc.robot.commands.controls.TrackVisionTarget;
 import frc.robot.tools.controlLoops.PurePursuitController;
+import frc.robot.tools.pathTools.PathList;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class CenterHighGoalAuto extends SequentialCommandGroup {
+public class Right8Auto extends SequentialCommandGroup {
   /**
-   * Creates a new CenterHighGoalAuto.
+   * Creates a new Right8Auto.
    */
-  public CenterHighGoalAuto() {
+  public Right8Auto() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new ParallelCommandGroup(new ConditionalSetFlyWheelVelocity(4500), new ConditionalSetHoodPosition(10.5), new TrackVisionTarget()),  new TimedMagazineRun(2.5), new SetFlyWheelVelocity(0), new SetHoodPosition(0),new PurePursuitController(RobotMap.pathList.center3AutoPath1, 2.5, 5.0, true, true));
+    super(new ParallelCommandGroup(new SetFlyWheelVelocity(4500), new SetHoodPosition(10.5), new TrackVisionTarget()), new FireSequence(4500, 10, 1.7), new PurePursuitController(PathList.right8AutoPath1, 2.5, 4.0,true, true ),new ParallelCommandGroup( new PurePursuitController(PathList.right8AutoPath2, 2.5, 4.0,true, true )),new ParallelCommandGroup(new SetFlyWheelVelocity(5500), new SetHoodPosition(13.5), new TrackVisionTarget()), new FireSequence(5500, 13.5, 1.8));
   }
 }

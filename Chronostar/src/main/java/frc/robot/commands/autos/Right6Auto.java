@@ -21,13 +21,13 @@ import frc.robot.tools.pathTools.PathList;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class RightAdvancedAuto extends SequentialCommandGroup {
+public class Right6Auto extends SequentialCommandGroup {
   /**
    * Creates a new RightAdvancedAuto.
    */
-  public RightAdvancedAuto() {
+  public Right6Auto() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new TrackVisionTarget(), new FireSequence(4500, 10, 1.0), new PurePursuitController(PathList.rightAutoPath1, 2.5, 4.0,true, true ),new ParallelCommandGroup( new SetFlyWheelVelocity(5500), new SetHoodPosition(13.5),new PurePursuitController(PathList.rightAutoPath2, 2.5, 4.0,true, true )), new TrackVisionTarget(), new FireSequence(5500, 13.5, 1.8));
+    super(new ParallelCommandGroup(new SetFlyWheelVelocity(4500), new SetHoodPosition(10.5), new TrackVisionTarget()), new FireSequence(4500, 10, 1.0), new PurePursuitController(PathList.right6AutoPath1, 2.5, 4.0,true, true ),new ParallelCommandGroup( new PurePursuitController(PathList.right6AutoPath2, 2.5, 4.0,true, true )),new ParallelCommandGroup(new SetFlyWheelVelocity(5500), new SetHoodPosition(13.5), new TrackVisionTarget()), new FireSequence(5500, 13.5, 1.8));
   }
 }

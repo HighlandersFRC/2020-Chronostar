@@ -44,6 +44,8 @@ public class TrackVisionTarget extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     RobotMap.visionRelay1.set(Value.kReverse);
+    RobotMap.drive.setLeftSpeed(0);
+    RobotMap.drive.setRightSpeed(0);
   }
 
   // Returns true when the command should end.

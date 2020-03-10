@@ -14,12 +14,16 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import java.nio.file.Paths;
 
 public class PathList {
-  private static Trajectory centerAutoTraj1;
-  public static PathSetup centerAutoPath1;
-  private static Trajectory rightAutoTraj1;
-  public static PathSetup rightAutoPath1;
-  private static Trajectory rightAutoTraj2;
-  public static PathSetup rightAutoPath2;
+  private static Trajectory center3AutoTraj1;
+  public static PathSetup center3AutoPath1;
+  private static Trajectory right6AutoTraj1;
+  public static PathSetup right6AutoPath1;
+  private static Trajectory right6AutoTraj2;
+  public static PathSetup right6AutoPath2;
+  private static Trajectory right8AutoTraj1;
+  public static PathSetup right8AutoPath1;
+  private static Trajectory right8AutoTraj2;
+  public static PathSetup right8AutoPath2;
 
 
    //remember that for all paths if the first point is at (0,0,0) for some reason the end y value is revesred in the coordinate plane
@@ -27,12 +31,18 @@ public class PathList {
   // be decreasing y units on the coordinate plane, while in the other you would be increasing y units
   public PathList() {
     try{
-      centerAutoTraj1 = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Center3Highgoal.wpilib.json"));
-      centerAutoPath1 = new PathSetup(centerAutoTraj1, true);
-      rightAutoTraj1 = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Right3Highgoal1.wpilib.json"));
-      rightAutoPath1 = new PathSetup(rightAutoTraj1, true);
-      rightAutoTraj2 = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Right3HighGoal2.wpilib.json"));
-      rightAutoPath2 = new PathSetup(rightAutoTraj2, false);
+      center3AutoTraj1 = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Center3Highgoal.wpilib.json"));
+      center3AutoPath1 = new PathSetup(center3AutoTraj1, true);
+
+      right6AutoTraj1 = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Right6Highgoal1.wpilib.json"));
+      right6AutoPath1 = new PathSetup(right6AutoTraj1, true);
+      right6AutoTraj2 = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Right6HighGoal2.wpilib.json"));
+      right6AutoPath2 = new PathSetup(right6AutoTraj2, false);
+
+      right8AutoTraj1 = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Right8HighGoal1.wpilib.json"));
+      right8AutoPath1 = new PathSetup(right8AutoTraj1, true);
+      right8AutoTraj2 = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Right8HighGoal2.wpilib.json"));
+      right8AutoPath2 = new PathSetup(right8AutoTraj2, false);
     }      
     
     catch(Exception e){
