@@ -37,16 +37,20 @@ public class Intake extends SubsystemBase {
     if(RobotMap.magazine.stuck == false){
       if(ButtonMap.RunIntake()){
         RobotMap.intakeMotor.set(ControlMode.PercentOutput,0.7);
+        RobotMap.intake2Motor.set(ControlMode.PercentOutput, 0.5);
       }
       else if(ButtonMap.reverseMag()){
         RobotMap.intakeMotor.set(ControlMode.PercentOutput,-0.7);
+        RobotMap.intake2Motor.set(ControlMode.PercentOutput, -0.6);
       }
       else{
         RobotMap.intakeMotor.set(ControlMode.PercentOutput,0);
+        RobotMap.intake2Motor.set(ControlMode.PercentOutput, 0);
       }
     }
     else{
       RobotMap.intakeMotor.set(ControlMode.PercentOutput,-0.2);
+      RobotMap.intake2Motor.set(ControlMode.PercentOutput, -0.3);
     }
     
   }

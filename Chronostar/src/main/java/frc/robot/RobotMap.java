@@ -61,6 +61,7 @@ public class RobotMap {
   public static int magazineBeltID = 8;
   public static int indexerID = 9;
 
+  public static int Intake2ID = 10;
 
   public static int intakeMotorID = 12;
 
@@ -83,6 +84,7 @@ public class RobotMap {
   public static CANSparkMax hoodMotor = new CANSparkMax(hoodID, MotorType.kBrushless);
 
   public static TalonFX intakeMotor = new TalonFX(intakeMotorID);
+  public static VictorSPX intake2Motor = new VictorSPX(Intake2ID);
 
   public static CANSparkMax armMotor = new CANSparkMax(armID, MotorType.kBrushless);
 
