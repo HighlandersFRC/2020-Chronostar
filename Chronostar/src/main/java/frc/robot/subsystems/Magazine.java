@@ -59,7 +59,7 @@ public class Magazine extends SubsystemBase {
             System.err.println("1");
           }
           else{
-            if (tryCount <= 25){
+            if (tryCount <= 10){
              stuck = true;
              tryCount++;
             }
@@ -109,7 +109,7 @@ public class Magazine extends SubsystemBase {
     SmartDashboard.putBoolean("beamBroken", !RobotMap.beamBreakOne.get());
     if(ButtonMap.reverseMag() == true){
       RobotMap.magazineBelt.set(ControlMode.PercentOutput, -1);
-      RobotMap.indexer.set( .6);
+      RobotMap.indexer.set( .2);
     }
     if(ButtonMap.stopReverseMag()){
       RobotMap.magazineBelt.set(ControlMode.PercentOutput, 0);

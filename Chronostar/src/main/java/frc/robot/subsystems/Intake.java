@@ -27,26 +27,26 @@ public class Intake extends SubsystemBase {
   }
   public void autonomousPeriodic(){
     if(RobotMap.magazine.stuck){
-      RobotMap.intakeMotor.set(ControlMode.PercentOutput,-0.4);
+      RobotMap.intakeMotor.set(ControlMode.PercentOutput,-0.45);
     }
     else{
-      RobotMap.intakeMotor.set(ControlMode.PercentOutput,0.4);
+      RobotMap.intakeMotor.set(ControlMode.PercentOutput,0.55);
     }
   }
   public void teleopPeriodic(){
     if(RobotMap.magazine.stuck == false){
       if(ButtonMap.RunIntake()){
-        RobotMap.intakeMotor.set(ControlMode.PercentOutput,0.4);
+        RobotMap.intakeMotor.set(ControlMode.PercentOutput,0.7);
       }
       else if(ButtonMap.reverseMag()){
-        RobotMap.intakeMotor.set(ControlMode.PercentOutput,-0.4);
+        RobotMap.intakeMotor.set(ControlMode.PercentOutput,-0.7);
       }
       else{
         RobotMap.intakeMotor.set(ControlMode.PercentOutput,0);
       }
     }
     else{
-      RobotMap.intakeMotor.set(ControlMode.PercentOutput,-0.5);
+      RobotMap.intakeMotor.set(ControlMode.PercentOutput,-0.2);
     }
     
   }
