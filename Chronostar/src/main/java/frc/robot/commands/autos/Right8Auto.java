@@ -26,6 +26,6 @@ public class Right8Auto extends SequentialCommandGroup {
   public Right8Auto() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new ParallelCommandGroup(new SetFlyWheelVelocity(4500), new SetHoodPosition(10.5), new TrackVisionTarget()), new FireSequence(4500, 10, 1.7), new PurePursuitController(PathList.right8AutoPath1, 2.5, 4.0,true, true ),new ParallelCommandGroup( new PurePursuitController(PathList.right8AutoPath2, 2.5, 4.0,true, true )),new ParallelCommandGroup(new SetFlyWheelVelocity(5500), new SetHoodPosition(13.5), new TrackVisionTarget()), new FireSequence(5500, 13.5, 1.8));
+    super(new ParallelCommandGroup(new SetFlyWheelVelocity(4500), new SetHoodPosition(10.5), new TrackVisionTarget()), new FireSequence(4500, 10, 1.0), new PurePursuitController(PathList.right8AutoPath1, 2.5, 4.0,true, true ),new ParallelCommandGroup( new PurePursuitController(PathList.right8AutoPath2, 2.5, 4.0,true, true )),new ParallelCommandGroup(new SetFlyWheelVelocity(5250), new SetHoodPosition(13.5), new TrackVisionTarget()), new FireSequence(5250, 13.5, 1.8));
   }
 }

@@ -24,7 +24,7 @@ public class CommandSuites {
     public CommandSuites(){
     }
     public void startAutoCommands(){
-       /*if(ButtonMap.crossLineShoot()){
+       if(ButtonMap.crossLineShoot()){
             RobotMap.drive.startAutoOdometry(true, 10, -8);
             centerHighGoalAuto = new CenterHighGoalAuto();
             centerHighGoalAuto.schedule();
@@ -34,16 +34,19 @@ public class CommandSuites {
             crossLine = new CrossLine();
             crossLine.schedule();
         }
-        else if(ButtonMap.rightAdvancedAuto()){
+        else if(ButtonMap.right6Auto()){
             RobotMap.drive.startAutoOdometry(true, 10, -2.4);
-            rightAdvancedAuto = new RightAdvancedAuto();
-            rightAdvancedAuto.schedule();
+            right6Auto = new Right6Auto();
+            right6Auto.schedule();
+        }
+        else if(ButtonMap.right8Auto()){
+
         }
         else{
             RobotMap.drive.startAutoOdometry(true, 10, -8);
             centerHighGoalAuto = new CenterHighGoalAuto();
             centerHighGoalAuto.schedule();
-        }*/
+        }
         RobotMap.drive.startAutoOdometry(true, 10, -2.4);
         right8Auto = new Right8Auto();
         right8Auto.schedule();

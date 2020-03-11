@@ -100,16 +100,21 @@ public class ButtonMap {
     public static boolean armLow(){
         return oi.operatorController.getPOV()== 180;
     }
+    public static double armOutput(){
+        return oi.operatorController.getRawAxis(5);
+    }
+    //autochooser
     public static boolean crossLine(){
         return oi.autoChooser.getRawButton(1);
     }
     public static boolean crossLineShoot(){
         return oi.autoChooser.getRawButton(2);
     }
-    public static boolean rightAdvancedAuto(){
+    public static boolean right6Auto(){
         return oi.autoChooser.getRawButton(3);
     }
-    public static double armOutput(){
-        return oi.operatorController.getRawAxis(5);
+    public static boolean right8Auto(){
+        return oi.autoChooser.getRawButton(4);
     }
+
 }

@@ -28,9 +28,11 @@ public class Intake extends SubsystemBase {
   public void autonomousPeriodic(){
     if(RobotMap.magazine.stuck){
       RobotMap.intakeMotor.set(ControlMode.PercentOutput,-0.45);
+      RobotMap.intake2Motor.set(ControlMode.PercentOutput, -0.5);
     }
     else{
       RobotMap.intakeMotor.set(ControlMode.PercentOutput,0.55);
+      RobotMap.intake2Motor.set(ControlMode.PercentOutput, 0.3);
     }
   }
   public void teleopPeriodic(){
