@@ -56,10 +56,9 @@ public class Magazine extends SubsystemBase {
         if(RobotMap.beamBreakOne.get() == false){
           if(catchCount <= 50){
             new FeederBeltAutomation(.6, .15).schedule();;
-            System.err.println("1");
           }
           else{
-            if (tryCount <= 10){
+            if (tryCount <= 25){
              stuck = true;
              tryCount++;
             }
@@ -109,7 +108,7 @@ public class Magazine extends SubsystemBase {
     SmartDashboard.putBoolean("beamBroken", !RobotMap.beamBreakOne.get());
     if(ButtonMap.reverseMag() == true){
       RobotMap.magazineBelt.set(ControlMode.PercentOutput, -1);
-      RobotMap.indexer.set( .2);
+      RobotMap.indexer.set( .4);
     }
     if(ButtonMap.stopReverseMag()){
       RobotMap.magazineBelt.set(ControlMode.PercentOutput, 0);
