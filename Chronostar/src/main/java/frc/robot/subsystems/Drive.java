@@ -1,10 +1,8 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.RobotContainer;
+import frc.robot.*;
 
 public class Drive extends SubsystemBase {
 
@@ -14,11 +12,11 @@ public class Drive extends SubsystemBase {
   }
 
   private void setLeftPercent(double percent) {
-    RobotContainer.leftDriveLead.set(ControlMode.PercentOutput, percent);
+    RobotMap.leftDriveLead.set(ControlMode.PercentOutput, percent);
   }
 
   private void setRightPercent(double percent) {
-    RobotContainer.rightDriveLead.set(ControlMode.PercentOutput, percent);
+    RobotMap.rightDriveLead.set(ControlMode.PercentOutput, percent);
   }
 
   public void arcadeDrive(double throttle, double turn) {
@@ -43,9 +41,14 @@ public class Drive extends SubsystemBase {
     setLeftPercent(left);
     setRightPercent(right);
   }
+  
+  public void tankDrive(double left, double right) {
+    setLeftPercent(left);
+    setRightPercent(right);
+  }
 
   @Override
   public void periodic() {
-    arcadeDrive(RobotContainer.getThrottle(), RobotContainer.getTurn());
+    arcadeDrive(ButtonMap.getThrottle(), ButtonMap.getTurn());
   }
 }

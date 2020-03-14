@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 /**
  * Add your docs here.
@@ -14,18 +16,35 @@ package frc.robot;
 public class RobotConfig {
 
     public void startBaseConfig() {
-        RobotContainer.leftDriveFollower1.follow(RobotContainer.leftDriveLead);
-        RobotContainer.leftDriveFollower2.follow(RobotContainer.leftDriveLead);
-        RobotContainer.rightDriveFollower1.follow(RobotContainer.rightDriveLead);
-        RobotContainer.rightDriveFollower2.follow(RobotContainer.rightDriveLead);
-        RobotContainer.rightDriveLead.setInverted(true);
-        RobotContainer.rightDriveFollower1.setInverted(true);
-        RobotContainer.rightDriveFollower2.setInverted(true);
+        RobotMap.leftDriveFollower2.set(ControlMode.Follower, Constants.leftDriveLeadID);
+        RobotMap.rightDriveFollower2.set(ControlMode.Follower, Constants.rightDriveLeadID);
+        RobotMap.rightDriveLead.setInverted(true);
+        RobotMap.rightDriveFollower2.setInverted(true);
+        setCurrentLimitsEnabled();
     }
 
     public void startAutoConfig() {
+        setVoltageCompensation(Constants.driveMaxVoltage);
     }
 
     public void startTeleopConfig() {
+    }
+
+    private void setVoltageCompensation(double volts) {
+        for (TalonSRX t : RobotMap.allMotors) {
+            t.configVoltageCompSaturation(volts);
+        }
+    }
+
+    private void setCurrentLimitsEnabled() {
+        for (TalonSRX t : RobotMap.allMotors) {
+            t.configSupplyCurrentLimit(Constants.currentLimitEnabled);
+        }
+    }
+    
+    private void setCurrentLimitsDisabled() {
+        for (TalonSRX t : RobotMap.allMotors) {
+            t.configSupplyCurrentLimit(Constants.currentLimitDisabled);
+        }
     }
 }

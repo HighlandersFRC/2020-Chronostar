@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -20,7 +21,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
-  private RobotContainer m_robotContainer;
   private RobotConfig config = new RobotConfig();
 
   /**
@@ -31,8 +31,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
-    config.startBaseConfig();
+  config.startBaseConfig();
   }
 
   /**
@@ -49,7 +48,7 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    RobotContainer.drive.periodic();
+    RobotMap.drive.periodic();
   }
 
   /**
@@ -64,11 +63,10 @@ public class Robot extends TimedRobot {
   }
 
   /**
-   * This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
+   * This autonomous runs the autonomous command selected by your {@link RobotMap} class.
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
