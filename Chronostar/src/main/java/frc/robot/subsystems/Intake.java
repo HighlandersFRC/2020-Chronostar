@@ -15,15 +15,10 @@ import frc.robot.RobotMap;
 import frc.robot.commands.controls.MagazineAutomation;
 
 public class Intake extends SubsystemBase {
-  /**
-   * Creates a new Intake.
-   */
   public Intake() {
   }
-
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
   }
   public void autonomousPeriodic(){
     if(RobotMap.magazine.stuck){

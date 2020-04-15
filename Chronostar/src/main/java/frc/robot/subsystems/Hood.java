@@ -22,9 +22,6 @@ import com.revrobotics.CANDigitalInput.LimitSwitchPolarity;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Hood extends SubsystemBase {
-  /**
-   * Creates a new Hood.
-   */
   private double kf = .02;
   private double kp = 0.00009;
   private double ki = 0.0027;
@@ -37,9 +34,7 @@ public class Hood extends SubsystemBase {
   private double dPosition;
   private CANEncoder hoodEncoder;
 
-
   public void inithood(){
-
     m_forwardLimit = RobotMap.hoodMotor.getForwardLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
     m_reverseLimit = RobotMap.hoodMotor.getReverseLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
     RobotMap.hoodMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
@@ -75,15 +70,6 @@ public class Hood extends SubsystemBase {
     double lidarDist = RobotMap.lidar1.getDistance();
     double camDist = Robot.visionCamera.getDistance();
     double dist;
-    /*if(Math.abs(Timer.getFPGATimestamp()-Robot.visionCamera.lastParseTime)>0.5){
-        dist = lidarDist;
-    }
-    else if(Math.abs(lidarDist-camDist)>2){
-      dist = camDist;
-    }
-    else{
-      dist = lidarDist;
-    }*/
     dist = lidarDist;
     if(dist>=1.9 &&dist <=25){
       return 0.0076*Math.pow(dist,3) - 0.3358*Math.pow(dist,2)+ 4.8685*dist - 8.048;
@@ -95,7 +81,6 @@ public class Hood extends SubsystemBase {
   public void setHoodPosition(double desiredPosition){
     dPosition =desiredPosition;
     mpidController.setReference(desiredPosition, ControlType.kSmartMotion);
-    
   }
   public double autoHoodPositionCloseDistance(double dist){
     return 0;
@@ -103,7 +88,6 @@ public class Hood extends SubsystemBase {
   public double autoHoodPositionFarDistance(double dist){
     return 0;
   }
-
   @Override
   public void periodic() {
     if(m_reverseLimit.get() == true) {
