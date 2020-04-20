@@ -23,33 +23,28 @@ public class Arm extends SubsystemBase {
   /**
    * Creates a new arm.
    */
+  //fpid values for arm control
   private double kf = .12;
   private double kp = 0.0002;
   private double ki = 0.0000000000;
   private double kd = 0.00;
+  //max desired point on arm movement
   private float maxPoint = 14.5f;
   private float minPoint = -2;
+  //max point where the arm can be controlled by the fpid loop
   private float maxControlPoint = 13.5f;
-  private float maxvel = 20;
-  private float minvel = 20;
-  private float accel = 9;
-  private double allowederror = 0.1;
-
   private CANPIDController ArmPidController = new CANPIDController(RobotMap.armMotor);
   private CANEncoder armEncoder;
   private double ArmSetPoint;
   private CANDigitalInput forwardLimit;
   private CANDigitalInput reverseLimit;
-  ;
-
-
-
   public void initarm(){
-
+    //sets the motor to inverted
     RobotMap.armMotor.setInverted(true);
+    //initializing limit switches / setting them up
     forwardLimit = RobotMap.armMotor.getForwardLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
     reverseLimit = RobotMap.armMotor.getReverseLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
-    //RobotMap.armMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
+    //soft limits are code limits which effectively work like limit switches but go off encoder tics
     RobotMap.armMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
     RobotMap.armMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, maxPoint);
     RobotMap.armMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, minPoint);
@@ -57,6 +52,7 @@ public class Arm extends SubsystemBase {
     //SmartDashboard.putBoolean("Reverse Limit Enabled", m_reverseLimit.isLimitSwitchEnabled());
     ArmPidController = RobotMap.armMotor.getPIDController();
     armEncoder = RobotMap.armMotor.getEncoder();
+    //initializing pid loop
     ArmPidController.setFF(kf);
     ArmPidController.setP(kp);
     ArmPidController.setI(ki);
@@ -84,16 +80,18 @@ public class Arm extends SubsystemBase {
 
   @Override
   public void periodic() {
+    //zeroes off limit switch
    if(forwardLimit.get() == true){
       resetEncodermax();
    }
+   //constrain setpoints within desired boundries
     if (ArmSetPoint <= minPoint){
       ArmSetPoint = minPoint;
     }
     if (ArmSetPoint >= maxPoint){
       ArmSetPoint = maxPoint;
     }
-
+    //present for climber deploying
     if(ButtonMap.deployClimber() == true){
       ArmSetPoint = 3;
     }
@@ -103,10 +101,14 @@ public class Arm extends SubsystemBase {
     else if(ButtonMap.armHigh()){
       ArmSetPoint = 0;
     }
+    //"manual control" through joysticks shifting the arm setpoint
     else if(Math.abs(ButtonMap.armOutput())>0.2){
       ArmSetPoint = (ArmSetPoint+ButtonMap.armOutput()*0.08);
     }
+    //if the arm is below a certain position use manual values to run it into the hard stop. This allows for a constant amount of force on the arm
+    //keeping it down while the robot is bouncing around
     if(armEncoder.getPosition() >= maxControlPoint && ArmSetPoint >= maxControlPoint){
+      //push it down harder if the intake is running to deal with force of balls
       if(ButtonMap.RunIntake()){
         RobotMap.armMotor.set(0.3);
 

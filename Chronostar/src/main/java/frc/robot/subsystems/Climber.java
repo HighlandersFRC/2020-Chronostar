@@ -37,14 +37,17 @@ public class Climber extends SubsystemBase {
   }
   public void teleopPeriodic(){
     encoderTics = RobotMap.winchMotor.getEncoder().getPosition();
-
+    //if saftey button is pressed, the climber can be run
     if(ButtonMap.SafetyButton()) {
       saftey = true;
     }
     if(saftey){
+      //if the button to deploy the climber has been pressed and deploy climber has not already run, run it
       if(ButtonMap.deployClimber() == true&&!deployClimber.isFinished()){
         deployClimber.schedule();
       }
+      //if the deploy climber program has run, which ends with the release position going back to its constrain arm posision,
+      //then allow for operator control of the winch
       if(RobotMap.climberReleasePiston.get() == RobotMap.constrainArm){
         if(ButtonMap.winchDown() == true){
           RobotMap.winchMotor.set(-0.4);
