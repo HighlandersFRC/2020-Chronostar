@@ -49,6 +49,7 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
     RobotMap.drive.periodic();
+    RobotMap.magazine.periodic();
   }
 
   /**
@@ -72,6 +73,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+    config.startAutoConfig();
   }
 
   /**
@@ -90,6 +92,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    config.startTeleopConfig();
   }
 
   /**

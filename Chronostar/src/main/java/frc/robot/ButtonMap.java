@@ -18,4 +18,20 @@ public class ButtonMap {
     public static double getRightY() {
       return OI.driverController.getY(Hand.kRight);
     }
+
+    public static boolean getOperatorXButton() {
+      return OI.operatorController.getXButton();
+    }
+
+    public static boolean getOperatorYButton() {
+      return OI.operatorController.getYButton();
+    }
+
+    public static boolean getOperatorAButton() {
+      return OI.operatorController.getAButton();
+    }
+
+    public static boolean getOperatorBButton() {
+      return OI.operatorController.getBButton();
+    }
 }
