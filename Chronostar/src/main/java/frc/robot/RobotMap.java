@@ -16,15 +16,19 @@ public class RobotMap {
   public static TalonFX rightDriveLead = new TalonFX(Constants.rightDriveLeadID);
   public static TalonFX leftDriveFollower1 = new TalonFX(Constants.leftDriveFollower1ID);
   public static TalonFX rightDriveFollower1 = new TalonFX(Constants.rightDriveFollower1ID); 
+  public static TalonFX lowIntake = new TalonFX(Constants.lowIntakeID);
+  public static VictorSPX highIntake = new VictorSPX(Constants.highIntakeID);
   public static VictorSPX lowMag = new VictorSPX(Constants.magBeltID);
-  public static CANSparkMax topMag = new CANSparkMax(Constants.magWheelID, MotorType.kBrushless);
+  public static CANSparkMax highMag = new CANSparkMax(Constants.magWheelID, MotorType.kBrushless);
 
   public static DigitalInput beambreak1 = new DigitalInput(Constants.beamBreak1Port);
-  public static DigitalInput beambreak2 = new DigitalInput(Constants.beamBreak2Port);
-  public static DigitalInput beambreak3 = new DigitalInput(Constants.beamBreak3Port);
+  public static DigitalInput beambreak2 = new DigitalInput(Constants.beamBreak3Port);
+  public static DigitalInput beambreak3 = new DigitalInput(Constants.beamBreak2Port);
 
   public static Drive drive = new Drive();
   public static Magazine magazine = new Magazine();
+  public static Intake intake = new Intake();
+  public static Shooter shooter = new Shooter();
 
   public static TalonFX[] allMotors = {leftDriveLead, rightDriveLead,
   leftDriveFollower1, rightDriveFollower1};

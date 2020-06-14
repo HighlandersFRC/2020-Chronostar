@@ -34,4 +34,11 @@ public class ButtonMap {
     public static boolean getOperatorBButton() {
       return OI.operatorController.getBButton();
     }
+    public static double getOperatorRightTrigger() {
+      return OI.operatorController.getRawAxis(3);
+    }
+    public static double getOperatorLeftTrigger() {
+      return OI.operatorController.getRawAxis(2);
+    }
+    
 }

@@ -9,8 +9,10 @@ public class Constants {
     public static final int rightDriveLeadID = 3;
     public static final int leftDriveFollower1ID = 2;
     public static final int rightDriveFollower1ID = 4;
+    public static final int highIntakeID = 10;
     public static final int magBeltID = 8;
     public static final int magWheelID = 9;
+    public static final int lowIntakeID = 12;
 
     // Sensor ports
     public static final int beamBreak1Port = 0;
