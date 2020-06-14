@@ -27,9 +27,6 @@ public class ButtonMap {
       return OI.operatorController.getYButton();
     }
 
-    public static boolean getOperatorAButton() {
-      return OI.operatorController.getAButton();
-    }
 
     public static boolean getOperatorBButton() {
       return OI.operatorController.getBButton();
@@ -41,4 +38,7 @@ public class ButtonMap {
       return OI.operatorController.getRawAxis(2);
     }
     
+    public static boolean shoot(){
+      return OI.operatorController.getAButton();
+    }
 }

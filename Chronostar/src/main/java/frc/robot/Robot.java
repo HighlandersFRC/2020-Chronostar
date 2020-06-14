@@ -3,6 +3,7 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -41,6 +42,9 @@ public class Robot extends TimedRobot {
     RobotMap.drive.periodic();
     RobotMap.magazine.periodic();
     RobotMap.intake.periodic();
+    SmartDashboard.putBoolean("beam break 1", RobotMap.beambreak1.get());
+    SmartDashboard.putBoolean("beam break 2", RobotMap.beambreak2.get());
+    SmartDashboard.putBoolean("beam break 3", RobotMap.beambreak3.get());
   }
 
   /**
@@ -91,6 +95,18 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    if(ButtonMap.shoot()){
+      RobotMap.leftFlyWheel.set(ControlMode.PercentOutput, -0.30);
+      RobotMap.rightFlyWheel.set(ControlMode.PercentOutput,0.00);
+    }
+    else{
+      RobotMap.leftFlyWheel.set(ControlMode.PercentOutput, 0);
+      RobotMap.rightFlyWheel.set(ControlMode.PercentOutput,0);
+      RobotMap.magazine.stopAll();
+    }
+    SmartDashboard.putNumber("leftHeat", RobotMap.leftFlyWheel.getTemperature());
+    SmartDashboard.putNumber("rightHeat", RobotMap.rightFlyWheel.getTemperature());
+
   }
 
   @Override

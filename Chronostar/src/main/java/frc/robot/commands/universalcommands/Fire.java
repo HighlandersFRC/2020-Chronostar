@@ -1,23 +1,21 @@
-package frc.robot.commands.teleopcommands;
+package frc.robot.commands.universalcommands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.*;
 
-public class Outtake extends CommandBase {
-  /**
-   * Creates a new Outtake.
-   */
-  public Outtake() {
+public class Fire extends CommandBase {
+  double targetTime;
+  public Fire() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotMap.lowMag.set(ControlMode.PercentOutput, -1);
-    RobotMap.highMag.set(0.75);
+    targetTime = Timer.getFPGATimestamp() + 1;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -28,13 +26,13 @@ public class Outtake extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotMap.lowMag.set(ControlMode.PercentOutput, 0);
-    RobotMap.highMag.set(0);
+    RobotMap.lowMag.set(ControlMode.PercentOutput, 0.5);
+    RobotMap.highMag.set(-0.5);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return ButtonMap.getOperatorLeftTrigger() <= 0.5;
+    return Timer.getFPGATimestamp() > targetTime;
   }
 }

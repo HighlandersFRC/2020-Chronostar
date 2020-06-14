@@ -12,6 +12,11 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 public class RobotConfig {
 
     public void startBaseConfig() {
+        RobotMap.rightFlyWheel.configFactoryDefault();
+        RobotMap.leftFlyWheel.configFactoryDefault();
+        RobotMap.rightFlyWheel.setNeutralMode(NeutralMode.Coast);
+        RobotMap.leftFlyWheel.setNeutralMode(NeutralMode.Coast);
+
         RobotMap.leftDriveLead.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
         RobotMap.rightDriveLead.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
         RobotMap.leftDriveFollower1.set(ControlMode.Follower, Constants.leftDriveLeadID);

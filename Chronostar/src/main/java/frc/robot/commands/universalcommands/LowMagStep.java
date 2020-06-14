@@ -17,7 +17,7 @@ public class LowMagStep extends CommandBase {
   @Override
   public void initialize() {
     startTime = Timer.getFPGATimestamp();
-    RobotMap.lowMag.set(ControlMode.PercentOutput, 0.4);
+    RobotMap.lowMag.set(ControlMode.PercentOutput, 0.6);
   }
 
   @Override

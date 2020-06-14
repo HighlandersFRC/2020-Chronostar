@@ -13,6 +13,8 @@ public class Constants {
     public static final int magBeltID = 8;
     public static final int magWheelID = 9;
     public static final int lowIntakeID = 12;
+    public static final int leftFlywheelID = 5;
+    public static final int rightFlyWheelID = 6;
 
     // Sensor ports
     public static final int beamBreak1Port = 0;

@@ -17,7 +17,7 @@ public class HighMagStep extends CommandBase {
   @Override
   public void initialize() {
     startTime = Timer.getFPGATimestamp();
-    RobotMap.highMag.set(-0.35);
+    RobotMap.highMag.set(-0.75);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
