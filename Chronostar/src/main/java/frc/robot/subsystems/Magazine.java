@@ -9,53 +9,38 @@ import frc.robot.commands.universalcommands.*;
 
 public class Magazine extends SubsystemBase {
 
-  public boolean position1;
-  public boolean position2;
-  public boolean position3;
-  public boolean position4;
-  public boolean position5;
+  private boolean position1;
+  private boolean position3;
+  private MagPulse magPulse = new MagPulse();
+  private LowMagPulse lowMagPulse = new LowMagPulse();
+  private int catchCounter;
+  private int tryCounter;  
+  private boolean stuck;
 
   public Magazine() {
   }
 
   @Override
   public void periodic() {
-    position5 = !RobotMap.beambreak3.get();
-    position3 = !RobotMap.beambreak2.get();
     position1 = !RobotMap.beambreak1.get();
-    if (RobotMap.intake.isOuttaking) {
-      outtake();
-    } else {
-      if (ButtonMap.shoot()) {
-        fire();
-      } else {
-        if (position5) {
-          stopAll();
-          return;
-        } else {
-          if (RobotMap.intake.isIntaking) {
-            if (position1) {
-              position2 = true;
-              new LowMagStep(0.2).schedule();
-            }
-            if (position2 && position1) {
-              new LowMagStep(0.2).schedule();
-            }
-            if (position3 && position2 && position1) {
-              new HighMagStep(0.2).schedule();
-              new LowMagStep(0.2).schedule();
-              position4 = true;
-            }
-            if (position4 && position3 && position2 && position1) {
-              new HighMagStep(0.2).schedule();
-              new LowMagStep(0.2).schedule();
-            }
-          } else if (RobotMap.intake.isOuttaking) {
-            outtake();
-          }
-        }
+    position3 = !RobotMap.beambreak2.get();
+    
+    if (!ButtonMap.shoot()) {
+      if (position1 && position3 && !magPulse.isScheduled()) {
+        magPulse = new MagPulse();
+        magPulse.schedule();
       }
-    }
+      if (position3) {
+        magPulse.cancel();
+        
+      }
+      if (position1) {
+        lowMagPulse.schedule();
+      }
+    } else if (ButtonMap.shoot()) fire();
+    else if (ButtonMap.getOperatorLeftTrigger() >= 0.5) {
+      outtake();
+    } else stopAll();
   }
 
   public void stopAll() {

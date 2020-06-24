@@ -20,12 +20,12 @@ public class Intake extends SubsystemBase {
     if (ButtonMap.getOperatorRightTrigger() >= 0.5) {
       isIntaking = true;
       isOuttaking = false;
-      RobotMap.lowIntake.set(ControlMode.PercentOutput, 0.5);
+      RobotMap.lowIntake.set(ControlMode.PercentOutput, 0.25);
       RobotMap.highIntake.set(ControlMode.PercentOutput, 0.5);
     } else if (ButtonMap.getOperatorLeftTrigger() >= 0.5) {
       isIntaking = false;
       isOuttaking = true;
-      RobotMap.lowIntake.set(ControlMode.PercentOutput, -0.5);
+      RobotMap.lowIntake.set(ControlMode.PercentOutput, -0.25);
       RobotMap.highIntake.set(ControlMode.PercentOutput, -0.5);
     } else {
       isIntaking = false;

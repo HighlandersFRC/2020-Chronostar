@@ -1,23 +1,20 @@
 package frc.robot.commands.universalcommands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotMap;
 
-public class LowMagStep extends CommandBase {
+public class SetLowMag extends CommandBase {
 
-  private double desiredTime;
-  private double startTime;
+  private double power;
 
-  public LowMagStep(double time) {
-    desiredTime = time;
+  public SetLowMag(double power) {
+    this.power = power;
   }
 
   @Override
   public void initialize() {
-    startTime = Timer.getFPGATimestamp();
-    RobotMap.lowMag.set(ControlMode.PercentOutput, 0.6);
+    RobotMap.lowMag.set(ControlMode.PercentOutput, power);
   }
 
   @Override
@@ -27,12 +24,11 @@ public class LowMagStep extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotMap.lowMag.set(ControlMode.PercentOutput, 0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Timer.getFPGATimestamp() >= startTime + desiredTime;
+    return true;
   }
 }
