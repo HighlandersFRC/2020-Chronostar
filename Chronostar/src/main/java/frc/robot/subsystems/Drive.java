@@ -50,5 +50,12 @@ public class Drive extends SubsystemBase {
   @Override
   public void periodic() {
     arcadeDrive(ButtonMap.getThrottle(), ButtonMap.getTurn());
+    if (ButtonMap.getOperatorPOV() == 270) {
+      setLeftPercent(0.2);
+      setRightPercent(0.2);
+    } else if (ButtonMap.getOperatorPOV() == 90) {
+      setLeftPercent(-0.2);
+      setRightPercent(-0.2);
+    }
   }
 }

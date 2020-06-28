@@ -27,6 +27,9 @@ public class ButtonMap {
       return OI.operatorController.getYButton();
     }
 
+    public static int getOperatorPOV() {
+      return OI.operatorController.getPOV();
+    }
 
     public static boolean getOperatorBButton() {
       return OI.operatorController.getBButton();

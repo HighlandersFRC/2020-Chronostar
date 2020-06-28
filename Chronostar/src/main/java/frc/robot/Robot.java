@@ -106,6 +106,7 @@ public class Robot extends TimedRobot {
     }
     SmartDashboard.putNumber("leftHeat", RobotMap.leftFlyWheel.getTemperature());
     SmartDashboard.putNumber("rightHeat", RobotMap.rightFlyWheel.getTemperature());
+    RobotMap.magazine.teleopPeriodic();
   }
 
   @Override

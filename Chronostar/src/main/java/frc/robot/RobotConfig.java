@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 /**
  * Add your docs here.
@@ -19,8 +20,8 @@ public class RobotConfig {
 
         RobotMap.leftDriveLead.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
         RobotMap.rightDriveLead.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
-        RobotMap.leftDriveFollower1.set(ControlMode.Follower, Constants.leftDriveLeadID);
-        RobotMap.rightDriveFollower1.set(ControlMode.Follower, Constants.rightDriveLeadID);
+        RobotMap.leftDriveFollower1.set(ControlMode.Follower, RobotStats.leftDriveLeadID);
+        RobotMap.rightDriveFollower1.set(ControlMode.Follower, RobotStats.rightDriveLeadID);
         RobotMap.rightDriveLead.setInverted(true);
         RobotMap.rightDriveFollower1.setInverted(InvertType.FollowMaster);
         RobotMap.leftDriveFollower1.setInverted(InvertType.FollowMaster);
@@ -29,10 +30,14 @@ public class RobotConfig {
         RobotMap.leftDriveLead.setSelectedSensorPosition(0);
         RobotMap.rightDriveLead.setSelectedSensorPosition(0);
         setCurrentLimitsEnabled();
+        RobotMap.lowMag.setNeutralMode(NeutralMode.Brake);
+        RobotMap.highMag.setIdleMode(IdleMode.kBrake);
+        RobotMap.lowIntake.setNeutralMode(NeutralMode.Brake);
+        RobotMap.highIntake.setNeutralMode(NeutralMode.Brake);
     }
 
     public void startAutoConfig() {
-        setVoltageCompensation(Constants.driveMaxVoltage);
+        setVoltageCompensation(RobotStats.driveMaxVoltage);
         setDriveBrake();
     }
 
@@ -48,13 +53,13 @@ public class RobotConfig {
 
     private void setCurrentLimitsEnabled() {
         for (TalonFX t : RobotMap.allMotors) {
-            t.configSupplyCurrentLimit(Constants.currentLimitEnabled);
+            t.configSupplyCurrentLimit(RobotStats.currentLimitEnabled);
         }
     }
     
     private void setCurrentLimitsDisabled() {
         for (TalonFX t : RobotMap.allMotors) {
-            t.configSupplyCurrentLimit(Constants.currentLimitDisabled);
+            t.configSupplyCurrentLimit(RobotStats.currentLimitDisabled);
         }
     }
 
