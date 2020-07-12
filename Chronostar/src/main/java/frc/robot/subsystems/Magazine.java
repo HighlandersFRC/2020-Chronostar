@@ -12,7 +12,7 @@ public class Magazine extends SubsystemBase {
   private boolean beambreak1;
   private boolean beambreak2;
   private boolean beambreak3;
-  private LowMagBump lowMagBump = new LowMagBump(0.75, 0.2); 
+  private LowMagBump lowMagBump = new LowMagBump(0.85, 0.2); 
   private int catchCounter;
   private int tryCounter;  
   public static boolean stuck;
@@ -27,27 +27,23 @@ public class Magazine extends SubsystemBase {
     beambreak3 = !RobotMap.beambreak3.get();
     
     if (!ButtonMap.shoot() && ButtonMap.getOperatorLeftTrigger() <= 0.5) {
-      if (beambreak3 && !beambreak2 && !lowMagBump.isScheduled()) {
-        lowMagBump = new LowMagBump(0.75, 0.2);
-        lowMagBump.schedule();
+      if (beambreak3) {
+        new HighMagBump(0, 0.15).schedule();
       }
-      if (beambreak2) {
+      else if (beambreak2) {
         lowMagBump.cancel();
-        new HighMagBump(-1, 0.2).schedule();
-        new LowMagBump(0.75, 0.2).schedule();
-      }
-      if (beambreak3 && beambreak2) {
-        new HighMagBump(0, 0.2).schedule();
+        new HighMagBump(-0.6, 0.15).schedule();
+        new LowMagBump(0.9, 0.15).schedule();
       }
       if (beambreak1) {
         if (catchCounter <= 50) {
-          new LowMagBump(0.75, 0.2).schedule();
+          new LowMagBump(0.9, 0.15).schedule();
         } else {
           if (tryCounter <= 25) {
             stuck = true;
             tryCounter++;
           } else {
-            new LowMagBump(-0.8, 0.2).schedule();
+            new LowMagBump(-0.8, 0.15).schedule();
             catchCounter = 0;
             tryCounter = 0;
             stuck = false;

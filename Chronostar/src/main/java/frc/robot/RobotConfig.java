@@ -34,6 +34,8 @@ public class RobotConfig {
         RobotMap.highMag.setIdleMode(IdleMode.kBrake);
         RobotMap.lowIntake.setNeutralMode(NeutralMode.Brake);
         RobotMap.highIntake.setNeutralMode(NeutralMode.Brake);
+        RobotMap.lowMag.configVoltageCompSaturation(12.25);
+        RobotMap.highMag.enableVoltageCompensation(12.25);
     }
 
     public void startAutoConfig() {
