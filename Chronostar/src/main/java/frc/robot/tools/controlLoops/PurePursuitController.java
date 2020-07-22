@@ -8,15 +8,13 @@
 package frc.robot.tools.controlLoops;
 
 import edu.wpi.first.wpilibj.Notifier;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.RobotStats;
-import frc.robot.tools.pathTools.PathSetup;
-import frc.robot.tools.pathTools.Odometry;
 import frc.robot.tools.math.Point;
 import frc.robot.tools.math.Vector;
+import frc.robot.tools.pathTools.Odometry;
+import frc.robot.tools.pathTools.PathSetup;
 import jaci.pathfinder.Pathfinder;
 
 public class PurePursuitController extends CommandBase {

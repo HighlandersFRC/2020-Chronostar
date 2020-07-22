@@ -7,8 +7,6 @@
 
 package frc.robot.tools.pathTools;
 
-import java.io.File;
-
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import java.nio.file.Paths;

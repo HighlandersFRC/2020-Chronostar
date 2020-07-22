@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.SPI.Port;
 import frc.robot.sensors.LidarLite;
@@ -63,8 +62,7 @@ public class RobotMap {
 
   public static int intakeMotorID = 12;
 
-  public static int climberMotorId = 13;
-  public static int armID = 11;
+  public static int winchMotorID = 14;
 
   public static TalonFX leftDriveLead = new TalonFX(leftDriveLeadID);
   public static TalonFX rightDriveLead = new TalonFX(rightDriveLeadID);
@@ -83,6 +81,8 @@ public class RobotMap {
 
   public static TalonFX intakeMotor = new TalonFX(intakeMotorID);
   public static VictorSPX intake2Motor = new VictorSPX(Intake2ID);
+
+  public static TalonFX winchMotor = new TalonFX(winchMotorID);
 
   public static Spark blinkin = new Spark(0);
   public static DigitalInput beamBreakOne = new DigitalInput(beamBreak1Port);

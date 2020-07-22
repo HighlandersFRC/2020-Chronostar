@@ -11,15 +11,11 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.button.Button;
 import frc.robot.ButtonMap;
 import frc.robot.RobotMap;
 import frc.robot.commands.controls.FeederBeltAutomation;
 import frc.robot.commands.controls.FeederWheelsAutomation;
-import frc.robot.commands.controls.MagazineAutomation;
-import frc.robot.commands.controls.MagazineControl;
 import frc.robot.commands.controls.RunBeltBurst;
-import frc.robot.commands.controls.ShootingSequence;
 
 public class Magazine extends SubsystemBase {
   private boolean lastState;

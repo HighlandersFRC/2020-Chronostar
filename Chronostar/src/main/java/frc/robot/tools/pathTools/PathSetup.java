@@ -1,16 +1,7 @@
 package frc.robot.tools.pathTools;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-
-
-import frc.robot.RobotConfig;
-import frc.robot.RobotStats;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import jaci.pathfinder.followers.DistanceFollower;
-import jaci.pathfinder.modifiers.TankModifier;
 
 public class PathSetup {
 	private double velocity;
