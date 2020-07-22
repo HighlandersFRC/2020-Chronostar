@@ -21,8 +21,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.SPI.Port;
 import frc.robot.sensors.LidarLite;
 import frc.robot.sensors.Navx;
-import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
@@ -86,10 +84,6 @@ public class RobotMap {
   public static TalonFX intakeMotor = new TalonFX(intakeMotorID);
   public static VictorSPX intake2Motor = new VictorSPX(Intake2ID);
 
-  public static CANSparkMax armMotor = new CANSparkMax(armID, MotorType.kBrushless);
-
-  public static CANSparkMax winchMotor = new CANSparkMax(climberMotorId, MotorType.kBrushless);
-
   public static Spark blinkin = new Spark(0);
   public static DigitalInput beamBreakOne = new DigitalInput(beamBreak1Port);
   public static DigitalInput beamBreakTwo = new DigitalInput(beamBreak2Port);
@@ -145,7 +139,4 @@ public class RobotMap {
   public static Hood hood = new Hood();
   public static Magazine magazine = new Magazine();
   public static Intake intake = new Intake();
-  public static Climber climber = new Climber();
-  public static Arm arm = new Arm();
-  
 }

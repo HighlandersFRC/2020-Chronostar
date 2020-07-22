@@ -10,18 +10,15 @@ package frc.robot;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSink;
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Relay.Value;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.SerialPort.Port;
+import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.sensors.VisionCamera;
 
 public class Robot extends TimedRobot {
@@ -42,7 +39,6 @@ public class Robot extends TimedRobot {
     robotConfig.setStartingConfig();
     RobotMap.hood.inithood();
     RobotMap.magazine.initMagazine();
-    RobotMap.arm.initarm();
     m_oi = new OI();
     commandSuites = new CommandSuites();
 
@@ -91,7 +87,6 @@ public class Robot extends TimedRobot {
       RobotMap.magazine.periodic();
       RobotMap.hood.periodic();
       RobotMap.shooter.periodic();
-      RobotMap.arm.periodic();
 
     } catch (Exception e) {
     }
@@ -110,7 +105,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    RobotMap.arm.initarm();
     robotConfig.setAutoConfig();
     commandSuites.startAutoCommands();
     if (m_autonomousCommand != null) {
@@ -127,11 +121,9 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     robotConfig.setTeleopConfig();
-    RobotMap.arm.initarm();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    RobotMap.climber.initClimber();
   }
 
   @Override
@@ -141,7 +133,6 @@ public class Robot extends TimedRobot {
     RobotMap.hood.teleopPeriodic();
     RobotMap.magazine.teleopPeriodic();
     RobotMap.intake.teleopPeriodic();
-    RobotMap.climber.teleopPeriodic();
     Scheduler.getInstance().run();
   }
 

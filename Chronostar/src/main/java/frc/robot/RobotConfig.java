@@ -14,7 +14,6 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax.IdleMode;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.controls.SetFlyWheelVelocity;
 import frc.robot.commands.controls.SetHoodPosition;
@@ -74,14 +73,10 @@ public class RobotConfig {
         RobotMap.shooterMaster.configClosedLoopPeakOutput(0, RobotStats.maxShooterPercentVoltage);
         RobotMap.shooter.initShooterPID();
 
-        RobotMap.armMotor.setIdleMode(IdleMode.kBrake);
-        RobotMap.armMotor.setInverted(true);
         RobotMap.climberReleasePiston.set(RobotMap.constrainArm);
         RobotMap.winchRatchetPiston.set(RobotMap.winchRatchetSet);
-        RobotMap.winchMotor.setIdleMode(IdleMode.kCoast);
         RobotConfig.setShooterMotorsCoast();
         RobotConfig.setShooterMotorVoltageCompensation();
-        RobotMap.climber.initClimber();
     }
 
     public void setTeleopConfig() {
