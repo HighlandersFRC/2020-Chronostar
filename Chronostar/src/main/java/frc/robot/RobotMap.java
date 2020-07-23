@@ -39,8 +39,8 @@ public class RobotMap {
   public static Relay visionRelay1 = new Relay(0);
 
   public static int beamBreak1Port = 0;
-  public static int beamBreak2Port = 1;
-  public static int beamBreak3Port = 3;
+  public static int beamBreak2Port = 3;
+  public static int beamBreak3Port = 1;
   public static int beamBreak4Port = 4;
 
 
