@@ -73,8 +73,7 @@ public class RobotConfig {
         RobotMap.shooterMaster.configClosedLoopPeakOutput(0, RobotStats.maxShooterPercentVoltage);
         RobotMap.shooter.initShooterPID();
 
-        RobotMap.climberReleasePiston.set(RobotMap.constrainArm);
-        RobotMap.winchRatchetPiston.set(RobotMap.winchRatchetSet);
+        RobotMap.intakePiston.set(RobotMap.restrainIntake);
         RobotConfig.setShooterMotorsCoast();
         RobotConfig.setShooterMotorVoltageCompensation();
     }

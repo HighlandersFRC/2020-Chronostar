@@ -58,8 +58,6 @@ public class RobotMap {
   public static int magazineBeltID = 8;
   public static int indexerID = 9;
 
-  public static int Intake2ID = 10;
-
   public static int intakeMotorID = 12;
 
   public static int winchMotorID = 14;
@@ -80,7 +78,6 @@ public class RobotMap {
   public static CANSparkMax hoodMotor = new CANSparkMax(hoodID, MotorType.kBrushless);
 
   public static TalonFX intakeMotor = new TalonFX(intakeMotorID);
-  public static VictorSPX intake2Motor = new VictorSPX(Intake2ID);
 
   public static TalonFX winchMotor = new TalonFX(winchMotorID);
 
@@ -99,14 +96,9 @@ public class RobotMap {
 
   public static LidarLite lidar1 = new LidarLite(lidarCounter);
   
-  public static DoubleSolenoid climberReleasePiston = new DoubleSolenoid(0, 1);
-  public static DoubleSolenoid.Value releaseArm = Value.kReverse;
-  public static DoubleSolenoid.Value constrainArm = Value.kForward;
-  
-  public static DoubleSolenoid winchRatchetPiston = new DoubleSolenoid(2,3);
-  public static DoubleSolenoid.Value winchRatchetRelease = Value.kReverse;
-  public static DoubleSolenoid.Value winchRatchetSet = Value.kForward;
-
+  public static DoubleSolenoid intakePiston = new DoubleSolenoid(0, 1);
+  public static DoubleSolenoid.Value unleashIntake = Value.kReverse;
+  public static DoubleSolenoid.Value restrainIntake = Value.kForward;
 
   public static TalonFX driveMotors[] = {
     RobotMap.leftDriveLead,

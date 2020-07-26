@@ -12,7 +12,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ButtonMap;
 import frc.robot.RobotMap;
-import frc.robot.commands.controls.MagazineAutomation;
 
 public class Intake extends SubsystemBase {
   public Intake() {
@@ -22,32 +21,32 @@ public class Intake extends SubsystemBase {
   }
   public void autonomousPeriodic(){
     if(RobotMap.magazine.stuck){
+      RobotMap.intakePiston.set(RobotMap.unleashIntake);
       RobotMap.intakeMotor.set(ControlMode.PercentOutput,-0.45);
-      RobotMap.intake2Motor.set(ControlMode.PercentOutput, -0.5);
     }
     else{
+      RobotMap.intakePiston.set(RobotMap.unleashIntake);
       RobotMap.intakeMotor.set(ControlMode.PercentOutput,0.55);
-      RobotMap.intake2Motor.set(ControlMode.PercentOutput, 0.3);
     }
   }
   public void teleopPeriodic(){
     if(RobotMap.magazine.stuck == false){
       if(ButtonMap.RunIntake()){
+        RobotMap.intakePiston.set(RobotMap.unleashIntake);
         RobotMap.intakeMotor.set(ControlMode.PercentOutput,0.7);
-        RobotMap.intake2Motor.set(ControlMode.PercentOutput, 0.5);
       }
       else if(ButtonMap.reverseMag()){
+        RobotMap.intakePiston.set(RobotMap.unleashIntake);
         RobotMap.intakeMotor.set(ControlMode.PercentOutput,-0.7);
-        RobotMap.intake2Motor.set(ControlMode.PercentOutput, -0.6);
       }
       else{
+        RobotMap.intakePiston.set(RobotMap.restrainIntake);
         RobotMap.intakeMotor.set(ControlMode.PercentOutput,0);
-        RobotMap.intake2Motor.set(ControlMode.PercentOutput, 0);
       }
     }
     else{
+      RobotMap.intakePiston.set(RobotMap.unleashIntake);
       RobotMap.intakeMotor.set(ControlMode.PercentOutput,-0.2);
-      RobotMap.intake2Motor.set(ControlMode.PercentOutput, -0.3);
     }
     
   }
