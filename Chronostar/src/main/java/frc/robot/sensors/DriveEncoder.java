@@ -1,9 +1,7 @@
 package frc.robot.sensors;
 
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import frc.robot.RobotConfig;
 import frc.robot.RobotStats;
 
 public class DriveEncoder {

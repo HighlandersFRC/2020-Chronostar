@@ -9,11 +9,9 @@ package frc.robot.commands.autos;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.controls.AutoFiringSequence;
 import frc.robot.commands.controls.FireSequence;
 import frc.robot.commands.controls.SetFlyWheelVelocity;
 import frc.robot.commands.controls.SetHoodPosition;
-import frc.robot.commands.controls.SetIntakeSpeed;
 import frc.robot.commands.controls.TrackVisionTarget;
 import frc.robot.tools.controlLoops.PurePursuitController;
 import frc.robot.tools.pathTools.PathList;

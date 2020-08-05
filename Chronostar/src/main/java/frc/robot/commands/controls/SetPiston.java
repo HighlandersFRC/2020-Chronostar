@@ -8,7 +8,6 @@
 package frc.robot.commands.controls;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class SetPiston extends CommandBase {

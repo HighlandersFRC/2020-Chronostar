@@ -7,8 +7,6 @@
 
 package frc.robot.commands.controls;
 
-import org.ejml.data.DEigenpair;
-
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotMap;

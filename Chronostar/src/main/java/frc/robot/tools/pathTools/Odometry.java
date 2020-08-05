@@ -30,7 +30,6 @@ public class Odometry extends Command {
   private double yNext;
   private double xNext;
   private boolean shouldRun; 
-  private double dt;
   private boolean isReversed;
   private boolean finish;
   private double thetaOffset;
@@ -67,7 +66,6 @@ public class Odometry extends Command {
     navx.softResetYaw();
     leftDriveEncoder.softReset();
     rightDriveEncoder.softReset();
-    dt = 0.005;
     finish = false;
   }
   public void endOdmetry(){

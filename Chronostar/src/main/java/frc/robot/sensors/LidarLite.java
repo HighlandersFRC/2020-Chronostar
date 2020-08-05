@@ -11,8 +11,6 @@ package frc.robot.sensors;
  * Add your docs here.
  */
 import edu.wpi.first.wpilibj.Counter;
-import edu.wpi.first.wpilibj.DigitalSource;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class LidarLite {
 
 private static final int distOffset = -28;
