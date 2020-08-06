@@ -41,6 +41,8 @@ public class Robot extends TimedRobot {
     RobotMap.magazine.initMagazine();
     m_oi = new OI();
     commandSuites = new CommandSuites();
+    SmartDashboard.putNumber("falcon", 0);
+    SmartDashboard.putNumber("775", 0);
 
     try {
       cameraPort = new SerialPort(115200, Port.kUSB);

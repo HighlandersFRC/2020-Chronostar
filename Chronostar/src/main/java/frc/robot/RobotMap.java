@@ -39,8 +39,8 @@ public class RobotMap {
   public static Relay visionRelay1 = new Relay(0);
 
   public static int beamBreak1Port = 0;
-  public static int beamBreak2Port = 3;
-  public static int beamBreak3Port = 1;
+  public static int beamBreak2Port = 1;
+  public static int beamBreak3Port = 3;
   public static int beamBreak4Port = 4;
 
 
@@ -59,6 +59,7 @@ public class RobotMap {
   public static int indexerID = 9;
 
   public static int intakeMotorID = 12;
+  public static int intake2MotorID = 10;
 
   public static int winchMotorID = 14;
 
@@ -78,6 +79,7 @@ public class RobotMap {
   public static CANSparkMax hoodMotor = new CANSparkMax(hoodID, MotorType.kBrushless);
 
   public static TalonFX intakeMotor = new TalonFX(intakeMotorID);
+  public static VictorSPX intake2Motor = new VictorSPX(intake2MotorID);
 
   public static TalonFX winchMotor = new TalonFX(winchMotorID);
 
@@ -97,8 +99,8 @@ public class RobotMap {
   public static LidarLite lidar1 = new LidarLite(lidarCounter);
   
   public static DoubleSolenoid intakePiston = new DoubleSolenoid(0, 1);
-  public static DoubleSolenoid.Value unleashIntake = Value.kReverse;
-  public static DoubleSolenoid.Value restrainIntake = Value.kForward;
+  public static DoubleSolenoid.Value unleashIntake = Value.kForward;
+  public static DoubleSolenoid.Value restrainIntake = Value.kReverse;
 
   public static TalonFX driveMotors[] = {
     RobotMap.leftDriveLead,

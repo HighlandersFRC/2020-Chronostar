@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ButtonMap;
 import frc.robot.RobotMap;
@@ -23,30 +24,36 @@ public class Intake extends SubsystemBase {
     if(RobotMap.magazine.stuck){
       RobotMap.intakePiston.set(RobotMap.unleashIntake);
       RobotMap.intakeMotor.set(ControlMode.PercentOutput,-0.45);
+      RobotMap.intake2Motor.set(ControlMode.PercentOutput, -0.3);
     }
     else{
       RobotMap.intakePiston.set(RobotMap.unleashIntake);
       RobotMap.intakeMotor.set(ControlMode.PercentOutput,0.55);
+      RobotMap.intake2Motor.set(ControlMode.PercentOutput, 0.4);
     }
   }
   public void teleopPeriodic(){
     if(RobotMap.magazine.stuck == false){
       if(ButtonMap.RunIntake()){
         RobotMap.intakePiston.set(RobotMap.unleashIntake);
-        RobotMap.intakeMotor.set(ControlMode.PercentOutput,0.7);
+        RobotMap.intakeMotor.set(ControlMode.PercentOutput, SmartDashboard.getNumber("falcon", 0));
+        RobotMap.intake2Motor.set(ControlMode.PercentOutput, SmartDashboard.getNumber("775", 0));
       }
       else if(ButtonMap.reverseMag()){
         RobotMap.intakePiston.set(RobotMap.unleashIntake);
-        RobotMap.intakeMotor.set(ControlMode.PercentOutput,-0.7);
+        RobotMap.intakeMotor.set(ControlMode.PercentOutput,-0.3);
+        RobotMap.intake2Motor.set(ControlMode.PercentOutput, -0.5);
       }
       else{
-        RobotMap.intakePiston.set(RobotMap.restrainIntake);
+        RobotMap.intakePiston.set(RobotMap.unleashIntake);
         RobotMap.intakeMotor.set(ControlMode.PercentOutput,0);
+        RobotMap.intake2Motor.set(ControlMode.PercentOutput, 0);
       }
     }
     else{
       RobotMap.intakePiston.set(RobotMap.unleashIntake);
-      RobotMap.intakeMotor.set(ControlMode.PercentOutput,-0.2);
+      RobotMap.intakeMotor.set(ControlMode.PercentOutput,SmartDashboard.getNumber("falcon", 0));
+      RobotMap.intake2Motor.set(ControlMode.PercentOutput, SmartDashboard.getNumber("775", 0));
     }
     
   }
