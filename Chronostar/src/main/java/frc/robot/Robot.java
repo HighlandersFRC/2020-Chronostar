@@ -97,6 +97,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledInit() {
+    RobotMap.intakePiston.set(RobotMap.restrainIntake);
   }
 
   @Override
