@@ -31,7 +31,6 @@ public class Shooter extends SubsystemBase {
   private double shooterPower;
   //this shows the number of code cycles ~0.02 seconds that the wheel is a significantly away from the setpoint
   //allowing for quick estimation of the time it takes to spin up and recover
-  private double offCount;
 
   public Shooter() {
 
@@ -68,11 +67,8 @@ public class Shooter extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("Speed", this.getShooterVelocity());
     if(Math.abs(this.getShooterVelocity()-shooterPower)>100){
-      offCount++;
-      //SmartDashboard.putNumber("count", offCount);
     }
     else{
-      offCount = 0;
     }
   }
   public void teleopPeriodic(){

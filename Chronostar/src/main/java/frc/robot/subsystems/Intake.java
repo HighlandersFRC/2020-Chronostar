@@ -17,6 +17,7 @@ import frc.robot.OI;
 import frc.robot.RobotMap;
 
 public class Intake extends SubsystemBase {
+
   public Intake() {
   }
   @Override
@@ -56,5 +57,8 @@ public class Intake extends SubsystemBase {
     if (OI.operatorController.getBumper(Hand.kLeft)) {
       RobotMap.intakePiston.set(RobotMap.restrainIntake);
     } else RobotMap.intakePiston.set(RobotMap.unleashIntake);
+    if (ButtonMap.RunIntake()) {
+      RobotMap.intakeMotor.set(ControlMode.PercentOutput, 0.4);
+    }
   }
 }

@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import jaci.pathfinder.followers.DistanceFollower;
 
 public class PathSetup {
-	private double velocity;
 	private DistanceFollower rightFollower;
 	private DistanceFollower leftFollower;
 	private boolean isReversed;

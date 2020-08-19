@@ -7,7 +7,6 @@
 
 package frc.robot.commands.controls;
 
-import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotMap;
 

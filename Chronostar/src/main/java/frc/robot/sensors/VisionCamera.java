@@ -3,12 +3,11 @@ package frc.robot.sensors;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
+import edu.wpi.first.hal.util.UncleanStatusException;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.RobotMap;
 import frc.robot.tools.math.Point;
-import edu.wpi.first.hal.util.UncleanStatusException;
 
 public class VisionCamera {
    JSONParser parser = new JSONParser();

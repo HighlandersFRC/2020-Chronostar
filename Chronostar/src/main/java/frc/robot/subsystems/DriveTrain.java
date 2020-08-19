@@ -30,9 +30,8 @@ import frc.robot.tools.pathTools.Odometry;
 public class DriveTrain extends SubsystemBase {
 	//turn deadzone for controller drift
 	private double deadZone = 0.01;
-	//drive train input values: turn = desired differential, throttel = desired velocity
-	private double turn = 0;
-	private double throttel = 0;
+	
+	private double throttle = 0;
 	//desired forward/backwards velocity while tracking the vision tape in ft/s
 	private double trackTapeThrottel;
 	//setting up sensors for different sides of the drive train
@@ -118,10 +117,10 @@ public class DriveTrain extends SubsystemBase {
 			double differential;
 			if(Math.abs(ButtonMap.getDriveThrottle())>deadZone){
 				//change to throttel curve for smoother driving
-				throttel = Math.tanh(ButtonMap.getDriveThrottle())*(4/Math.PI); 
+				throttle = Math.tanh(ButtonMap.getDriveThrottle())*(4/Math.PI); 
 			}
 			else{
-				throttel = 0;
+				throttle = 0;
 			}
 			//deadzone checks for rotation
 			if(Math.abs(ButtonMap.getRotation())>deadZone){
@@ -130,8 +129,8 @@ public class DriveTrain extends SubsystemBase {
 			else{
 				differential = 0;
 			}
-			leftPower = (throttel - (differential));
-			rightPower = (throttel + (differential));
+			leftPower = (throttle - (differential));
+			rightPower = (throttle + (differential));
 			//this maintains the ratio between the left power and right power even if throttel + differential >1
 			if(Math.abs(leftPower)>1) {
 				rightPower = Math.abs(rightPower/leftPower)*Math.signum(rightPower);

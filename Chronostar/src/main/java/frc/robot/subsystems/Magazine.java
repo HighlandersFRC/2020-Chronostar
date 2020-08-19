@@ -18,11 +18,8 @@ import frc.robot.commands.controls.FeederWheelsAutomation;
 import frc.robot.commands.controls.RunBeltBurst;
 
 public class Magazine extends SubsystemBase {
-  private boolean lastState;
-  private boolean lastState2;
   public Boolean stuck;
   public Boolean Shooting;
-  private double magCount;
   private double catchCount;
   private double tryCount;
   private RunBeltBurst runBeltBurst = new RunBeltBurst();
@@ -68,8 +65,6 @@ public class Magazine extends SubsystemBase {
         }
     }// the code above automates the magazine, it takes the 3 beam breaks and is able to sense if a ball is stuck at its position
      // if a ball is stuck the magazing will briefly reverseto un-jam it
-    lastState = RobotMap.beamBreakOne.get();
-    lastState2 = RobotMap.beamBreakThree.get();
     SmartDashboard.putBoolean("1 beamBroken", !RobotMap.beamBreakOne.get());
     SmartDashboard.putBoolean("2 beamBroken", !RobotMap.beamBreakTwo.get());
     SmartDashboard.putBoolean("3 beamBroken", !RobotMap.beamBreakThree.get());

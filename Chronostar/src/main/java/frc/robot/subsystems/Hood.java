@@ -9,14 +9,12 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANDigitalInput;
 import com.revrobotics.CANDigitalInput.LimitSwitchPolarity;
-import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 public class Hood extends SubsystemBase {
@@ -30,7 +28,6 @@ public class Hood extends SubsystemBase {
   private CANDigitalInput m_forwardLimit;
   private CANDigitalInput m_reverseLimit;
   private double dPosition;
-  private CANEncoder hoodEncoder;
 
   public void inithood(){
     m_forwardLimit = RobotMap.hoodMotor.getForwardLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
@@ -41,7 +38,6 @@ public class Hood extends SubsystemBase {
     RobotMap.hoodMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, minpoint);
     RobotMap.hoodMotor.enableVoltageCompensation(11.3);
     mpidController = RobotMap.hoodMotor.getPIDController();
-    hoodEncoder = RobotMap.hoodMotor.getEncoder();
     mpidController.setFF(kf);
     mpidController.setP(kp);
     mpidController.setI(ki);
@@ -66,7 +62,6 @@ public class Hood extends SubsystemBase {
   }
   public double getOptimalPosition(){
     double lidarDist = RobotMap.lidar1.getDistance();
-    double camDist = Robot.visionCamera.getDistance();
     double dist;
     dist = lidarDist;
     if(dist>=1.9 &&dist <=25){

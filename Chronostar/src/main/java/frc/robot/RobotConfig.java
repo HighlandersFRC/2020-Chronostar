@@ -77,7 +77,7 @@ public class RobotConfig {
         RobotConfig.setShooterMotorsCoast();
         RobotConfig.setShooterMotorVoltageCompensation();
         RobotMap.intakeMotor.setInverted(true);
-
+        RobotMap.intakeMotor.configVoltageCompSaturation(11);
     }
 
     public void setTeleopConfig() {

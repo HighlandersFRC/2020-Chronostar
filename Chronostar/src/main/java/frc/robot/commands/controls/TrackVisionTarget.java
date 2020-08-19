@@ -16,7 +16,6 @@ public class TrackVisionTarget extends CommandBase {
   /**
    * Creates a new TrackVisionTarget.
    */
-  private Boolean targetLock;
   private double latestLockTime;
   public TrackVisionTarget() {
     // Use addRequirements() here to declare subsystem dependencies.

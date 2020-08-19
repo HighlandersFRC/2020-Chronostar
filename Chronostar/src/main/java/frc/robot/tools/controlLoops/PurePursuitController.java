@@ -242,7 +242,6 @@ public class PurePursuitController extends CommandBase {
 		double c = curvature;
 		if(chosenPath.getReversed()){
 			v = -v;
-			c=c;
 		}
 		else{
 			c = -c;
