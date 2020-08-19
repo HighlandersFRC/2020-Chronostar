@@ -32,18 +32,18 @@ public class Magazine extends SubsystemBase {
       }
       else if (beambreak2) {
         lowMagBump.cancel();
-        new HighMagBump(-0.6, 0.15).schedule();
-        new LowMagBump(0.9, 0.15).schedule();
+        new HighMagBump(-0.3, 0.15).schedule();
+        new LowMagBump(0.55, 0.15).schedule();
       }
       if (beambreak1) {
         if (catchCounter <= 50) {
-          new LowMagBump(0.9, 0.15).schedule();
+          new LowMagBump(0.55, 0.15).schedule();
         } else {
           if (tryCounter <= 25) {
             stuck = true;
             tryCounter++;
           } else {
-            new LowMagBump(-0.8, 0.15).schedule();
+            new LowMagBump(-0.55, 0.15).schedule();
             catchCounter = 0;
             tryCounter = 0;
             stuck = false;

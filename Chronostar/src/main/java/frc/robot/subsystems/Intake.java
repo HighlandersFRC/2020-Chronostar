@@ -13,14 +13,14 @@ public class Intake extends SubsystemBase {
   @Override
   public void periodic() {
     if (ButtonMap.getOperatorRightTrigger() >= 0.5) {
-      RobotMap.lowIntake.set(ControlMode.PercentOutput, 0.325);
-      RobotMap.highIntake.set(ControlMode.PercentOutput, 0.75);
+      RobotMap.intakeMotor.set(ControlMode.PercentOutput, 0.325);
+      RobotMap.intake2Motor.set(ControlMode.PercentOutput, 0.75);
     } else if (ButtonMap.getOperatorLeftTrigger() >= 0.5) {
-      RobotMap.lowIntake.set(ControlMode.PercentOutput, -0.325);
-      RobotMap.highIntake.set(ControlMode.PercentOutput, -0.75);
+      RobotMap.intakeMotor.set(ControlMode.PercentOutput, -0.325);
+      RobotMap.intake2Motor.set(ControlMode.PercentOutput, -0.75);
     } else {
-      RobotMap.lowIntake.set(ControlMode.PercentOutput, 0);
-      RobotMap.highIntake.set(ControlMode.PercentOutput, 0);
+      RobotMap.intakeMotor.set(ControlMode.PercentOutput, 0);
+      RobotMap.intake2Motor.set(ControlMode.PercentOutput, 0);
     }
   }
 }

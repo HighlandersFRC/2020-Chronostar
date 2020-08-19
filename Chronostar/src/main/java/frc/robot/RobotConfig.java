@@ -32,10 +32,12 @@ public class RobotConfig {
         setCurrentLimitsEnabled();
         RobotMap.lowMag.setNeutralMode(NeutralMode.Brake);
         RobotMap.highMag.setIdleMode(IdleMode.kBrake);
-        RobotMap.lowIntake.setNeutralMode(NeutralMode.Brake);
-        RobotMap.highIntake.setNeutralMode(NeutralMode.Brake);
+        RobotMap.intakeMotor.setNeutralMode(NeutralMode.Brake);
+        RobotMap.intake2Motor.setNeutralMode(NeutralMode.Brake);
         RobotMap.lowMag.configVoltageCompSaturation(12.25);
         RobotMap.highMag.enableVoltageCompensation(12.25);
+        RobotMap.intakeMotor.setInverted(true);
+        RobotMap.highMag.setIdleMode(IdleMode.kBrake);
     }
 
     public void startAutoConfig() {

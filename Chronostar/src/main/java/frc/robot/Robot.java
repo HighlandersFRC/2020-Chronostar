@@ -76,6 +76,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
+    RobotMap.highMag.set(1);
   }
 
   @Override
