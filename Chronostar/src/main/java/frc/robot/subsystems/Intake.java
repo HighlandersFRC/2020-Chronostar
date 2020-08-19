@@ -14,6 +14,7 @@ import frc.robot.ButtonMap;
 import frc.robot.RobotMap;
 
 public class Intake extends SubsystemBase {
+
   public Intake() {
   }
   @Override
@@ -30,7 +31,7 @@ public class Intake extends SubsystemBase {
     }
   }
   public void teleopPeriodic(){
-    if(RobotMap.magazine.stuck == false){
+    /*if(RobotMap.magazine.stuck == false){
       if(ButtonMap.RunIntake()){
         RobotMap.intakeMotor.set(ControlMode.PercentOutput,0.7);
         RobotMap.intake2Motor.set(ControlMode.PercentOutput, 0.5);
@@ -47,6 +48,10 @@ public class Intake extends SubsystemBase {
     else{
       RobotMap.intakeMotor.set(ControlMode.PercentOutput,-0.2);
       RobotMap.intake2Motor.set(ControlMode.PercentOutput, -0.3);
+    }
+    */
+    if (ButtonMap.RunIntake()) {
+      RobotMap.intakeMotor.set(ControlMode.PercentOutput, 0.4);
     }
     
   }

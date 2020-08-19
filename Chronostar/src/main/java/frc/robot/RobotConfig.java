@@ -77,6 +77,8 @@ public class RobotConfig {
         RobotMap.winchRatchetPiston.set(RobotMap.winchRatchetSet);
         RobotConfig.setShooterMotorsCoast();
         RobotConfig.setShooterMotorVoltageCompensation();
+        RobotMap.intakeMotor.setInverted(true);
+        RobotMap.intakeMotor.configVoltageCompSaturation(11);
     }
 
     public void setTeleopConfig() {
