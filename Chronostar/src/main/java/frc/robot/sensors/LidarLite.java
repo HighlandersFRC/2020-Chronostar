@@ -11,11 +11,9 @@ package frc.robot.sensors;
  * Add your docs here.
  */
 import edu.wpi.first.wpilibj.Counter;
-import edu.wpi.first.wpilibj.DigitalSource;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class LidarLite {
 
-private static final int distOffset = -18;
+private static final int distOffset = -28;
 private Counter counter;
     public LidarLite (Counter lidarCounter) {
         counter = lidarCounter;
@@ -28,12 +26,10 @@ private Counter counter;
         double cmDist;
         double inDist;
         if (counter.get() < 1) {
-          SmartDashboard.putNumber("lidarDist", -1);
           return -1;
         }
         cmDist = (counter.getPeriod() * 1000000.0 / 10.0) + distOffset;
         inDist = cmDist*0.0328084;
-        SmartDashboard.putNumber("lidarDist", inDist);
         return inDist;
     }
 }

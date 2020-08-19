@@ -9,23 +9,17 @@ import jaci.pathfinder.Pathfinder;
 public class Navx {
 	private double originalAngle;
 	private double originalYaw;
-	private double originalRoll;
-	private double originalPitch;
 	private AHRS imu;
 
 	public Navx(AHRS navx) {
 		imu = navx;
 		originalAngle = imu.getAngle();
 		originalYaw = imu.getYaw();
-		originalPitch = imu.getPitch();
-		originalRoll = imu.getRoll();
 	}
 	public Navx(AHRS navx, Double startAngle) {
 		imu = navx;
 		originalAngle = startAngle;
 		originalYaw = imu.getYaw();
-		originalPitch = imu.getPitch();
-		originalRoll = imu.getRoll();
 	}
 	public double currentAngle() {
 		return imu.getAngle()-originalAngle;	

@@ -30,7 +30,6 @@ public class Odometry extends Command {
   private double yNext;
   private double xNext;
   private boolean shouldRun; 
-  private double dt;
   private boolean isReversed;
   private boolean finish;
   private double thetaOffset;
@@ -67,7 +66,6 @@ public class Odometry extends Command {
     navx.softResetYaw();
     leftDriveEncoder.softReset();
     rightDriveEncoder.softReset();
-    dt = 0.005;
     finish = false;
   }
   public void endOdmetry(){
@@ -120,7 +118,7 @@ public class Odometry extends Command {
       if(isReversed){
         leftSideNext = leftDriveEncoder.getDistance();
         rightSideNext = rightDriveEncoder.getDistance();
-        thetaNext = navx.currentAngle()+thetaOffset;
+        thetaNext = -navx.currentAngle()+thetaOffset;
         leftDelta = (leftSideNext-leftSide);
         rightDelta = (rightSideNext-rightSide);
         centerDelta = (leftDelta+rightDelta)/2;
@@ -135,7 +133,7 @@ public class Odometry extends Command {
       else{
         leftSideNext = leftDriveEncoder.getDistance();
         rightSideNext = rightDriveEncoder.getDistance();
-        thetaNext = navx.currentAngle()+thetaOffset;
+        thetaNext = -navx.currentAngle()+thetaOffset;
         leftDelta = (leftSideNext-leftSide);
         rightDelta = (rightSideNext-rightSide);
         centerDelta = (leftDelta+rightDelta)/2;

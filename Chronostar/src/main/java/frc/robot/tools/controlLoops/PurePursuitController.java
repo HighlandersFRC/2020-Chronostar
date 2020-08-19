@@ -8,15 +8,13 @@
 package frc.robot.tools.controlLoops;
 
 import edu.wpi.first.wpilibj.Notifier;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.RobotStats;
-import frc.robot.tools.pathTools.PathSetup;
-import frc.robot.tools.pathTools.Odometry;
 import frc.robot.tools.math.Point;
 import frc.robot.tools.math.Vector;
+import frc.robot.tools.pathTools.Odometry;
+import frc.robot.tools.pathTools.PathSetup;
 import jaci.pathfinder.Pathfinder;
 
 public class PurePursuitController extends CommandBase {
@@ -70,7 +68,6 @@ public class PurePursuitController extends CommandBase {
 		//if robotAbsoluteDirection is false, assuming a theta of 0, the robot moving forwards (on gravistar away from battery side) will lead to x increasing,
 		//this way the robot can run any path either forward or reversed, as long as robotAbsoluteDirection remains constant.
 		odometryDirection = robotAbsoluteDirection;
-		addRequirements(RobotMap.drive);
  	}
 
 
@@ -79,19 +76,18 @@ public class PurePursuitController extends CommandBase {
   	public void initialize() {
 		shouldEnd = false;
 		odometry = new Odometry(odometryDirection);
-		RobotMap.drive.setOdometryReversed(odometryDirection);
-
 		odometry.zero();
 		odometry.start();
 		if(useOutsideOdometry){
 			odometry.setX(RobotMap.drive.getDriveTrainX());
 			odometry.setY(RobotMap.drive.getDriveTrainY());
 			odometry.setTheta(RobotMap.drive.getDriveTrainHeading());
+			RobotMap.drive.setOdometryReversed(odometryDirection);
 		}
 		else{
-			odometry.setX(chosenPath.getMainPath().get(0).x);
-			odometry.setY(chosenPath.getMainPath().get(0).y);
-			odometry.setTheta(chosenPath.getMainPath().get(0).heading);
+			odometry.setX(chosenPath.getMainPath().getStates().get(0).poseMeters.getTranslation().getX());
+			odometry.setY(chosenPath.getMainPath().getStates().get(0).poseMeters.getTranslation().getY());
+			odometry.setTheta(chosenPath.getMainPath().getStates().get(0).poseMeters.getRotation().getDegrees());
 		}
 		
 		distToEndVector = new Vector(12,12);
@@ -137,22 +133,22 @@ public class PurePursuitController extends CommandBase {
 			odometry.setY(RobotMap.drive.getDriveTrainY());
 		}
 
-		for(int i = startingNumber; i<chosenPath.getMainPath().length()-1;i++){        
-			deltaX = chosenPath.getMainPath().get(i).x-odometry.getX();
-			deltaY = chosenPath.getMainPath().get(i).y-odometry.getY();
+		for(int i = startingNumber; i<chosenPath.getMainPath().getStates().size()-1;i++){        
+			deltaX = chosenPath.getMainPath().getStates().get(i).poseMeters.getTranslation().getX()-odometry.getX();
+			deltaY = chosenPath.getMainPath().getStates().get(i).poseMeters.getTranslation().getY()-odometry.getY();
 			distToPoint = Math.sqrt(Math.pow(deltaX, 2)+Math.pow(deltaY, 2));
 			if(distToPoint<minDistanceToPoint){
 				minDistanceToPoint = distToPoint;
 				closestSegment = i;
-				closestPoint.setLocation(chosenPath.getMainPath().get(i).x, chosenPath.getMainPath().get(i).y);
+				closestPoint.setLocation(chosenPath.getMainPath().getStates().get(i).poseMeters.getTranslation().getX(), chosenPath.getMainPath().getStates().get(i).poseMeters.getTranslation().getY());
 			}
 		}
 		startingNumber = closestSegment;
-		minDistanceToPoint = 100;
+		minDistanceToPoint = 1000;
 		firstLookAheadFound = false;
-		for(int i = startingNumberLA; i<chosenPath.getMainPath().length()-1;i++){
-			startingPointOfLineSegment.setLocation(chosenPath.getMainPath().get(i).x, chosenPath.getMainPath().get(i).y);
-			endPointOfLineSegment.setLocation(chosenPath.getMainPath().get(i+1).x, chosenPath.getMainPath().get(i+1).y); 
+		for(int i = startingNumberLA; i<chosenPath.getMainPath().getStates().size()-1;i++){
+			startingPointOfLineSegment.setLocation(chosenPath.getMainPath().getStates().get(i).poseMeters.getTranslation().getX(),chosenPath.getMainPath().getStates().get(i).poseMeters.getTranslation().getY());
+			endPointOfLineSegment.setLocation(chosenPath.getMainPath().getStates().get(i+1).poseMeters.getTranslation().getX(), chosenPath.getMainPath().getStates().get(i+1).poseMeters.getTranslation().getY()); 
 			robotPos.setLocation(odometry.getX(), odometry.getY());
 			lineSegVector.setX(endPointOfLineSegment.getXPos()-startingPointOfLineSegment.getXPos());
 			lineSegVector.setY(endPointOfLineSegment.getYPos()-startingPointOfLineSegment.getYPos());
@@ -185,9 +181,9 @@ public class PurePursuitController extends CommandBase {
 				}
 			}
 			if(firstLookAheadFound){
-				i = chosenPath.getMainPath().length();
+				i = chosenPath.getMainPath().getStates().size();
 			}
-			else if(!firstLookAheadFound && i==chosenPath.getMainPath().length()-1){
+			else if(!firstLookAheadFound && i==chosenPath.getMainPath().getStates().size()-1){
 				System.out.println("failed");
 				lookAheadPoint.setLocation(lastLookAheadPoint.getXPos(), lastLookAheadPoint.getYPos());
 			}
@@ -196,21 +192,21 @@ public class PurePursuitController extends CommandBase {
 		if(partialPointIndex>lastPointIndex){
 			lastPointIndex = partialPointIndex;
 		}
-		distToEndVector.setX(chosenPath.getMainPath().get(chosenPath.getMainPath().length()-1).x-odometry.getX());
-		distToEndVector.setY(chosenPath.getMainPath().get(chosenPath.getMainPath().length()-1).y-odometry.getY());
-		SmartDashboard.putNumber("distoend", distToEndVector.length());
+		distToEndVector.setX(chosenPath.getMainPath().getStates().get(chosenPath.getMainPath().getStates().size()-1).poseMeters.getTranslation().getX()-odometry.getX());
+		distToEndVector.setY(chosenPath.getMainPath().getStates().get(chosenPath.getMainPath().getStates().size()-1).poseMeters.getTranslation().getY()-odometry.getY());
+		/*SmartDashboard.putNumber("distoend", distToEndVector.length());
 		SmartDashboard.putNumber("x", odometry.getX());
-		SmartDashboard.putNumber("closestSegment", closestSegment);
+		SmartDashboard.putNumber("closestSegment", chosenPath.getMainPath().getStates().size()-closestSegment);
 		SmartDashboard.putNumber("y",odometry.getY());
 		SmartDashboard.putNumber("theta", odometry.gettheta());
 		SmartDashboard.putNumber("LAX", lookAheadPoint.getXPos());
-		SmartDashboard.putNumber("LAY", lookAheadPoint.getYPos());
+		SmartDashboard.putNumber("LAY", lookAheadPoint.getYPos());*/
 		startingNumberLA = (int)partialPointIndex;
 		lastLookAheadPoint = lookAheadPoint;
 		findRobotCurvature();
-		curveAdjustedVelocity = Math.min(Math.abs(k/desiredRobotCurvature),chosenPath.getMainPath().get(closestSegment).velocity);
+		curveAdjustedVelocity = Math.min(Math.abs(k/chosenPath.getMainPath().getStates().get(closestSegment).curvatureRadPerMeter),chosenPath.getMainPath().getStates().get(closestSegment).velocityMetersPerSecond);
 		setWheelVelocities(curveAdjustedVelocity, desiredRobotCurvature);
-		endThetaError = Pathfinder.boundHalfDegrees((Math.toDegrees(chosenPath.getMainPath().get(chosenPath.getMainPath().length()-1).heading)-odometry.gettheta()));
+		endThetaError = Pathfinder.boundHalfDegrees((Math.toDegrees(chosenPath.getMainPath().getStates().get((chosenPath.getMainPath().getStates().size()-1)).poseMeters.getRotation().getDegrees())-odometry.gettheta()));
   	} 
   	public void setOdometryX(double X){
 		double desiredX= X;
@@ -237,8 +233,8 @@ public class PurePursuitController extends CommandBase {
 		double leftVelocity;
 		double rightVelocity;
 		double v;
-		if(closestSegment <10){
-			v = 1.2;
+		if(closestSegment <3){
+			v = 0.6+targetVelocity;
 		}
 		else{
 			v = targetVelocity;
@@ -249,11 +245,6 @@ public class PurePursuitController extends CommandBase {
 		}
 		else{
 			c = -c;
-		}
-		if(useOutsideOdometry){
-			if(odometryDirection!= chosenPath.getReversed()){
-				c = -c;
-			}
 		}
 
 		leftVelocity = v*(2+(c*RobotStats.robotBaseDistance))/2;
@@ -289,12 +280,8 @@ public class PurePursuitController extends CommandBase {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	public boolean isFinished() {
-		if(chosenPath.getMainPath().length()-closestSegment<=2){
-			return true;
-		} 
-		else{
-			return shouldEnd;
-		}   
+
+		return distToEndVector.length()<0.20|| shouldEnd;
 		
 	}
 	// Called once after isFinished returns true
