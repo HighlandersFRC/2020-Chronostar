@@ -38,6 +38,8 @@ public class RobotConfig {
         RobotMap.highMag.enableVoltageCompensation(12.25);
         RobotMap.intakeMotor.setInverted(true);
         RobotMap.highMag.setIdleMode(IdleMode.kBrake);
+        RobotMap.lowMag.configVoltageCompSaturation(11.7);
+        RobotMap.highMag.enableVoltageCompensation(11.7);
     }
 
     public void startAutoConfig() {

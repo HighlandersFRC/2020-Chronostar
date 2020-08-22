@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.I2C.Port;
 import frc.robot.subsystems.*;
 
@@ -22,6 +23,7 @@ public class RobotMap {
   public static VictorSPX intake2Motor = new VictorSPX(RobotStats.intake2MotorID);
   public static VictorSPX lowMag = new VictorSPX(RobotStats.magBeltID);
   public static CANSparkMax highMag = new CANSparkMax(RobotStats.magWheelID, MotorType.kBrushless);
+  public static DoubleSolenoid intakePiston = new DoubleSolenoid(0, 1);
 
   public static DigitalInput beambreak1 = new DigitalInput(RobotStats.beamBreak1Port);
   public static DigitalInput beambreak2 = new DigitalInput(RobotStats.beamBreak3Port);
