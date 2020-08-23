@@ -26,8 +26,8 @@ public class Fire extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotMap.lowMag.set(ControlMode.PercentOutput, 0.7);
-    RobotMap.highMag.set(-0.8);
+    RobotMap.lowMag.set(ControlMode.PercentOutput, 0.6);
+    RobotMap.highMag.set(-0.9);
   }
 
   // Returns true when the command should end.
