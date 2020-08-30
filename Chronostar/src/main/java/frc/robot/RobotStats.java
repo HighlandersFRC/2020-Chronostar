@@ -21,6 +21,11 @@ public class RobotStats {
     public static int beamBreak2Port = 3;
     public static int beamBreak3Port = 1;
 
+    // Ticks per rotation
+    public static int ticksPerShooterRotation = 1317;
+    public static int maxRPM = 4000;
+    public static double maxPercentage = 0.5;
+
     // Drive constants
     public static final double driveMaxVoltage = 11.7;
     public static final double driveCurrentPeakThreshold = 40;

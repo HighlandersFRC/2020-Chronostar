@@ -96,21 +96,14 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    if(ButtonMap.shoot()){
-      RobotMap.leftFlyWheel.set(ControlMode.PercentOutput, -0.30);
-      RobotMap.rightFlyWheel.set(ControlMode.PercentOutput,0.00);
-    }
-    else{
-      RobotMap.leftFlyWheel.set(ControlMode.PercentOutput, 0);
-      RobotMap.rightFlyWheel.set(ControlMode.PercentOutput,0);
-      RobotMap.magazine.stopAll();
-    }
     SmartDashboard.putNumber("leftHeat", RobotMap.leftFlyWheel.getTemperature());
     SmartDashboard.putNumber("rightHeat", RobotMap.rightFlyWheel.getTemperature());
     RobotMap.magazine.teleopPeriodic();
     if (ButtonMap.getOperatorYButton()) {
       RobotMap.intake2Motor.set(ControlMode.PercentOutput, 0.6);
     } else RobotMap.intake2Motor.set(ControlMode.PercentOutput, 0);
+    SmartDashboard.putNumber("rpm", RobotMap.leftFlyWheel.getSelectedSensorVelocity() * 600 / RobotStats.ticksPerShooterRotation);
+    RobotMap.shooter.periodic();
   }
 
   @Override

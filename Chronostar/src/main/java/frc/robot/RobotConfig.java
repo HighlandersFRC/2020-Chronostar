@@ -40,6 +40,12 @@ public class RobotConfig {
         RobotMap.highMag.setIdleMode(IdleMode.kBrake);
         RobotMap.lowMag.configVoltageCompSaturation(11.7);
         RobotMap.highMag.enableVoltageCompensation(11.7);
+        RobotMap.leftFlyWheel.set(ControlMode.Follower, RobotStats.rightFlyWheelID);
+        RobotMap.leftFlyWheel.setInverted(InvertType.OpposeMaster);
+        RobotMap.leftFlyWheel.configClosedLoopPeakOutput(0, RobotStats.maxPercentage);
+        RobotMap.leftFlyWheel.configPeakOutputForward(0.5);
+        RobotMap.leftFlyWheel.configPeakOutputReverse(0);
+        RobotMap.leftFlyWheel.configVoltageCompSaturation(11.7);
     }
 
     public void startAutoConfig() {

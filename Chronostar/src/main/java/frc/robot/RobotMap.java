@@ -32,6 +32,7 @@ public class RobotMap {
   public static Drive drive = new Drive();
   public static Magazine magazine = new Magazine();
   public static Intake intake = new Intake();
+  public static Shooter shooter = new Shooter();
 
   public static TalonFX[] allMotors = {leftDriveLead, rightDriveLead,
   leftDriveFollower1, rightDriveFollower1};
