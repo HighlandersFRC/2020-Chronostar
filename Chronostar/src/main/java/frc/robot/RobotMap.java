@@ -18,8 +18,8 @@ public class RobotMap {
   public static TalonFX leftDriveFollower1 = new TalonFX(RobotStats.leftDriveFollower1ID);
   public static TalonFX rightDriveFollower1 = new TalonFX(RobotStats.rightDriveFollower1ID); 
   public static TalonFX intakeMotor = new TalonFX(RobotStats.intakeMotorID);
-  public static TalonFX leftFlyWheel = new TalonFX(RobotStats.leftFlywheelID);
-  public static TalonFX rightFlyWheel = new TalonFX(RobotStats.rightFlyWheelID);
+  public static TalonFX leftFlywheel = new TalonFX(RobotStats.leftFlywheelID);
+  public static TalonFX rightFlywheel = new TalonFX(RobotStats.rightFlywheelID);
   public static VictorSPX intake2Motor = new VictorSPX(RobotStats.intake2MotorID);
   public static VictorSPX lowMag = new VictorSPX(RobotStats.magBeltID);
   public static CANSparkMax highMag = new CANSparkMax(RobotStats.magWheelID, MotorType.kBrushless);

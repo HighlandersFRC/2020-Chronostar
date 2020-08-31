@@ -13,10 +13,10 @@ import com.revrobotics.CANSparkMax.IdleMode;
 public class RobotConfig {
 
     public void startBaseConfig() {
-        RobotMap.rightFlyWheel.configFactoryDefault();
-        RobotMap.leftFlyWheel.configFactoryDefault();
-        RobotMap.rightFlyWheel.setNeutralMode(NeutralMode.Coast);
-        RobotMap.leftFlyWheel.setNeutralMode(NeutralMode.Coast);
+        RobotMap.rightFlywheel.configFactoryDefault();
+        RobotMap.leftFlywheel.configFactoryDefault();
+        RobotMap.rightFlywheel.setNeutralMode(NeutralMode.Coast);
+        RobotMap.leftFlywheel.setNeutralMode(NeutralMode.Coast);
 
         RobotMap.leftDriveLead.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
         RobotMap.rightDriveLead.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
@@ -40,12 +40,15 @@ public class RobotConfig {
         RobotMap.highMag.setIdleMode(IdleMode.kBrake);
         RobotMap.lowMag.configVoltageCompSaturation(11.7);
         RobotMap.highMag.enableVoltageCompensation(11.7);
-        RobotMap.leftFlyWheel.set(ControlMode.Follower, RobotStats.rightFlyWheelID);
-        RobotMap.leftFlyWheel.setInverted(InvertType.OpposeMaster);
-        RobotMap.leftFlyWheel.configClosedLoopPeakOutput(0, RobotStats.maxPercentage);
-        RobotMap.leftFlyWheel.configPeakOutputForward(0.5);
-        RobotMap.leftFlyWheel.configPeakOutputReverse(0);
-        RobotMap.leftFlyWheel.configVoltageCompSaturation(11.7);
+        RobotMap.rightFlywheel.set(ControlMode.Follower, RobotStats.leftFlywheelID);
+        RobotMap.leftFlywheel.setInverted(true);
+        RobotMap.rightFlywheel.setInverted(InvertType.OpposeMaster);
+        RobotMap.leftFlywheel.configClosedLoopPeakOutput(0, RobotStats.maxPercentage);
+        RobotMap.leftFlywheel.configPeakOutputForward(0.5);
+        RobotMap.leftFlywheel.configPeakOutputReverse(0);
+        RobotMap.leftFlywheel.configVoltageCompSaturation(11.7);
+        RobotMap.leftFlywheel.configMotionCruiseVelocity(4500);
+        RobotMap.rightFlywheel.configMotionAcceleration(9000);
     }
 
     public void startAutoConfig() {

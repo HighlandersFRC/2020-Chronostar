@@ -45,6 +45,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("beam break 1", RobotMap.beambreak1.get());
     SmartDashboard.putBoolean("beam break 2", RobotMap.beambreak2.get());
     SmartDashboard.putBoolean("beam break 3", RobotMap.beambreak3.get());
+    RobotMap.shooter.periodic();
   }
 
   /**
@@ -96,14 +97,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    SmartDashboard.putNumber("leftHeat", RobotMap.leftFlyWheel.getTemperature());
-    SmartDashboard.putNumber("rightHeat", RobotMap.rightFlyWheel.getTemperature());
+    SmartDashboard.putNumber("leftHeat", RobotMap.leftFlywheel.getTemperature());
+    SmartDashboard.putNumber("rightHeat", RobotMap.rightFlywheel.getTemperature());
     RobotMap.magazine.teleopPeriodic();
-    if (ButtonMap.getOperatorYButton()) {
-      RobotMap.intake2Motor.set(ControlMode.PercentOutput, 0.6);
-    } else RobotMap.intake2Motor.set(ControlMode.PercentOutput, 0);
-    SmartDashboard.putNumber("rpm", RobotMap.leftFlyWheel.getSelectedSensorVelocity() * 600 / RobotStats.ticksPerShooterRotation);
-    RobotMap.shooter.periodic();
+    SmartDashboard.putNumber("rpm", RobotMap.leftFlywheel.getSelectedSensorVelocity() * 600 / RobotStats.ticksPerShooterRotation);
   }
 
   @Override

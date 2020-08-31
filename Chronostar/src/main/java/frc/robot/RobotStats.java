@@ -14,12 +14,12 @@ public class RobotStats {
     public static final int magWheelID = 9;
     public static final int intakeMotorID = 12;
     public static final int leftFlywheelID = 5;
-    public static final int rightFlyWheelID = 6;
+    public static final int rightFlywheelID = 6;
 
     // Sensor ports
     public static int beamBreak1Port = 0;
-    public static int beamBreak2Port = 3;
-    public static int beamBreak3Port = 1;
+    public static int beamBreak2Port = 1;
+    public static int beamBreak3Port = 3;
 
     // Ticks per rotation
     public static int ticksPerShooterRotation = 1317;
