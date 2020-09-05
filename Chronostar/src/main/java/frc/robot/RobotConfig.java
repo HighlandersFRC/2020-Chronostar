@@ -7,6 +7,8 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax.IdleMode;
 
+import frc.robot.subsystems.Shooter;
+
 /**
  * Add your docs here.
  */
@@ -34,21 +36,20 @@ public class RobotConfig {
         RobotMap.highMag.setIdleMode(IdleMode.kBrake);
         RobotMap.intakeMotor.setNeutralMode(NeutralMode.Brake);
         RobotMap.intake2Motor.setNeutralMode(NeutralMode.Brake);
-        RobotMap.lowMag.configVoltageCompSaturation(12.25);
-        RobotMap.highMag.enableVoltageCompensation(12.25);
         RobotMap.intakeMotor.setInverted(true);
         RobotMap.highMag.setIdleMode(IdleMode.kBrake);
         RobotMap.lowMag.configVoltageCompSaturation(11.7);
-        RobotMap.highMag.enableVoltageCompensation(11.7);
+        RobotMap.lowMag.enableVoltageCompensation(true);
         RobotMap.rightFlywheel.set(ControlMode.Follower, RobotStats.leftFlywheelID);
         RobotMap.leftFlywheel.setInverted(true);
         RobotMap.rightFlywheel.setInverted(InvertType.OpposeMaster);
         RobotMap.leftFlywheel.configClosedLoopPeakOutput(0, RobotStats.maxPercentage);
-        RobotMap.leftFlywheel.configPeakOutputForward(0.5);
+        RobotMap.leftFlywheel.configPeakOutputForward(0.415);
         RobotMap.leftFlywheel.configPeakOutputReverse(0);
         RobotMap.leftFlywheel.configVoltageCompSaturation(11.7);
-        RobotMap.leftFlywheel.configMotionCruiseVelocity(4500);
-        RobotMap.rightFlywheel.configMotionAcceleration(9000);
+        RobotMap.leftFlywheel.enableVoltageCompensation(true);
+        RobotMap.leftFlywheel.setSensorPhase(true);
+        RobotMap.shooter.initialize();
     }
 
     public void startAutoConfig() {

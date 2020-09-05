@@ -1,12 +1,10 @@
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.subsystems.Shooter;
 
 
 public class Robot extends TimedRobot {
@@ -45,7 +43,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("beam break 1", RobotMap.beambreak1.get());
     SmartDashboard.putBoolean("beam break 2", RobotMap.beambreak2.get());
     SmartDashboard.putBoolean("beam break 3", RobotMap.beambreak3.get());
-    RobotMap.shooter.periodic();
   }
 
   /**
@@ -100,7 +97,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("leftHeat", RobotMap.leftFlywheel.getTemperature());
     SmartDashboard.putNumber("rightHeat", RobotMap.rightFlywheel.getTemperature());
     RobotMap.magazine.teleopPeriodic();
-    SmartDashboard.putNumber("rpm", RobotMap.leftFlywheel.getSelectedSensorVelocity() * 600 / RobotStats.ticksPerShooterRotation);
+    SmartDashboard.putNumber("rpm", Shooter.unitsPer100MsToRpm(RobotMap.leftFlywheel.getSelectedSensorVelocity()));
+    RobotMap.shooter.teleopPeriodic();
   }
 
   @Override

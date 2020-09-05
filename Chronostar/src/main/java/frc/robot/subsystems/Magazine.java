@@ -16,8 +16,10 @@ public class Magazine extends SubsystemBase {
   private int catchCounter;
   private int tryCounter;  
   public static boolean stuck;
+  private Fire fire;
 
   public Magazine() {
+    fire = new Fire(4000);
   }
 
   @Override
@@ -63,7 +65,7 @@ public class Magazine extends SubsystemBase {
   }
 
   public void fire() {
-    new Fire().schedule();
+    if (!fire.isScheduled() && !fire.isFinished()) fire.schedule();
   }
 
   public void outtake() {
