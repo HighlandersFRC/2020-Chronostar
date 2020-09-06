@@ -16,8 +16,8 @@ public class Shooter extends SubsystemBase {
   public void initialize() {
     RobotMap.leftFlywheel.selectProfileSlot(0, 0);
     RobotMap.leftFlywheel.config_kF(0, 0.05);
-    RobotMap.leftFlywheel.config_kP(0, 30);
-    RobotMap.leftFlywheel.config_kI(0, 0);
+    RobotMap.leftFlywheel.config_kP(0, 0.25);
+    RobotMap.leftFlywheel.config_kI(0, 0.001);
     RobotMap.leftFlywheel.config_kD(0, 0);
     RobotMap.leftFlywheel.config_IntegralZone(0, RobotStats.shooterIntegralRange);
   }

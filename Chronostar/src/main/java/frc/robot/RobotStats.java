@@ -18,8 +18,8 @@ public class RobotStats {
 
     // Sensor ports
     public static int beamBreak1Port = 0;
-    public static int beamBreak2Port = 1;
-    public static int beamBreak3Port = 3;
+    public static int beamBreak2Port = 3;
+    public static int beamBreak3Port = 1;
 
     // Shooter type beat
     public static int ticksPerShooterRotation = 1317;
