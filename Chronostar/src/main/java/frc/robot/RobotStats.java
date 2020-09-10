@@ -33,9 +33,11 @@ public class RobotStats {
     public static final double driveCurrentPeakTime = 10;
     public static final double driveMaxCurrent = 39;
 
-    public static final SupplyCurrentLimitConfiguration currentLimitEnabled = 
-    new SupplyCurrentLimitConfiguration(true, driveMaxCurrent, driveCurrentPeakThreshold, driveCurrentPeakTime);
+    public static final SupplyCurrentLimitConfiguration currentLimitEnabled =
+            new SupplyCurrentLimitConfiguration(
+                    true, driveMaxCurrent, driveCurrentPeakThreshold, driveCurrentPeakTime);
 
-    public static final SupplyCurrentLimitConfiguration currentLimitDisabled = 
-    new SupplyCurrentLimitConfiguration(false, driveMaxCurrent, driveCurrentPeakThreshold, driveCurrentPeakTime);
+    public static final SupplyCurrentLimitConfiguration currentLimitDisabled =
+            new SupplyCurrentLimitConfiguration(
+                    false, driveMaxCurrent, driveCurrentPeakThreshold, driveCurrentPeakTime);
 }

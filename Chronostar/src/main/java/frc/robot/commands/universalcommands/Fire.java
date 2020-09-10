@@ -26,8 +26,8 @@ public class Fire extends CommandBase {
   @Override
   public void execute() {
     if (Timer.getFPGATimestamp() > startTime + 2) {
-      RobotMap.lowMag.set(ControlMode.PercentOutput, 0.3);
-      RobotMap.highMag.set(-1);
+      RobotMap.lowMag.set(ControlMode.PercentOutput, 0.2);
+      RobotMap.highMag.set(-0.9);
     } else {
       RobotMap.lowMag.set(ControlMode.PercentOutput, 0);
       RobotMap.highMag.set(0);

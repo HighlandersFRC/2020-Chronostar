@@ -12,7 +12,6 @@ public class Magazine extends SubsystemBase {
   private boolean beambreak1;
   private boolean beambreak2;
   private boolean beambreak3;
-  private LowMagBump lowMagBump = new LowMagBump(0.85, 0.2); 
   private int catchCounter;
   private int tryCounter;  
   public static boolean stuck;
@@ -33,8 +32,7 @@ public class Magazine extends SubsystemBase {
         new HighMagBump(0, 0.15).schedule();
       }
       else if (beambreak2) {
-        lowMagBump.cancel();
-        new HighMagBump(-0.45, 0.15).schedule();
+        new HighMagBump(-0.4, 0.15).schedule();
         new LowMagBump(0.6, 0.15).schedule();
       }
       if (beambreak1) {

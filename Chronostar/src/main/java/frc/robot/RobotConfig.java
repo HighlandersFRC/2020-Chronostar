@@ -7,11 +7,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax.IdleMode;
 
-import frc.robot.subsystems.Shooter;
-
-/**
- * Add your docs here.
- */
+/** Add your docs here. */
 public class RobotConfig {
 
     public void startBaseConfig() {
@@ -72,7 +68,7 @@ public class RobotConfig {
             t.configSupplyCurrentLimit(RobotStats.currentLimitEnabled);
         }
     }
-    
+
     private void setCurrentLimitsDisabled() {
         for (TalonFX t : RobotMap.allMotors) {
             t.configSupplyCurrentLimit(RobotStats.currentLimitDisabled);
