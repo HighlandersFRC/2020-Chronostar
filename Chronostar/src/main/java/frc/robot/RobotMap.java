@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.Relay;
 
 import frc.robot.subsystems.*;
 
@@ -41,4 +42,6 @@ public class RobotMap {
     };
 
     public static AHRS navx = new AHRS(Port.kMXP);
+
+    public static Relay visionRelay = new Relay(0);
 }
