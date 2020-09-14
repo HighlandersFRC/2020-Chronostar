@@ -41,7 +41,7 @@ public class RobotMap {
         leftDriveLead, rightDriveLead, leftDriveFollower1, rightDriveFollower1
     };
 
-    public static AHRS navx = new AHRS(Port.kMXP);
+    public static AHRS ahrs = new AHRS(Port.kMXP);
 
     public static Relay visionRelay = new Relay(0);
 }
