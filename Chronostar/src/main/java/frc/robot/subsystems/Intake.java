@@ -10,6 +10,10 @@ import frc.robot.RobotMap;
 public class Intake extends SubsystemBase {
     public Intake() {}
 
+    public void init() {
+        RobotMap.intakeMotor.setInverted(true);
+    }
+
     @Override
     public void periodic() {
         if (ButtonMap.getOperatorRightTrigger() >= 0.5) {

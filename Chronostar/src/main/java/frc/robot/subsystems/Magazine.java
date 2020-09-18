@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -20,6 +22,16 @@ public class Magazine extends SubsystemBase {
 
     public Magazine() {
         fire = new Fire(4000);
+    }
+
+    public void init() {
+        RobotMap.lowMag.setNeutralMode(NeutralMode.Brake);
+        RobotMap.highMag.setIdleMode(IdleMode.kBrake);
+        RobotMap.lowMag.configVoltageCompSaturation(11.7);
+        RobotMap.lowMag.enableVoltageCompensation(true);
+        RobotMap.intakeMotor.setNeutralMode(NeutralMode.Brake);
+        RobotMap.intake2Motor.setNeutralMode(NeutralMode.Brake);
+        RobotMap.intakeMotor.setInverted(true);
     }
 
     @Override

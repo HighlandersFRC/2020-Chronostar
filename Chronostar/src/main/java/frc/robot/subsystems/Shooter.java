@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -11,7 +13,18 @@ public class Shooter extends SubsystemBase {
     /** Creates a new Shooter. */
     public Shooter() {}
 
-    public void initialize() {
+    public void init() {
+        RobotMap.rightFlywheel.setNeutralMode(NeutralMode.Coast);
+        RobotMap.leftFlywheel.setNeutralMode(NeutralMode.Coast);
+        RobotMap.rightFlywheel.set(ControlMode.Follower, RobotStats.leftFlywheelID);
+        RobotMap.leftFlywheel.setInverted(true);
+        RobotMap.rightFlywheel.setInverted(InvertType.OpposeMaster);
+        RobotMap.leftFlywheel.configClosedLoopPeakOutput(0, RobotStats.maxPercentage);
+        RobotMap.leftFlywheel.configPeakOutputForward(0.415);
+        RobotMap.leftFlywheel.configPeakOutputReverse(0);
+        RobotMap.leftFlywheel.configVoltageCompSaturation(11.7);
+        RobotMap.leftFlywheel.enableVoltageCompensation(true);
+        RobotMap.leftFlywheel.setSensorPhase(true);
         RobotMap.leftFlywheel.selectProfileSlot(0, 0);
         RobotMap.leftFlywheel.config_kF(0, 0.05);
         RobotMap.leftFlywheel.config_kP(0, 3);
