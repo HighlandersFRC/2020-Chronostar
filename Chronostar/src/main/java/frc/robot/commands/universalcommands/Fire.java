@@ -1,3 +1,5 @@
+// Copyrights (c) 2018-2019 FIRST, 2020 Highlanders FRC. All Rights Reserved.
+
 package frc.robot.commands.universalcommands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -26,7 +28,8 @@ public class Fire extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (RobotMap.shooter.getShooterRPM() <= targetVelocity + 10) {
+        if (RobotMap.shooter.getShooterRPM() >= targetVelocity + 10
+                || RobotMap.shooter.getShooterRPM() <= targetVelocity - 10) {
             RobotMap.lowMag.set(ControlMode.PercentOutput, 0.2);
             RobotMap.highMag.set(-0.9);
         } else {
