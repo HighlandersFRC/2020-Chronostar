@@ -35,13 +35,13 @@ public class RobotConfig {
         }
     }
 
-    private void setDriveBrake() {
+    public static void setDriveBrake() {
         for (TalonFX t : RobotMap.allMotors) {
             t.setNeutralMode(NeutralMode.Brake);
         }
     }
 
-    private void setDriveCoast() {
+    public static void setDriveCoast() {
         for (TalonFX t : RobotMap.allMotors) {
             t.setNeutralMode(NeutralMode.Coast);
         }

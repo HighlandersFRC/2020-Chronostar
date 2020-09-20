@@ -32,6 +32,9 @@ public class RobotStats {
     public static final double driveCurrentPeakThreshold = 40;
     public static final double driveCurrentPeakTime = 10;
     public static final double driveMaxCurrent = 39;
+    public static final double driveTicksPerWheelRotation = 28672;
+    public static final double wheelDiam = 0.5;
+    public static final double wheelCircum = wheelDiam * Math.PI;
 
     public static final SupplyCurrentLimitConfiguration currentLimitEnabled =
             new SupplyCurrentLimitConfiguration(
@@ -40,4 +43,20 @@ public class RobotStats {
     public static final SupplyCurrentLimitConfiguration currentLimitDisabled =
             new SupplyCurrentLimitConfiguration(
                     false, driveMaxCurrent, driveCurrentPeakThreshold, driveCurrentPeakTime);
+
+    public static double ticksToFeet(double ticks) {
+        return ticks / driveTicksPerWheelRotation * wheelCircum;
+    }
+
+    public static double feetToTicks(double feet) {
+        return feet * driveTicksPerWheelRotation / wheelCircum;
+    }
+
+    public static double encVelocityToFps(double velocity) {
+        return ticksToFeet(velocity) * 10;
+    }
+
+    public static double fpsToEncVelocity(double fps) {
+        return feetToTicks(fps) / 10;
+    }
 }

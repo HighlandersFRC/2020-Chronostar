@@ -39,8 +39,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putBoolean("beam break 3", RobotMap.beambreak3.get());
         try {
             visionCam.updateVision();
-            SmartDashboard.putString("cam string", visionCam.getString());
-            SmartDashboard.putNumber("cam angle", visionCam.getAngle());
+            SmartDashboard.putNumber("distance", visionCam.getDistance());
         } catch (Exception e) {
         }
     }
