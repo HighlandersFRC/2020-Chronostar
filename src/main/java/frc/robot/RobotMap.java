@@ -8,11 +8,13 @@ import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.Relay;
 
+import frc.robot.sensors.LidarLite;
 import frc.robot.subsystems.*;
 
 public class RobotMap {
@@ -44,6 +46,9 @@ public class RobotMap {
     };
 
     public static AHRS ahrs = new AHRS(Port.kMXP);
+
+    public static Counter lidar = new Counter(2);
+    public static LidarLite lidarlite = new LidarLite(lidar);
 
     public static Relay visionRelay = new Relay(0);
 }

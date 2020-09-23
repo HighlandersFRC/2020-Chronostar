@@ -44,6 +44,8 @@ public class Robot extends TimedRobot {
             SmartDashboard.putNumber("distance", visionCam.getDistance());
         } catch (Exception e) {
         }
+
+        SmartDashboard.putNumber("lidar lite dist", RobotMap.lidarlite.getDistance());
     }
 
     /** This function is called once each time the robot enters Disabled mode. */

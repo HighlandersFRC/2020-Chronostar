@@ -20,10 +20,10 @@ public class Magazine extends SubsystemBase {
     private int catchCounter;
     private int tryCounter;
     public static boolean stuck;
-    private Fire fire;
+    private FireSequence fire;
 
     public Magazine() {
-        fire = new Fire(4000);
+        fire = new FireSequence(5000, 0);
     }
 
     public void init() {

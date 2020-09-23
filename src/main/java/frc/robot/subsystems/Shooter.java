@@ -22,7 +22,7 @@ public class Shooter extends SubsystemBase {
         RobotMap.leftFlywheel.setInverted(true);
         RobotMap.rightFlywheel.setInverted(InvertType.OpposeMaster);
         RobotMap.leftFlywheel.configClosedLoopPeakOutput(0, RobotStats.maxPercentage);
-        RobotMap.leftFlywheel.configPeakOutputForward(0.415);
+        RobotMap.leftFlywheel.configPeakOutputForward(0.6);
         RobotMap.leftFlywheel.configPeakOutputReverse(0);
         RobotMap.leftFlywheel.configVoltageCompSaturation(11.7);
         RobotMap.leftFlywheel.enableVoltageCompensation(true);
