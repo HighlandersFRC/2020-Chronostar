@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.ButtonMap;
@@ -35,10 +36,10 @@ public class Shooter extends SubsystemBase {
         RobotMap.leftFlywheel.enableVoltageCompensation(true);
         RobotMap.leftFlywheel.setSensorPhase(true);
         RobotMap.leftFlywheel.selectProfileSlot(0, 0);
-        RobotMap.leftFlywheel.config_kF(0, 0.075);
-        RobotMap.leftFlywheel.config_kP(0, 3);
-        RobotMap.leftFlywheel.config_kI(0, 0.025);
-        RobotMap.leftFlywheel.config_kD(0, 0);
+        RobotMap.leftFlywheel.config_kF(0, 0.05);
+        RobotMap.leftFlywheel.config_kP(0, 0.45);
+        RobotMap.leftFlywheel.config_kI(0, 0.0009);
+        RobotMap.leftFlywheel.config_kD(0, 10);
         RobotMap.leftFlywheel.config_IntegralZone(0, Constants.shooterIntegralRange);
     }
 
@@ -47,6 +48,8 @@ public class Shooter extends SubsystemBase {
         if (ButtonMap.shoot() && !averageFiringSequence.isScheduled()) {
             averageFiringSequence.schedule();
         }
+        SmartDashboard.putNumber("speed", getShooterRPM());
+        SmartDashboard.putBoolean("close", Math.abs(getShooterRPM()) < 100);
     }
 
     public void setVelocity(double desiredVelocity) {
