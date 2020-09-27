@@ -91,6 +91,7 @@ public class Robot extends TimedRobot {
                 Shooter.unitsPer100MsToRpm(RobotMap.leftFlywheel.getSelectedSensorVelocity()));
         RobotMap.shooter.teleopPeriodic();
         RobotMap.drive.teleopPeriodic();
+        RobotMap.climber.teleopPeriodic();
     }
 
     @Override

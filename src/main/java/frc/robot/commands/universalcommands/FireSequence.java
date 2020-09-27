@@ -2,16 +2,13 @@
 
 package frc.robot.commands.universalcommands;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import frc.robot.ButtonMap;
 
 public class FireSequence extends SequentialCommandGroup {
     public FireSequence(double rpm, double hoodPosition) {
-        super(
-                new SetFlywheelVelocity(rpm),
-                new ParallelCommandGroup(new SetLowMag(0.5), new SetHighMag(-1)));
+        super(new SetFlywheelVelocity(rpm), new SetMags(-1, 0.6));
     }
 
     public boolean isFinished() {
@@ -19,8 +16,7 @@ public class FireSequence extends SequentialCommandGroup {
     }
 
     public void end(boolean interrupted) {
-        new SetLowMag(0).schedule();
-        new SetHighMag(0).schedule();
+        new SetMags(0, 0).schedule();
         new SetFlywheelVelocity(0).schedule();
     }
 }

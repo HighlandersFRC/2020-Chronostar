@@ -14,37 +14,38 @@ public class RobotConfig {
         RobotMap.drive.init();
         RobotMap.intake.init();
         RobotMap.magazine.init();
+        RobotMap.climber.init();
     }
 
     public void startAutoConfig() {
-        setVoltageCompensation(RobotStats.driveMaxVoltage);
-        setDriveBrake();
+        setVoltageCompensation(Constants.driveMaxVoltage);
+        setDriveMotorsBrake();
     }
 
     public void startTeleopConfig() {
-        setDriveCoast();
+        setDriveMotorsCoast();
     }
 
     private void setVoltageCompensation(double volts) {
-        for (TalonFX t : RobotMap.allMotors) {
+        for (TalonFX t : RobotMap.driveMotors) {
             t.configVoltageCompSaturation(volts);
         }
     }
 
     private void setCurrentLimitsEnabled() {
-        for (TalonFX t : RobotMap.allMotors) {
-            t.configSupplyCurrentLimit(RobotStats.currentLimitEnabled);
+        for (TalonFX t : RobotMap.driveMotors) {
+            t.configSupplyCurrentLimit(Constants.currentLimitEnabled);
         }
     }
 
-    public static void setDriveBrake() {
-        for (TalonFX t : RobotMap.allMotors) {
+    public static void setDriveMotorsBrake() {
+        for (TalonFX t : RobotMap.driveMotors) {
             t.setNeutralMode(NeutralMode.Brake);
         }
     }
 
-    public static void setDriveCoast() {
-        for (TalonFX t : RobotMap.allMotors) {
+    public static void setDriveMotorsCoast() {
+        for (TalonFX t : RobotMap.driveMotors) {
             t.setNeutralMode(NeutralMode.Coast);
         }
     }
