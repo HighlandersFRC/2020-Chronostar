@@ -1,5 +1,3 @@
-// Copyrights (c) 2018-2019 FIRST, 2020 Highlanders FRC. All Rights Reserved.
-
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -20,8 +18,11 @@ public class Magazine extends SubsystemBase {
     private int catchCounter;
     private int tryCounter;
     public static boolean stuck;
+    private Fire fire;
 
-    public Magazine() {}
+    public Magazine() {
+        fire = new Fire(4000);
+    }
 
     public void init() {
         RobotMap.lowMag.setNeutralMode(NeutralMode.Brake);
@@ -45,17 +46,17 @@ public class Magazine extends SubsystemBase {
                 new HighMagBump(0, 0.15).schedule();
             } else if (beambreak2) {
                 new HighMagBump(-0.425, 0.15).schedule();
-                new LowMagBump(0.3, 0.15).schedule();
+                new LowMagBump(0.4, 0.15).schedule();
             }
             if (beambreak1) {
                 if (catchCounter <= 50) {
-                    new LowMagBump(0.3, 0.15).schedule();
+                    new LowMagBump(0.4, 0.15).schedule();
                 } else {
                     if (tryCounter <= 25) {
                         stuck = true;
                         tryCounter++;
                     } else {
-                        new LowMagBump(-0.3, 0.15).schedule();
+                        new LowMagBump(-0.4, 0.15).schedule();
                         catchCounter = 0;
                         tryCounter = 0;
                         stuck = false;
@@ -74,12 +75,18 @@ public class Magazine extends SubsystemBase {
         RobotMap.lowMag.set(ControlMode.PercentOutput, 0);
     }
 
+    public void fire() {
+        if (!fire.isScheduled() && !fire.isFinished()) fire.schedule();
+    }
+
     public void outtake() {
         new Outtake().schedule();
     }
 
     public void teleopPeriodic() {
-        if (ButtonMap.getOperatorLeftTrigger() >= 0.5) {
+        if (ButtonMap.shoot()) {
+            fire();
+        } else if (ButtonMap.getOperatorLeftTrigger() >= 0.5) {
             outtake();
         }
     }

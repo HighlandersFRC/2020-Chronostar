@@ -9,7 +9,6 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import frc.robot.ButtonMap;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.commands.universalcommands.DumbFireSequence;
@@ -58,11 +57,7 @@ public class Shooter extends SubsystemBase {
         RobotMap.leftFlywheel.set(ControlMode.Velocity, rpmToUnitsPer100Ms(desiredVelocity));
     }
 
-    public void teleopPeriodic() {
-        if (ButtonMap.shoot() && !dumbFireSequence.isScheduled()) {
-            dumbFireSequence.schedule();
-        }
-    }
+    public void teleopPeriodic() {}
 
     public static double unitsPer100MsToRpm(double units) {
         return (units * 600) / Constants.ticksPerShooterRotation;
