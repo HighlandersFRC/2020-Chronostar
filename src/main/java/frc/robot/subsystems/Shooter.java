@@ -12,15 +12,18 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ButtonMap;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
+import frc.robot.commands.universalcommands.DumbFireSequence;
 import frc.robot.commands.universalcommands.FireSequence;
 
 public class Shooter extends SubsystemBase {
 
-    private FireSequence averageFiringSequence;
-    private FireSequence closeUpFiringSequence;
+    private FireSequence avgFireSequence; // further than 10 ft
+    private FireSequence closeFireSequence; // 10 ft or closer
+    private DumbFireSequence dumbFireSequence; // FTC one
 
     public Shooter() {
-        averageFiringSequence = new FireSequence(5000, 0);
+        avgFireSequence = new FireSequence(5000, 0);
+        dumbFireSequence = new DumbFireSequence();
     }
 
     public void init() {
@@ -45,9 +48,6 @@ public class Shooter extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if (ButtonMap.shoot() && !averageFiringSequence.isScheduled()) {
-            averageFiringSequence.schedule();
-        }
         SmartDashboard.putNumber("speed", getShooterRPM());
         SmartDashboard.putBoolean("close", Math.abs(getShooterRPM()) < 100);
     }
@@ -58,7 +58,11 @@ public class Shooter extends SubsystemBase {
         RobotMap.leftFlywheel.set(ControlMode.Velocity, rpmToUnitsPer100Ms(desiredVelocity));
     }
 
-    public void teleopPeriodic() {}
+    public void teleopPeriodic() {
+        if (ButtonMap.shoot() && !dumbFireSequence.isScheduled()) {
+            dumbFireSequence.schedule();
+        }
+    }
 
     public static double unitsPer100MsToRpm(double units) {
         return (units * 600) / Constants.ticksPerShooterRotation;
