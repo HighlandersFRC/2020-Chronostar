@@ -92,6 +92,15 @@ public class Robot extends TimedRobot {
         RobotMap.shooter.teleopPeriodic();
         RobotMap.drive.teleopPeriodic();
         RobotMap.climber.teleopPeriodic();
+        if(OI.operatorController.getYButton()) {
+            RobotMap.climberMotor.set(0.1);
+        }
+        else if(OI.operatorController.getXButton()) {
+            RobotMap.climberMotor.set(-0.1);
+        }
+        else {
+            RobotMap.climberMotor.set(0.0);
+        }
     }
 
     @Override

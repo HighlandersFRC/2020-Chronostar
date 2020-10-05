@@ -30,6 +30,7 @@ public class RobotMap {
     public static VictorSPX intake2Motor = new VictorSPX(Constants.intake2MotorID);
     public static VictorSPX lowMag = new VictorSPX(Constants.magBeltID);
     public static CANSparkMax highMag = new CANSparkMax(Constants.magWheelID, MotorType.kBrushless);
+    public static CANSparkMax climberMotor = new CANSparkMax(Constants.climberMotorID, MotorType.kBrushless);
 
     public static DoubleSolenoid intakePiston = new DoubleSolenoid(0, 1);
     public static DoubleSolenoid ratchetPiston = new DoubleSolenoid(2, 3);

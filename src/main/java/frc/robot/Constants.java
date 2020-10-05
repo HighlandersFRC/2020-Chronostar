@@ -18,6 +18,7 @@ public class Constants {
     public static final int leftFlywheelID = 5;
     public static final int rightFlywheelID = 6;
     public static final int winchID = 14;
+    public static final int climberMotorID = 15;
 
     // Sensor ports
     public static int beamBreak1Port = 0;
