@@ -20,11 +20,8 @@ public class Magazine extends SubsystemBase {
     private int catchCounter;
     private int tryCounter;
     public static boolean stuck;
-    private FireSequence fire;
 
-    public Magazine() {
-        fire = new FireSequence(5000, 0);
-    }
+    public Magazine() {}
 
     public void init() {
         RobotMap.lowMag.setNeutralMode(NeutralMode.Brake);
@@ -77,18 +74,12 @@ public class Magazine extends SubsystemBase {
         RobotMap.lowMag.set(ControlMode.PercentOutput, 0);
     }
 
-    public void fire() {
-        if (!fire.isScheduled() && !fire.isFinished()) fire.schedule();
-    }
-
     public void outtake() {
         new Outtake().schedule();
     }
 
     public void teleopPeriodic() {
-        if (ButtonMap.shoot()) {
-            fire();
-        } else if (ButtonMap.getOperatorLeftTrigger() >= 0.5) {
+        if (ButtonMap.getOperatorLeftTrigger() >= 0.5) {
             outtake();
         }
     }

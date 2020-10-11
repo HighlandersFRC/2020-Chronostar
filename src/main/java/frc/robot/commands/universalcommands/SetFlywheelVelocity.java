@@ -31,6 +31,6 @@ public class SetFlywheelVelocity extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return Math.abs(RobotMap.shooter.getShooterRPM()) < 100;
+        return Math.abs(RobotMap.shooter.getShooterRPM() - targetVelocity) < 100;
     }
 }

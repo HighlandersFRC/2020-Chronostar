@@ -8,11 +8,17 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import frc.robot.ButtonMap;
 import frc.robot.RobotMap;
 import frc.robot.RobotStats;
+import frc.robot.commands.universalcommands.FireSequence;
 
 public class Shooter extends SubsystemBase {
     /** Creates a new Shooter. */
+    public FireSequence standardFireSequence;
+
+    public FireSequence closeUpFireSequence;
+
     public Shooter() {}
 
     public void init() {
@@ -33,6 +39,8 @@ public class Shooter extends SubsystemBase {
         RobotMap.leftFlywheel.config_kI(0, 0.025);
         RobotMap.leftFlywheel.config_kD(0, 0);
         RobotMap.leftFlywheel.config_IntegralZone(0, RobotStats.shooterIntegralRange);
+        standardFireSequence = new FireSequence(6000, 0);
+        closeUpFireSequence = new FireSequence(5000, 0);
     }
 
     @Override
@@ -49,6 +57,11 @@ public class Shooter extends SubsystemBase {
     public void teleopPeriodic() {
         System.out.println(RobotMap.leftFlywheel.getClosedLoopTarget());
         System.out.println(RobotMap.leftFlywheel.getMotorOutputPercent());
+        if (ButtonMap.shoot()) {
+            if (!standardFireSequence.isScheduled()) {
+                standardFireSequence.schedule();
+            }
+        }
     }
 
     public static double unitsPer100MsToRpm(double units) {
