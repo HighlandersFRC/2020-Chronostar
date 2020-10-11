@@ -30,8 +30,10 @@ public class RobotMap {
     public static CANSparkMax hoodMotor = new CANSparkMax(Constants.HOOD_ID, MotorType.kBrushless);
 
     public static DoubleSolenoid intakePiston = new DoubleSolenoid(0, 1);
-    public static DoubleSolenoid climberPiston = new DoubleSolenoid(2, 3);
-    public static DoubleSolenoid winchRelease = new DoubleSolenoid(4, 5);
+    public static DoubleSolenoid ratchetPiston = new DoubleSolenoid(2, 3);
+    public static DoubleSolenoid climberRelease = new DoubleSolenoid(4, 5);
+    public static TalonFX winch = new TalonFX(Constants.WINCH_ID);
+    public static CANSparkMax climberMotor = new CANSparkMax(Constants.CLIMBER_MOTOR_ID, MotorType.kBrushless);
 
     public static DigitalInput beambreak1 = new DigitalInput(Constants.BEAM_BREAK_1_ID);
     public static DigitalInput beambreak2 = new DigitalInput(Constants.BEAM_BREAK_3_ID);
@@ -47,6 +49,7 @@ public class RobotMap {
     public static Intake intake = new Intake();
     public static Shooter shooter = new Shooter();
     public static Hood hood = new Hood();
+    public static Climber climber = new Climber();
 
     public static TalonFX[] driveMotors = {
         leftDriveLead, rightDriveLead, leftDriveFollower, rightDriveFollower
