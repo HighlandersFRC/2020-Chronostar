@@ -101,6 +101,11 @@ public class Robot extends TimedRobot {
         else {
             RobotMap.climberMotor.set(0.0);
         }
+
+        try{
+            visionCam.updateVision();
+            SmartDashboard.putNumber("Vision Angle",visionCam.getAngle());
+        }catch(Exception e){}
     }
 
     @Override
