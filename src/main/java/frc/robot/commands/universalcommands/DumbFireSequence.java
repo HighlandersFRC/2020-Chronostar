@@ -3,20 +3,22 @@
 package frc.robot.commands.universalcommands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import frc.robot.ButtonMap;
 
-public class FireSequence extends SequentialCommandGroup {
-    public FireSequence(double rpm, double hoodPosition) {
-        super(new SetFlywheelVelocity(rpm), new SetMags(-1, 0.6));
+public class DumbFireSequence extends SequentialCommandGroup {
+
+    public DumbFireSequence() {
+        super(new SetFlywheelPercent(0.5), new WaitCommand(1.5), new SetMags(-1, 0.2));
     }
 
     public boolean isFinished() {
         return !ButtonMap.shoot();
     }
 
-    public void end(boolean interrupted) {
+    public void end() {
+        new SetFlywheelPercent(0).schedule();
         new SetMags(0, 0).schedule();
-        new SetFlywheelVelocity(0).schedule();
     }
 }

@@ -123,4 +123,9 @@ public class VisionCamera {
         targetPoint.setLocation(xAverage, yAverage);
         return targetPoint;
     }
+
+    public double getCorrectedDistance(double a, double b, double c, double d) {
+        updateVision();
+        return a * Math.pow(getDistance(), 3) + b * Math.pow(getDistance(), 2) + c * getDistance() + d;
+    }
 }

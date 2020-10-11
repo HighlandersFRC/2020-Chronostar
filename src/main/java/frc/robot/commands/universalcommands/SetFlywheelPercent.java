@@ -2,22 +2,23 @@
 
 package frc.robot.commands.universalcommands;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.robot.*;
+import frc.robot.RobotMap;
 
-public class SetFlywheelVelocity extends CommandBase {
+public class SetFlywheelPercent extends CommandBase {
+    double targetPercent;
 
-    private double targetVelocity;
-
-    public SetFlywheelVelocity(double velocity) {
-        targetVelocity = velocity;
+    public SetFlywheelPercent(double percent) {
+        targetPercent = percent;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        RobotMap.shooter.setVelocity(targetVelocity);
+        RobotMap.leftFlywheel.set(ControlMode.PercentOutput, targetPercent);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -31,6 +32,6 @@ public class SetFlywheelVelocity extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return Math.abs(RobotMap.shooter.getShooterRPM() - targetVelocity) > 100;
+        return true;
     }
 }
