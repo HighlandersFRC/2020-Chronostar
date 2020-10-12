@@ -15,7 +15,7 @@ public class Robot extends TimedRobot {
     public static SerialPort jevois;
     public static VisionCamera visionCam;
 
-    private RobotConfig config = new RobotConfig();
+    private final RobotConfig config = new RobotConfig();
 
     @Override
     public void robotInit() {
@@ -23,7 +23,7 @@ public class Robot extends TimedRobot {
         try {
             jevois = new SerialPort(115200, Port.kUSB2);
             visionCam = new VisionCamera(jevois);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             System.err.println("vision cam failed to connect");
         }
     }
@@ -39,7 +39,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putBoolean("beam break 3", RobotMap.beambreak3.get());
         try {
             SmartDashboard.putNumber("distance", visionCam.getDistance());
-        } catch (Exception e) {
+        } catch (final Exception e) {
         }
         SmartDashboard.putNumber("lidar dist", RobotMap.lidar.getDistance());
         SmartDashboard.putBoolean("lower limit switch", RobotMap.lowerHoodSwitch.get());
