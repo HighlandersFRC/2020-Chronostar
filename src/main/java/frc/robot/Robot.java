@@ -5,10 +5,12 @@ package frc.robot;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Relay.Value;
+//import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
+import frc.robot.commands.VisionAlignmentPID;
 import frc.robot.sensors.VisionCamera;
 import frc.robot.subsystems.Shooter;
 
@@ -24,7 +26,7 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         config.startBaseConfig();
         try {
-            jevois = new SerialPort(115200, Port.kUSB2);
+            jevois = new SerialPort(115200, Port.kUSB1);
             visionCam = new VisionCamera(jevois);
         } catch (Exception e) {
             System.err.println("vision cam failed to connect");
@@ -105,7 +107,20 @@ public class Robot extends TimedRobot {
         try{
             visionCam.updateVision();
             SmartDashboard.putNumber("Vision Angle",visionCam.getAngle());
-        }catch(Exception e){}
+            SmartDashboard.putBoolean("Has Camera", true);
+        }catch(Exception e){
+            SmartDashboard.putBoolean("Has Camera", false);
+        }
+
+
+        if(OI.driverController.getXButton()){
+           //RobotMap.VisionAlignmentPID.schedule();
+            //visionPID.schedule();
+            RobotMap.visionRelay.set(Value.kForward);
+        }
+        else{
+            RobotMap.visionRelay.set(Value.kReverse);
+        }
     }
 
     @Override

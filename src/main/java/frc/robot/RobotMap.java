@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.Relay;
-
+import frc.robot.commands.VisionAlignmentPID;
 import frc.robot.sensors.LidarLite;
 import frc.robot.subsystems.*;
 
@@ -45,6 +45,7 @@ public class RobotMap {
     public static Intake intake = new Intake();
     public static Shooter shooter = new Shooter();
     public static Climber climber = new Climber();
+    VisionAlignmentPID visionPID = new VisionAlignmentPID();
 
     public static TalonFX[] driveMotors = {
         leftDriveLead, rightDriveLead, leftDriveFollower1, rightDriveFollower1
