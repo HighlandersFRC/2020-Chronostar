@@ -17,6 +17,16 @@ public class VisionAlignmentPID extends CommandBase {
   /**
    * Creates a new VisionAlignmentPID.
    */
+
+  private PID pid;
+  private final double kP = 0;
+  private final double kI = 0;
+  private final double kD = 0;
+
+  public double jevoisAngle;
+
+  private double startingTime;
+
   public VisionAlignmentPID() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -43,12 +53,12 @@ public class VisionAlignmentPID extends CommandBase {
       startingTime = Timer.getFPGATimestamp();
       Robot.visionCam.updateVision();
       jevoisAngle = Robot.visionCam.getAngle();
-      SmartDashboard.putNumber("Jevois Angle",jevoisAngle);
-      SmartDashboard.putNumber("PID Result",pid.getResult());
+      SmartDashboard.putNumber("Jevois Angle", jevoisAngle);
+      SmartDashboard.putNumber("Get result", pid.getResult());
       if(Timer.getFPGATimestamp() - Robot.visionCam.lastParseTime < 0.25){
-        pid.updatePID(jevoisAngle);
+        pid.updatePID(jevoisAngle + 9.5);
         RobotMap.leftDriveLead.set(ControlMode.PercentOutput, pid.getResult());
-        RobotMap.rightDriveLead.set(ControlMode.PercentOutput, pid.getResult());
+        RobotMap.rightDriveLead.set(ControlMode.PercentOutput, -pid.getResult());
       }
       else{
         pid.updatePID(0);
@@ -56,7 +66,9 @@ public class VisionAlignmentPID extends CommandBase {
         RobotMap.rightDriveLead.set(ControlMode.PercentOutput, 0);
       }
 
-    }catch(Exception e){};
+    } catch(Exception e) {
+  
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -70,9 +82,8 @@ public class VisionAlignmentPID extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(!OI.driverController.getXButton()){
+    if (!OI.driverController.getXButton()) {
       return true;
-
     }
     return false;
   }
