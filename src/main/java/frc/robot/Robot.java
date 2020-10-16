@@ -114,8 +114,7 @@ public class Robot extends TimedRobot {
 
 
         if(OI.driverController.getXButton()){
-           //RobotMap.VisionAlignmentPID.schedule();
-            //visionPID.schedule();
+        RobotMap.visionPID.schedule();
             RobotMap.visionRelay.set(Value.kForward);
         }
         else{

@@ -45,7 +45,7 @@ public class RobotMap {
     public static Intake intake = new Intake();
     public static Shooter shooter = new Shooter();
     public static Climber climber = new Climber();
-    VisionAlignmentPID visionPID = new VisionAlignmentPID();
+    public static VisionAlignmentPID visionPID = new VisionAlignmentPID();
 
     public static TalonFX[] driveMotors = {
         leftDriveLead, rightDriveLead, leftDriveFollower1, rightDriveFollower1

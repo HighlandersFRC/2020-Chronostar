@@ -18,21 +18,12 @@ public class VisionAlignmentPID extends CommandBase {
    * Creates a new VisionAlignmentPID.
    */
 
-  private PID pid;
-  private final double kP = 0;
-  private final double kI = 0;
-  private final double kD = 0;
-
-  public double jevoisAngle;
-
-  private double startingTime;
-
   public VisionAlignmentPID() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   public static PID pid;
-  private final double kP = 0;
+  private final double kP = 0.05;
   private final double kI = 0;
   private final double kD = 0;
 
