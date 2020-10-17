@@ -42,8 +42,8 @@ public class Robot extends TimedRobot {
         SmartDashboard.putBoolean("beam break 2", RobotMap.beambreak2.get());
         SmartDashboard.putBoolean("beam break 3", RobotMap.beambreak3.get());
         try {
-            visionCam.updateVision();
-            SmartDashboard.putNumber("distance", visionCam.getDistance());
+           visionCam.updateVision();
+           SmartDashboard.putNumber("distance", visionCam.getDistance());
         } catch (Exception e) {
         }
 
@@ -105,20 +105,21 @@ public class Robot extends TimedRobot {
         }
 
         try{
-            visionCam.updateVision();
-            SmartDashboard.putNumber("Vision Angle",visionCam.getAngle());
-            SmartDashboard.putBoolean("Has Camera", true);
+           visionCam.updateVision();
+           SmartDashboard.putNumber("Vision Angle",visionCam.getAngle());
+           SmartDashboard.putBoolean("Has Camera", true);
         }catch(Exception e){
             SmartDashboard.putBoolean("Has Camera", false);
         }
 
 
         if(OI.driverController.getXButton()){
-        RobotMap.visionPID.schedule();
+            RobotMap.visionPID.schedule();
+            RobotMap.visionRelay.set(Value.kForward);
             RobotMap.visionRelay.set(Value.kForward);
         }
         else{
-            RobotMap.visionRelay.set(Value.kReverse);
+            
         }
     }
 

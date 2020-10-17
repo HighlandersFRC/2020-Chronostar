@@ -67,7 +67,7 @@ public class VisionAlignmentPID extends CommandBase {
   public void end(boolean interrupted) {
     RobotMap.leftDriveLead.set(ControlMode.PercentOutput, 0);
     RobotMap.rightDriveLead.set(ControlMode.PercentOutput, 0);
-    RobotMap.visionRelay.set(Value.kReverse); 
+    RobotMap.visionRelay.set(Value.kForward); 
   }
 
   // Returns true when the command should end.

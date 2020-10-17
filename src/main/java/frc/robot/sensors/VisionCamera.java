@@ -29,20 +29,16 @@ public class VisionCamera {
     }
 
     public void updateVision() {
-        try {
+        /*try {
             String unsanitizedString = this.getString();
-            System.out.println("unsantized String " + unsanitizedString);
             String jsonString =
                     unsanitizedString.substring(
                             unsanitizedString.indexOf('{'), unsanitizedString.indexOf('}') + 1);
-            System.out.println("in updateVision");
             double tryDistance = badDistance;
             double tryAngle = badAngle;
 
-            System.out.println("before jsonString");
 
             if (jsonString != null) {
-                System.out.println(jsonString);
 
                 tryDistance = parseDistance(jsonString);
                 tryAngle = parseAngle(jsonString);
@@ -56,6 +52,7 @@ public class VisionCamera {
 
         } catch (Exception e) {
         }
+    */
     }
 
     public double parseAngle(String jsonString) {
