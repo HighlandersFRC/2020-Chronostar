@@ -39,8 +39,8 @@ public class Shooter extends SubsystemBase {
         RobotMap.leftFlywheel.config_kI(0, 0.025);
         RobotMap.leftFlywheel.config_kD(0, 0);
         RobotMap.leftFlywheel.config_IntegralZone(0, RobotStats.shooterIntegralRange);
-        standardFireSequence = new FireSequence(6000, 0);
-        closeUpFireSequence = new FireSequence(5000, 0);
+        standardFireSequence = new FireSequence(5000, 0);
+        closeUpFireSequence = new FireSequence(4500, 0);
     }
 
     @Override

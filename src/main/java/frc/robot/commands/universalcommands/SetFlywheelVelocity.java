@@ -12,7 +12,7 @@ public class SetFlywheelVelocity extends CommandBase {
     private double targetVelocity;
 
     public SetFlywheelVelocity(double velocity) {
-        if (targetVelocity < RobotStats.maxRPM) targetVelocity = RobotStats.maxRPM;
+        if (targetVelocity > RobotStats.maxRPM) targetVelocity = RobotStats.maxRPM;
         targetVelocity = velocity;
     }
 
@@ -20,6 +20,7 @@ public class SetFlywheelVelocity extends CommandBase {
     @Override
     public void initialize() {
         SmartDashboard.putNumber("target velocity", targetVelocity);
+        SmartDashboard.putNumber("current velocity", RobotMap.shooter.getShooterRPM());
         RobotMap.shooter.setVelocity(targetVelocity);
     }
 
