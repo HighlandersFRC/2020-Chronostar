@@ -2,6 +2,7 @@
 
 package frc.robot.commands.universalcommands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.*;
@@ -18,6 +19,7 @@ public class SetFlywheelVelocity extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        SmartDashboard.putNumber("target velocity", targetVelocity);
         RobotMap.shooter.setVelocity(targetVelocity);
     }
 
