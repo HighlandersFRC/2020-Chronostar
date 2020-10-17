@@ -50,17 +50,12 @@ public class Robot extends TimedRobot {
 
     /** This function is called once each time the robot enters Disabled mode. */
     @Override
-    public void disabledInit() {
-    }
+    public void disabledInit() {}
 
     @Override
-    public void disabledPeriodic() {
-    }
+    public void disabledPeriodic() {}
 
-    /**
-     * This autonomous runs the autonomous command selected by your {@link RobotMap}
-     * class.
-     */
+    /** This autonomous runs the autonomous command selected by your {@link RobotMap} class. */
     @Override
     public void autonomousInit() {
 
@@ -91,7 +86,9 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("leftHeat", RobotMap.leftFlywheel.getTemperature());
         SmartDashboard.putNumber("rightHeat", RobotMap.rightFlywheel.getTemperature());
         RobotMap.magazine.teleopPeriodic();
-        SmartDashboard.putNumber("rpm", Shooter.unitsPer100MsToRpm(RobotMap.leftFlywheel.getSelectedSensorVelocity()));
+        SmartDashboard.putNumber(
+                "rpm",
+                Shooter.unitsPer100MsToRpm(RobotMap.leftFlywheel.getSelectedSensorVelocity()));
         RobotMap.shooter.teleopPeriodic();
         RobotMap.drive.teleopPeriodic();
     }
@@ -104,6 +101,5 @@ public class Robot extends TimedRobot {
 
     /** This function is called periodically during test mode. */
     @Override
-    public void testPeriodic() {
-    }
+    public void testPeriodic() {}
 }

@@ -26,7 +26,7 @@ public class RobotStats {
     // Shooter type beat
     public static int ticksPerShooterRotation = 1317;
     public static int maxRPM = 4000;
-    public static double maxPercentage = 0.5;
+    public static double maxPercentage = 0.7;
     public static int shooterIntegralRange = 439;
 
     // Drive constants
