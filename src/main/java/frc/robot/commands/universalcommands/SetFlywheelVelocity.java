@@ -11,6 +11,7 @@ public class SetFlywheelVelocity extends CommandBase {
     private double targetVelocity;
 
     public SetFlywheelVelocity(double velocity) {
+        if (targetVelocity < RobotStats.maxRPM) targetVelocity = RobotStats.maxRPM;
         targetVelocity = velocity;
     }
 

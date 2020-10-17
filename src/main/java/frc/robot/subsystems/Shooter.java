@@ -55,8 +55,6 @@ public class Shooter extends SubsystemBase {
     }
 
     public void teleopPeriodic() {
-        System.out.println(RobotMap.leftFlywheel.getClosedLoopTarget());
-        System.out.println(RobotMap.leftFlywheel.getMotorOutputPercent());
         if (ButtonMap.shoot()) {
             if (!standardFireSequence.isScheduled()) {
                 standardFireSequence.schedule();
