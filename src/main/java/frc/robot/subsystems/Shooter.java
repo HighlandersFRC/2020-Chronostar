@@ -11,12 +11,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ButtonMap;
 import frc.robot.RobotMap;
 import frc.robot.RobotStats;
-import frc.robot.commands.universalcommands.FireSequence;
 import frc.robot.commands.universalcommands.SetFlywheelPercent;
+import frc.robot.commands.universalcommands.SetFlywheelRPM;
 
 public class Shooter extends SubsystemBase {
-    public FireSequence standardFireSequence;
-    public FireSequence closeUpFireSequence;
+    public SetFlywheelRPM standardRPM;
+    public SetFlywheelRPM closeUpRPM;
     public SetFlywheelPercent dumbFireSequence;
 
     public Shooter() {}
@@ -39,8 +39,8 @@ public class Shooter extends SubsystemBase {
         RobotMap.leftFlywheel.config_kI(0, 0.025);
         RobotMap.leftFlywheel.config_kD(0, 0);
         RobotMap.leftFlywheel.config_IntegralZone(0, RobotStats.shooterIntegralRange);
-        standardFireSequence = new FireSequence(5000);
-        closeUpFireSequence = new FireSequence(4500);
+        standardRPM = new SetFlywheelRPM(5000);
+        closeUpRPM = new SetFlywheelRPM(4500);
         dumbFireSequence = new SetFlywheelPercent(0.5);
     }
 
@@ -48,8 +48,8 @@ public class Shooter extends SubsystemBase {
     public void periodic() {}
 
     public void teleopPeriodic() {
-        if (ButtonMap.shoot() && !standardFireSequence.isScheduled()) {
-            standardFireSequence.schedule();
+        if (ButtonMap.shoot() && !standardRPM.isScheduled()) {
+            standardRPM.schedule();
         }
     }
 

@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+import frc.robot.ButtonMap;
 import frc.robot.RobotMap;
 
 public class SetFlywheelRPM extends CommandBase {
@@ -33,7 +34,7 @@ public class SetFlywheelRPM extends CommandBase {
     }
 
     public boolean isFinished() {
-        return isAtTargetRPM();
+        return isAtTargetRPM() && !ButtonMap.shoot();
     }
 
     public static boolean isAtTargetRPM() {
