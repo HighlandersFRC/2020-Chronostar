@@ -53,6 +53,8 @@ public class Shooter extends SubsystemBase {
     public void teleopPeriodic() {
         if (ButtonMap.shoot()) {
             new SetFlywheelPercent(0.5).schedule();
+        } else {
+            new RunMags(0, 0).schedule();
         }
     }
 
