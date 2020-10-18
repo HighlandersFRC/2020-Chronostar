@@ -46,7 +46,7 @@ public class Shooter extends SubsystemBase {
 
     public void teleopPeriodic() {
         if (ButtonMap.shoot()) {
-            if (standardFireSequence.isFinished()) {
+            if (!standardFireSequence.isScheduled()) {
                 standardFireSequence = new FireSequence(5000);
                 standardFireSequence.schedule();
             }
