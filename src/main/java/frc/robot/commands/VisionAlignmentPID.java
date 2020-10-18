@@ -23,7 +23,7 @@ public class VisionAlignmentPID extends CommandBase {
   }
 
   public static PID pid;
-  private final double kP = 0.05;
+  private final double kP = 0.005;
   private final double kI = 0;
   private final double kD = 0;
 
@@ -33,7 +33,7 @@ public class VisionAlignmentPID extends CommandBase {
     pid.setSetPoint(0);
     pid.setMinOutput(-0.75);
     pid.setMaxOutput(0.75);
-    RobotMap.visionRelay.set(Value.kReverse);
+    RobotMap.visionRelay.set(Value.kForward);
   }
 
  public double jevoisAngle;
@@ -67,7 +67,7 @@ public class VisionAlignmentPID extends CommandBase {
   public void end(boolean interrupted) {
     RobotMap.leftDriveLead.set(ControlMode.PercentOutput, 0);
     RobotMap.rightDriveLead.set(ControlMode.PercentOutput, 0);
-    RobotMap.visionRelay.set(Value.kForward); 
+    RobotMap.visionRelay.set(Value.kReverse); 
   }
 
   // Returns true when the command should end.

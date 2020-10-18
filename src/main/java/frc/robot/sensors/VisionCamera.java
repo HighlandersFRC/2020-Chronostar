@@ -29,7 +29,7 @@ public class VisionCamera {
     }
 
     public void updateVision() {
-        /*try {
+        try {
             String unsanitizedString = this.getString();
             String jsonString =
                     unsanitizedString.substring(
@@ -52,7 +52,7 @@ public class VisionCamera {
 
         } catch (Exception e) {
         }
-    */
+    
     }
 
     public double parseAngle(String jsonString) {
