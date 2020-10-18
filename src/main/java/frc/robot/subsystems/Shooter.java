@@ -22,6 +22,7 @@ import frc.robot.commands.universalcommands.SetFlywheelRPM;
 public class Shooter extends SubsystemBase {
     public FireSequence standardFireSequence;
     public FireSequence closeUpFireSequence;
+    public SetFlywheelPercent dumbFireSequence;
 
     public Shooter() {}
 
@@ -45,17 +46,15 @@ public class Shooter extends SubsystemBase {
         RobotMap.leftFlywheel.config_IntegralZone(0, RobotStats.shooterIntegralRange);
         standardFireSequence = new FireSequence(5000);
         closeUpFireSequence = new FireSequence(4500);
+        dumbFireSequence = new SetFlywheelPercent(0.5);
     }
 
     @Override
     public void periodic() {}
 
     public void teleopPeriodic() {
-        if (ButtonMap.shoot()) {
-            new SetFlywheelPercent(0.5).schedule();
-        } else {
-            new SetFlywheelPercent(0).schedule();
-            new RunMags(0, 0).schedule();
+        if (ButtonMap.shoot() && !dumbFireSequence.isScheduled()) {
+            dumbFireSequence.schedule();
         }
     }
 

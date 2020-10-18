@@ -20,15 +20,18 @@ public class SetFlywheelPercent extends CommandBase {
     @Override
     public void initialize() {
         RobotMap.leftFlywheel.set(ControlMode.PercentOutput, percent);
+        new WaitCommand(1.5).schedule();
     }
 
     @Override
-    public void execute() {}
+    public void execute() {
+        new RunMags(0.5, -1).schedule();
+    }
 
     @Override
     public void end(boolean interrupted) {
-        new WaitCommand(1.5).schedule();
-        new RunMags(0.5, -1).schedule();
+        RobotMap.leftFlywheel.set(ControlMode.PercentOutput, 0);
+        new RunMags(0, 0).schedule();
     }
 
     public boolean isFinished() {
