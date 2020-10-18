@@ -4,11 +4,11 @@ package frc.robot.commands.universalcommands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.RobotMap;
 
-public class SetFlywheelRPM extends InstantCommand {
+public class SetFlywheelRPM extends CommandBase {
 
     private static double rpm;
 
@@ -25,7 +25,13 @@ public class SetFlywheelRPM extends InstantCommand {
     public void execute() {}
 
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        new RunMags(0.5, -1).schedule();
+    }
+
+    public boolean isFinished() {
+        return isAtTargetRPM();
+    }
 
     public static boolean isAtTargetRPM() {
         return Math.abs(rpm - RobotMap.shooter.getShooterRPM()) <= 100;

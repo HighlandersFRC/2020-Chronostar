@@ -54,6 +54,7 @@ public class Shooter extends SubsystemBase {
         if (ButtonMap.shoot()) {
             new SetFlywheelPercent(0.5).schedule();
         } else {
+            new SetFlywheelPercent(0).schedule();
             new RunMags(0, 0).schedule();
         }
     }
