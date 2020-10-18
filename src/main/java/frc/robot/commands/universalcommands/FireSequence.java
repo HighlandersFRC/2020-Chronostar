@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.ButtonMap;
 
 public class FireSequence extends SequentialCommandGroup {
-    public FireSequence(double rpm, double hoodPosition) {
+    public FireSequence(double rpm) {
         super(new SetFlywheelVelocity(rpm));
         // new ParallelCommandGroup(new SetLowMag(0.5), new SetHighMag(-1)));
     }

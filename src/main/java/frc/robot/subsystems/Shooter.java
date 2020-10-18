@@ -37,8 +37,8 @@ public class Shooter extends SubsystemBase {
         RobotMap.leftFlywheel.config_kI(0, 0.025);
         RobotMap.leftFlywheel.config_kD(0, 0);
         RobotMap.leftFlywheel.config_IntegralZone(0, RobotStats.shooterIntegralRange);
-        standardFireSequence = new FireSequence(5000, 0);
-        closeUpFireSequence = new FireSequence(4500, 0);
+        standardFireSequence = new FireSequence(5000);
+        closeUpFireSequence = new FireSequence(4500);
     }
 
     @Override
@@ -46,9 +46,12 @@ public class Shooter extends SubsystemBase {
 
     public void teleopPeriodic() {
         if (ButtonMap.shoot()) {
-            if (!standardFireSequence.isScheduled()) {
+            if (standardFireSequence.isFinished()) {
+                standardFireSequence = new FireSequence(5000);
                 standardFireSequence.schedule();
             }
+        } else {
+            standardFireSequence = new FireSequence(5000);
         }
     }
 
