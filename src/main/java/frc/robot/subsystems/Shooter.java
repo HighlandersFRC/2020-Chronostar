@@ -14,9 +14,7 @@ import frc.robot.RobotStats;
 import frc.robot.commands.universalcommands.FireSequence;
 
 public class Shooter extends SubsystemBase {
-    /** Creates a new Shooter. */
     public FireSequence standardFireSequence;
-
     public FireSequence closeUpFireSequence;
 
     public Shooter() {}
@@ -44,15 +42,7 @@ public class Shooter extends SubsystemBase {
     }
 
     @Override
-    public void periodic() {
-        // This method will be called once per scheduler run
-    }
-
-    public void setVelocity(double desiredVelocity) {
-        if (desiredVelocity > RobotStats.maxRPM) desiredVelocity = RobotStats.maxRPM;
-        else if (desiredVelocity < 0) desiredVelocity = 0;
-        RobotMap.leftFlywheel.set(ControlMode.Velocity, rpmToUnitsPer100Ms(desiredVelocity));
-    }
+    public void periodic() {}
 
     public void teleopPeriodic() {
         if (ButtonMap.shoot()) {

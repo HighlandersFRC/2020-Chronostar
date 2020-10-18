@@ -2,10 +2,13 @@
 
 package frc.robot.commands.universalcommands;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.*;
+import frc.robot.subsystems.Shooter;
 
 public class SetFlywheelVelocity extends CommandBase {
 
@@ -23,7 +26,7 @@ public class SetFlywheelVelocity extends CommandBase {
     public void initialize() {
         SmartDashboard.putNumber("target velocity", targetVelocity);
         SmartDashboard.putNumber("current velocity", RobotMap.shooter.getShooterRPM());
-        RobotMap.shooter.setVelocity(targetVelocity);
+        RobotMap.leftFlywheel.set(ControlMode.Velocity, Shooter.rpmToUnitsPer100Ms(5000));
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -32,9 +35,7 @@ public class SetFlywheelVelocity extends CommandBase {
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {
-        RobotMap.shooter.setVelocity(targetVelocity);
-    }
+    public void end(boolean interrupted) {}
 
     // Returns true when the command should end.
     @Override
