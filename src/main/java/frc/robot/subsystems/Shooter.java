@@ -17,7 +17,7 @@ import frc.robot.RobotStats;
 import frc.robot.commands.universalcommands.DumbFireSequence;
 import frc.robot.commands.universalcommands.FireSequence;
 import frc.robot.commands.universalcommands.RunMags;
-import frc.robot.commands.universalcommands.SetFlywheelVelocity;
+import frc.robot.commands.universalcommands.SetFlywheelRPM;
 
 public class Shooter extends SubsystemBase {
     public FireSequence standardFireSequence;
@@ -70,7 +70,7 @@ public class Shooter extends SubsystemBase {
 
     public Command fire(double rpm) {
         return new RunCommand(() -> {})
-                .withInterrupt(() -> SetFlywheelVelocity.isAtTargetRPM())
+                .withInterrupt(() -> SetFlywheelRPM.isAtTargetRPM())
                 .andThen(new InstantCommand(() -> new RunMags(0.5, -1).schedule()));
     }
 }
