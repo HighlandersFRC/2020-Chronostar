@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
+import frc.robot.ButtonMap;
 import frc.robot.RobotMap;
 
 public class SetFlywheelPercent extends CommandBase {
@@ -35,6 +36,6 @@ public class SetFlywheelPercent extends CommandBase {
     }
 
     public boolean isFinished() {
-        return true;
+        return !ButtonMap.shoot();
     }
 }
