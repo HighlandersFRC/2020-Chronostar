@@ -4,11 +4,12 @@ package frc.robot.commands.universalcommands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import frc.robot.RobotMap;
 
-public class SetFlywheelPercent extends InstantCommand {
+public class SetFlywheelPercent extends CommandBase {
 
     private double percent;
 
@@ -25,5 +26,12 @@ public class SetFlywheelPercent extends InstantCommand {
     public void execute() {}
 
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        new WaitCommand(1.5).schedule();
+        new RunMags(0.5, -1).schedule();
+    }
+
+    public boolean isFinished() {
+        return true;
+    }
 }

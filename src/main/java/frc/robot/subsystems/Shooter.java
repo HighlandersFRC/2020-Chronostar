@@ -14,9 +14,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ButtonMap;
 import frc.robot.RobotMap;
 import frc.robot.RobotStats;
-import frc.robot.commands.universalcommands.DumbFireSequence;
 import frc.robot.commands.universalcommands.FireSequence;
 import frc.robot.commands.universalcommands.RunMags;
+import frc.robot.commands.universalcommands.SetFlywheelPercent;
 import frc.robot.commands.universalcommands.SetFlywheelRPM;
 
 public class Shooter extends SubsystemBase {
@@ -52,7 +52,7 @@ public class Shooter extends SubsystemBase {
 
     public void teleopPeriodic() {
         if (ButtonMap.shoot()) {
-            new DumbFireSequence().schedule();
+            new SetFlywheelPercent(0.5).schedule();
         }
     }
 
