@@ -12,7 +12,7 @@ import frc.robot.subsystems.Shooter;
 
 public class SetFlywheelVelocity extends CommandBase {
 
-    private double targetVelocity;
+    private static double targetVelocity;
 
     public SetFlywheelVelocity(double velocity) {
         if (velocity > RobotStats.maxRPM) {
@@ -27,6 +27,10 @@ public class SetFlywheelVelocity extends CommandBase {
         SmartDashboard.putNumber("target velocity", targetVelocity);
         SmartDashboard.putNumber("current velocity", RobotMap.shooter.getShooterRPM());
         RobotMap.leftFlywheel.set(ControlMode.Velocity, Shooter.rpmToUnitsPer100Ms(5000));
+    }
+
+    public static boolean isAtTargetRPM() {
+        return Math.abs(RobotMap.shooter.getShooterRPM() - targetVelocity) < 100;
     }
 
     // Called every time the scheduler runs while the command is scheduled.
