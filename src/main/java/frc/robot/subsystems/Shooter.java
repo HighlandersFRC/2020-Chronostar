@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ButtonMap;
 import frc.robot.RobotMap;
 import frc.robot.RobotStats;
+import frc.robot.commands.universalcommands.DumbFireSequence;
 import frc.robot.commands.universalcommands.FireSequence;
 import frc.robot.commands.universalcommands.RunMags;
 import frc.robot.commands.universalcommands.SetFlywheelVelocity;

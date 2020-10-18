@@ -12,11 +12,7 @@ import frc.robot.RobotMap;
 
 public class DumbFireSequence extends SequentialCommandGroup {
     public DumbFireSequence() {
-        super(new WaitCommand(1.5), new RunMags(0.5, -1));
-    }
-
-    public void initialize() {
-        RobotMap.leftFlywheel.set(ControlMode.PercentOutput, 0.5);
+        super(new SetFlywheelPercent(0.5), new WaitCommand(1.5), new RunMags(0.5, -1));
     }
 
     public boolean isFinished() {
