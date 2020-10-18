@@ -50,8 +50,6 @@ public class Shooter extends SubsystemBase {
                 standardFireSequence = new FireSequence(5000);
                 standardFireSequence.schedule();
             }
-        } else {
-            standardFireSequence = new FireSequence(5000);
         }
     }
 
