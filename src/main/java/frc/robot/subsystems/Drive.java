@@ -161,7 +161,7 @@ public class Drive extends SubsystemBase {
     }
 
     public void teleopPeriodic() {
-        arcadeDrive(ButtonMap.getThrottle(), ButtonMap.getTurn());
+        arcadeDrive(ButtonMap.getTurn(), ButtonMap.getThrottle());
         if (ButtonMap.getDriverRightBumper()) {
             RobotMap.visionRelay.set(Value.kForward);
         } else {

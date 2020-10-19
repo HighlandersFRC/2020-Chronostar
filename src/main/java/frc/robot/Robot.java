@@ -14,18 +14,17 @@ public class Robot extends TimedRobot {
 
     public static SerialPort jevois;
     public static VisionCamera visionCam;
-
     private final RobotConfig config = new RobotConfig();
 
     @Override
     public void robotInit() {
-        config.startBaseConfig();
         try {
             jevois = new SerialPort(115200, Port.kUSB2);
             visionCam = new VisionCamera(jevois);
         } catch (final Exception e) {
             System.err.println("vision cam failed to connect");
         }
+        SmartDashboard.updateValues();
     }
 
     @Override
@@ -50,7 +49,9 @@ public class Robot extends TimedRobot {
     }
 
     @Override
-    public void disabledInit() {}
+    public void disabledInit() {
+        //RobotMap.intakePiston.set(Value.kReverse);
+    }
 
     @Override
     public void disabledPeriodic() {}

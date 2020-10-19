@@ -15,6 +15,7 @@ public class RobotConfig {
         RobotMap.intake.init();
         RobotMap.magazine.init();
         RobotMap.hood.init();
+        RobotMap.climber.init();   
     }
 
     public void startAutoConfig() {

@@ -13,7 +13,7 @@ import frc.robot.RobotMap;
 import frc.robot.commands.universalcommands.SetWinchSpeed;
 
 public class Climber extends SubsystemBase {
-    /** Creates a new Climber. */
+    
     public Climber() {}
 
     public void init() {
