@@ -24,13 +24,13 @@ public class SetFlywheelRPM extends CommandBase {
 
     @Override
     public void execute() {
-        // new SetMags(0.5, -1).schedule();
+        new SetMags(0.5, -1).schedule();
     }
 
     @Override
     public void end(boolean interrupted) {
         RobotMap.leftFlywheel.set(ControlMode.Velocity, 0);
-        // new RunMags(0, 0).schedule();
+        new SetMags(0, 0).schedule();
     }
 
     public boolean isFinished() {

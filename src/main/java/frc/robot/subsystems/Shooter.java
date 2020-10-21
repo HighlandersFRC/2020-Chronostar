@@ -35,10 +35,10 @@ public class Shooter extends SubsystemBase {
         RobotMap.leftFlywheel.enableVoltageCompensation(true);
         RobotMap.leftFlywheel.setSensorPhase(true);
         RobotMap.leftFlywheel.selectProfileSlot(0, 0);
-        RobotMap.leftFlywheel.config_kF(0, 0.05);
-        RobotMap.leftFlywheel.config_kP(0, 0.45);
-        RobotMap.leftFlywheel.config_kI(0, 0.0009);
-        RobotMap.leftFlywheel.config_kD(0, 0);
+        RobotMap.leftFlywheel.config_kF(0, 0.075);
+        RobotMap.leftFlywheel.config_kP(0, 3);
+        RobotMap.leftFlywheel.config_kI(0, 0.025);
+        RobotMap.leftFlywheel.config_kD(0, 10);
         RobotMap.leftFlywheel.config_IntegralZone(0, RobotStats.shooterIntegralRange);
         standardRPM = new SetFlywheelRPM(5000);
         closeUpRPM = new SetFlywheelRPM(4500);
