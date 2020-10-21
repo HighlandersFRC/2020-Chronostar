@@ -13,6 +13,7 @@ import frc.robot.RobotMap;
 import frc.robot.RobotStats;
 import frc.robot.commands.universalcommands.SetFlywheelPercent;
 import frc.robot.commands.universalcommands.SetFlywheelRPM;
+import frc.robot.commands.universalcommands.SetMags;
 
 public class Shooter extends SubsystemBase {
     public SetFlywheelRPM standardRPM;
@@ -50,6 +51,9 @@ public class Shooter extends SubsystemBase {
     public void teleopPeriodic() {
         if (ButtonMap.shoot() && !standardRPM.isScheduled()) {
             standardRPM.schedule();
+        } else {
+            new SetMags(0, 0).schedule();
+            new SetFlywheelRPM(0).schedule();
         }
     }
 
