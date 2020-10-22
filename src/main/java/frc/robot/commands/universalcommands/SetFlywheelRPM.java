@@ -19,20 +19,32 @@ public class SetFlywheelRPM extends CommandBase {
 
     @Override
     public void initialize() {
-        RobotMap.leftFlywheel.set(ControlMode.Velocity, Shooter.rpmToUnitsPer100Ms(velocity));
+        RobotMap.leftFlywheel.set(ControlMode.Velocity, Shooter.rpmToUnitsPer100Ms(rpm));
     }
 
     @Override
-    public void execute() {}
+    public void execute() {
+        if (isAtTargetRPM()) {
+            new RunMags(0.5, -1).schedule();
+            RobotMap.intake2Motor.set(ControlMode.PercentOutput, -0.8);
+        } else {
+            new RunMags(0, 0).schedule();
+            RobotMap.intake2Motor.set(ControlMode.PercentOutput, 0);
+        }
+    }
 
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        RobotMap.leftFlywheel.set(ControlMode.Velocity, 0);
+        new RunMags(0, 0).schedule();
+        RobotMap.intake2Motor.set(ControlMode.PercentOutput, 0);
+    }
 
     public boolean isFinished() {
-        return isAtTargetRPM();
+        return !ButtonMap.shoot();
     }
 
     public static boolean isAtTargetRPM() {
-        return Math.abs(velocity - RobotMap.shooter.getShooterRPM()) >= 100;
+        return Math.abs(rpm - RobotMap.shooter.getShooterRPM()) <= 200;
     }
 }
