@@ -6,38 +6,33 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.robot.ButtonMap;
 import frc.robot.RobotMap;
+import frc.robot.subsystems.Shooter;
 
 public class SetFlywheelRPM extends CommandBase {
 
-    private static double rpm;
+    private static double velocity;
 
     public SetFlywheelRPM(double rpm) {
-        this.rpm = rpm;
+        velocity = rpm;
     }
 
     @Override
     public void initialize() {
-        RobotMap.leftFlywheel.set(ControlMode.Velocity, rpm);
+        RobotMap.leftFlywheel.set(ControlMode.Velocity, Shooter.rpmToUnitsPer100Ms(velocity));
     }
 
     @Override
-    public void execute() {
-        new SetMags(0.5, -1).schedule();
-    }
+    public void execute() {}
 
     @Override
-    public void end(boolean interrupted) {
-        RobotMap.leftFlywheel.set(ControlMode.Velocity, 0);
-        new SetMags(0, 0).schedule();
-    }
+    public void end(boolean interrupted) {}
 
     public boolean isFinished() {
-        return !ButtonMap.shoot();
+        return isAtTargetRPM();
     }
 
     public static boolean isAtTargetRPM() {
-        return Math.abs(rpm - RobotMap.shooter.getShooterRPM()) <= 100;
+        return Math.abs(velocity - RobotMap.shooter.getShooterRPM()) >= 100;
     }
 }

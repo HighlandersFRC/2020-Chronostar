@@ -31,9 +31,9 @@ public class Intake extends SubsystemBase {
             RobotMap.intake2Motor.set(ControlMode.PercentOutput, 0);
         }
         if (OI.operatorController.getBackButton()) {
-            RobotMap.intakePiston.set(Value.kReverse);
-        } else {
             RobotMap.intakePiston.set(Value.kForward);
+        } else {
+            RobotMap.intakePiston.set(Value.kReverse);
         }
     }
 }

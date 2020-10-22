@@ -4,7 +4,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 
-public class RobotStats {
+public class Constants {
 
     // Motor IDs
     public static final int leftDriveLeadID = 1;

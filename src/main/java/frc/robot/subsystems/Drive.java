@@ -33,8 +33,8 @@ public class Drive extends SubsystemBase {
         aPID = new PID(akP, akI, akD);
         RobotMap.leftDriveLead.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
         RobotMap.rightDriveLead.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
-        RobotMap.leftDriveFollower1.set(ControlMode.Follower, RobotStats.leftDriveLeadID);
-        RobotMap.rightDriveFollower1.set(ControlMode.Follower, RobotStats.rightDriveLeadID);
+        RobotMap.leftDriveFollower1.set(ControlMode.Follower, Constants.leftDriveLeadID);
+        RobotMap.rightDriveFollower1.set(ControlMode.Follower, Constants.rightDriveLeadID);
         RobotMap.rightDriveLead.setInverted(true);
         RobotMap.rightDriveFollower1.setInverted(InvertType.FollowMaster);
         RobotMap.leftDriveFollower1.setInverted(InvertType.FollowMaster);
@@ -64,11 +64,11 @@ public class Drive extends SubsystemBase {
     }
 
     private void setLeftSpeed(double fps) {
-        RobotMap.leftDriveLead.set(ControlMode.Velocity, RobotStats.fpsToEncVelocity(fps));
+        RobotMap.leftDriveLead.set(ControlMode.Velocity, Constants.fpsToEncVelocity(fps));
     }
 
     private void setRightSpeed(double fps) {
-        RobotMap.rightDriveLead.set(ControlMode.Velocity, RobotStats.fpsToEncVelocity(fps));
+        RobotMap.rightDriveLead.set(ControlMode.Velocity, Constants.fpsToEncVelocity(fps));
     }
 
     public void arcadeDrive(double throttle, double turn) {

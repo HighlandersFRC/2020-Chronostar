@@ -17,7 +17,7 @@ public class RobotConfig {
     }
 
     public void startAutoConfig() {
-        setVoltageCompensation(RobotStats.driveMaxVoltage);
+        setVoltageCompensation(Constants.driveMaxVoltage);
         setDriveBrake();
     }
 
@@ -33,7 +33,7 @@ public class RobotConfig {
 
     private void setCurrentLimitsEnabled() {
         for (TalonFX t : RobotMap.allMotors) {
-            t.configSupplyCurrentLimit(RobotStats.currentLimitEnabled);
+            t.configSupplyCurrentLimit(Constants.currentLimitEnabled);
         }
     }
 
