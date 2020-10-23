@@ -8,8 +8,7 @@ import edu.wpi.first.wpilibj.SerialPort;
 import frc.robot.tools.math.Point;
 
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.simple.parser.*;
 
 public class VisionCamera {
     JSONParser parser = new JSONParser();
@@ -28,31 +27,20 @@ public class VisionCamera {
     }
 
     /*
-    public void updateVision() {
-        try {
-            String unsanitizedString = this.getString();
-            String jsonString =
-                    unsanitizedString.substring(
-                            unsanitizedString.indexOf('{'), unsanitizedString.indexOf('}') + 1);
-            double tryDistance = badDistance;
-            double tryAngle = badAngle;
-
-            if (jsonString != null) {
-
-                tryDistance = parseDistance(jsonString);
-                tryAngle = parseAngle(jsonString);
-            }
-            if (tryAngle != badAngle) {
-                distance = tryDistance;
-                angle = tryAngle;
-
-                lastParseTime = Timer.getFPGATimestamp();
-            }
-
-        } catch (Exception e) {
-        }
-    }
-    */
+     * public void updateVision() { try { String unsanitizedString =
+     * this.getString(); String jsonString = unsanitizedString.substring(
+     * unsanitizedString.indexOf('{'), unsanitizedString.indexOf('}') + 1); double
+     * tryDistance = badDistance; double tryAngle = badAngle;
+     *
+     * if (jsonString != null) {
+     *
+     * tryDistance = parseDistance(jsonString); tryAngle = parseAngle(jsonString); }
+     * if (tryAngle != badAngle) { distance = tryDistance; angle = tryAngle;
+     *
+     * lastParseTime = Timer.getFPGATimestamp(); }
+     *
+     * } catch (Exception e) { } }
+     */
 
     public double parseAngle(String jsonString) {
 

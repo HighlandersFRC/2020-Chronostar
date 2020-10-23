@@ -7,9 +7,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import frc.robot.ButtonMap;
-import frc.robot.OI;
-import frc.robot.RobotMap;
+import frc.robot.*;
 
 public class Intake extends SubsystemBase {
     public Intake() {}

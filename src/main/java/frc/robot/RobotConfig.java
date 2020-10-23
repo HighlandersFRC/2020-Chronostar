@@ -14,6 +14,7 @@ public class RobotConfig {
         RobotMap.drive.init();
         RobotMap.intake.init();
         RobotMap.magazine.init();
+        RobotMap.hood.init();
     }
 
     public void startAutoConfig() {
