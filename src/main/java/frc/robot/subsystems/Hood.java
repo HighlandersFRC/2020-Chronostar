@@ -35,16 +35,16 @@ public class Hood extends SubsystemBase {
             hoodPID.setSetPoint(0);
         }
         if (ButtonMap.getOperatorXButton()) {
-            hoodPID.setSetPoint(10);
+            hoodPID.setSetPoint(11);
         }
         if (ButtonMap.getOperatorYButton()) {
-            hoodPID.setSetPoint(20);
+            hoodPID.setSetPoint(22);
         }
         encValue = RobotMap.hoodMotor.getEncoder(EncoderType.kHallSensor, 42).getPosition();
         if (RobotMap.lowerHoodSwitch.get()) {
             encValue = 0;
         } else if (RobotMap.upperHoodSwitch.get()) {
-            encValue = 20;
+            encValue = 22;
         }
         hoodPID.updatePID(encValue);
         RobotMap.hoodMotor.set(hoodPID.getResult());
