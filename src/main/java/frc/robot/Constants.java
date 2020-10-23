@@ -17,6 +17,7 @@ public class Constants {
     public static final int intakeMotorID = 12;
     public static final int leftFlywheelID = 5;
     public static final int rightFlywheelID = 6;
+    public static final int hoodID = 7;
 
     // Sensor ports
     public static int beamBreak1Port = 0;

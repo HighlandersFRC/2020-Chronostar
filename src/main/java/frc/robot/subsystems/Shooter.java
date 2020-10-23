@@ -16,7 +16,6 @@ import frc.robot.commands.universalcommands.SetFlywheelRPM;
 public class Shooter extends SubsystemBase {
     public SetFlywheelRPM standardRPM;
     public SetFlywheelRPM closeUpRPM;
-    public SetFlywheelRPM zero;
 
     public Shooter() {}
 
@@ -33,24 +32,21 @@ public class Shooter extends SubsystemBase {
         RobotMap.leftFlywheel.enableVoltageCompensation(true);
         RobotMap.leftFlywheel.setSensorPhase(true);
         RobotMap.leftFlywheel.selectProfileSlot(0, 0);
-        RobotMap.leftFlywheel.config_kF(0, 0.075);
-        RobotMap.leftFlywheel.config_kP(0, 3);
-        RobotMap.leftFlywheel.config_kI(0, 0.025);
+        RobotMap.leftFlywheel.config_kF(0, 0.125);
+        RobotMap.leftFlywheel.config_kP(0, 4.5);
+        RobotMap.leftFlywheel.config_kI(0, 0.015);
         RobotMap.leftFlywheel.config_kD(0, 10);
         RobotMap.leftFlywheel.config_IntegralZone(0, Constants.shooterIntegralRange);
         standardRPM = new SetFlywheelRPM(5000);
         closeUpRPM = new SetFlywheelRPM(4500);
-        zero = new SetFlywheelRPM(0);
     }
 
     @Override
     public void periodic() {}
 
     public void teleopPeriodic() {
-        if (ButtonMap.shoot() && !standardRPM.isScheduled()) {
-            standardRPM.schedule();
-        } else {
-            zero.schedule();
+        if (ButtonMap.shoot() && !closeUpRPM.isScheduled()) {
+            closeUpRPM.schedule();
         }
     }
 

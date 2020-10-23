@@ -33,11 +33,11 @@ public class Drive extends SubsystemBase {
         aPID = new PID(akP, akI, akD);
         RobotMap.leftDriveLead.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
         RobotMap.rightDriveLead.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
-        RobotMap.leftDriveFollower1.set(ControlMode.Follower, Constants.leftDriveLeadID);
-        RobotMap.rightDriveFollower1.set(ControlMode.Follower, Constants.rightDriveLeadID);
+        RobotMap.leftDriveFollower.set(ControlMode.Follower, Constants.leftDriveLeadID);
+        RobotMap.rightDriveFollower.set(ControlMode.Follower, Constants.rightDriveLeadID);
         RobotMap.rightDriveLead.setInverted(true);
-        RobotMap.rightDriveFollower1.setInverted(InvertType.FollowMaster);
-        RobotMap.leftDriveFollower1.setInverted(InvertType.FollowMaster);
+        RobotMap.rightDriveFollower.setInverted(InvertType.FollowMaster);
+        RobotMap.leftDriveFollower.setInverted(InvertType.FollowMaster);
         RobotMap.leftDriveLead.setSensorPhase(false);
         RobotMap.rightDriveLead.setSensorPhase(false);
         RobotMap.leftDriveLead.setSelectedSensorPosition(0);
