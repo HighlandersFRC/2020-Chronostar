@@ -7,39 +7,48 @@ import com.revrobotics.EncoderType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import frc.robot.ButtonMap;
 import frc.robot.RobotMap;
 import frc.robot.tools.controlloops.PID;
 
 public class Hood extends SubsystemBase {
 
-    double encValue;
-    double kP = 0.15;
-    double kI = 0.00015;
-    double kD = 0;
+    private double encValue;
+    private double kP = 0.15;
+    private double kI = 0.000025;
+    private double kD = 0;
+    private PID hoodPID;
 
     public Hood() {}
 
-    PID hoodPosition;
-
     public void init() {
         RobotMap.hoodMotor.setInverted(true);
-        hoodPosition = new PID(kP, kI, kD);
-        hoodPosition.setSetPoint(10);
-        hoodPosition.setMaxOutput(0.2);
-        hoodPosition.setMinOutput(-0.2);
+        hoodPID = new PID(kP, kI, kD);
+        hoodPID.setMaxOutput(0.2);
+        hoodPID.setMinOutput(-0.2);
+        hoodPID.setSetPoint(0);
     }
 
     @Override
     public void periodic() {
+        if (ButtonMap.getOperatorBButton()) {
+            hoodPID.setSetPoint(0);
+        }
+        if (ButtonMap.getOperatorXButton()) {
+            hoodPID.setSetPoint(10);
+        }
+        if (ButtonMap.getOperatorYButton()) {
+            hoodPID.setSetPoint(20);
+        }
         encValue = RobotMap.hoodMotor.getEncoder(EncoderType.kHallSensor, 42).getPosition();
         if (RobotMap.lowerHoodSwitch.get()) {
             encValue = 0;
         } else if (RobotMap.upperHoodSwitch.get()) {
-            encValue = 21;
+            encValue = 20;
         }
-        hoodPosition.updatePID(encValue);
-        RobotMap.hoodMotor.set(hoodPosition.getResult());
+        hoodPID.updatePID(encValue);
+        RobotMap.hoodMotor.set(hoodPID.getResult());
         SmartDashboard.putNumber("enc value", encValue);
-        SmartDashboard.putNumber("hood power", hoodPosition.getResult());
+        SmartDashboard.putNumber("hood power", hoodPID.getResult());
     }
 }
