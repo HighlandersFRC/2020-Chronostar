@@ -109,13 +109,14 @@ public class Robot extends TimedRobot {
            SmartDashboard.putNumber("Vision Angle",visionCam.getAngle());
            SmartDashboard.putBoolean("Has Camera", true);
         }catch(Exception e){
+
             SmartDashboard.putBoolean("Has Camera", false);
         }
 
 
         if(OI.driverController.getXButton()){
             RobotMap.visionPID.schedule();
-            //RobotMap.visionRelay.set(Value.kForward);
+            RobotMap.visionRelay.set(Value.kForward);
         }
         else{
             

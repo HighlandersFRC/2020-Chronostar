@@ -23,9 +23,9 @@ public class VisionAlignmentPID extends CommandBase {
   }
 
   public static PID pid;
-  private final double kP = 0.005;
+  private final double kP = 0.0075;
   private final double kI = 0;
-  private final double kD = 0;
+  private final double kD = 0.0025;
 
   @Override
   public void initialize() {
@@ -55,6 +55,7 @@ public class VisionAlignmentPID extends CommandBase {
         pid.updatePID(0);
         RobotMap.leftDriveLead.set(ControlMode.PercentOutput, 0);
         RobotMap.rightDriveLead.set(ControlMode.PercentOutput, 0);
+        RobotMap.visionRelay.set(Value.kForward);
       }
 
     } catch(Exception e) {
