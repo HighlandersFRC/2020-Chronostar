@@ -10,8 +10,8 @@ import frc.robot.*;
 import frc.robot.commands.universalcommands.SetFlywheelRPM;
 
 public class Shooter extends SubsystemBase {
-    public SetFlywheelRPM standardRPM;
-    public SetFlywheelRPM closeUpRPM;
+    public SetFlywheelRPM trenchRPM;
+    public SetFlywheelRPM initiationRPM;
 
     public Shooter() {}
 
@@ -33,28 +33,34 @@ public class Shooter extends SubsystemBase {
         RobotMap.leftFlywheel.config_kI(0, 0.015);
         RobotMap.leftFlywheel.config_kD(0, 10);
         RobotMap.leftFlywheel.config_IntegralZone(0, Constants.shooterIntegralRange);
-        standardRPM = new SetFlywheelRPM(5000);
-        closeUpRPM = new SetFlywheelRPM(4500);
+        trenchRPM = new SetFlywheelRPM(5000, 7.2);
+        initiationRPM = new SetFlywheelRPM(4500, 7.2);
     }
 
     @Override
     public void periodic() {}
 
     public void teleopPeriodic() {
-        if (ButtonMap.shoot() && !closeUpRPM.isScheduled()) {
-            closeUpRPM.schedule();
+        if (ButtonMap.shoot()
+                && !initiationRPM.isScheduled()
+                && Math.round(RobotMap.lidar.getDistance()) == 10) {
+            initiationRPM.schedule();
+        } else if (ButtonMap.shoot()) {
+            if (Math.abs(Math.round(Robot.visionCam.getDistance() - RobotMap.lidar.getDistance()))
+                    <= 2) {
+                trenchRPM =
+                        new SetFlywheelRPM(
+                                5000, Constants.convertLidar(RobotMap.lidar.getDistance()));
+            } else {
+                trenchRPM =
+                        new SetFlywheelRPM(
+                                5000, Constants.convertCamera(Robot.visionCam.getDistance()));
+            }
+            trenchRPM.schedule();
         }
     }
 
-    public static double unitsPer100MsToRpm(double units) {
-        return (units * 600) / Constants.ticksPerShooterRotation;
-    }
-
     public double getShooterRPM() {
-        return unitsPer100MsToRpm(RobotMap.leftFlywheel.getSelectedSensorVelocity());
-    }
-
-    public static int rpmToUnitsPer100Ms(double rpm) {
-        return (int) Math.round((rpm / 600) * Constants.ticksPerShooterRotation);
+        return Constants.unitsPer100MsToRpm(RobotMap.leftFlywheel.getSelectedSensorVelocity());
     }
 }

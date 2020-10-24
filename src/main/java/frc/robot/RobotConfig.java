@@ -20,10 +20,12 @@ public class RobotConfig {
     public void startAutoConfig() {
         setVoltageCompensation(Constants.driveMaxVoltage);
         setDriveBrake();
+        RobotMap.hood.init();
     }
 
     public void startTeleopConfig() {
         setDriveCoast();
+        RobotMap.hood.init();
     }
 
     private void setVoltageCompensation(double volts) {

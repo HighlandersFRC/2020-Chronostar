@@ -8,10 +8,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
 
 import frc.robot.sensors.VisionCamera;
-import frc.robot.subsystems.Shooter;
 
 public class Robot extends TimedRobot {
-    private Command m_autonomousCommand;
 
     public static SerialPort jevois;
     public static VisionCamera visionCam;
@@ -41,12 +39,12 @@ public class Robot extends TimedRobot {
             SmartDashboard.putNumber("distance", visionCam.getDistance());
         } catch (Exception e) {
         }
-        SmartDashboard.putNumber("lidar dist", RobotMap.lidarPort.getDistance());
+        SmartDashboard.putNumber("lidar dist", RobotMap.lidar.getDistance());
         SmartDashboard.putBoolean("lower limit switch", RobotMap.lowerHoodSwitch.get());
         SmartDashboard.putBoolean("upper limit switch", RobotMap.upperHoodSwitch.get());
         SmartDashboard.putNumber(
                 "rpm",
-                Shooter.unitsPer100MsToRpm(RobotMap.leftFlywheel.getSelectedSensorVelocity()));
+                Constants.unitsPer100MsToRpm(RobotMap.leftFlywheel.getSelectedSensorVelocity()));
     }
 
     @Override
@@ -57,22 +55,14 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        if (m_autonomousCommand != null) {
-            m_autonomousCommand.schedule();
-        }
         config.startAutoConfig();
     }
 
     @Override
-    public void autonomousPeriodic() {
-        RobotMap.highMag.set(1);
-    }
+    public void autonomousPeriodic() {}
 
     @Override
     public void teleopInit() {
-        if (m_autonomousCommand != null) {
-            m_autonomousCommand.cancel();
-        }
         config.startTeleopConfig();
     }
 

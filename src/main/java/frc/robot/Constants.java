@@ -62,4 +62,20 @@ public class Constants {
     public static double fpsToEncVelocity(double fps) {
         return feetToTicks(fps) / 10;
     }
+
+    public static double unitsPer100MsToRpm(double units) {
+        return (units * 600) / Constants.ticksPerShooterRotation;
+    }
+
+    public static int rpmToUnitsPer100Ms(double rpm) {
+        return (int) Math.round((rpm / 600) * Constants.ticksPerShooterRotation);
+    }
+
+    public static double convertCamera(double camDistance) {
+        return 0;
+    }
+
+    public static double convertLidar(double lidarDistance) {
+        return 0;
+    }
 }
