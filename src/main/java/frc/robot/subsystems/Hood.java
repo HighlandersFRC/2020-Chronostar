@@ -6,6 +6,7 @@ import com.revrobotics.EncoderType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import frc.robot.ButtonMap;
 import frc.robot.RobotMap;
 import frc.robot.tools.controlloops.PID;
 
@@ -43,5 +44,8 @@ public class Hood extends SubsystemBase {
         hoodPID.updatePID(encValue);
         hoodPID.setSetPoint(hoodTarget);
         RobotMap.hoodMotor.set(hoodPID.getResult());
+        if (ButtonMap.getOperatorBButton()) {
+            setHoodTarget(10);
+        }
     }
 }
