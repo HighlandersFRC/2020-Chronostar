@@ -20,7 +20,6 @@ public class SetFlywheelRPM extends CommandBase {
 
     @Override
     public void initialize() {
-        RobotMap.hood.setHoodTarget(position);
         RobotMap.leftFlywheel.set(ControlMode.Velocity, Constants.rpmToUnitsPer100Ms(velocity));
     }
 
@@ -32,6 +31,7 @@ public class SetFlywheelRPM extends CommandBase {
         } else {
             new SetMags(0, 0).schedule();
             RobotMap.intake2Motor.set(ControlMode.PercentOutput, 0);
+            RobotMap.hood.setHoodTarget(position);
         }
     }
 

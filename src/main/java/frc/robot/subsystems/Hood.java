@@ -37,7 +37,6 @@ public class Hood extends SubsystemBase {
         encValue = RobotMap.hoodMotor.getEncoder(EncoderType.kHallSensor, 42).getPosition();
         if (RobotMap.lowerHoodSwitch.get()) {
             encValue = 0;
-
         } else if (RobotMap.upperHoodSwitch.get()) {
             encValue = 22;
         }
