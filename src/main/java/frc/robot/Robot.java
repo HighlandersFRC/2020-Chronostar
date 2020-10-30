@@ -32,6 +32,7 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().run();
         RobotMap.magazine.periodic();
         RobotMap.intake.periodic();
+        RobotMap.hood.periodic();
         SmartDashboard.putBoolean("beam break 1", RobotMap.beambreak1.get());
         SmartDashboard.putBoolean("beam break 2", RobotMap.beambreak2.get());
         SmartDashboard.putBoolean("beam break 3", RobotMap.beambreak3.get());
