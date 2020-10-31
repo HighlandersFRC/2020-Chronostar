@@ -4,6 +4,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.EncoderType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.ButtonMap;
@@ -47,5 +48,7 @@ public class Hood extends SubsystemBase {
         if (ButtonMap.getOperatorBButton()) {
             setHoodTarget(10);
         }
+        SmartDashboard.putNumber("hood pos", encValue);
+        SmartDashboard.putNumber("hood target", hoodTarget);
     }
 }
