@@ -23,9 +23,9 @@ public class VisionAlignmentPID extends CommandBase {
   }
 
   public static PID pid;
-  private final double kP = 0.0069;
-  private final double kI = 0.00008;
-  private final double kD = 0.003;
+  private final double kP = 0.0085;
+  private final double kI = 0.00005;
+  private final double kD = 0.02;
 
   @Override
   public void initialize() {
