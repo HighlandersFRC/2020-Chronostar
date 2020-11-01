@@ -50,5 +50,12 @@ public class Hood extends SubsystemBase {
         }
         SmartDashboard.putNumber("hood pos", encValue);
         SmartDashboard.putNumber("hood target", hoodTarget);
+        if (ButtonMap.getOperatorXButton()) {
+            setHoodTarget(11);
+        } else if (ButtonMap.getOperatorYButton()) {
+            setHoodTarget(0);
+        } else if (ButtonMap.getOperatorBButton()) {
+            setHoodTarget(22);
+        }
     }
 }

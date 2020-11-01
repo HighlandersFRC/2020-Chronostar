@@ -5,6 +5,7 @@ package frc.robot.commands.universalcommands;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import frc.robot.*;
 
@@ -12,15 +13,29 @@ public class SetFlywheelRPM extends CommandBase {
 
     private static double velocity;
     private static double position;
+    private WaitCommand waitCommand;
+    private boolean isAutonomous;
 
-    public SetFlywheelRPM(double rpm, double hoodPos) {
+    public SetFlywheelRPM(double rpm, double hoodPos, boolean isAuto) {
         velocity = rpm;
         position = hoodPos;
+        isAutonomous = isAuto;
+    }
+
+    public SetFlywheelRPM(double rpm, double hoodPos, double seconds, boolean isAuto) {
+        velocity = rpm;
+        position = hoodPos;
+        waitCommand = new WaitCommand(seconds);
+        isAutonomous = isAuto;
     }
 
     @Override
     public void initialize() {
+        RobotMap.hood.setHoodTarget(position);
         RobotMap.leftFlywheel.set(ControlMode.Velocity, Constants.rpmToUnitsPer100Ms(velocity));
+        if (isAutonomous) {
+            waitCommand.schedule();
+        }
     }
 
     @Override
@@ -31,7 +46,6 @@ public class SetFlywheelRPM extends CommandBase {
         } else {
             new SetMags(0, 0).schedule();
             RobotMap.intake2Motor.set(ControlMode.PercentOutput, 0);
-            RobotMap.hood.setHoodTarget(position);
         }
     }
 
@@ -43,11 +57,15 @@ public class SetFlywheelRPM extends CommandBase {
     }
 
     public boolean isFinished() {
-        return !ButtonMap.shoot();
+        if (!isAutonomous) {
+            return !ButtonMap.shoot();
+        } else {
+            return waitCommand.isFinished();
+        }
     }
 
     public static boolean isAtTargetRPM() {
-        return velocity - RobotMap.shooter.getShooterRPM() <= 200
-                && velocity - RobotMap.shooter.getShooterRPM() >= -200;
+        return velocity - RobotMap.shooter.getShooterRPM() <= 100
+                && velocity - RobotMap.shooter.getShooterRPM() >= -100;
     }
 }

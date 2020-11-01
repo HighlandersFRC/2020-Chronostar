@@ -27,9 +27,9 @@ public class Magazine extends SubsystemBase {
         RobotMap.highMag.setIdleMode(IdleMode.kBrake);
         RobotMap.lowMag.configVoltageCompSaturation(11.7);
         RobotMap.lowMag.enableVoltageCompensation(true);
-        RobotMap.intakeMotor.setNeutralMode(NeutralMode.Brake);
+        // RobotMap.intakeMotor.setNeutralMode(NeutralMode.Brake);
         RobotMap.intake2Motor.setNeutralMode(NeutralMode.Brake);
-        RobotMap.intakeMotor.setInverted(true);
+        // RobotMap.intakeMotor.setInverted(true);
         RobotMap.intake2Motor.setInverted(true);
     }
 
@@ -39,7 +39,7 @@ public class Magazine extends SubsystemBase {
         beambreak2 = !RobotMap.beambreak2.get();
         beambreak3 = !RobotMap.beambreak3.get();
 
-        if (!ButtonMap.shoot() && ButtonMap.getOperatorLeftTrigger() <= 0.5) {
+        if (!RobotMap.shooter.isShooting() && ButtonMap.getOperatorLeftTrigger() <= 0.5) {
             if (beambreak3) {
                 new HighMagBump(0, 0.15).schedule();
             } else if (beambreak2) {

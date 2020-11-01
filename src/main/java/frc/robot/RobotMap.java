@@ -20,7 +20,7 @@ public class RobotMap {
     public static TalonFX rightDriveLead = new TalonFX(Constants.rightDriveLeadID);
     public static TalonFX leftDriveFollower = new TalonFX(Constants.leftDriveFollower1ID);
     public static TalonFX rightDriveFollower = new TalonFX(Constants.rightDriveFollower1ID);
-    public static TalonFX intakeMotor = new TalonFX(Constants.intakeMotorID);
+    // public static TalonFX intakeMotor = new TalonFX(Constants.intakeMotorID);
     public static VictorSPX intake2Motor = new VictorSPX(Constants.intake2MotorID);
     public static TalonFX leftFlywheel = new TalonFX(Constants.leftFlywheelID);
     public static TalonFX rightFlywheel = new TalonFX(Constants.rightFlywheelID);

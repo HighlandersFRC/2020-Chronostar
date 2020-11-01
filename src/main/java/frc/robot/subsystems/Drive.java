@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.*;
 import frc.robot.tools.controlloops.PID;
+import frc.robot.tools.pathtools.Odometry;
 
 public class Drive extends SubsystemBase {
 
@@ -23,8 +24,40 @@ public class Drive extends SubsystemBase {
     private double akD = 0;
     private PID aPID;
     private double visionTapePercent;
+    private Odometry autoOdometry;
 
     public Drive() {}
+
+    public void startAutoOdometry(double x, double y, double theta) {}
+    ;
+
+    public double getDriveTrainX() {
+        return autoOdometry.getX();
+    }
+
+    public double getDriveTrainY() {
+        return autoOdometry.getY();
+    }
+
+    public double getDriveTrainHeading() {
+        return autoOdometry.gettheta();
+    }
+
+    public void setDriveTrainX(double x) {
+        autoOdometry.setX(x);
+    }
+
+    public void setDriveTrainY(double y) {
+        autoOdometry.setY(y);
+    }
+
+    public void setDriveTrainHeading(double theta) {
+        autoOdometry.setTheta(theta);
+    }
+
+    public void setOdometryReversed(boolean reversed) {
+        autoOdometry.setReversed(reversed);
+    }
 
     public void init() {
         aPID = new PID(akP, akI, akD);

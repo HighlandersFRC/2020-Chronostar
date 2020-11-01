@@ -10,6 +10,7 @@ import frc.robot.*;
 import frc.robot.commands.universalcommands.SetFlywheelRPM;
 
 public class Shooter extends SubsystemBase {
+
     public SetFlywheelRPM trenchRPM;
     public SetFlywheelRPM initiationRPM;
 
@@ -28,39 +29,42 @@ public class Shooter extends SubsystemBase {
         RobotMap.leftFlywheel.enableVoltageCompensation(true);
         RobotMap.leftFlywheel.setSensorPhase(true);
         RobotMap.leftFlywheel.selectProfileSlot(0, 0);
-        RobotMap.leftFlywheel.config_kF(0, 0.125);
-        RobotMap.leftFlywheel.config_kP(0, 4.5);
-        RobotMap.leftFlywheel.config_kI(0, 0.015);
+        RobotMap.leftFlywheel.config_kF(0, 0.05);
+        RobotMap.leftFlywheel.config_kP(0, 0.45);
+        RobotMap.leftFlywheel.config_kI(0, 0.0009);
         RobotMap.leftFlywheel.config_kD(0, 10);
         RobotMap.leftFlywheel.config_IntegralZone(0, Constants.shooterIntegralRange);
-        trenchRPM = new SetFlywheelRPM(5000, 7.2);
-        initiationRPM = new SetFlywheelRPM(4500, 7.2);
+        trenchRPM = new SetFlywheelRPM(5000, 7.5, false);
+        initiationRPM = new SetFlywheelRPM(4500, 8.2, false);
     }
 
     @Override
     public void periodic() {}
 
     public void teleopPeriodic() {
-        if (ButtonMap.shoot()
-                && !initiationRPM.isScheduled()
-                && Math.round(RobotMap.lidar.getDistance()) == 10) {
-            initiationRPM.schedule();
-        } else if (ButtonMap.shoot()) {
-            if (Math.abs(Math.round(Robot.visionCam.getDistance() - RobotMap.lidar.getDistance()))
-                    <= 2) {
-                trenchRPM =
-                        new SetFlywheelRPM(
-                                5000, Constants.convertLidar(RobotMap.lidar.getDistance()));
-            } else {
-                trenchRPM =
-                        new SetFlywheelRPM(
-                                5000, Constants.convertCamera(Robot.visionCam.getDistance()));
-            }
-            trenchRPM.schedule();
+        if (ButtonMap.shoot()) {
+            if (!initiationRPM.isScheduled()
+                    && Math.round(RobotMap.lidar.getDistance()) >= 8.0
+                    && Math.round(RobotMap.lidar.getDistance()) <= 12.0) {
+                initiationRPM.schedule();
+            } /*
+               * else if (Math.abs( Math.round( Robot.visionCam.getDistance() -
+               * RobotMap.lidar.getDistance())) <= 2) { trenchRPM = new SetFlywheelRPM( 5000,
+               * Constants.convertLidar(RobotMap.lidar.getDistance())); } else { trenchRPM =
+               * new SetFlywheelRPM( 5000,
+               * Constants.convertCamera(Robot.visionCam.getDistance())); }
+               * trenchRPM.schedule();
+               */
+        } else if (!isShooting()) {
+            RobotMap.hood.setHoodTarget(0);
         }
     }
 
     public double getShooterRPM() {
         return Constants.unitsPer100MsToRpm(RobotMap.leftFlywheel.getSelectedSensorVelocity());
+    }
+
+    public boolean isShooting() {
+        return RobotMap.leftFlywheel.getClosedLoopTarget() >= 0;
     }
 }
