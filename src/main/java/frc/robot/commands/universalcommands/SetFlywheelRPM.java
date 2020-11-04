@@ -11,10 +11,11 @@ import frc.robot.*;
 
 public class SetFlywheelRPM extends CommandBase {
 
-    private static double velocity;
-    private static double position;
+    private double velocity;
+    private double position;
     private WaitCommand waitCommand;
     private boolean isAutonomous;
+    private static final int TARGET_RPM_THRESHOLD = 100;
 
     public SetFlywheelRPM(double rpm, double hoodPos, boolean isAuto) {
         velocity = rpm;
@@ -64,8 +65,8 @@ public class SetFlywheelRPM extends CommandBase {
         }
     }
 
-    public static boolean isAtTargetRPM() {
-        return velocity - RobotMap.shooter.getShooterRPM() <= 100
-                && velocity - RobotMap.shooter.getShooterRPM() >= -100;
+    public boolean isAtTargetRPM() {
+        return velocity - RobotMap.shooter.getShooterRPM() <= TARGET_RPM_THRESHOLD
+                && velocity - RobotMap.shooter.getShooterRPM() >= -TARGET_RPM_THRESHOLD;
     }
 }

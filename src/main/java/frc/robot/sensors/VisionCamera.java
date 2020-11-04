@@ -4,6 +4,7 @@ package frc.robot.sensors;
 
 import edu.wpi.first.hal.util.UncleanStatusException;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.Timer;
 
 import frc.robot.tools.math.Point;
 
@@ -26,21 +27,30 @@ public class VisionCamera {
         targetPoint = new Point(0, 0);
     }
 
-    /*
-     * public void updateVision() { try { String unsanitizedString =
-     * this.getString(); String jsonString = unsanitizedString.substring(
-     * unsanitizedString.indexOf('{'), unsanitizedString.indexOf('}') + 1); double
-     * tryDistance = badDistance; double tryAngle = badAngle;
-     *
-     * if (jsonString != null) {
-     *
-     * tryDistance = parseDistance(jsonString); tryAngle = parseAngle(jsonString); }
-     * if (tryAngle != badAngle) { distance = tryDistance; angle = tryAngle;
-     *
-     * lastParseTime = Timer.getFPGATimestamp(); }
-     *
-     * } catch (Exception e) { } }
-     */
+    public void updateVision() {
+        try {
+            String unsanitizedString = this.getString();
+            String jsonString =
+                    unsanitizedString.substring(
+                            unsanitizedString.indexOf('{'), unsanitizedString.indexOf('}') + 1);
+            double tryDistance = badDistance;
+            double tryAngle = badAngle;
+
+            if (jsonString != null) {
+
+                tryDistance = parseDistance(jsonString);
+                tryAngle = parseAngle(jsonString);
+            }
+            if (tryAngle != badAngle) {
+                distance = tryDistance;
+                angle = tryAngle;
+
+                lastParseTime = Timer.getFPGATimestamp();
+            }
+
+        } catch (Exception e) {
+        }
+    }
 
     public double parseAngle(String jsonString) {
 
@@ -102,7 +112,7 @@ public class VisionCamera {
     public Point getTargetPoint() {
         double xAverage = 0;
         double yAverage = 0;
-        // updateVision();
+        updateVision();
         for (int i = 0; i < 20; i++) {
             xAverage = xAverage + (getDistance() * Math.cos(Math.toRadians(getAngle())));
             yAverage = yAverage + (getDistance() * Math.sin(Math.toRadians(getAngle())));
