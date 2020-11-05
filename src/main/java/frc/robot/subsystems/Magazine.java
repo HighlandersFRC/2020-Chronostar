@@ -17,6 +17,9 @@ public class Magazine extends SubsystemBase {
     private int catchCounter;
     private int tryCounter;
     public static boolean stuck;
+    private static double PULSE_TIME = 0.15;
+    private static double LOW_MAG_POWER = 0.4;
+    private static double HIGH_MAG_POWER = 0.425;
 
     public Magazine() {}
 
@@ -39,20 +42,20 @@ public class Magazine extends SubsystemBase {
 
         if (!RobotMap.shooter.isShooting() && ButtonMap.getOperatorLeftTrigger() <= 0.5) {
             if (beambreak3) {
-                new HighMagBump(0, 0.15).schedule();
+                new HighMagBump(0, PULSE_TIME).schedule();
             } else if (beambreak2) {
-                new HighMagBump(-0.425, 0.15).schedule();
-                new LowMagBump(0.4, 0.15).schedule();
+                new HighMagBump(HIGH_MAG_POWER, PULSE_TIME).schedule();
+                new LowMagBump(LOW_MAG_POWER, PULSE_TIME).schedule();
             }
             if (beambreak1) {
                 if (catchCounter <= 50) {
-                    new LowMagBump(0.4, 0.15).schedule();
+                    new LowMagBump(LOW_MAG_POWER, PULSE_TIME).schedule();
                 } else {
                     if (tryCounter <= 25) {
                         stuck = true;
                         tryCounter++;
                     } else {
-                        new LowMagBump(-0.4, 0.15).schedule();
+                        new LowMagBump(-LOW_MAG_POWER, PULSE_TIME).schedule();
                         catchCounter = 0;
                         tryCounter = 0;
                         stuck = false;
