@@ -2,11 +2,15 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.*;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import frc.robot.*;
+import frc.robot.ButtonMap;
+import frc.robot.Constants;
+import frc.robot.RobotMap;
 import frc.robot.commands.universalcommands.SetFlywheelRPM;
 
 public class Shooter extends SubsystemBase {
@@ -47,14 +51,7 @@ public class Shooter extends SubsystemBase {
                     && Math.round(RobotMap.lidar.getDistance()) >= 8.0
                     && Math.round(RobotMap.lidar.getDistance()) <= 12.0) {
                 initiationRPM.schedule();
-            } /*
-               * else if (Math.abs( Math.round( Robot.visionCam.getDistance() -
-               * RobotMap.lidar.getDistance())) <= 2) { trenchRPM = new SetFlywheelRPM( 5000,
-               * Constants.convertLidar(RobotMap.lidar.getDistance())); } else { trenchRPM =
-               * new SetFlywheelRPM( 5000,
-               * Constants.convertCamera(Robot.visionCam.getDistance())); }
-               * trenchRPM.schedule();
-               */
+            }
         } else if (!isShooting()) {
             RobotMap.hood.setHoodTarget(0);
         }

@@ -5,7 +5,7 @@ package frc.robot.commands.universalcommands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 public class SetMags extends ParallelCommandGroup {
-    public SetMags(double lowPower, double highPower) {
+    public SetMags(double highPower, double lowPower) {
         super(new SetHighMag(highPower), new SetLowMag(lowPower));
     }
 }

@@ -143,8 +143,8 @@ public class Drive extends SubsystemBase {
             } else {
                 visionTapePercent = 0;
             }
-            RobotConfig.setDriveBrake();
-            // Robot.visionCam.updateVision();
+            RobotConfig.setDriveMotorsBrake();
+            Robot.visionCam.updateVision();
             if (Timer.getFPGATimestamp() - Robot.visionCam.lastParseTime > 0.25) {
                 aPID.updatePID(0);
                 return;

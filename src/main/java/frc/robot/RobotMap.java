@@ -48,7 +48,7 @@ public class RobotMap {
     public static Shooter shooter = new Shooter();
     public static Hood hood = new Hood();
 
-    public static TalonFX[] allMotors = {
+    public static TalonFX[] driveMotors = {
         leftDriveLead, rightDriveLead, leftDriveFollower, rightDriveFollower
     };
 

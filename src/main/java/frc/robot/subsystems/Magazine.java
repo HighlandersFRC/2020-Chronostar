@@ -1,5 +1,3 @@
-// Copyrights (c) 2018-2019 FIRST, 2020 Highlanders FRC. All Rights Reserved.
-
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.*;
@@ -44,17 +42,17 @@ public class Magazine extends SubsystemBase {
                 new HighMagBump(0, 0.15).schedule();
             } else if (beambreak2) {
                 new HighMagBump(-0.425, 0.15).schedule();
-                new LowMagBump(0.3, 0.15).schedule();
+                new LowMagBump(0.4, 0.15).schedule();
             }
             if (beambreak1) {
                 if (catchCounter <= 50) {
-                    new LowMagBump(0.3, 0.15).schedule();
+                    new LowMagBump(0.4, 0.15).schedule();
                 } else {
                     if (tryCounter <= 25) {
                         stuck = true;
                         tryCounter++;
                     } else {
-                        new LowMagBump(-0.3, 0.15).schedule();
+                        new LowMagBump(-0.4, 0.15).schedule();
                         catchCounter = 0;
                         tryCounter = 0;
                         stuck = false;
