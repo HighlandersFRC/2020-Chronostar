@@ -18,7 +18,7 @@ public class RobotConfig {
     }
 
     public void startAutoConfig() {
-        setVoltageCompensation(Constants.driveMaxVoltage);
+        setVoltageCompensation(Constants.DRIVE_MAX_VOLTAGE);
         setDriveBrake();
         RobotMap.hood.init();
     }

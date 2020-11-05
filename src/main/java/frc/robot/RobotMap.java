@@ -16,25 +16,26 @@ import frc.robot.subsystems.*;
 
 public class RobotMap {
 
-    public static TalonFX leftDriveLead = new TalonFX(Constants.leftDriveLeadID);
-    public static TalonFX rightDriveLead = new TalonFX(Constants.rightDriveLeadID);
-    public static TalonFX leftDriveFollower = new TalonFX(Constants.leftDriveFollower1ID);
-    public static TalonFX rightDriveFollower = new TalonFX(Constants.rightDriveFollower1ID);
-    // public static TalonFX intakeMotor = new TalonFX(Constants.intakeMotorID);
-    public static VictorSPX intake2Motor = new VictorSPX(Constants.intake2MotorID);
-    public static TalonFX leftFlywheel = new TalonFX(Constants.leftFlywheelID);
-    public static TalonFX rightFlywheel = new TalonFX(Constants.rightFlywheelID);
-    public static VictorSPX lowMag = new VictorSPX(Constants.magBeltID);
-    public static CANSparkMax highMag = new CANSparkMax(Constants.magWheelID, MotorType.kBrushless);
-    public static CANSparkMax hoodMotor = new CANSparkMax(Constants.hoodID, MotorType.kBrushless);
+    public static TalonFX leftDriveLead = new TalonFX(Constants.LEFT_DRIVE_LEAD_ID);
+    public static TalonFX rightDriveLead = new TalonFX(Constants.RIGHT_DRIVE_LEAD_ID);
+    public static TalonFX leftDriveFollower = new TalonFX(Constants.LEFT_DRIVE_FOLLOWER_ID);
+    public static TalonFX rightDriveFollower = new TalonFX(Constants.RIGHT_DRIVE_FOLLOWER_ID);
+    public static TalonFX intakeMotor = new TalonFX(Constants.INTAKE_1_ID);
+    public static VictorSPX intake2Motor = new VictorSPX(Constants.INTAKE_2_ID);
+    public static TalonFX leftFlywheel = new TalonFX(Constants.LEFT_FLYWHEEL_ID);
+    public static TalonFX rightFlywheel = new TalonFX(Constants.RIGHT_FLYWHEEL_ID);
+    public static VictorSPX lowMag = new VictorSPX(Constants.MAG_BELT_ID);
+    public static CANSparkMax highMag =
+            new CANSparkMax(Constants.MAG_WHEEL_ID, MotorType.kBrushless);
+    public static CANSparkMax hoodMotor = new CANSparkMax(Constants.HOOD_ID, MotorType.kBrushless);
 
     public static DoubleSolenoid intakePiston = new DoubleSolenoid(0, 1);
     public static DoubleSolenoid climberPiston = new DoubleSolenoid(2, 3);
     public static DoubleSolenoid winchRelease = new DoubleSolenoid(4, 5);
 
-    public static DigitalInput beambreak1 = new DigitalInput(Constants.beamBreak1Port);
-    public static DigitalInput beambreak2 = new DigitalInput(Constants.beamBreak3Port);
-    public static DigitalInput beambreak3 = new DigitalInput(Constants.beamBreak2Port);
+    public static DigitalInput beambreak1 = new DigitalInput(Constants.BEAM_BREAK_1_ID);
+    public static DigitalInput beambreak2 = new DigitalInput(Constants.BEAM_BREAK_3_ID);
+    public static DigitalInput beambreak3 = new DigitalInput(Constants.BEAM_BREAK_2_ID);
 
     public static CANDigitalInput lowerHoodSwitch =
             new CANDigitalInput(hoodMotor, LimitSwitch.kReverse, LimitSwitchPolarity.kNormallyOpen);

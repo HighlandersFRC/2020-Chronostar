@@ -23,13 +23,13 @@ public class DriveEncoder {
     }
 
     public double getDistance() {
-        return ((((getEncoderValue()) / Constants.driveTicksPerWheelRotation)
-                * Constants.wheelCircum));
+        return ((((getEncoderValue()) / Constants.TICKS_PER_WHEEL_ROTATION)
+                * Constants.WHEEL_CIRCUMFERENCE));
     }
 
     public double getVelocity() {
-        return (((((getEncoderVelocity() * 10)) / Constants.driveTicksPerWheelRotation)
-                * Constants.wheelCircum));
+        return (((((getEncoderVelocity() * 10)) / Constants.TICKS_PER_WHEEL_ROTATION)
+                * Constants.WHEEL_CIRCUMFERENCE));
     }
 
     public void softReset() {
@@ -37,7 +37,7 @@ public class DriveEncoder {
     }
 
     public double convertftpersToNativeUnitsper100ms(double feetPerSecond) {
-        return (((feetPerSecond / 10) / (Constants.wheelCircum))
-                * Constants.driveTicksPerWheelRotation);
+        return (((feetPerSecond / 10) / (Constants.WHEEL_CIRCUMFERENCE))
+                * Constants.TICKS_PER_WHEEL_ROTATION);
     }
 }

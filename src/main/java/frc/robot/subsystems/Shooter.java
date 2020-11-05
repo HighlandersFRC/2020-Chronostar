@@ -19,10 +19,10 @@ public class Shooter extends SubsystemBase {
     public void init() {
         RobotMap.rightFlywheel.setNeutralMode(NeutralMode.Coast);
         RobotMap.leftFlywheel.setNeutralMode(NeutralMode.Coast);
-        RobotMap.rightFlywheel.set(ControlMode.Follower, Constants.leftFlywheelID);
+        RobotMap.rightFlywheel.set(ControlMode.Follower, Constants.LEFT_FLYWHEEL_ID);
         RobotMap.leftFlywheel.setInverted(true);
         RobotMap.rightFlywheel.setInverted(InvertType.OpposeMaster);
-        RobotMap.leftFlywheel.configClosedLoopPeakOutput(0, Constants.maxPercentage);
+        RobotMap.leftFlywheel.configClosedLoopPeakOutput(0, Constants.MAX_SHOOTER_PERCENTAGE);
         RobotMap.leftFlywheel.configPeakOutputForward(0.7);
         RobotMap.leftFlywheel.configPeakOutputReverse(0);
         RobotMap.leftFlywheel.configVoltageCompSaturation(11.7);
@@ -33,7 +33,7 @@ public class Shooter extends SubsystemBase {
         RobotMap.leftFlywheel.config_kP(0, 0.45);
         RobotMap.leftFlywheel.config_kI(0, 0.0009);
         RobotMap.leftFlywheel.config_kD(0, 10);
-        RobotMap.leftFlywheel.config_IntegralZone(0, Constants.shooterIntegralRange);
+        RobotMap.leftFlywheel.config_IntegralZone(0, Constants.SHOOTER_INTEGRAL_RANGE);
         trenchRPM = new SetFlywheelRPM(5000, 7.5, false);
         initiationRPM = new SetFlywheelRPM(4500, 8.2, false);
     }

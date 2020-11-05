@@ -27,9 +27,9 @@ public class Magazine extends SubsystemBase {
         RobotMap.highMag.setIdleMode(IdleMode.kBrake);
         RobotMap.lowMag.configVoltageCompSaturation(11.7);
         RobotMap.lowMag.enableVoltageCompensation(true);
-        // RobotMap.intakeMotor.setNeutralMode(NeutralMode.Brake);
+        RobotMap.intakeMotor.setNeutralMode(NeutralMode.Brake);
         RobotMap.intake2Motor.setNeutralMode(NeutralMode.Brake);
-        // RobotMap.intakeMotor.setInverted(true);
+        RobotMap.intakeMotor.setInverted(true);
         RobotMap.intake2Motor.setInverted(true);
     }
 
