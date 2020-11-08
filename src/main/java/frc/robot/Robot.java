@@ -2,13 +2,7 @@
 
 package frc.robot;
 
-<<<<<<< HEAD
 import edu.wpi.first.wpilibj.*;
-=======
-import java.util.Set;
-
-import edu.wpi.first.wpilibj.SerialPort;
->>>>>>> 75147cf... Working climber code, have not been able to test the actual climb but
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
@@ -20,10 +14,6 @@ public class Robot extends TimedRobot {
 
     public static SerialPort jevois;
     public static VisionCamera visionCam;
-<<<<<<< HEAD
-=======
-
->>>>>>> 75147cf... Working climber code, have not been able to test the actual climb but
     private final RobotConfig config = new RobotConfig();
 
     @Override
@@ -85,16 +75,6 @@ public class Robot extends TimedRobot {
         RobotMap.drive.teleopPeriodic();
         RobotMap.magazine.teleopPeriodic();
         RobotMap.climber.teleopPeriodic();
-<<<<<<< HEAD
-=======
-        try{
-           visionCam.updateVision();
-           SmartDashboard.putNumber("Vision Angle", visionCam.getAngle()); 
-        }
-        catch(final Exception E){
-
-        }
->>>>>>> 75147cf... Working climber code, have not been able to test the actual climb but
     }
 
     @Override
