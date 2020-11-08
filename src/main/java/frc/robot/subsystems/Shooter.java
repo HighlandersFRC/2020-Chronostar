@@ -35,7 +35,7 @@ public class Shooter extends SubsystemBase {
         RobotMap.leftFlywheel.selectProfileSlot(0, 0);
         RobotMap.leftFlywheel.config_kF(0, 0.05);
         RobotMap.leftFlywheel.config_kP(0, 0.45);
-        RobotMap.leftFlywheel.config_kI(0, 0.0009);
+        RobotMap.leftFlywheel.config_kI(0, 0.001);
         RobotMap.leftFlywheel.config_kD(0, 10);
         RobotMap.leftFlywheel.config_IntegralZone(0, Constants.SHOOTER_INTEGRAL_RANGE);
         trenchRPM = new SetFlywheelRPM(5000, 7.5, false);

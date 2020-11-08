@@ -3,6 +3,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -13,7 +14,10 @@ public class Intake extends SubsystemBase {
     public Intake() {}
 
     public void init() {
+        RobotMap.intakeMotor.setNeutralMode(NeutralMode.Brake);
+        RobotMap.intake2Motor.setNeutralMode(NeutralMode.Brake);
         RobotMap.intakeMotor.setInverted(true);
+        RobotMap.intake2Motor.setInverted(true);
     }
 
     @Override

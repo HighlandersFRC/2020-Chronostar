@@ -6,7 +6,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.*;
-import frc.robot.commands.teleopcommands.*;
+import frc.robot.commands.teleopcommands.Outtake;
 import frc.robot.commands.universalcommands.*;
 
 public class Magazine extends SubsystemBase {
@@ -28,10 +28,8 @@ public class Magazine extends SubsystemBase {
         RobotMap.highMag.setIdleMode(IdleMode.kBrake);
         RobotMap.lowMag.configVoltageCompSaturation(11.7);
         RobotMap.lowMag.enableVoltageCompensation(true);
-        RobotMap.intakeMotor.setNeutralMode(NeutralMode.Brake);
-        RobotMap.intake2Motor.setNeutralMode(NeutralMode.Brake);
-        RobotMap.intakeMotor.setInverted(true);
-        RobotMap.intake2Motor.setInverted(true);
+        RobotMap.lowMag.setInverted(false);
+        RobotMap.highMag.setInverted(true);
     }
 
     @Override
@@ -74,13 +72,9 @@ public class Magazine extends SubsystemBase {
         RobotMap.lowMag.set(ControlMode.PercentOutput, 0);
     }
 
-    public void outtake() {
-        new Outtake().schedule();
-    }
-
     public void teleopPeriodic() {
         if (ButtonMap.getOperatorLeftTrigger() >= 0.5) {
-            outtake();
+            new Outtake().schedule();
         }
     }
 }

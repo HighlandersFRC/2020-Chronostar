@@ -71,9 +71,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
-        RobotMap.magazine.teleopPeriodic();
         RobotMap.shooter.teleopPeriodic();
         RobotMap.drive.teleopPeriodic();
+        RobotMap.magazine.teleopPeriodic();
     }
 
     @Override

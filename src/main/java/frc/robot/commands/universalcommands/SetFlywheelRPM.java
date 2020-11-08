@@ -42,7 +42,7 @@ public class SetFlywheelRPM extends CommandBase {
     @Override
     public void execute() {
         if (isAtTargetRPM()) {
-            new SetMags(0.5, -1).schedule();
+            new SetMags(0.5, 1).schedule();
             RobotMap.intake2Motor.set(ControlMode.PercentOutput, 0.8);
         } else {
             new SetMags(0, 0).schedule();
@@ -55,6 +55,7 @@ public class SetFlywheelRPM extends CommandBase {
         RobotMap.leftFlywheel.set(ControlMode.Velocity, 0);
         new SetMags(0, 0).schedule();
         RobotMap.intake2Motor.set(ControlMode.PercentOutput, 0);
+        RobotMap.hood.setHoodTarget(0);
     }
 
     public boolean isFinished() {
@@ -66,7 +67,6 @@ public class SetFlywheelRPM extends CommandBase {
     }
 
     public boolean isAtTargetRPM() {
-        return velocity - RobotMap.shooter.getShooterRPM() <= TARGET_RPM_THRESHOLD
-                && velocity - RobotMap.shooter.getShooterRPM() >= -TARGET_RPM_THRESHOLD;
+        return velocity - RobotMap.shooter.getShooterRPM() <= TARGET_RPM_THRESHOLD;
     }
 }
