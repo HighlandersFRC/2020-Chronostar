@@ -9,8 +9,7 @@ import edu.wpi.first.wpilibj.Timer;
 import frc.robot.tools.math.Point;
 
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.simple.parser.*;
 
 public class VisionCamera {
     JSONParser parser = new JSONParser();
