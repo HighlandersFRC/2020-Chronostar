@@ -1,3 +1,5 @@
+// Copyrights (c) 2018-2019 FIRST, 2020 Highlanders FRC. All Rights Reserved.
+
 package frc.robot.commands.universalcommands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;

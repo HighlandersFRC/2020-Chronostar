@@ -12,6 +12,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 
 public class VisionCamera {
+
     JSONParser parser = new JSONParser();
     SerialPort port;
     public String sanitizedString = "nothing";
@@ -20,11 +21,10 @@ public class VisionCamera {
     private double angle;
     private double badAngle = -100.0;
     private double badDistance = -11.0;
-    private Point targetPoint;
+    private Point targetPoint = new Point(0, 0);
 
-    public VisionCamera(SerialPort jevois) {
-        port = jevois;
-        targetPoint = new Point(0, 0);
+    public VisionCamera(SerialPort port) {
+        this.port = port;
     }
 
     public void updateVision() {
@@ -93,7 +93,7 @@ public class VisionCamera {
     public double getAngle() {
         return angle;
     }
-
+    
     public String getString() {
         try {
             if (port.getBytesReceived() > 2) {
