@@ -14,7 +14,7 @@ import frc.robot.tools.pathtools.Odometry;
 
 public class Drive extends SubsystemBase {
 
-    double deadzone = 0.01;
+    private double deadzone = 0.01;
     private double vkF = 0.0455925;
     private double vkP = 0.21;
     private double vkI = 0.000002;
@@ -29,7 +29,6 @@ public class Drive extends SubsystemBase {
     public Drive() {}
 
     public void startAutoOdometry(double x, double y, double theta) {}
-    ;
 
     public double getDriveTrainX() {
         return autoOdometry.getX();
@@ -161,11 +160,8 @@ public class Drive extends SubsystemBase {
     }
 
     public void teleopPeriodic() {
-        arcadeDrive(ButtonMap.getTurn(), ButtonMap.getThrottle());
-        if (ButtonMap.getDriverRightBumper()) {
-            RobotMap.visionRelay.set(Value.kForward);
-        } else {
-            RobotMap.visionRelay.set(Value.kReverse);
-        }
+        arcadeDrive(ButtonMap.getThrottle(), ButtonMap.getTurn());
+        RobotMap.visionRelay.set(ButtonMap.getDriverRightBumper() ? 
+                Value.kForward : Value.kReverse);
     }
 }
