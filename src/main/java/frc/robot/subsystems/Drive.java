@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.*;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.Relay.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.*;
@@ -19,9 +20,9 @@ public class Drive extends SubsystemBase {
     private double vkP = 0.21;
     private double vkI = 0.000002;
     private double vkD = 0;
-    private double akP = 0.1;
-    private double akI = 0;
-    private double akD = 0;
+    private double akP = 0.01;
+    private double akI = 0.00006;
+    private double akD = 0.02;
     private PID aPID;
     private double visionTapePercent;
     private Odometry autoOdometry;
@@ -29,7 +30,6 @@ public class Drive extends SubsystemBase {
     public Drive() {}
 
     public void startAutoOdometry(double x, double y, double theta) {}
-    ;
 
     public double getDriveTrainX() {
         return autoOdometry.getX();
@@ -61,6 +61,8 @@ public class Drive extends SubsystemBase {
 
     public void init() {
         aPID = new PID(akP, akI, akD);
+        aPID.setMaxOutput(0.75);
+        aPID.setMinOutput(-0.75);
         RobotMap.leftDriveLead.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
         RobotMap.rightDriveLead.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
         RobotMap.leftDriveFollower.set(ControlMode.Follower, Constants.LEFT_DRIVE_LEAD_ID);
@@ -133,39 +135,29 @@ public class Drive extends SubsystemBase {
     public void periodic() {}
 
     public void trackVisionTape() {
-        try {
-            if (!RobotState.isOperatorControl()) {
-                if (Math.abs(ButtonMap.getThrottle()) > deadzone) {
-                    visionTapePercent = Math.tanh(ButtonMap.getThrottle()) * 4 / Math.PI;
-                } else {
-                    visionTapePercent = 0;
-                }
-            } else {
-                visionTapePercent = 0;
-            }
-            RobotConfig.setDriveMotorsBrake();
-            Robot.visionCam.updateVision();
-            if (Timer.getFPGATimestamp() - Robot.visionCam.lastParseTime > 0.25) {
-                aPID.updatePID(0);
-                return;
-            } else {
-                aPID.updatePID(Robot.visionCam.getAngle());
-            }
-
-            setLeftSpeed(visionTapePercent * 6 + aPID.getResult());
-            setRightSpeed(visionTapePercent * 6 + aPID.getResult());
-
-        } catch (Exception e) {
-
+        RobotMap.visionRelay.set(Value.kForward);
+        Robot.visionCam.updateVision();
+        double jevoisAngle = Robot.visionCam.getAngle();
+        SmartDashboard.putNumber("Jevois Angle", jevoisAngle);
+        SmartDashboard.putNumber("Get result", aPID.getResult());
+        if (Timer.getFPGATimestamp() - Robot.visionCam.lastParseTime < 0.25) {
+            aPID.updatePID(jevoisAngle + 6.5);
+            RobotMap.leftDriveLead.set(ControlMode.PercentOutput, aPID.getResult());
+            RobotMap.rightDriveLead.set(ControlMode.PercentOutput, -aPID.getResult());
+        } else {
+            aPID.updatePID(0);
+            RobotMap.leftDriveLead.set(ControlMode.PercentOutput, 0);
+            RobotMap.rightDriveLead.set(ControlMode.PercentOutput, 0);
+            RobotMap.visionRelay.set(Value.kForward);
         }
     }
 
     public void teleopPeriodic() {
-        arcadeDrive(ButtonMap.getThrottle(), ButtonMap.getTurn());
         if (ButtonMap.getDriverRightBumper()) {
-            RobotMap.visionRelay.set(Value.kForward);
+            trackVisionTape();
         } else {
             RobotMap.visionRelay.set(Value.kReverse);
+            arcadeDrive(ButtonMap.getThrottle(), ButtonMap.getTurn());
         }
     }
 }
