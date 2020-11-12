@@ -33,7 +33,6 @@ public class SetFlywheelRPM extends CommandBase {
     @Override
     public void initialize() {
         RobotMap.hood.setHoodTarget(position);
-        RobotMap.drive.trackVisionTape();
         RobotMap.leftFlywheel.set(ControlMode.Velocity, Constants.rpmToUnitsPer100Ms(velocity));
         if (isAutonomous) {
             waitCommand.schedule();
@@ -42,6 +41,7 @@ public class SetFlywheelRPM extends CommandBase {
 
     @Override
     public void execute() {
+        RobotMap.drive.trackVisionTape();
         if (isAtTargetRPM()) {
             new SetMags(0.5, 1).schedule();
             RobotMap.intake2Motor.set(ControlMode.PercentOutput, 0.8);
@@ -53,7 +53,7 @@ public class SetFlywheelRPM extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        RobotMap.leftFlywheel.set(ControlMode.Velocity, 0);
+        RobotMap.leftFlywheel.set(ControlMode.PercentOutput, 0);
         new SetMags(0, 0).schedule();
         RobotMap.intake2Motor.set(ControlMode.PercentOutput, 0);
         RobotMap.hood.setHoodTarget(0);

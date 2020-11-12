@@ -22,9 +22,8 @@ public class Drive extends SubsystemBase {
     private double vkD = 0;
     private double akP = 0.01;
     private double akI = 0.00006;
-    private double akD = 0.02;
+    private double akD = 0.01;
     private PID aPID;
-    private double visionTapePercent;
     private Odometry autoOdometry;
 
     public Drive() {}
@@ -141,7 +140,7 @@ public class Drive extends SubsystemBase {
         SmartDashboard.putNumber("Jevois Angle", jevoisAngle);
         SmartDashboard.putNumber("Get result", aPID.getResult());
         if (Timer.getFPGATimestamp() - Robot.visionCam.lastParseTime < 0.25) {
-            aPID.updatePID(jevoisAngle + 6.5);
+            aPID.updatePID(jevoisAngle + 8);
             RobotMap.leftDriveLead.set(ControlMode.PercentOutput, aPID.getResult());
             RobotMap.rightDriveLead.set(ControlMode.PercentOutput, -aPID.getResult());
         } else {

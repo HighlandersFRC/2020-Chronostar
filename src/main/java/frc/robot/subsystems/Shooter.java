@@ -39,7 +39,7 @@ public class Shooter extends SubsystemBase {
         RobotMap.leftFlywheel.config_kD(0, 10);
         RobotMap.leftFlywheel.config_IntegralZone(0, Constants.SHOOTER_INTEGRAL_RANGE);
         trenchRPM = new SetFlywheelRPM(5000, 7.5, false);
-        initiationRPM = new SetFlywheelRPM(4500, 8.2, false);
+        initiationRPM = new SetFlywheelRPM(4500, 8.75, false);
     }
 
     @Override
@@ -62,6 +62,6 @@ public class Shooter extends SubsystemBase {
     }
 
     public boolean isShooting() {
-        return RobotMap.leftFlywheel.getClosedLoopTarget() >= 0;
+        return initiationRPM.isAtTargetRPM() || trenchRPM.isAtTargetRPM();
     }
 }
