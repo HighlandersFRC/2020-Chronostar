@@ -2,15 +2,14 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Relay.Value;
-//import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.VisionAlignmentPID;
+
 import frc.robot.sensors.VisionCamera;
 import frc.robot.subsystems.Shooter;
 
@@ -41,12 +40,10 @@ public class Robot extends TimedRobot {
         SmartDashboard.putBoolean("beam break 1", RobotMap.beambreak1.get());
         SmartDashboard.putBoolean("beam break 2", RobotMap.beambreak2.get());
         SmartDashboard.putBoolean("beam break 3", RobotMap.beambreak3.get());
-        try {
-           visionCam.updateVision();
-           SmartDashboard.putNumber("distance", visionCam.getDistance());
-        } catch (Exception e) {
-        }
 
+        visionCam.updateVision();
+
+        SmartDashboard.putNumber("distance", visionCam.getDistance());
         SmartDashboard.putNumber("lidar lite dist", RobotMap.lidarlite.getDistance());
     }
 
@@ -94,32 +91,21 @@ public class Robot extends TimedRobot {
         RobotMap.shooter.teleopPeriodic();
         RobotMap.drive.teleopPeriodic();
         RobotMap.climber.teleopPeriodic();
-        if(OI.operatorController.getYButton()) {
+        if (OI.operatorController.getYButton()) {
             RobotMap.climberMotor.set(0.1);
-        }
-        else if(OI.operatorController.getXButton()) {
+        } else if (OI.operatorController.getXButton()) {
             RobotMap.climberMotor.set(-0.1);
-        }
-        else {
+        } else {
             RobotMap.climberMotor.set(0.0);
         }
+        visionCam.updateVision();
+        SmartDashboard.putNumber("Vision Angle", visionCam.getAngle());
+        // TODO: Actually look for existence of camera
+        SmartDashboard.putBoolean("Has Camera", true);
 
-        try{
-           visionCam.updateVision();
-           SmartDashboard.putNumber("Vision Angle",visionCam.getAngle());
-           SmartDashboard.putBoolean("Has Camera", true);
-        }catch(Exception e){
-
-            SmartDashboard.putBoolean("Has Camera", false);
-        }
-
-
-        if(OI.driverController.getXButton()){
+        if (OI.driverController.getXButton()) {
             RobotMap.visionPID.schedule();
             RobotMap.visionRelay.set(Value.kForward);
-        }
-        else{
-            
         }
     }
 

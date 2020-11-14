@@ -15,15 +15,14 @@ import frc.robot.RobotMap;
 import frc.robot.tools.controlloops.PID;
 
 public class VisionAlignmentPID extends CommandBase {
-    /** Creates a new VisionAlignmentPID. */
-    public VisionAlignmentPID() {
-        // Use addRequirements() here to declare subsystem dependencies.
-    }
 
-    public static PID pid;
-    private final double kP = 0.01;
-    private final double kI = 0.00006;
-    private final double kD = 0.02;
+    public VisionAlignmentPID() {}
+
+    private static final double kP = 0.01;
+    private static final double kI = 0.00006;
+    private static final double kD = 0.02;
+    private PID pid;
+    private double jevoisAngle;
 
     @Override
     public void initialize() {
@@ -34,34 +33,24 @@ public class VisionAlignmentPID extends CommandBase {
         RobotMap.visionRelay.set(Value.kForward);
     }
 
-    public double jevoisAngle;
-    public double startingTime;
-
     @Override
     public void execute() {
-        try {
-            startingTime = Timer.getFPGATimestamp();
-            Robot.visionCam.updateVision();
-            jevoisAngle = Robot.visionCam.getAngle();
-            SmartDashboard.putNumber("Jevois Angle", jevoisAngle);
-            SmartDashboard.putNumber("Get result", pid.getResult());
-            if (Timer.getFPGATimestamp() - Robot.visionCam.lastParseTime < 0.25) {
-                pid.updatePID(jevoisAngle + 9.5);
-                RobotMap.leftDriveLead.set(ControlMode.PercentOutput, pid.getResult());
-                RobotMap.rightDriveLead.set(ControlMode.PercentOutput, -pid.getResult());
-            } else {
-                pid.updatePID(0);
-                RobotMap.leftDriveLead.set(ControlMode.PercentOutput, 0);
-                RobotMap.rightDriveLead.set(ControlMode.PercentOutput, 0);
-                RobotMap.visionRelay.set(Value.kForward);
-            }
-
-        } catch (Exception e) {
-
+        Robot.visionCam.updateVision();
+        jevoisAngle = Robot.visionCam.getAngle();
+        SmartDashboard.putNumber("Jevois Angle", jevoisAngle);
+        SmartDashboard.putNumber("Get result", pid.getResult());
+        if (Timer.getFPGATimestamp() - Robot.visionCam.lastParseTime < 0.25) {
+            pid.updatePID(jevoisAngle + 9.5);
+            RobotMap.leftDriveLead.set(ControlMode.PercentOutput, pid.getResult());
+            RobotMap.rightDriveLead.set(ControlMode.PercentOutput, -pid.getResult());
+        } else {
+            pid.updatePID(0);
+            RobotMap.leftDriveLead.set(ControlMode.PercentOutput, 0);
+            RobotMap.rightDriveLead.set(ControlMode.PercentOutput, 0);
+            RobotMap.visionRelay.set(Value.kForward);
         }
     }
 
-    // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
         RobotMap.leftDriveLead.set(ControlMode.PercentOutput, 0);
@@ -69,12 +58,8 @@ public class VisionAlignmentPID extends CommandBase {
         RobotMap.visionRelay.set(Value.kReverse);
     }
 
-    // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if (!OI.driverController.getXButton()) {
-            return true;
-        }
-        return false;
+        return (!OI.driverController.getXButton());
     }
 }

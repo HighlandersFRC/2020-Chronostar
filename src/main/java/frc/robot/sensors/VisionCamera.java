@@ -37,7 +37,6 @@ public class VisionCamera {
             double tryDistance = badDistance;
             double tryAngle = badAngle;
 
-
             if (jsonString != null) {
 
                 tryDistance = parseDistance(jsonString);
@@ -52,7 +51,6 @@ public class VisionCamera {
 
         } catch (Exception e) {
         }
-    
     }
 
     public double parseAngle(String jsonString) {
@@ -128,6 +126,9 @@ public class VisionCamera {
 
     public double getCorrectedDistance(double a, double b, double c, double d) {
         updateVision();
-        return a * Math.pow(getDistance(), 3) + b * Math.pow(getDistance(), 2) + c * getDistance() + d;
+        return a * Math.pow(getDistance(), 3)
+                + b * Math.pow(getDistance(), 2)
+                + c * getDistance()
+                + d;
     }
 }
