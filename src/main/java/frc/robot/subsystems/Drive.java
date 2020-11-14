@@ -2,17 +2,15 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.*;
 
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.Relay.Value;
-import edu.wpi.first.wpilibj.RobotState;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.*;
 import frc.robot.tools.controlloops.PID;
+import frc.robot.tools.pathtools.Odometry;
 
 public class Drive extends SubsystemBase {
 
@@ -26,18 +24,50 @@ public class Drive extends SubsystemBase {
     private double akD = 0;
     private PID aPID;
     private double visionTapePercent;
+    private Odometry autoOdometry;
 
     public Drive() {}
+
+    public void startAutoOdometry(double x, double y, double theta) {}
+    ;
+
+    public double getDriveTrainX() {
+        return autoOdometry.getX();
+    }
+
+    public double getDriveTrainY() {
+        return autoOdometry.getY();
+    }
+
+    public double getDriveTrainHeading() {
+        return autoOdometry.gettheta();
+    }
+
+    public void setDriveTrainX(double x) {
+        autoOdometry.setX(x);
+    }
+
+    public void setDriveTrainY(double y) {
+        autoOdometry.setY(y);
+    }
+
+    public void setDriveTrainHeading(double theta) {
+        autoOdometry.setTheta(theta);
+    }
+
+    public void setOdometryReversed(boolean reversed) {
+        autoOdometry.setReversed(reversed);
+    }
 
     public void init() {
         aPID = new PID(akP, akI, akD);
         RobotMap.leftDriveLead.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
         RobotMap.rightDriveLead.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
-        RobotMap.leftDriveFollower1.set(ControlMode.Follower, Constants.leftDriveLeadID);
-        RobotMap.rightDriveFollower1.set(ControlMode.Follower, Constants.rightDriveLeadID);
+        RobotMap.leftDriveFollower.set(ControlMode.Follower, Constants.LEFT_DRIVE_LEAD_ID);
+        RobotMap.rightDriveFollower.set(ControlMode.Follower, Constants.RIGHT_DRIVE_LEAD_ID);
         RobotMap.rightDriveLead.setInverted(true);
-        RobotMap.rightDriveFollower1.setInverted(InvertType.FollowMaster);
-        RobotMap.leftDriveFollower1.setInverted(InvertType.FollowMaster);
+        RobotMap.rightDriveFollower.setInverted(InvertType.FollowMaster);
+        RobotMap.leftDriveFollower.setInverted(InvertType.FollowMaster);
         RobotMap.leftDriveLead.setSensorPhase(false);
         RobotMap.rightDriveLead.setSensorPhase(false);
         RobotMap.leftDriveLead.setSelectedSensorPosition(0);

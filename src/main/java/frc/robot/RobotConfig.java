@@ -14,16 +14,18 @@ public class RobotConfig {
         RobotMap.drive.init();
         RobotMap.intake.init();
         RobotMap.magazine.init();
-        RobotMap.climber.init();
+        RobotMap.hood.init();
     }
 
     public void startAutoConfig() {
-        setVoltageCompensation(Constants.driveMaxVoltage);
+        setVoltageCompensation(Constants.DRIVE_MAX_VOLTAGE);
         setDriveMotorsBrake();
+        RobotMap.hood.init();
     }
 
     public void startTeleopConfig() {
         setDriveMotorsCoast();
+        RobotMap.hood.init();
     }
 
     private void setVoltageCompensation(double volts) {

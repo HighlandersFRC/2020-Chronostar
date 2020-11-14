@@ -2,19 +2,16 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.Relay.Value;
-import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.SerialPort.Port;
-import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.*;
 
+import frc.robot.commands.universalcommands.SetFlywheelRPM;
 import frc.robot.sensors.VisionCamera;
-import frc.robot.subsystems.Shooter;
 
 public class Robot extends TimedRobot {
-    private Command m_autonomousCommand;
 
     public static SerialPort jevois;
     public static VisionCamera visionCam;
@@ -37,68 +34,44 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().run();
         RobotMap.magazine.periodic();
         RobotMap.intake.periodic();
+        RobotMap.hood.periodic();
         SmartDashboard.putBoolean("beam break 1", RobotMap.beambreak1.get());
         SmartDashboard.putBoolean("beam break 2", RobotMap.beambreak2.get());
         SmartDashboard.putBoolean("beam break 3", RobotMap.beambreak3.get());
-
-        visionCam.updateVision();
-
         SmartDashboard.putNumber("distance", visionCam.getDistance());
-        SmartDashboard.putNumber("lidar lite dist", RobotMap.lidarlite.getDistance());
+        SmartDashboard.putNumber("lidar dist", RobotMap.lidar.getDistance());
+        SmartDashboard.putBoolean("lower limit switch", RobotMap.lowerHoodSwitch.get());
+        SmartDashboard.putBoolean("upper limit switch", RobotMap.upperHoodSwitch.get());
+        SmartDashboard.putNumber(
+                "rpm",
+                Constants.unitsPer100MsToRpm(RobotMap.leftFlywheel.getSelectedSensorVelocity()));
     }
 
-    /** This function is called once each time the robot enters Disabled mode. */
     @Override
     public void disabledInit() {}
 
     @Override
     public void disabledPeriodic() {}
 
-    /** This autonomous runs the autonomous command selected by your {@link RobotMap} class. */
     @Override
     public void autonomousInit() {
-
-        // schedule the autonomous command (example)
-        if (m_autonomousCommand != null) {
-            m_autonomousCommand.schedule();
-        }
         config.startAutoConfig();
+        new SetFlywheelRPM(4500, 8, 3, true).schedule();
     }
 
-    /** This function is called periodically during autonomous. */
     @Override
-    public void autonomousPeriodic() {
-        RobotMap.highMag.set(1);
-    }
+    public void autonomousPeriodic() {}
 
     @Override
     public void teleopInit() {
-        if (m_autonomousCommand != null) {
-            m_autonomousCommand.cancel();
-        }
         config.startTeleopConfig();
     }
 
-    /** This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
-        SmartDashboard.putNumber("leftHeat", RobotMap.leftFlywheel.getTemperature());
-        SmartDashboard.putNumber("rightHeat", RobotMap.rightFlywheel.getTemperature());
-        RobotMap.magazine.teleopPeriodic();
-        SmartDashboard.putNumber(
-                "rpm",
-                Shooter.unitsPer100MsToRpm(RobotMap.leftFlywheel.getSelectedSensorVelocity()));
         RobotMap.shooter.teleopPeriodic();
         RobotMap.drive.teleopPeriodic();
-        RobotMap.climber.teleopPeriodic();
-        if (OI.operatorController.getYButton()) {
-            RobotMap.climberMotor.set(0.1);
-        } else if (OI.operatorController.getXButton()) {
-            RobotMap.climberMotor.set(-0.1);
-        } else {
-            RobotMap.climberMotor.set(0.0);
-        }
-        visionCam.updateVision();
+        RobotMap.magazine.teleopPeriodic();
         SmartDashboard.putNumber("Vision Angle", visionCam.getAngle());
         // TODO: Actually look for existence of camera
         SmartDashboard.putBoolean("Has Camera", true);
@@ -111,11 +84,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void testInit() {
-        // Cancels all running commands at the start of test mode.
         CommandScheduler.getInstance().cancelAll();
     }
 
-    /** This function is called periodically during test mode. */
     @Override
     public void testPeriodic() {}
 }
