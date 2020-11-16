@@ -140,7 +140,7 @@ public class Drive extends SubsystemBase {
         SmartDashboard.putNumber("Jevois Angle", Robot.visionCam.getAngle());
         SmartDashboard.putNumber("Get result", aPID.getResult());
         if (Timer.getFPGATimestamp() - Robot.visionCam.lastParseTime < 0.25) {
-            aPID.updatePID(Robot.visionCam.getAngle() + 7);
+            aPID.updatePID(Robot.visionCam.getAngle() + 6);
             RobotMap.leftDriveLead.set(ControlMode.PercentOutput, aPID.getResult());
             RobotMap.rightDriveLead.set(ControlMode.PercentOutput, -aPID.getResult());
         } else {
