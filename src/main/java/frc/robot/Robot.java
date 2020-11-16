@@ -3,6 +3,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
@@ -44,7 +45,9 @@ public class Robot extends TimedRobot {
     }
 
     @Override
-    public void disabledInit() {}
+    public void disabledInit() {
+        RobotMap.intakePiston.set(Value.kReverse);
+    }
 
     @Override
     public void disabledPeriodic() {}
@@ -52,7 +55,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         config.startAutoConfig();
-        new SetFlywheelRPM(4500, 8, 3, true).schedule();
+        new SetFlywheelRPM(4500, Constants.INITIATION_HOOD_POSITION, 3, true).schedule();
     }
 
     @Override

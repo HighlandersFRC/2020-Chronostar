@@ -74,11 +74,13 @@ public class Constants {
         return (int) Math.round((rpm / 600) * Constants.TICKS_PER_SHOOTER_ROTATION);
     }
 
-    public static double convertCamera(double camDistance) {
-        return 0;
-    }
+    // Hood constants
 
-    public static double convertLidar(double lidarDistance) {
+    public static final double INITIATION_HOOD_POSITION = 9.5;
+
+    public static double distanceToHoodPos(double camDistance, double lidarDistance) {
+        if (Math.abs(camDistance - lidarDistance) > 2) {}
+
         return 0;
     }
 }

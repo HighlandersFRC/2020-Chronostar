@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.ButtonMap;
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.universalcommands.SetFlywheelRPM;
 
@@ -39,7 +40,7 @@ public class Shooter extends SubsystemBase {
         RobotMap.leftFlywheel.config_kD(0, 10);
         RobotMap.leftFlywheel.config_IntegralZone(0, Constants.SHOOTER_INTEGRAL_RANGE);
         trenchRPM = new SetFlywheelRPM(5000, 7.5, false);
-        initiationRPM = new SetFlywheelRPM(4500, 8.75, false);
+        initiationRPM = new SetFlywheelRPM(4500, Constants.INITIATION_HOOD_POSITION, false);
     }
 
     @Override
@@ -48,8 +49,10 @@ public class Shooter extends SubsystemBase {
     public void teleopPeriodic() {
         if (ButtonMap.shoot()) {
             if (!initiationRPM.isScheduled()
-                    && Math.round(RobotMap.lidar.getDistance()) >= 8.0
-                    && Math.round(RobotMap.lidar.getDistance()) <= 12.0) {
+                    && (Math.round(RobotMap.lidar.getDistance()) >= 6.0
+                            || Math.round(Robot.visionCam.getDistance()) >= 6.0)
+                    && (Math.round(RobotMap.lidar.getDistance()) <= 14.0
+                            || Math.round(Robot.visionCam.getDistance()) <= 14.0)) {
                 initiationRPM.schedule();
             }
         } else if (!isShooting()) {

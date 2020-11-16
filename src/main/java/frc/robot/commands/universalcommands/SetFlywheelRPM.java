@@ -4,6 +4,7 @@ package frc.robot.commands.universalcommands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
@@ -53,6 +54,7 @@ public class SetFlywheelRPM extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        RobotMap.visionRelay.set(Value.kReverse);
         RobotMap.leftFlywheel.set(ControlMode.PercentOutput, 0);
         new SetMags(0, 0).schedule();
         RobotMap.intake2Motor.set(ControlMode.PercentOutput, 0);

@@ -136,11 +136,11 @@ public class Drive extends SubsystemBase {
     public void trackVisionTape() {
         RobotMap.visionRelay.set(Value.kForward);
         Robot.visionCam.updateVision();
-        double jevoisAngle = Robot.visionCam.getAngle();
-        SmartDashboard.putNumber("Jevois Angle", jevoisAngle);
+        Robot.visionCam.getAngle();
+        SmartDashboard.putNumber("Jevois Angle", Robot.visionCam.getAngle());
         SmartDashboard.putNumber("Get result", aPID.getResult());
         if (Timer.getFPGATimestamp() - Robot.visionCam.lastParseTime < 0.25) {
-            aPID.updatePID(jevoisAngle + 8);
+            aPID.updatePID(Robot.visionCam.getAngle() + 7);
             RobotMap.leftDriveLead.set(ControlMode.PercentOutput, aPID.getResult());
             RobotMap.rightDriveLead.set(ControlMode.PercentOutput, -aPID.getResult());
         } else {
