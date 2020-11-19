@@ -47,13 +47,14 @@ public class Shooter extends SubsystemBase {
 
     public void teleopPeriodic() {
         if (ButtonMap.shoot()) {
-            if (!initiationRPM.isScheduled()
-                    && (Math.round(RobotMap.lidar.getDistance()) >= 6.0
-                            || Math.round(RobotMap.visionCam.getDistance()) >= 6.0)
-                    && (Math.round(RobotMap.lidar.getDistance()) <= 14.0
-                            || Math.round(RobotMap.visionCam.getDistance()) <= 14.0)) {
-                initiationRPM.schedule();
-            }
+            /*
+             * if (!initiationRPM.isScheduled() && (Math.round(RobotMap.lidar.getDistance())
+             * >= 6.0 || Math.round(RobotMap.visionCam.getDistance()) >= 6.0) &&
+             * (Math.round(RobotMap.lidar.getDistance()) <= 14.0 ||
+             * Math.round(RobotMap.visionCam.getDistance()) <= 14.0)) {
+             */
+            initiationRPM.schedule();
+            // }
         } else if (!isShooting()) {
             RobotMap.hood.setHoodTarget(0);
         }

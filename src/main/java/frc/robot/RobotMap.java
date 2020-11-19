@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.SerialPort;
 
-
 import frc.robot.sensors.*;
 import frc.robot.subsystems.*;
 
@@ -61,6 +60,7 @@ public class RobotMap {
     public static LidarLite lidar = new LidarLite(lidarPort);
 
     public static Relay visionRelay = new Relay(0);
+
     public static VisionCamera visionCam;
 
     static {
@@ -68,8 +68,8 @@ public class RobotMap {
         try {
             jevois = new SerialPort(115200, SerialPort.Port.kUSB);
         } catch (Exception e) {
-            System.err.println("CV cam's serial port failed to connect" + e);
-        }    
+            System.err.println("CV cam's serial port failed to connect. Here's the reason: " + e);
+        }
         visionCam = new VisionCamera(jevois);
     }
 }
