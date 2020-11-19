@@ -59,4 +59,6 @@ public class RobotMap {
     public static LidarLite lidar = new LidarLite(lidarPort);
 
     public static Relay visionRelay = new Relay(0);
+    public static SerialPort jevois;
+    public static VisionCamera visionCam;
 }

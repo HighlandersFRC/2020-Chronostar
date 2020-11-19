@@ -13,16 +13,13 @@ import frc.robot.sensors.VisionCamera;
 
 public class Robot extends TimedRobot {
 
-    public static SerialPort jevois;
-    public static VisionCamera visionCam;
-
     private RobotConfig config = new RobotConfig();
 
     @Override
     public void robotInit() {
         config.startBaseConfig();
-        jevois = new SerialPort(115200, Port.kUSB);
-        visionCam = new VisionCamera(jevois);
+        RobotMap.jevois = new SerialPort(115200, Port.kUSB);
+        RobotMap.visionCam = new VisionCamera(RobotMap.jevois);
     }
 
     @Override
@@ -34,8 +31,8 @@ public class Robot extends TimedRobot {
         SmartDashboard.putBoolean("beam break 1", RobotMap.beambreak1.get());
         SmartDashboard.putBoolean("beam break 2", RobotMap.beambreak2.get());
         SmartDashboard.putBoolean("beam break 3", RobotMap.beambreak3.get());
-        SmartDashboard.putNumber("cam distance", visionCam.getDistance());
-        SmartDashboard.putNumber("cam angle", visionCam.getAngle());
+        SmartDashboard.putNumber("cam distance", RobotMap.visionCam.getDistance());
+        SmartDashboard.putNumber("cam angle", RobotMap.visionCam.getAngle());
         SmartDashboard.putNumber("lidar dist", RobotMap.lidar.getDistance());
         SmartDashboard.putBoolean("lower limit switch", RobotMap.lowerHoodSwitch.get());
         SmartDashboard.putBoolean("upper limit switch", RobotMap.upperHoodSwitch.get());

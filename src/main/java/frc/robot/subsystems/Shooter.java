@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.ButtonMap;
 import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.universalcommands.SetFlywheelRPM;
 
@@ -50,9 +49,9 @@ public class Shooter extends SubsystemBase {
         if (ButtonMap.shoot()) {
             if (!initiationRPM.isScheduled()
                     && (Math.round(RobotMap.lidar.getDistance()) >= 6.0
-                            || Math.round(Robot.visionCam.getDistance()) >= 6.0)
+                            || Math.round(RobotMap.visionCam.getDistance()) >= 6.0)
                     && (Math.round(RobotMap.lidar.getDistance()) <= 14.0
-                            || Math.round(Robot.visionCam.getDistance()) <= 14.0)) {
+                            || Math.round(RobotMap.visionCam.getDistance()) <= 14.0)) {
                 initiationRPM.schedule();
             }
         } else if (!isShooting()) {
