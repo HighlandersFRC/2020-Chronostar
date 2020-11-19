@@ -4,12 +4,10 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
 
 import frc.robot.commands.universalcommands.SetFlywheelRPM;
-import frc.robot.sensors.VisionCamera;
 
 public class Robot extends TimedRobot {
 
@@ -17,9 +15,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
-        config.startBaseConfig();
-        RobotMap.jevois = new SerialPort(115200, Port.kUSB);
-        RobotMap.visionCam = new VisionCamera(RobotMap.jevois);
+        config.startBaseConfig();        
     }
 
     @Override
