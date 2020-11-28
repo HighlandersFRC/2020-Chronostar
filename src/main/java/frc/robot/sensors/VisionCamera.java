@@ -66,28 +66,6 @@ public class VisionCamera {
     }
 
     public void updateVision() {
-        // try {
-        //     String unsanitizedString = this.getString();
-        //     String jsonString =
-        //             unsanitizedString.substring(
-        //                     unsanitizedString.indexOf('{'), unsanitizedString.indexOf('}') + 1);
-        //     double tryDistance = badDistance;
-        //     double tryAngle = badAngle;
-
-        //     if (jsonString != null) {
-
-        //         tryDistance = parseDistance(jsonString);
-        //         tryAngle = parseAngle(jsonString);
-        //     }
-        //     if (tryAngle != badAngle) {
-        //         distance = tryDistance;
-        //         angle = tryAngle;
-
-        //         lastParseTime = Timer.getFPGATimestamp();
-        //     }
-
-        // } catch (Exception e) {
-        // }
         JSONObject json = jsonResults.poll();
         if (json != null) {
             double tempDistance = (double) json.get("Distance");
@@ -102,61 +80,12 @@ public class VisionCamera {
         }
     }
 
-    // public double parseAngle(String jsonString) {
-
-    //     try {
-    //         Object object = parser.parse(jsonString);
-    //         JSONObject jsonObject = (JSONObject) object;
-    //         if (jsonObject != null) {
-    //             double distString = (double) jsonObject.get("Angle");
-    //             return Double.valueOf(distString);
-    //         }
-    //     } catch (ParseException e) {
-    //     } catch (UncleanStatusException e) {
-    //     } catch (ClassCastException e) {
-    //     }
-
-    //     return badAngle;
-    // }
-
-    // public double parseDistance(String jsonString) {
-
-    //     try {
-    //         Object object = parser.parse(jsonString);
-    //         JSONObject jsonObject = (JSONObject) object;
-    //         if (jsonObject != null) {
-    //             double distString = (double) jsonObject.get("Distance");
-    //             return (Double.valueOf(distString)) / 12;
-    //         }
-    //     } catch (ParseException e) {
-    //     } catch (UncleanStatusException e) {
-    //     } catch (ClassCastException e) {
-    //     }
-
-    //     return badDistance;
-    // }
-
     public double getDistance() {
         return distance;
     }
 
     public double getAngle() {
         return angle;
-    }
-
-    public String getString() {
-        try {
-            if (port.getBytesReceived() > 2) {
-                String unsanitizedString = port.readString();
-                if (unsanitizedString.length() > 5
-                        && !unsanitizedString.isBlank()
-                        && !unsanitizedString.isEmpty()) {
-                    sanitizedString = unsanitizedString;
-                }
-            }
-        } catch (Exception e) {
-        }
-        return sanitizedString;
     }
 
     public Point getTargetPoint() {
