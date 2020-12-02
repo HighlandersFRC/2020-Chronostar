@@ -71,6 +71,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
+        SmartDashboard.putNumber("JevoisDistance", visionCam.getDistance());
+        SmartDashboard.putNumber("JevoisAngle", visionCam.getAngle());
         RobotMap.shooter.teleopPeriodic();
         RobotMap.drive.teleopPeriodic();
         RobotMap.magazine.teleopPeriodic();
