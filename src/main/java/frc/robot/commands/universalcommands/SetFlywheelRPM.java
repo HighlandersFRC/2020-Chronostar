@@ -55,7 +55,7 @@ public class SetFlywheelRPM extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         RobotMap.visionRelay.set(Value.kReverse);
-        RobotMap.leftFlywheel.set(ControlMode.PercentOutput, 0);
+        RobotMap.leftFlywheel.set(ControlMode.Velocity, 0);
         new SetMags(0, 0).schedule();
         RobotMap.intake2Motor.set(ControlMode.PercentOutput, 0);
         RobotMap.hood.setHoodTarget(0);
