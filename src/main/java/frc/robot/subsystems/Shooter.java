@@ -62,6 +62,6 @@ public class Shooter extends SubsystemBase {
     }
 
     public boolean isShooting() {
-        return RobotMap.leftFlywheel.getClosedLoopTarget() >= 0;
+        return initiationRPM.isAtTargetRPM() || trenchRPM.isAtTargetRPM();
     }
 }
