@@ -147,7 +147,6 @@ public class Drive extends SubsystemBase {
             aPID.updatePID(0);
             RobotMap.leftDriveLead.set(ControlMode.PercentOutput, 0);
             RobotMap.rightDriveLead.set(ControlMode.PercentOutput, 0);
-            RobotMap.visionRelay.set(Value.kForward);
         }
     }
 
