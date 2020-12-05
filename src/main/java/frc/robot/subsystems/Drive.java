@@ -139,15 +139,9 @@ public class Drive extends SubsystemBase {
         RobotMap.visionCam.getAngle();
         SmartDashboard.putNumber("Jevois Angle", RobotMap.visionCam.getAngle());
         SmartDashboard.putNumber("Get result", aPID.getResult());
-        if (Timer.getFPGATimestamp() - RobotMap.visionCam.getLastParseTime() < 0.25) {
-            aPID.updatePID(RobotMap.visionCam.getAngle() + 6);
-            RobotMap.leftDriveLead.set(ControlMode.PercentOutput, aPID.getResult());
-            RobotMap.rightDriveLead.set(ControlMode.PercentOutput, -aPID.getResult());
-        } else {
-            aPID.updatePID(0);
-            RobotMap.leftDriveLead.set(ControlMode.PercentOutput, 0);
-            RobotMap.rightDriveLead.set(ControlMode.PercentOutput, 0);
-        }
+        aPID.updatePID(RobotMap.visionCam.getAngle() + 6);
+        RobotMap.leftDriveLead.set(ControlMode.PercentOutput, aPID.getResult());
+        RobotMap.rightDriveLead.set(ControlMode.PercentOutput, -aPID.getResult());
     }
 
     public void teleopPeriodic() {
