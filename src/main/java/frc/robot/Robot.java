@@ -45,28 +45,24 @@ public class Robot extends TimedRobot {
         } catch (Exception e) {
         }
 
-        SmartDashboard.putNumber("lidar lite dist", RobotMap.lidarlite.getDistance());
+        SmartDashboard.putNumber("lidar lite dist", RobotMap.lidar.getDistance());
     }
 
-    /** This function is called once each time the robot enters Disabled mode. */
     @Override
     public void disabledInit() {}
 
     @Override
     public void disabledPeriodic() {}
 
-    /** This autonomous runs the autonomous command selected by your {@link RobotMap} class. */
     @Override
     public void autonomousInit() {
 
-        // schedule the autonomous command (example)
         if (m_autonomousCommand != null) {
             m_autonomousCommand.schedule();
         }
         config.startAutoConfig();
     }
 
-    /** This function is called periodically during autonomous. */
     @Override
     public void autonomousPeriodic() {
         RobotMap.highMag.set(1);
@@ -80,7 +76,6 @@ public class Robot extends TimedRobot {
         config.startTeleopConfig();
     }
 
-    /** This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
         SmartDashboard.putNumber("leftHeat", RobotMap.leftFlywheel.getTemperature());
@@ -95,11 +90,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void testInit() {
-        // Cancels all running commands at the start of test mode.
         CommandScheduler.getInstance().cancelAll();
     }
 
-    /** This function is called periodically during test mode. */
     @Override
     public void testPeriodic() {}
 }

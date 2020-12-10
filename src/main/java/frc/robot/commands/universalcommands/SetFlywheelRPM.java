@@ -6,12 +6,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.*;
 
-public class SetFlywheelVelocity extends CommandBase {
+public class SetFlywheelRPM extends CommandBase {
 
     private double targetVelocity;
 
-    public SetFlywheelVelocity(double velocity) {
+    public SetFlywheelRPM(double velocity) {
         targetVelocity = velocity;
+        addRequirements(RobotMap.shooter);
     }
 
     // Called when the command is initially scheduled.

@@ -2,89 +2,92 @@
 
 package frc.robot.sensors;
 
-import edu.wpi.first.hal.util.UncleanStatusException;
 import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.Timer;
 
 import frc.robot.tools.math.Point;
 
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.simple.parser.*;
+
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class VisionCamera {
-    JSONParser parser = new JSONParser();
-    SerialPort port;
-    public String sanitizedString = "nothing";
-    public double lastParseTime;
+    private JSONParser parser = new JSONParser();
+    private SerialPort port;
+    private double lastParseTime;
     private double distance;
     private double angle;
-    private double badAngle = -100.0;
-    private double badDistance = -11.0;
-    private Point targetPoint;
+    private static final double BAD_ANGLE = -100.0;
+    private static final double BAD_DISTANCE = -11.0;
+    private Point targetPoint = new Point(0, 0);
+    private AtomicBoolean shouldStop = new AtomicBoolean(false);
+    private ConcurrentLinkedQueue<JSONObject> jsonResults = new ConcurrentLinkedQueue<JSONObject>();
 
     public VisionCamera(SerialPort jevois) {
         port = jevois;
-        targetPoint = new Point(0, 0);
+        Runnable task =
+                () -> {
+                    String buffer = "";
+                    while (!shouldStop.get()) {
+                        // Gets bytes from serial port
+                        if (port.getBytesReceived() > 0) {
+                            buffer += port.readString();
+                        }
+                        // Consume bytes until the '{'
+                        if (buffer.length() > 0) {
+                            int index = buffer.indexOf('{', 0);
+                            if (index != -1 && index != 0) {
+                                buffer = buffer.substring(index);
+                            } else if (index == -1) {
+                                buffer = "";
+                            }
+                        }
+                        // Search for '}' and parse JSON
+                        if (buffer.length() > 0) {
+                            int index = buffer.indexOf('}', 0);
+                            if (index != -1) {
+                                String section = buffer.substring(0, index + 1);
+                                try {
+                                    JSONObject json = (JSONObject) parser.parse(section);
+                                    if (jsonResults.size() > 16) {
+                                        jsonResults.poll();
+                                    }
+                                    jsonResults.add(json);
+                                } catch (ParseException e) {
+                                    System.err.println(e);
+                                }
+                                buffer = buffer.substring(index + 1);
+                            }
+                        }
+                    }
+                };
+        Thread thread = new Thread(task);
+        thread.start();
     }
 
     public void updateVision() {
-        try {
-            String unsanitizedString = this.getString();
-            String jsonString =
-                    unsanitizedString.substring(
-                            unsanitizedString.indexOf('{'), unsanitizedString.indexOf('}') + 1);
-            double tryDistance = badDistance;
-            double tryAngle = badAngle;
-
-            if (jsonString != null) {
-
-                tryDistance = parseDistance(jsonString);
-                tryAngle = parseAngle(jsonString);
+        // Drain existing objects out of queue and use most recent
+        JSONObject json = jsonResults.poll();
+        int jsonSize = jsonResults.size();
+        for (int i = 0; i < jsonSize; i++) {
+            JSONObject temp = jsonResults.poll();
+            if (temp != null) {
+                json = temp;
             }
-            if (tryAngle != badAngle) {
-                distance = tryDistance;
-                angle = tryAngle;
-
-                lastParseTime = Timer.getFPGATimestamp();
-            }
-
-        } catch (Exception e) {
         }
-    }
+        // Use JSON results if present
+        if (json != null) {
+            double tempDistance = (double) json.get("Distance");
+            double tempAngle = (double) json.get("Angle");
 
-    public double parseAngle(String jsonString) {
-
-        try {
-            Object object = parser.parse(jsonString);
-            JSONObject jsonObject = (JSONObject) object;
-            if (jsonObject != null) {
-                double distString = (double) jsonObject.get("Angle");
-                return Double.valueOf(distString);
+            if (tempDistance != BAD_DISTANCE) {
+                distance = tempDistance;
             }
-        } catch (ParseException e) {
-        } catch (UncleanStatusException e) {
-        } catch (ClassCastException e) {
-        }
-
-        return badAngle;
-    }
-
-    public double parseDistance(String jsonString) {
-
-        try {
-            Object object = parser.parse(jsonString);
-            JSONObject jsonObject = (JSONObject) object;
-            if (jsonObject != null) {
-                double distString = (double) jsonObject.get("Distance");
-                return (Double.valueOf(distString)) / 12;
+            if (tempAngle != BAD_ANGLE) {
+                angle = tempAngle;
             }
-        } catch (ParseException e) {
-        } catch (UncleanStatusException e) {
-        } catch (ClassCastException e) {
         }
-
-        return badDistance;
     }
 
     public double getDistance() {
@@ -95,19 +98,8 @@ public class VisionCamera {
         return angle;
     }
 
-    public String getString() {
-        try {
-            if (port.getBytesReceived() > 2) {
-                String unsanitizedString = port.readString();
-                if (unsanitizedString.length() > 5
-                        && !unsanitizedString.isBlank()
-                        && !unsanitizedString.isEmpty()) {
-                    sanitizedString = unsanitizedString;
-                }
-            }
-        } catch (Exception e) {
-        }
-        return sanitizedString;
+    public double getLastParseTime() {
+        return lastParseTime;
     }
 
     public Point getTargetPoint() {
@@ -122,5 +114,13 @@ public class VisionCamera {
         yAverage = yAverage / 20;
         targetPoint.setLocation(xAverage, yAverage);
         return targetPoint;
+    }
+
+    public double getCorrectedDistance(double a, double b, double c, double d) {
+        updateVision();
+        return a * Math.pow(getDistance(), 3)
+                + b * Math.pow(getDistance(), 2)
+                + c * getDistance()
+                + d;
     }
 }

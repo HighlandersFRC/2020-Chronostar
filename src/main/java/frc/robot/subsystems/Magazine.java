@@ -9,22 +9,16 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.*;
-import frc.robot.commands.teleopcommands.*;
-import frc.robot.commands.universalcommands.*;
+import frc.robot.commands.defaultcommands.MagazineDefaultCommand;
 
 public class Magazine extends SubsystemBase {
 
     private boolean beambreak1;
     private boolean beambreak2;
     private boolean beambreak3;
-    private int catchCounter;
-    private int tryCounter;
     public static boolean stuck;
-    private FireSequence fire;
 
-    public Magazine() {
-        fire = new FireSequence(5000, 0);
-    }
+    public Magazine() {}
 
     public void init() {
         RobotMap.lowMag.setNeutralMode(NeutralMode.Brake);
@@ -35,6 +29,27 @@ public class Magazine extends SubsystemBase {
         RobotMap.intake2Motor.setNeutralMode(NeutralMode.Brake);
         RobotMap.intakeMotor.setInverted(true);
         RobotMap.intake2Motor.setInverted(true);
+        setDefaultCommand(new MagazineDefaultCommand());
+    }
+
+    public boolean getBeamBreak3() {
+        return beambreak3;
+    }
+
+    public boolean getBeamBreak2() {
+        return beambreak2;
+    }
+
+    public boolean getBeamBreak1() {
+        return beambreak1;
+    }
+
+    public void setLowMagPercent(double power) {
+        RobotMap.lowMag.set(ControlMode.PercentOutput, power);
+    }
+
+    public void setHighMagPercent(double power) {
+        RobotMap.highMag.set(power);
     }
 
     @Override
@@ -42,54 +57,7 @@ public class Magazine extends SubsystemBase {
         beambreak1 = !RobotMap.beambreak1.get();
         beambreak2 = !RobotMap.beambreak2.get();
         beambreak3 = !RobotMap.beambreak3.get();
-
-        if (!ButtonMap.shoot() && ButtonMap.getOperatorLeftTrigger() <= 0.5) {
-            if (beambreak3) {
-                new HighMagBump(0, 0.15).schedule();
-            } else if (beambreak2) {
-                new HighMagBump(-0.425, 0.15).schedule();
-                new LowMagBump(0.3, 0.15).schedule();
-            }
-            if (beambreak1) {
-                if (catchCounter <= 50) {
-                    new LowMagBump(0.3, 0.15).schedule();
-                } else {
-                    if (tryCounter <= 25) {
-                        stuck = true;
-                        tryCounter++;
-                    } else {
-                        new LowMagBump(-0.3, 0.15).schedule();
-                        catchCounter = 0;
-                        tryCounter = 0;
-                        stuck = false;
-                    }
-                }
-                catchCounter++;
-            } else {
-                catchCounter = 0;
-                stuck = false;
-            }
-        }
     }
 
-    public void stopAll() {
-        RobotMap.highMag.set(0);
-        RobotMap.lowMag.set(ControlMode.PercentOutput, 0);
-    }
-
-    public void fire() {
-        if (!fire.isScheduled() && !fire.isFinished()) fire.schedule();
-    }
-
-    public void outtake() {
-        new Outtake().schedule();
-    }
-
-    public void teleopPeriodic() {
-        if (ButtonMap.shoot()) {
-            fire();
-        } else if (ButtonMap.getOperatorLeftTrigger() >= 0.5) {
-            outtake();
-        }
-    }
+    public void teleopPeriodic() {}
 }

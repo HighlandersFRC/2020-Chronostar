@@ -6,12 +6,12 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 
-import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.*;
+import frc.robot.commands.defaultcommands.DriveDefaultCommand;
 import frc.robot.tools.controlloops.PID;
 
 public class Drive extends SubsystemBase {
@@ -33,11 +33,11 @@ public class Drive extends SubsystemBase {
         aPID = new PID(akP, akI, akD);
         RobotMap.leftDriveLead.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
         RobotMap.rightDriveLead.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
-        RobotMap.leftDriveFollower1.set(ControlMode.Follower, RobotStats.leftDriveLeadID);
-        RobotMap.rightDriveFollower1.set(ControlMode.Follower, RobotStats.rightDriveLeadID);
+        RobotMap.leftDriveFollower.set(ControlMode.Follower, Constants.LEFT_DRIVE_LEAD_ID);
+        RobotMap.rightDriveFollower.set(ControlMode.Follower, Constants.RIGHT_DRIVE_LEAD_ID);
         RobotMap.rightDriveLead.setInverted(true);
-        RobotMap.rightDriveFollower1.setInverted(InvertType.FollowMaster);
-        RobotMap.leftDriveFollower1.setInverted(InvertType.FollowMaster);
+        RobotMap.rightDriveFollower.setInverted(InvertType.FollowMaster);
+        RobotMap.leftDriveFollower.setInverted(InvertType.FollowMaster);
         RobotMap.leftDriveLead.setSensorPhase(false);
         RobotMap.rightDriveLead.setSensorPhase(false);
         RobotMap.leftDriveLead.setSelectedSensorPosition(0);
@@ -53,22 +53,23 @@ public class Drive extends SubsystemBase {
         RobotMap.rightDriveLead.config_kI(0, vkI);
         RobotMap.leftDriveLead.config_kD(0, vkD);
         RobotMap.rightDriveLead.config_kD(0, vkD);
+        setDefaultCommand(new DriveDefaultCommand(true));
     }
 
-    private void setLeftPercent(double percent) {
+    public void setLeftPercent(double percent) {
         RobotMap.leftDriveLead.set(ControlMode.PercentOutput, percent);
     }
 
-    private void setRightPercent(double percent) {
+    public void setRightPercent(double percent) {
         RobotMap.rightDriveLead.set(ControlMode.PercentOutput, percent);
     }
 
-    private void setLeftSpeed(double fps) {
-        RobotMap.leftDriveLead.set(ControlMode.Velocity, RobotStats.fpsToEncVelocity(fps));
+    public void setLeftSpeed(double fps) {
+        RobotMap.leftDriveLead.set(ControlMode.Velocity, Constants.driveFPSToUnitsPer100MS(fps));
     }
 
-    private void setRightSpeed(double fps) {
-        RobotMap.rightDriveLead.set(ControlMode.Velocity, RobotStats.fpsToEncVelocity(fps));
+    public void setRightSpeed(double fps) {
+        RobotMap.rightDriveLead.set(ControlMode.Velocity, Constants.driveFPSToUnitsPer100MS(fps));
     }
 
     public void arcadeDrive(double throttle, double turn) {
@@ -102,11 +103,11 @@ public class Drive extends SubsystemBase {
     @Override
     public void periodic() {}
 
-    public void trackVisionTape() {
+    public void orientToTarget() {
         try {
             if (!RobotState.isOperatorControl()) {
-                if (Math.abs(ButtonMap.getThrottle()) > deadzone) {
-                    visionTapePercent = Math.tanh(ButtonMap.getThrottle()) * 4 / Math.PI;
+                if (Math.abs(OI.getDriverLeftY()) > deadzone) {
+                    visionTapePercent = Math.tanh(OI.getDriverLeftY()) * 4 / Math.PI;
                 } else {
                     visionTapePercent = 0;
                 }
@@ -115,27 +116,20 @@ public class Drive extends SubsystemBase {
             }
             RobotConfig.setDriveBrake();
             Robot.visionCam.updateVision();
-            if (Timer.getFPGATimestamp() - Robot.visionCam.lastParseTime > 0.25) {
+            if (Timer.getFPGATimestamp() - Robot.visionCam.getLastParseTime() > 0.25) {
                 aPID.updatePID(0);
                 return;
             } else {
                 aPID.updatePID(Robot.visionCam.getAngle());
             }
 
-            setLeftSpeed(visionTapePercent * 6 + aPID.getResult());
-            setRightSpeed(visionTapePercent * 6 + aPID.getResult());
+            setLeftPercent(visionTapePercent * 6 + aPID.getResult());
+            setRightPercent(visionTapePercent * 6 + aPID.getResult());
 
         } catch (Exception e) {
 
         }
     }
 
-    public void teleopPeriodic() {
-        arcadeDrive(ButtonMap.getThrottle(), ButtonMap.getTurn());
-        if (ButtonMap.getDriverRightBumper()) {
-            RobotMap.visionRelay.set(Value.kForward);
-        } else {
-            RobotMap.visionRelay.set(Value.kReverse);
-        }
-    }
+    public void teleopPeriodic() {}
 }
