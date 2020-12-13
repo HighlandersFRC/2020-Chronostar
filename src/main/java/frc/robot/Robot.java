@@ -2,33 +2,20 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
-import frc.robot.sensors.VisionCamera;
-import frc.robot.subsystems.Shooter;
+import frc.robot.commands.universalcommands.Fire;
+import frc.robot.commands.universalcommands.SetMags;
 
 public class Robot extends TimedRobot {
-    private Command m_autonomousCommand;
-
-    public static SerialPort jevois;
-    public static VisionCamera visionCam;
 
     private RobotConfig config = new RobotConfig();
 
     @Override
     public void robotInit() {
         config.startBaseConfig();
-        try {
-            jevois = new SerialPort(115200, Port.kUSB2);
-            visionCam = new VisionCamera(jevois);
-        } catch (Exception e) {
-            System.err.println("vision cam failed to connect");
-        }
     }
 
     @Override
@@ -36,12 +23,12 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().run();
         RobotMap.magazine.periodic();
         RobotMap.intake.periodic();
-        SmartDashboard.putBoolean("beam break 1", RobotMap.beambreak1.get());
-        SmartDashboard.putBoolean("beam break 2", RobotMap.beambreak2.get());
-        SmartDashboard.putBoolean("beam break 3", RobotMap.beambreak3.get());
+        SmartDashboard.putBoolean("beam break 1", RobotMap.magazine.getBeamBreak1());
+        SmartDashboard.putBoolean("beam break 2", RobotMap.magazine.getBeamBreak2());
+        SmartDashboard.putBoolean("beam break 3", RobotMap.magazine.getBeamBreak3());
         try {
-            visionCam.updateVision();
-            SmartDashboard.putNumber("distance", visionCam.getDistance());
+            RobotMap.visionCam.updateVision();
+            SmartDashboard.putNumber("distance", RobotMap.visionCam.getDistance());
         } catch (Exception e) {
         }
 
@@ -56,24 +43,16 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-
-        if (m_autonomousCommand != null) {
-            m_autonomousCommand.schedule();
-        }
         config.startAutoConfig();
     }
 
     @Override
-    public void autonomousPeriodic() {
-        RobotMap.highMag.set(1);
-    }
+    public void autonomousPeriodic() {}
 
     @Override
     public void teleopInit() {
-        if (m_autonomousCommand != null) {
-            m_autonomousCommand.cancel();
-        }
         config.startTeleopConfig();
+        OI.operatorA.whileHeld(new Fire(true));
     }
 
     @Override
@@ -81,11 +60,11 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("leftHeat", RobotMap.leftFlywheel.getTemperature());
         SmartDashboard.putNumber("rightHeat", RobotMap.rightFlywheel.getTemperature());
         RobotMap.magazine.teleopPeriodic();
-        SmartDashboard.putNumber(
-                "rpm",
-                Shooter.unitsPer100MsToRpm(RobotMap.leftFlywheel.getSelectedSensorVelocity()));
         RobotMap.shooter.teleopPeriodic();
         RobotMap.drive.teleopPeriodic();
+        if (OI.getOperatorLeftTrigger() >= 0.5) {
+            new SetMags(-1, 0.75).schedule();
+        }
     }
 
     @Override

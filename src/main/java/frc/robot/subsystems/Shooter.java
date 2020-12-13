@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
@@ -49,13 +50,15 @@ public class Shooter extends SubsystemBase {
                 ControlMode.Velocity, Constants.shooterRPMToUnitsPer100MS(desiredVelocity));
     }
 
-    public void teleopPeriodic() {}
-
-    public static double unitsPer100MsToRpm(double units) {
-        return (units * 600) / Constants.TICKS_PER_SHOOTER_ROTATION;
+    public void teleopPeriodic() {
+        SmartDashboard.putNumber(
+                "rpm",
+                Constants.shooterUnitsPer100MsToRPM(
+                        RobotMap.leftFlywheel.getSelectedSensorVelocity()));
     }
 
     public double getShooterRPM() {
-        return unitsPer100MsToRpm(RobotMap.leftFlywheel.getSelectedSensorVelocity());
+        return Constants.shooterUnitsPer100MsToRPM(
+                RobotMap.leftFlywheel.getSelectedSensorVelocity());
     }
 }

@@ -115,12 +115,12 @@ public class Drive extends SubsystemBase {
                 visionTapePercent = 0;
             }
             RobotConfig.setDriveBrake();
-            Robot.visionCam.updateVision();
-            if (Timer.getFPGATimestamp() - Robot.visionCam.getLastParseTime() > 0.25) {
+            RobotMap.visionCam.updateVision();
+            if (Timer.getFPGATimestamp() - RobotMap.visionCam.getLastParseTime() > 0.25) {
                 aPID.updatePID(0);
                 return;
             } else {
-                aPID.updatePID(Robot.visionCam.getAngle());
+                aPID.updatePID(RobotMap.visionCam.getAngle());
             }
 
             setLeftPercent(visionTapePercent * 6 + aPID.getResult());

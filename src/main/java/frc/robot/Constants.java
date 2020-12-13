@@ -86,6 +86,10 @@ public class Constants {
         return (int) Math.round((rpm / 600) * Constants.TICKS_PER_SHOOTER_ROTATION);
     }
 
+    public static double shooterUnitsPer100MsToRPM(double units) {
+        return (units * 600) / Constants.TICKS_PER_SHOOTER_ROTATION;
+    }
+
     public static double convertCamera(double camDistance) {
         return 0;
     }
