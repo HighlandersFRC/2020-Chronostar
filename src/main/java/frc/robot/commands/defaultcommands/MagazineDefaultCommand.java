@@ -1,20 +1,18 @@
 package frc.robot.commands.defaultcommands;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.robot.RobotMap;
 import frc.robot.commands.universalcommands.*;
+import frc.robot.subsystems.Magazine;
 
 public class MagazineDefaultCommand extends CommandBase {
 
-    private int catchCounter;
-    private int tryCounter;
-    private double PULSE_TIME = 0.15;
-    private double LOW_MAG_POWER = 0.4;
-    private double HIGH_MAG_POWER = 0.425;
+    private final Magazine m_magazine = new Magazine();
 
     public MagazineDefaultCommand() {
-        addRequirements(RobotMap.magazine);
+        addRequirements(m_magazine);
     }
 
     @Override
@@ -22,27 +20,35 @@ public class MagazineDefaultCommand extends CommandBase {
 
     @Override
     public void execute() {
-        if (RobotMap.magazine.getBeamBreak3()) {
-            new HighMagBump(0, PULSE_TIME).schedule();
-        } else if (RobotMap.magazine.getBeamBreak2()) {
-            new HighMagBump(HIGH_MAG_POWER, PULSE_TIME).schedule();
-            new LowMagBump(LOW_MAG_POWER, PULSE_TIME).schedule();
+        if (Magazine.beamBreak1.get() == true
+                & Magazine.beamBreak2.get() == true
+                & Magazine.beamBreak3.get() == true) {
+            Magazine.highMag.set(0);
+            Magazine.lowMag.set(ControlMode.PercentOutput, 0);
+        } else if (Magazine.beamBreak3.get() == false) {
+            Magazine.highMag.set(0);
+            Magazine.lowMag.set(ControlMode.PercentOutput, 0);
+        } else if (Magazine.beamBreak1.get() == false & Magazine.beamBreak2.get() == true) {
+            Magazine.lowMag.set(ControlMode.PercentOutput, 0.5);
+        } else if (Magazine.beamBreak2.get() == false & Magazine.beamBreak1.get() == true) {
+            Magazine.lowMag.set(ControlMode.PercentOutput, 0.3);
+            Magazine.highMag.set(0);
+        } else if (Magazine.beamBreak2.get() == false & Magazine.beamBreak1.get() == false) {
+            Magazine.lowMag.set(ControlMode.PercentOutput, 0.3);
+            Magazine.highMag.set(-0.3);
         }
-        if (RobotMap.magazine.getBeamBreak1()) {
-            if (catchCounter <= 50) {
-                new LowMagBump(LOW_MAG_POWER, PULSE_TIME).schedule();
-            } else {
-                if (tryCounter <= 25) {
-                    tryCounter++;
-                } else {
-                    new LowMagBump(-LOW_MAG_POWER, PULSE_TIME).schedule();
-                    catchCounter = 0;
-                    tryCounter = 0;
-                }
-            }
-            catchCounter++;
+        // else if(Magazine.beamBreak2.get() == false & numBalls != 0) {
+        // Magazine.lowMag.set(ControlMode.PercentOutput, 0.3);
+        // }
+        else if (Magazine.beamBreak3.get() == false & Magazine.beamBreak2.get() == false) {
+            Magazine.highMag.set(0);
+            Magazine.lowMag.set(ControlMode.PercentOutput, 0.2);
+        } else if (Magazine.beamBreak2.get() == false & Magazine.beamBreak3.get() == true) {
+            Magazine.highMag.set(-0.3);
+            Magazine.lowMag.set(ControlMode.PercentOutput, 0.3);
         } else {
-            catchCounter = 0;
+            Magazine.lowMag.set(ControlMode.PercentOutput, -0.3);
+            Magazine.highMag.set(0.2);
         }
     }
 

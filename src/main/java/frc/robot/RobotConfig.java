@@ -10,8 +10,6 @@ public class RobotConfig {
 
     public void startBaseConfig() {
         setCurrentLimitsEnabled();
-        RobotMap.shooter.init();
-        RobotMap.drive.init();
         RobotMap.intake.init();
         RobotMap.magazine.init();
     }
