@@ -6,7 +6,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.robot.RobotMap;
+import frc.robot.subsystems.Magazine;
 
 public class SetLowMag extends CommandBase {
 
@@ -18,7 +18,7 @@ public class SetLowMag extends CommandBase {
 
     @Override
     public void initialize() {
-        RobotMap.lowMag.set(ControlMode.PercentOutput, power);
+        Magazine.lowMag.set(ControlMode.PercentOutput, power);
     }
 
     @Override

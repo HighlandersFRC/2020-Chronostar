@@ -4,7 +4,7 @@ package frc.robot.commands.universalcommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.robot.RobotMap;
+import frc.robot.subsystems.Magazine;
 
 public class SetHighMag extends CommandBase {
 
@@ -17,7 +17,7 @@ public class SetHighMag extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        RobotMap.highMag.set(power);
+        Magazine.highMag.set(power);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
