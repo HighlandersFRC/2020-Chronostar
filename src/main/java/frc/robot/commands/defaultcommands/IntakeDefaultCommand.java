@@ -8,11 +8,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.OI;
 import frc.robot.RobotMap;
 import frc.robot.commands.universalcommands.SetPiston;
+import frc.robot.subsystems.Intake;
 
 public class IntakeDefaultCommand extends CommandBase {
 
-    public IntakeDefaultCommand() {
-        addRequirements(RobotMap.intake);
+    public IntakeDefaultCommand(Intake m_intake) {
+        addRequirements(m_intake);
     }
 
     @Override

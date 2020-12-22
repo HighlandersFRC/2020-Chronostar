@@ -9,9 +9,7 @@ import frc.robot.subsystems.Magazine;
 
 public class MagazineDefaultCommand extends CommandBase {
 
-    private final Magazine m_magazine = new Magazine();
-
-    public MagazineDefaultCommand() {
+    public MagazineDefaultCommand(Magazine m_magazine) {
         addRequirements(m_magazine);
     }
 
@@ -36,11 +34,7 @@ public class MagazineDefaultCommand extends CommandBase {
         } else if (Magazine.beamBreak2.get() == false & Magazine.beamBreak1.get() == false) {
             Magazine.lowMag.set(ControlMode.PercentOutput, 0.3);
             Magazine.highMag.set(-0.3);
-        }
-        // else if(Magazine.beamBreak2.get() == false & numBalls != 0) {
-        // Magazine.lowMag.set(ControlMode.PercentOutput, 0.3);
-        // }
-        else if (Magazine.beamBreak3.get() == false & Magazine.beamBreak2.get() == false) {
+        } else if (Magazine.beamBreak3.get() == false & Magazine.beamBreak2.get() == false) {
             Magazine.highMag.set(0);
             Magazine.lowMag.set(ControlMode.PercentOutput, 0.2);
         } else if (Magazine.beamBreak2.get() == false & Magazine.beamBreak3.get() == true) {
