@@ -2,12 +2,11 @@
 
 package frc.robot.commands.defaultcommands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.OI;
 import frc.robot.RobotMap;
-import frc.robot.commands.universalcommands.SetPiston;
 import frc.robot.subsystems.Intake;
 
 public class IntakeDefaultCommand extends CommandBase {
@@ -22,13 +21,14 @@ public class IntakeDefaultCommand extends CommandBase {
     @Override
     public void execute() {
         if (OI.getOperatorRightTrigger() >= 0.5) {
-            RobotMap.intake.setIntake(0.8, 0.6);
+            RobotMap.intake.setIntake(0.8, -0.6);
         } else if (OI.getOperatorLeftTrigger() >= 0.5) {
-            RobotMap.intake.setIntake(-0.8, -0.6);
+            RobotMap.intake.setIntake(-0.8, 0.6);
         } else {
             RobotMap.intake.setIntake(0, 0);
         }
-        new SetPiston(RobotMap.intakePiston, Value.kReverse).schedule();
+        SmartDashboard.putNumber("Current", RobotMap.intakeMotor.getOutputCurrent());
+        SmartDashboard.putNumber("IntakeTemp", RobotMap.intakeMotor.getTemperature());
     }
 
     @Override

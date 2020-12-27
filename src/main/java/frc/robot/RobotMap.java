@@ -36,7 +36,6 @@ public class RobotMap {
     public static CANDigitalInput upperHoodSwitch =
             new CANDigitalInput(hoodMotor, LimitSwitch.kForward, LimitSwitchPolarity.kNormallyOpen);
 
-    public static Magazine magazine = new Magazine();
     public static Intake intake = new Intake();
 
     public static TalonFX[] driveMotors = {

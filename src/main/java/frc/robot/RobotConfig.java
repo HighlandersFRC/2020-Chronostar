@@ -11,7 +11,6 @@ public class RobotConfig {
     public void startBaseConfig() {
         setCurrentLimitsEnabled();
         RobotMap.intake.init();
-        RobotMap.magazine.init();
     }
 
     public void startAutoConfig() {

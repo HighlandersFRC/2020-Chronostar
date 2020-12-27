@@ -17,11 +17,11 @@ import frc.robot.commands.defaultcommands.MagazineDefaultCommand;
 
 public class Magazine extends SubsystemBase {
 
-    public static DigitalInput beamBreak1 = new DigitalInput(Constants.BEAM_BREAK_1_ID);
-    public static DigitalInput beamBreak2 = new DigitalInput(Constants.BEAM_BREAK_3_ID);
-    public static DigitalInput beamBreak3 = new DigitalInput(Constants.BEAM_BREAK_2_ID);
-    public static VictorSPX lowMag = new VictorSPX(Constants.MAG_BELT_ID);
-    public static CANSparkMax highMag =
+    private final DigitalInput beamBreak1 = new DigitalInput(Constants.BEAM_BREAK_1_ID);
+    private final DigitalInput beamBreak2 = new DigitalInput(Constants.BEAM_BREAK_3_ID);
+    private final DigitalInput beamBreak3 = new DigitalInput(Constants.BEAM_BREAK_2_ID);
+    private final VictorSPX lowMag = new VictorSPX(Constants.MAG_BELT_ID);
+    private final CANSparkMax highMag =
             new CANSparkMax(Constants.MAG_WHEEL_ID, MotorType.kBrushless);
 
     public Magazine() {}
@@ -31,7 +31,7 @@ public class Magazine extends SubsystemBase {
         highMag.setIdleMode(IdleMode.kBrake);
         lowMag.configVoltageCompSaturation(11.7);
         lowMag.enableVoltageCompensation(true);
-        setDefaultCommand(new MagazineDefaultCommand(RobotMap.magazine));
+        setDefaultCommand(new MagazineDefaultCommand(this));
     }
 
     public void setLowMagPercent(double power) {
@@ -40,6 +40,23 @@ public class Magazine extends SubsystemBase {
 
     public void setHighMagPercent(double power) {
         highMag.set(power);
+    }
+
+    public void setMagPercent(double lowPower, double highPower) {
+        setLowMagPercent(lowPower);
+        setHighMagPercent(highPower);
+    }
+
+    public boolean getBeamBreak1() {
+        return beamBreak1.get();
+    }
+
+    public boolean getBeamBreak2() {
+        return beamBreak2.get();
+    }
+
+    public boolean getBeamBreak3() {
+        return beamBreak3.get();
     }
 
     @Override
