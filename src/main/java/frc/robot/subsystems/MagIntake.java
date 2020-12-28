@@ -4,18 +4,22 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import frc.robot.*;
-import frc.robot.commands.defaultcommands.MagazineDefaultCommand;
+import frc.robot.Constants;
+import frc.robot.commands.defaults.MagIntakeDefault;
 
-public class Magazine extends SubsystemBase {
+public class MagIntake extends SubsystemBase {
+    public MagIntake() {}
 
     private final DigitalInput beamBreak1 = new DigitalInput(Constants.BEAM_BREAK_1_ID);
     private final DigitalInput beamBreak2 = new DigitalInput(Constants.BEAM_BREAK_3_ID);
@@ -24,14 +28,17 @@ public class Magazine extends SubsystemBase {
     private final CANSparkMax highMag =
             new CANSparkMax(Constants.MAG_WHEEL_ID, MotorType.kBrushless);
 
-    public Magazine() {}
+    private final TalonFX lowIntake = new TalonFX(Constants.LOW_INTAKE_ID);
+    private final VictorSPX highIntake = new VictorSPX(Constants.HIGH_INTAKE_ID);
+    private final DoubleSolenoid intakePiston = new DoubleSolenoid(0, 1);
 
     public void init() {
         lowMag.setNeutralMode(NeutralMode.Brake);
         highMag.setIdleMode(IdleMode.kBrake);
         lowMag.configVoltageCompSaturation(11.7);
         lowMag.enableVoltageCompensation(true);
-        setDefaultCommand(new MagazineDefaultCommand(this));
+        setDefaultCommand(new MagIntakeDefault(this));
+        lowIntake.setInverted(true);
     }
 
     public void setLowMagPercent(double power) {
@@ -59,8 +66,27 @@ public class Magazine extends SubsystemBase {
         return beamBreak3.get();
     }
 
+    public void setIntake(double frontIntakePercent, double backIntakePercent) {
+        lowIntake.set(ControlMode.PercentOutput, frontIntakePercent);
+        highIntake.set(ControlMode.PercentOutput, backIntakePercent);
+    }
+
+    public void setLowIntakePercent(double power) {
+        lowIntake.set(ControlMode.PercentOutput, power);
+    }
+
+    public void setHighIntakePercent(double power) {
+        highIntake.set(ControlMode.PercentOutput, power);
+    }
+
+    public void intakePistonUp() {
+        intakePiston.set(Value.kForward);
+    }
+
+    public void intakePistonDown() {
+        intakePiston.set(Value.kReverse);
+    }
+
     @Override
     public void periodic() {}
-
-    public void teleopPeriodic() {}
 }

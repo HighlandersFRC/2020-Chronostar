@@ -23,10 +23,10 @@ public class Constants {
     public static final int RIGHT_DRIVE_LEAD_ID = 3;
     public static final int LEFT_DRIVE_FOLLOWER_ID = 2;
     public static final int RIGHT_DRIVE_FOLLOWER_ID = 4;
-    public static final int INTAKE_2_ID = 10;
+    public static final int HIGH_INTAKE_ID = 10;
     public static final int MAG_BELT_ID = 8;
     public static final int MAG_WHEEL_ID = 9;
-    public static final int INTAKE_1_ID = 12;
+    public static final int LOW_INTAKE_ID = 12;
     public static final int LEFT_FLYWHEEL_ID = 5;
     public static final int RIGHT_FLYWHEEL_ID = 6;
     public static final int HOOD_ID = 7;

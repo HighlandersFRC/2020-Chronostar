@@ -3,20 +3,31 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
 
-    private RobotConfig config = new RobotConfig();
-
     @Override
-    public void robotInit() {
-        config.startBaseConfig();
-    }
+    public void robotInit() {}
 
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
+        RobotMap.magIntake.periodic();
+        SmartDashboard.putBoolean("beam break 1", RobotMap.magIntake.getBeamBreak1());
+        SmartDashboard.putBoolean("beam break 2", RobotMap.magIntake.getBeamBreak2());
+        SmartDashboard.putBoolean("beam break 3", RobotMap.magIntake.getBeamBreak3());
+        try {
+            RobotMap.visionCam.updateVision();
+            SmartDashboard.putNumber("distance", RobotMap.visionCam.getDistance());
+        } catch (Exception e) {
+        }
+
+        SmartDashboard.putNumber("lidar lite dist", RobotMap.lidar.getDistance());
+        RobotMap.magIntake.init();
+        RobotMap.shooter.init();
+        RobotMap.drive.init();
     }
 
     @Override
@@ -27,14 +38,16 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        config.startAutoConfig();
+        RobotMap.drive.autoInit();
     }
 
     @Override
     public void autonomousPeriodic() {}
 
     @Override
-    public void teleopInit() {}
+    public void teleopInit() {
+        RobotMap.drive.teleopInit();
+    }
 
     @Override
     public void teleopPeriodic() {}
