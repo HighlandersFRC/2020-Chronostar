@@ -36,8 +36,8 @@ public class DriveDefaultCommand extends CommandBase {
 
         // drive code
 
-        if (Math.abs(OI.driverController.getRawAxis(4)) > 0.1) {
-            turn = (OI.driverController.getRawAxis(4));
+        if (Math.abs(OI.driverController.getRawAxis(0)) > 0.1) {
+            turn = (OI.driverController.getRawAxis(0));
         } else {
             turn = 0;
         }
