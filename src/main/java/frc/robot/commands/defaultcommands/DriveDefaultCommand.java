@@ -56,7 +56,7 @@ public class DriveDefaultCommand extends CommandBase {
             finalLeft = leftPower;
         }
 
-        if (Math.abs(OI.driverController.getRawAxis(1)) > 0.15) {
+        if (Math.abs(OI.driverController.getRawAxis(4)) > 0.15) {
             Drive.rightDriveLead.set(ControlMode.PercentOutput, finalRight);
             Drive.leftDriveLead.set(ControlMode.PercentOutput, finalLeft);
         } else {
