@@ -36,8 +36,8 @@ public class DriveDefaultCommand extends CommandBase {
 
         // drive code
 
-        if (Math.abs(OI.driverController.getRawAxis(0)) > 0.1) {
-            turn = (OI.driverController.getRawAxis(0));
+        if (Math.abs(OI.driverController.getRawAxis(4)) > 0.1) {
+            turn = (OI.driverController.getRawAxis(4));
         } else {
             turn = 0;
         }
@@ -58,9 +58,6 @@ public class DriveDefaultCommand extends CommandBase {
 
         Drive.rightDriveLead.set(ControlMode.PercentOutput, finalRight);
         Drive.leftDriveLead.set(ControlMode.PercentOutput, finalLeft);
-
-        Drive.rightDriveLead.set(ControlMode.PercentOutput, turn);
-        Drive.leftDriveLead.set(ControlMode.PercentOutput, -turn);
     }
 
     // Called once the command ends or is interrupted.
