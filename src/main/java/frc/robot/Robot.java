@@ -7,14 +7,8 @@ import edu.wpi.first.wpilibj2.command.*;
 
 public class Robot extends TimedRobot {
 
-    public static SerialPort jevois;
-
-    private RobotConfig config = new RobotConfig();
-
     @Override
-    public void robotInit() {
-        config.startBaseConfig();
-    }
+    public void robotInit() {}
 
     @Override
     public void robotPeriodic() {
@@ -34,9 +28,7 @@ public class Robot extends TimedRobot {
     public void autonomousPeriodic() {}
 
     @Override
-    public void teleopInit() {
-        config.startTeleopConfig();
-    }
+    public void teleopInit() {}
 
     @Override
     public void teleopPeriodic() {}
