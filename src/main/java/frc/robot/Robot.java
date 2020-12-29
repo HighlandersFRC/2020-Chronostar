@@ -6,7 +6,12 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
+import frc.robot.subsystems.MagIntake;
+
 public class Robot extends TimedRobot {
+
+    public static MagIntake magIntake = new MagIntake();
+    ;
 
     @Override
     public void robotInit() {}
@@ -14,10 +19,6 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
-        RobotMap.magIntake.periodic();
-        SmartDashboard.putBoolean("beam break 1", RobotMap.magIntake.getBeamBreak1());
-        SmartDashboard.putBoolean("beam break 2", RobotMap.magIntake.getBeamBreak2());
-        SmartDashboard.putBoolean("beam break 3", RobotMap.magIntake.getBeamBreak3());
         try {
             RobotMap.visionCam.updateVision();
             SmartDashboard.putNumber("distance", RobotMap.visionCam.getDistance());
@@ -25,7 +26,7 @@ public class Robot extends TimedRobot {
         }
 
         SmartDashboard.putNumber("lidar lite dist", RobotMap.lidar.getDistance());
-        RobotMap.magIntake.init();
+        magIntake.init();
         RobotMap.shooter.init();
         RobotMap.drive.init();
     }

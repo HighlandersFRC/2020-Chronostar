@@ -2,11 +2,10 @@
 
 package frc.robot.commands.defaults;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.robot.commands.basic.StopHighMag;
-import frc.robot.commands.composite.BumpHighMag;
-import frc.robot.commands.composite.BumpLowMag;
+import frc.robot.OI;
 import frc.robot.subsystems.MagIntake;
 
 public class MagIntakeDefault extends CommandBase {
@@ -28,29 +27,39 @@ public class MagIntakeDefault extends CommandBase {
         // Intake stuff
         magIntake.setIntake(0, 0);
         magIntake.intakePistonDown();
+        if (OI.getOperatorRightTrigger() >= 0.5) {
+            magIntake.setIntake(0.8, -0.6);
+        } else if (OI.getOperatorLeftTrigger() >= 0.5) {
+            magIntake.setIntake(-0.8, 0.6);
+        } else {
+            magIntake.setIntake(0, 0);
+        }
 
         // Magazine stuff
-        if (magIntake.getBeamBreak3()) {
-            new StopHighMag(magIntake).schedule();
-        } else if (magIntake.getBeamBreak2()) {
-            new BumpHighMag(magIntake, true).schedule();
-            new BumpLowMag(magIntake, true).schedule();
-        }
-        if (magIntake.getBeamBreak1()) {
-            if (catchCounter <= 50) {
-                new BumpLowMag(magIntake, true).schedule();
-            } else {
-                if (tryCounter <= 25) {
-                    tryCounter++;
-                } else {
-                    new BumpLowMag(magIntake, false).schedule();
-                    catchCounter = 0;
-                    tryCounter = 0;
-                }
-            }
-            catchCounter++;
+        SmartDashboard.putBoolean("beam break 1", magIntake.getBeamBreak1());
+        SmartDashboard.putBoolean("beam break 2", magIntake.getBeamBreak2());
+        SmartDashboard.putBoolean("beam break 3", magIntake.getBeamBreak3());
+        if (OI.getOperatorLeftTrigger() >= 0.5) {
+            magIntake.setMagPercent(-0.4, 0.2);
+        } else if (magIntake.getBeamBreak1()
+                & magIntake.getBeamBreak2()
+                & magIntake.getBeamBreak3()
+                & OI.getOperatorLeftTrigger() < 0.5) {
+            magIntake.setMagPercent(0, 0);
+        } else if (!magIntake.getBeamBreak3() & OI.getOperatorLeftTrigger() < 0.5) {
+            magIntake.setMagPercent(0, 0);
+        } else if (!magIntake.getBeamBreak1() & magIntake.getBeamBreak2()) {
+            magIntake.setMagPercent(0.5, 0);
+        } else if (!magIntake.getBeamBreak2() & magIntake.getBeamBreak1()) {
+            magIntake.setMagPercent(-0.3, 0.4);
+        } else if (!magIntake.getBeamBreak2() & !magIntake.getBeamBreak1()) {
+            magIntake.setMagPercent(0.3, -0.35);
+        } else if (!magIntake.getBeamBreak3() & !magIntake.getBeamBreak2()) {
+            magIntake.setMagPercent(0.2, 0);
+        } else if (!magIntake.getBeamBreak2() & magIntake.getBeamBreak3()) {
+            magIntake.setMagPercent(0.3, -0.4);
         } else {
-            catchCounter = 0;
+            magIntake.setMagPercent(-0.3, 0.2);
         }
     }
 
