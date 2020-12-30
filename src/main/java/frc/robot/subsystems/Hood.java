@@ -24,7 +24,7 @@ public class Hood extends SubsystemBase {
             new CANDigitalInput(hoodMotor, LimitSwitch.kForward, LimitSwitchPolarity.kNormallyOpen);
 
     private double encValue;
-    private double hoodTarget;
+    private double hoodTarget = 0;
     private double kP = 0.15;
     private double kI = 0.00003;
     private double kD = 0;
