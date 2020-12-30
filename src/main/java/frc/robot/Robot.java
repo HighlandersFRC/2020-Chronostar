@@ -6,29 +6,30 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
-import frc.robot.subsystems.MagIntake;
+import frc.robot.subsystems.*;
 
 public class Robot extends TimedRobot {
 
     public static MagIntake magIntake = new MagIntake();
-    ;
+    public static Drive drive = new Drive();
+    public static Shooter shooter = new Shooter();
+    public static Hood hood = new Hood();
+    public static Climber climber = new Climber();
 
     @Override
-    public void robotInit() {}
+    public void robotInit() {
+        magIntake.init();
+        shooter.init();
+        drive.init();
+        hood.init();
+    }
 
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
-        try {
-            RobotMap.visionCam.updateVision();
-            SmartDashboard.putNumber("distance", RobotMap.visionCam.getDistance());
-        } catch (Exception e) {
-        }
-
+        RobotMap.visionCam.updateVision();
+        SmartDashboard.putNumber("distance", RobotMap.visionCam.getDistance());
         SmartDashboard.putNumber("lidar lite dist", RobotMap.lidar.getDistance());
-        magIntake.init();
-        RobotMap.shooter.init();
-        RobotMap.drive.init();
     }
 
     @Override
@@ -39,7 +40,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        RobotMap.drive.autoInit();
+        drive.autoInit();
     }
 
     @Override
@@ -47,7 +48,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        RobotMap.drive.teleopInit();
+        drive.teleopInit();
     }
 
     @Override

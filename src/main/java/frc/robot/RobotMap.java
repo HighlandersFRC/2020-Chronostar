@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.SerialPort;
 
 import frc.robot.sensors.*;
-import frc.robot.subsystems.*;
 
 public class RobotMap {
 
@@ -18,11 +17,6 @@ public class RobotMap {
      * TODO own subsystems. You'll also have to create classes for your subsystems,
      * TODO and create default commands. Use Adi's and my code as a reference.
      */
-
-    public static Climber climber = new Climber();
-    public static Hood hood = new Hood();
-    public static Shooter shooter = new Shooter();
-    public static Drive drive = new Drive();
 
     public static AHRS ahrs = new AHRS(Port.kMXP);
     public static Navx navx = new Navx(ahrs);
