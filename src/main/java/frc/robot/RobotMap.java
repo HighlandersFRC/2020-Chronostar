@@ -19,7 +19,6 @@ public class RobotMap {
      * TODO and create default commands. Use Adi's and my code as a reference.
      */
 
-    public static MagIntake magIntake = new MagIntake();
     public static Climber climber = new Climber();
     public static Hood hood = new Hood();
     public static Shooter shooter = new Shooter();
