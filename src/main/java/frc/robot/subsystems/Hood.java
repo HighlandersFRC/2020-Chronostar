@@ -9,7 +9,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.EncoderType;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
@@ -46,18 +45,21 @@ public class Hood extends SubsystemBase {
         hoodTarget = target;
     }
 
+    public double getHoodPosition() {
+        encValue = hoodMotor.getEncoder(EncoderType.kHallSensor, 42).getPosition();
+        return encValue;
+    }
+
     @Override
     public void periodic() {
         encValue = hoodMotor.getEncoder(EncoderType.kHallSensor, 42).getPosition();
-        encValue = -encValue;
         if (lowerHoodSwitch.get()) {
             encValue = 0;
         } else if (upperHoodSwitch.get()) {
             encValue = 22;
         }
-        SmartDashboard.putNumber("HoodEncValue", encValue);
-        // hoodPID.updatePID(encValue);
-        // hoodPID.setSetPoint(hoodTarget);
-        // hoodMotor.set(hoodPID.getResult());
+        hoodPID.updatePID(encValue);
+        hoodPID.setSetPoint(hoodTarget);
+        hoodMotor.set(hoodPID.getResult());
     }
 }

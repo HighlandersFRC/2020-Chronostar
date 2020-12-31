@@ -4,6 +4,7 @@ package frc.robot.commands.basic;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
 
 public class SpinFlywheel extends CommandBase {
@@ -30,6 +31,6 @@ public class SpinFlywheel extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return Math.abs(shooter.getShooterRPM() - rpm) < 100;
+        return Constants.shooterRPMToUnitsPer100MS(Math.abs(shooter.getShooterRPM() - rpm)) < 100;
     }
 }

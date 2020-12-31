@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
-import frc.robot.commands.defaults.MagIntakeDefault;
 
 public class MagIntake extends SubsystemBase {
     public MagIntake() {}
@@ -37,7 +36,6 @@ public class MagIntake extends SubsystemBase {
         highMag.setIdleMode(IdleMode.kBrake);
         lowMag.configVoltageCompSaturation(11.7);
         lowMag.enableVoltageCompensation(true);
-        setDefaultCommand(new MagIntakeDefault(this));
         lowIntake.setInverted(true);
     }
 

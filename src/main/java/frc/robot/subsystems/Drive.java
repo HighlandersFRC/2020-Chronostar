@@ -11,7 +11,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
-import frc.robot.commands.defaults.DriveDefault;
 import frc.robot.tools.controlloops.PID;
 
 public class Drive extends SubsystemBase {
@@ -63,7 +62,6 @@ public class Drive extends SubsystemBase {
         leftDriveLead.config_kD(0, vkD);
         rightDriveLead.config_kD(0, vkD);
         setCurrentLimitsEnabled();
-        setDefaultCommand(new DriveDefault(this));
     }
 
     public void autoInit() {

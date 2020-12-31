@@ -11,8 +11,6 @@ import frc.robot.subsystems.MagIntake;
 public class MagIntakeDefault extends CommandBase {
 
     private MagIntake magIntake;
-    private int catchCounter;
-    private int tryCounter;
 
     public MagIntakeDefault(MagIntake magIntake) {
         this.magIntake = magIntake;

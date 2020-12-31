@@ -16,12 +16,12 @@ public class ShooterDefault extends CommandBase {
     }
 
     @Override
-    public void initialize() {
-        shooter.setRPM(0);
-    }
+    public void initialize() {}
 
     @Override
-    public void execute() {}
+    public void execute() {
+        shooter.setRPM(0);
+    }
 
     @Override
     public void end(boolean interrupted) {}
