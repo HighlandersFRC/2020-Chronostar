@@ -12,8 +12,11 @@ import frc.robot.subsystems.Intake;
 
 public class IntakeDefaultCommand extends CommandBase {
 
-    public IntakeDefaultCommand(Intake m_intake) {
-        addRequirements(m_intake);
+    private Intake intake;
+
+    public IntakeDefaultCommand(Intake intake) {
+        this.intake = intake;
+        addRequirements(this.intake);
     }
 
     @Override
@@ -22,11 +25,11 @@ public class IntakeDefaultCommand extends CommandBase {
     @Override
     public void execute() {
         if (OI.getOperatorRightTrigger() >= 0.5) {
-            RobotMap.intake.setIntake(0.8, 0.6);
+            intake.setIntake(0.8, 0.6);
         } else if (OI.getOperatorLeftTrigger() >= 0.5) {
-            RobotMap.intake.setIntake(-0.8, -0.6);
+            intake.setIntake(-0.8, -0.6);
         } else {
-            RobotMap.intake.setIntake(0, 0);
+            intake.setIntake(0, 0);
         }
         new SetPiston(RobotMap.intakePiston, Value.kReverse).schedule();
     }

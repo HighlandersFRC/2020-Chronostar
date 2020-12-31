@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.I2C.Port;
 
 import frc.robot.sensors.*;
-import frc.robot.subsystems.*;
 
 public class RobotMap {
 
@@ -40,10 +39,6 @@ public class RobotMap {
             new CANDigitalInput(hoodMotor, LimitSwitch.kReverse, LimitSwitchPolarity.kNormallyOpen);
     public static CANDigitalInput upperHoodSwitch =
             new CANDigitalInput(hoodMotor, LimitSwitch.kForward, LimitSwitchPolarity.kNormallyOpen);
-
-    public static Drive drive = new Drive();
-    public static Magazine magazine = new Magazine();
-    public static Intake intake = new Intake();
 
     public static AHRS ahrs = new AHRS(Port.kMXP);
     public static Navx navx = new Navx(ahrs);

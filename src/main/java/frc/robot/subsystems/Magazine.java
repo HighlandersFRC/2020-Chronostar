@@ -31,7 +31,7 @@ public class Magazine extends SubsystemBase {
         highMag.setIdleMode(IdleMode.kBrake);
         lowMag.configVoltageCompSaturation(11.7);
         lowMag.enableVoltageCompensation(true);
-        setDefaultCommand(new MagazineDefaultCommand(RobotMap.magazine));
+        setDefaultCommand(new MagazineDefaultCommand(Robot.magazine));
     }
 
     public void setLowMagPercent(double power) {

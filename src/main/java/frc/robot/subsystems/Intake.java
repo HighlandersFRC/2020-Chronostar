@@ -14,7 +14,7 @@ public class Intake extends SubsystemBase {
 
     public void init() {
         RobotMap.intakeMotor.setInverted(true);
-        setDefaultCommand(new IntakeDefaultCommand(RobotMap.intake));
+        setDefaultCommand(new IntakeDefaultCommand(this));
     }
 
     @Override

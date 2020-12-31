@@ -4,7 +4,7 @@ package frc.robot.commands.universalcommands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
-import frc.robot.RobotMap;
+import frc.robot.Robot;
 
 public class SetHighIntakePercent extends InstantCommand {
 
@@ -16,7 +16,7 @@ public class SetHighIntakePercent extends InstantCommand {
 
     @Override
     public void initialize() {
-        RobotMap.intake.setHighIntakePercent(percent);
+        Robot.intake.setHighIntakePercent(percent);
     }
 
     @Override

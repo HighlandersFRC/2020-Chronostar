@@ -5,10 +5,18 @@ package frc.robot;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj2.command.*;
 
+import frc.robot.subsystems.*;
+
 public class Robot extends TimedRobot {
 
+    public static Drive drive = new Drive();
+    public static Magazine magazine = new Magazine();
+    public static Intake intake = new Intake();
+
     @Override
-    public void robotInit() {}
+    public void robotInit() {
+        drive.init();
+    }
 
     @Override
     public void robotPeriodic() {

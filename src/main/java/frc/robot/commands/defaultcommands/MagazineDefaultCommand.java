@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.robot.commands.universalcommands.*;
 import frc.robot.subsystems.Magazine;
 
 public class MagazineDefaultCommand extends CommandBase {

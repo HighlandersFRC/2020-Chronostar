@@ -2,7 +2,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -36,19 +35,19 @@ public class OI {
     public static JoystickButton operatorRS = new JoystickButton(operatorController, Constants.RS);
 
     public static double getDriverLeftX() {
-        return driverController.getX(Hand.kRight);
+        return driverController.getRawAxis(0);
     }
 
     public static double getDriverLeftY() {
-        return driverController.getY(Hand.kLeft);
+        return driverController.getRawAxis(1);
     }
 
     public static double getDriverRightX() {
-        return driverController.getX(Hand.kRight);
+        return driverController.getRawAxis(4);
     }
 
     public static double getDriverRightY() {
-        return driverController.getY(Hand.kRight);
+        return driverController.getRawAxis(5);
     }
 
     public static double getDriverLeftTrigger() {

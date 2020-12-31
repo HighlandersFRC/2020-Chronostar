@@ -12,13 +12,19 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.OI;
-import frc.robot.RobotMap;
 import frc.robot.subsystems.Drive;
 
 public class DriveDefaultCommand extends CommandBase {
-    /** Creates a new DriveDefaultCommand. */
-    public DriveDefaultCommand() {
-        addRequirements(RobotMap.drive);
+    private Drive drive;
+    private double turn;
+    private double rightPower;
+    private double leftPower;
+    private double finalLeft = 0;
+    private double finalRight = 0;
+
+    public DriveDefaultCommand(Drive drive) {
+        this.drive = drive;
+        addRequirements(this.drive);
     }
 
     // Called when the command is initially scheduled.
@@ -28,22 +34,14 @@ public class DriveDefaultCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        double turn;
-        double rightPower;
-        double leftPower;
-        double finalLeft = 0;
-        double finalRight = 0;
-
-        // drive code
-
-        if (Math.abs(OI.driverController.getRawAxis(4)) > 0.1) {
-            turn = (OI.driverController.getRawAxis(4));
+        if (Math.abs(OI.getDriverRightX()) > 0.1) {
+            turn = OI.getDriverRightX();
         } else {
             turn = 0;
         }
 
-        leftPower = OI.driverController.getRawAxis(1) - turn;
-        rightPower = OI.driverController.getRawAxis(1) + turn;
+        leftPower = OI.getDriverLeftY();
+        rightPower = OI.getDriverLeftY() + turn;
 
         if (Math.abs(leftPower) > 1) {
             finalRight = rightPower / Math.abs(leftPower);
@@ -56,7 +54,7 @@ public class DriveDefaultCommand extends CommandBase {
             finalLeft = leftPower;
         }
 
-        Drive.rightDriveLead.set(ControlMode.PercentOutput, finalRight);
+        drive.setRightPercent(finalRight);
         Drive.leftDriveLead.set(ControlMode.PercentOutput, finalLeft);
     }
 
