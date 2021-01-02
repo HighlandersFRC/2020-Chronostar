@@ -38,7 +38,7 @@ public class MagIntakeDefault extends CommandBase {
         SmartDashboard.putBoolean("beam break 2", magIntake.getBeamBreak2());
         SmartDashboard.putBoolean("beam break 3", magIntake.getBeamBreak3());
         if (OI.getOperatorLeftTrigger() >= 0.5) {
-            magIntake.setMagPercent(-0.4, 0.2);
+            magIntake.setMagPercent(-0.4, -0.2);
         } else if (magIntake.getBeamBreak1()
                 & magIntake.getBeamBreak2()
                 & magIntake.getBeamBreak3()
@@ -51,7 +51,7 @@ public class MagIntakeDefault extends CommandBase {
         } else if (!magIntake.getBeamBreak2() & magIntake.getBeamBreak1()) {
             magIntake.setMagPercent(-0.3, 0.4);
         } else if (!magIntake.getBeamBreak2() & !magIntake.getBeamBreak1()) {
-            magIntake.setMagPercent(0.3, -0.35);
+            magIntake.setMagPercent(0.3, 0.25);
         } else if (!magIntake.getBeamBreak3() & !magIntake.getBeamBreak2()) {
             magIntake.setMagPercent(0.2, 0);
         } else if (!magIntake.getBeamBreak2() & magIntake.getBeamBreak3()) {
