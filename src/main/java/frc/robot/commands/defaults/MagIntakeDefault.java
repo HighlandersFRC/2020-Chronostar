@@ -38,26 +38,26 @@ public class MagIntakeDefault extends CommandBase {
         SmartDashboard.putBoolean("beam break 2", magIntake.getBeamBreak2());
         SmartDashboard.putBoolean("beam break 3", magIntake.getBeamBreak3());
         if (OI.getOperatorLeftTrigger() >= 0.5) {
-            magIntake.setMagPercent(-0.4, -0.2);
+            magIntake.setMagazine(-0.4, -0.2);
         } else if (magIntake.getBeamBreak1()
                 & magIntake.getBeamBreak2()
                 & magIntake.getBeamBreak3()
                 & OI.getOperatorLeftTrigger() < 0.5) {
-            magIntake.setMagPercent(0, 0);
+            magIntake.setMagazine(0, 0);
         } else if (!magIntake.getBeamBreak3() & OI.getOperatorLeftTrigger() < 0.5) {
-            magIntake.setMagPercent(0, 0);
+            magIntake.setMagazine(0, 0);
         } else if (!magIntake.getBeamBreak1() & magIntake.getBeamBreak2()) {
-            magIntake.setMagPercent(0.5, 0);
+            magIntake.setMagazine(0.5, 0);
         } else if (!magIntake.getBeamBreak2() & magIntake.getBeamBreak1()) {
-            magIntake.setMagPercent(-0.3, 0.4);
+            magIntake.setMagazine(-0.3, 0.4);
         } else if (!magIntake.getBeamBreak2() & !magIntake.getBeamBreak1()) {
-            magIntake.setMagPercent(0.3, 0.25);
+            magIntake.setMagazine(0.3, 0.25);
         } else if (!magIntake.getBeamBreak3() & !magIntake.getBeamBreak2()) {
-            magIntake.setMagPercent(0.2, 0);
+            magIntake.setMagazine(0.2, 0);
         } else if (!magIntake.getBeamBreak2() & magIntake.getBeamBreak3()) {
-            magIntake.setMagPercent(0.3, -0.4);
+            magIntake.setMagazine(0.3, -0.4);
         } else {
-            magIntake.setMagPercent(-0.3, 0.2);
+            magIntake.setMagazine(-0.3, 0.2);
         }
     }
 
