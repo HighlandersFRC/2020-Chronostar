@@ -6,7 +6,6 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.I2C.Port;
-import edu.wpi.first.wpilibj.SerialPort;
 
 import frc.robot.sensors.*;
 
