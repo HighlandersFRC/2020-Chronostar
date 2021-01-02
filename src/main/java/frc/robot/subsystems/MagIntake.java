@@ -47,7 +47,7 @@ public class MagIntake extends SubsystemBase {
         highMag.set(power);
     }
 
-    public void setMagPercent(double lowPower, double highPower) {
+    public void setMagazine(double lowPower, double highPower) {
         setLowMagPercent(lowPower);
         setHighMagPercent(highPower);
     }
@@ -64,9 +64,9 @@ public class MagIntake extends SubsystemBase {
         return beamBreak3.get();
     }
 
-    public void setIntake(double frontIntakePercent, double backIntakePercent) {
-        lowIntake.set(ControlMode.PercentOutput, frontIntakePercent);
-        highIntake.set(ControlMode.PercentOutput, backIntakePercent);
+    public void setIntake(double lowIntakePercent, double highIntakePercent) {
+        lowIntake.set(ControlMode.PercentOutput, lowIntakePercent);
+        highIntake.set(ControlMode.PercentOutput, highIntakePercent);
     }
 
     public void setLowIntakePercent(double power) {
