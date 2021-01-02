@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.basic.Intake;
 import frc.robot.commands.basic.Outtake;
 import frc.robot.commands.basic.SetHoodPosition;
-import frc.robot.commands.basic.SpinFlywheel;
+import frc.robot.commands.composite.Fire;
 import frc.robot.commands.defaults.DriveDefault;
 import frc.robot.commands.defaults.HoodDefault;
 import frc.robot.commands.defaults.MagIntakeDefault;
@@ -17,12 +17,12 @@ import frc.robot.subsystems.*;
 
 public class Robot extends TimedRobot {
 
-    private final MagIntake magIntake = new MagIntake();
-    private final Drive drive = new Drive();
-    private final Shooter shooter = new Shooter();
-    private final Hood hood = new Hood();
-    private final Climber climber = new Climber();
-    private final SpinFlywheel spinFlywheel4500 = new SpinFlywheel(shooter, 4500);
+    public static MagIntake magIntake = new MagIntake();
+    public static Drive drive = new Drive();
+    public static Shooter shooter = new Shooter();
+    public static Hood hood = new Hood();
+    public static Climber climber = new Climber();
+    private final Fire fire = new Fire(shooter, hood, magIntake, 0.02);
 
     @Override
     public void robotInit() {
@@ -58,7 +58,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
         drive.teleopInit();
-        OI.operatorX.whileHeld(spinFlywheel4500);
+        OI.operatorX.whileHeld(fire);
         OI.operatorA.whenPressed(new SetHoodPosition(hood, 0));
         OI.operatorB.whenPressed(new SetHoodPosition(hood, 11));
         OI.operatorY.whenPressed(new SetHoodPosition(hood, 22));
