@@ -1,22 +1,22 @@
 // Copyrights (c) 2018-2019 FIRST, 2020 Highlanders FRC. All Rights Reserved.
 
-package frc.robot.commands.universalcommands;
+package frc.robot.commands.basic;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
-import frc.robot.RobotMap;
+import frc.robot.subsystems.MagIntake;
 
-public class SetLowIntakePercent extends InstantCommand {
+public class StopHighMag extends InstantCommand {
 
-    private double percent;
+    private MagIntake magIntake;
 
-    public SetLowIntakePercent(double percent) {
-        this.percent = percent;
+    public StopHighMag(MagIntake magIntake) {
+        this.magIntake = magIntake;
     }
 
     @Override
     public void initialize() {
-        RobotMap.intake.setLowIntakePercent(percent);
+        magIntake.setHighMagPercent(0);
     }
 
     @Override

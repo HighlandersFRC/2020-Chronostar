@@ -2,20 +2,16 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.can.*;
 import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.*;
-import com.revrobotics.CANDigitalInput.*;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.I2C.Port;
 
 import frc.robot.sensors.*;
-import frc.robot.subsystems.*;
 
 public class RobotMap {
 
+<<<<<<< HEAD
     public static TalonFX intakeMotor = new TalonFX(Constants.INTAKE_1_ID);
     public static VictorSPX intake2Motor = new VictorSPX(Constants.INTAKE_2_ID);
     public static TalonFX leftFlywheel = new TalonFX(Constants.LEFT_FLYWHEEL_ID);
@@ -41,6 +37,13 @@ public class RobotMap {
     public static Drive drive = new Drive();
     public static Magazine magazine = new Magazine();
     public static Intake intake = new Intake();
+=======
+    /*
+     * TODO Om, you need to move your subsystems' hardware declarations into their
+     * TODO own subsystems. You'll also have to create classes for your subsystems,
+     * TODO and create default commands. Use Adi's and my code as a reference.
+     */
+>>>>>>> 8e0565b9ed40c562f07f411e066bf1934f0862e6
 
     public static AHRS ahrs = new AHRS(Port.kMXP);
     public static Navx navx = new Navx(ahrs);
@@ -49,4 +52,19 @@ public class RobotMap {
     public static LidarLite lidar = new LidarLite(lidarPort);
 
     public static Relay visionRelay = new Relay(0);
+<<<<<<< HEAD
+=======
+
+    public static VisionCamera visionCam;
+
+    static {
+        SerialPort jevois = null;
+        try {
+            jevois = new SerialPort(115200, SerialPort.Port.kUSB);
+        } catch (Exception e) {
+            System.err.println("CV cam's serial port failed to connect. Reason: " + e);
+        }
+        visionCam = new VisionCamera(jevois);
+    }
+>>>>>>> 8e0565b9ed40c562f07f411e066bf1934f0862e6
 }
