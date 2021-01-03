@@ -5,6 +5,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
+import frc.robot.commands.basic.Intake;
+import frc.robot.commands.basic.Outtake;
 import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SpinFlywheel;
 import frc.robot.commands.defaults.DriveDefault;
@@ -61,6 +63,8 @@ public class Robot extends TimedRobot {
         OI.operatorA.whenPressed(new SetHoodPosition(hood, 0));
         OI.operatorB.whenPressed(new SetHoodPosition(hood, 11));
         OI.operatorY.whenPressed(new SetHoodPosition(hood, 22));
+        OI.operatorLB.whenPressed(new Intake(magIntake));
+        OI.operatorRB.whenPressed(new Outtake(magIntake));
     }
 
     @Override
