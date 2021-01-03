@@ -2,16 +2,6 @@
 
 package frc.robot;
 
-<<<<<<< HEAD
-import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj2.command.*;
-
-public class Robot extends TimedRobot {
-
-    public static SerialPort jevois;
-
-    private RobotConfig config = new RobotConfig();
-=======
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -32,7 +22,6 @@ public class Robot extends TimedRobot {
     public static Climber climber = new Climber();
     private final SpinFlywheel spinFlywheel4500 = new SpinFlywheel(shooter, 4500);
     ;
->>>>>>> 8e0565b9ed40c562f07f411e066bf1934f0862e6
 
     @Override
     public void robotInit() {
@@ -58,28 +47,20 @@ public class Robot extends TimedRobot {
     public void disabledPeriodic() {}
 
     @Override
-<<<<<<< HEAD
-    public void autonomousInit() {}
-=======
     public void autonomousInit() {
         drive.autoInit();
     }
->>>>>>> 8e0565b9ed40c562f07f411e066bf1934f0862e6
 
     @Override
     public void autonomousPeriodic() {}
 
     @Override
     public void teleopInit() {
-<<<<<<< HEAD
-        config.startTeleopConfig();
-=======
         drive.teleopInit();
         OI.operatorX.whileHeld(spinFlywheel4500);
         OI.operatorA.whenPressed(new SetHoodPosition(hood, 0));
         OI.operatorB.whenPressed(new SetHoodPosition(hood, 11));
         OI.operatorY.whenPressed(new SetHoodPosition(hood, 22));
->>>>>>> 8e0565b9ed40c562f07f411e066bf1934f0862e6
     }
 
     @Override
