@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SpinFlywheel;
+import frc.robot.commands.defaults.ClimberDefault;
 import frc.robot.commands.defaults.DriveDefault;
 import frc.robot.commands.defaults.HoodDefault;
 import frc.robot.commands.defaults.MagIntakeDefault;
@@ -33,6 +34,7 @@ public class Robot extends TimedRobot {
         magIntake.setDefaultCommand(new MagIntakeDefault(magIntake));
         hood.setDefaultCommand(new HoodDefault(hood));
         shooter.setDefaultCommand(new ShooterDefault(shooter));
+        climber.setDefaultCommand(new ClimberDefault(climber));
     }
 
     @Override

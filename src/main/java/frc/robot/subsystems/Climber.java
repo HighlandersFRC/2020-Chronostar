@@ -2,14 +2,16 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
-import frc.robot.commands.defaults.ClimberDefault;
 
 public class Climber extends SubsystemBase {
 
@@ -18,16 +20,38 @@ public class Climber extends SubsystemBase {
      * TODO You're the one who knows it the best.
      */
 
-    public final DoubleSolenoid ratchetPiston = new DoubleSolenoid(2, 3);
-    // private final DoubleSolenoid rachetPiston = new DoubleSolenoid(2, 3);
+    private final TalonFX winch = new TalonFX(Constants.WINCH_ID);
+    private final DoubleSolenoid ratchetPiston = new DoubleSolenoid(2, 3);
     private final DoubleSolenoid climberRelease = new DoubleSolenoid(4, 5);
-    private final CANSparkMax climberMotor =
+    private final CANSparkMax armMotor =
             new CANSparkMax(Constants.CLIMBER_MOTOR_ID, MotorType.kBrushless);
 
     public Climber() {}
 
-    public void init() {
-        ClimberDefault();
+    public void init() {}
+
+    public void ratchetPistonForward() {
+        ratchetPiston.set(Value.kForward);
+    }
+
+    public void ratchetPistonReverse() {
+        ratchetPiston.set(Value.kReverse);
+    }
+
+    public void climberReleaseForward() {
+        climberRelease.set(Value.kForward);
+    }
+
+    public void climberReleaseReverse() {
+        climberRelease.set(Value.kReverse);
+    }
+
+    public void setArmMotor(double val) {
+        armMotor.set(val);
+    }
+
+    public void setWinchMotor(double val) {
+        winch.set(ControlMode.PercentOutput, val);
     }
 
     @Override

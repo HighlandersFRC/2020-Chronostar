@@ -2,7 +2,6 @@
 
 package frc.robot.commands.defaults;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.OI;
@@ -23,13 +22,13 @@ public class ClimberDefault extends CommandBase {
     @Override
     public void execute() {
         if (OI.getDriverRightTrigger() >= 0.5) {
-            climber.ratchetPiston.set(Value.kReverse);
-            // RobotMap.winch.set(ControlMode.PercentOutput, 0.8);
+            climber.ratchetPistonReverse();
+            climber.setWinchMotor(0.8);
         } else if (OI.getDriverLeftTrigger() >= 0.5) {
-            climber.ratchetPiston.set(Value.kForward);
+            climber.ratchetPistonForward();
             // new SequentialCommandGroup(new WaitCommand(0.1), new SetWinchSpeed(-0.8)).schedule();
         } else {
-            this.climber.ratchetPiston.set(Value.kReverse);
+            climber.ratchetPistonReverse();
             // this.climber.winch.set(ControlMode.PercentOutput, 0);
         }
     }
