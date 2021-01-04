@@ -35,7 +35,7 @@ public class Outtake extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if (OI.getOperatorRightTrigger() < 0.5) {
+        if (!OI.operatorLB.get()) {
             return true;
         }
         return false;

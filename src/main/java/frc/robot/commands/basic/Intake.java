@@ -24,8 +24,9 @@ public class Intake extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        magIntake.setIntake(0.8, -0.6);
-
+        if (OI.operatorRB.get()) {
+            magIntake.setIntake(0.8, -0.6);
+        }
         if (magIntake.getBeamBreak1()
                 & magIntake.getBeamBreak2()
                 & magIntake.getBeamBreak3()
@@ -55,7 +56,7 @@ public class Intake extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if (OI.getOperatorRightTrigger() < 0.5) {
+        if (!OI.operatorRB.get()) {
             return true;
         }
         return false;

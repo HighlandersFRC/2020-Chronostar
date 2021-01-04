@@ -63,8 +63,8 @@ public class Robot extends TimedRobot {
         OI.operatorA.whenPressed(new SetHoodPosition(hood, 0));
         OI.operatorB.whenPressed(new SetHoodPosition(hood, 11));
         OI.operatorY.whenPressed(new SetHoodPosition(hood, 22));
-        OI.operatorLB.whenPressed(new Intake(magIntake));
-        OI.operatorRB.whenPressed(new Outtake(magIntake));
+        OI.operatorRB.whenPressed(new Intake(magIntake));
+        OI.operatorLB.whenPressed(new Outtake(magIntake));
     }
 
     @Override
