@@ -2,10 +2,8 @@
 
 package frc.robot;
 
-import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.I2C.Port;
 
 import frc.robot.sensors.*;
 
@@ -17,23 +15,4 @@ public class RobotMap {
      * TODO and create default commands. Use Adi's and my code as a reference.
      */
 
-    public static AHRS ahrs = new AHRS(Port.kMXP);
-    public static Navx navx = new Navx(ahrs);
-
-    public static Counter lidarPort = new Counter(2);
-    public static LidarLite lidar = new LidarLite(lidarPort);
-
-    public static Relay visionRelay = new Relay(0);
-
-    public static VisionCamera visionCam;
-
-    static {
-        SerialPort jevois = null;
-        try {
-            jevois = new SerialPort(115200, SerialPort.Port.kUSB);
-        } catch (Exception e) {
-            System.err.println("CV cam's serial port failed to connect. Reason: " + e);
-        }
-        visionCam = new VisionCamera(jevois);
-    }
 }

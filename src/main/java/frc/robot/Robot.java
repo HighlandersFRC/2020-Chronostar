@@ -17,7 +17,11 @@ public class Robot extends TimedRobot {
     private final Shooter shooter = new Shooter();
     private final Hood hood = new Hood();
     private final Climber climber = new Climber();
-    private final SubsystemBaseEnhanced[] subsystems = {magIntake, drive, shooter, hood, climber};
+    private final Peripherals peripherals = new Peripherals();
+    private final LightRing lightRing = new LightRing();
+    private final SubsystemBaseEnhanced[] subsystems = {
+        magIntake, drive, shooter, hood, climber, peripherals, lightRing
+    };
     private final SpinFlywheel spinFlywheel4500 = new SpinFlywheel(shooter, 4500);
 
     public Robot() {}

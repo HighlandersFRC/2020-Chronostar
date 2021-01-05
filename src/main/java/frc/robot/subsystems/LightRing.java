@@ -8,9 +8,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class LightRing extends SubsystemBase {
+public class LightRing extends SubsystemBaseEnhanced {
     /** Creates a new LightRing. */
     private final Relay visionRelay = new Relay(0);
 
@@ -27,5 +26,23 @@ public class LightRing extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
+    }
+
+    @Override
+    public void init() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void autoInit() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void teleopInit() {
+        // TODO Auto-generated method stub
+
     }
 }
