@@ -3,6 +3,8 @@
 package frc.robot.commands.defaults;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import frc.robot.OI;
 import frc.robot.subsystems.Climber;
@@ -26,7 +28,7 @@ public class ClimberDefault extends CommandBase {
             climber.setWinchMotor(0.8);
         } else if (OI.getDriverLeftTrigger() >= 0.5) {
             climber.ratchetPistonForward();
-            // new SequentialCommandGroup(new WaitCommand(0.1), new SetWinchSpeed(-0.8)).schedule();
+            new SequentialCommandGroup(new WaitCommand(0.1), new SetWinchSpeed(-0.8)).schedule();
         } else {
             climber.ratchetPistonReverse();
             // this.climber.winch.set(ControlMode.PercentOutput, 0);
