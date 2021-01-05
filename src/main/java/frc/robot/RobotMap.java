@@ -14,5 +14,4 @@ public class RobotMap {
      * TODO and create default commands. Use Adi's and my code as a reference.
      */
 
-    public static Relay visionRelay = new Relay(0);
 }

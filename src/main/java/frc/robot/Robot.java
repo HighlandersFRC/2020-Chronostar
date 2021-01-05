@@ -10,6 +10,7 @@ import frc.robot.commands.basic.SpinFlywheel;
 import frc.robot.commands.defaults.DriveDefault;
 import frc.robot.commands.defaults.HoodDefault;
 import frc.robot.commands.defaults.MagIntakeDefault;
+import frc.robot.commands.defaults.PeripheralsDefault;
 import frc.robot.commands.defaults.ShooterDefault;
 import frc.robot.subsystems.*;
 
@@ -20,6 +21,7 @@ public class Robot extends TimedRobot {
     public static Shooter shooter = new Shooter();
     public static Hood hood = new Hood();
     public static Climber climber = new Climber();
+    public static Peripherals peripherals = new Peripherals();
     private final SpinFlywheel spinFlywheel4500 = new SpinFlywheel(shooter, 4500);
     ;
 
@@ -29,10 +31,12 @@ public class Robot extends TimedRobot {
         shooter.init();
         drive.init();
         hood.init();
+        peripherals.init();
         drive.setDefaultCommand(new DriveDefault(drive));
         magIntake.setDefaultCommand(new MagIntakeDefault(magIntake));
         hood.setDefaultCommand(new HoodDefault(hood));
         shooter.setDefaultCommand(new ShooterDefault(shooter));
+        peripherals.setDefaultCommand(new PeripheralsDefault(peripherals));
     }
 
     @Override
