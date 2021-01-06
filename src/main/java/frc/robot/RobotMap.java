@@ -23,8 +23,6 @@ public class RobotMap {
     public static Counter lidarPort = new Counter(2);
     public static LidarLite lidar = new LidarLite(lidarPort);
 
-    public static Relay visionRelay = new Relay(0);
-
     public static VisionCamera visionCam;
 
     static {

@@ -17,7 +17,7 @@ public class EjectMagazine extends InstantCommand {
 
     @Override
     public void initialize() {
-        magIntake.setMagazine(0.5, 1);
+        magIntake.setMagazine(0.25, 0.8);
         magIntake.setIntake(0, 0.8);
     }
 

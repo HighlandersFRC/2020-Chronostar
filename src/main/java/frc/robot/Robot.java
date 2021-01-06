@@ -11,6 +11,7 @@ import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.composite.Fire;
 import frc.robot.commands.defaults.DriveDefault;
 import frc.robot.commands.defaults.HoodDefault;
+import frc.robot.commands.defaults.LightRingDefault;
 import frc.robot.commands.defaults.MagIntakeDefault;
 import frc.robot.commands.defaults.ShooterDefault;
 import frc.robot.subsystems.*;
@@ -21,8 +22,10 @@ public class Robot extends TimedRobot {
     public static Drive drive = new Drive();
     public static Shooter shooter = new Shooter();
     public static Hood hood = new Hood();
-    public static Climber climber = new Climber();
-    private final Fire fire = new Fire(shooter, hood, magIntake, 0.02);
+    public static LightRing lightRing = new LightRing();
+    private final Fire teleopFire = new Fire(shooter, hood, magIntake, drive, lightRing, 0);
+    private final Intake intake = new Intake(magIntake);
+    private final Outtake outtake = new Outtake(magIntake);
 
     @Override
     public void robotInit() {
@@ -34,6 +37,7 @@ public class Robot extends TimedRobot {
         magIntake.setDefaultCommand(new MagIntakeDefault(magIntake));
         hood.setDefaultCommand(new HoodDefault(hood));
         shooter.setDefaultCommand(new ShooterDefault(shooter));
+        lightRing.setDefaultCommand(new LightRingDefault(lightRing));
     }
 
     @Override
@@ -58,12 +62,10 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
         drive.teleopInit();
-        OI.operatorX.whileHeld(fire);
-        OI.operatorA.whenPressed(new SetHoodPosition(hood, 0));
-        OI.operatorB.whenPressed(new SetHoodPosition(hood, 11));
-        OI.operatorY.whenPressed(new SetHoodPosition(hood, 22));
-        OI.operatorRB.whenPressed(new Intake(magIntake));
-        OI.operatorLB.whenPressed(new Outtake(magIntake));
+        OI.operatorX.whileHeld(teleopFire);
+        OI.operatorRB.whileHeld(intake);
+        OI.operatorLB.whileHeld(outtake);
+        OI.operatorX.whenReleased(new SetHoodPosition(hood, 0));
     }
 
     @Override

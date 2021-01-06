@@ -36,7 +36,9 @@ public class MagIntake extends SubsystemBase {
         highMag.setIdleMode(IdleMode.kBrake);
         lowMag.configVoltageCompSaturation(11.7);
         lowMag.enableVoltageCompensation(true);
+        highMag.setInverted(true);
         lowIntake.setInverted(true);
+        highIntake.setInverted(true);
     }
 
     public void setLowMagPercent(double power) {
