@@ -1,18 +1,17 @@
 // Copyrights (c) 2018-2019 FIRST, 2020 Highlanders FRC. All Rights Reserved.
 
-package frc.robot.commands.defaults;
+package frc.robot.commands.basic;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.MagIntake;
 
-public class MagIntakeDefault extends CommandBase {
-
+public class Outtake extends CommandBase {
     private MagIntake magIntake;
 
-    public MagIntakeDefault(MagIntake magIntake) {
+    public Outtake(MagIntake magIntake) {
         this.magIntake = magIntake;
-        addRequirements(this.magIntake);
+        addRequirements(magIntake);
     }
 
     @Override
@@ -20,10 +19,8 @@ public class MagIntakeDefault extends CommandBase {
 
     @Override
     public void execute() {
-        // Intake stuff
-        magIntake.setIntake(0, 0);
-        magIntake.intakePistonDown();
-        magIntake.setMagazine(0, 0);
+        magIntake.setIntake(-0.8, -0.6);
+        magIntake.setMagazine(-1, -0.6);
     }
 
     @Override
@@ -31,6 +28,6 @@ public class MagIntakeDefault extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 }

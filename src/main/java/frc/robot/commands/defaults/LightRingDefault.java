@@ -4,19 +4,21 @@ package frc.robot.commands.defaults;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.robot.subsystems.Hood;
+import frc.robot.subsystems.LightRing;
 
-public class HoodDefault extends CommandBase {
+public class LightRingDefault extends CommandBase {
 
-    private Hood hood;
+    private LightRing lightRing;
 
-    public HoodDefault(Hood hood) {
-        this.hood = hood;
-        addRequirements(this.hood);
+    public LightRingDefault(LightRing lightRing) {
+        this.lightRing = lightRing;
+        addRequirements(lightRing);
     }
 
     @Override
-    public void initialize() {}
+    public void initialize() {
+        lightRing.turnOff();
+    }
 
     @Override
     public void execute() {}

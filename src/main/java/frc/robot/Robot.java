@@ -5,11 +5,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
-import frc.robot.commands.composite.Fire;
-import frc.robot.commands.defaults.DriveDefault;
-import frc.robot.commands.defaults.HoodDefault;
-import frc.robot.commands.defaults.MagIntakeDefault;
-import frc.robot.commands.defaults.ShooterDefault;
+import frc.robot.commands.basic.*;
+import frc.robot.commands.composite.*;
+import frc.robot.commands.defaults.*;
 import frc.robot.subsystems.*;
 
 public class Robot extends TimedRobot {
@@ -18,8 +16,10 @@ public class Robot extends TimedRobot {
     public static Drive drive = new Drive();
     public static Shooter shooter = new Shooter();
     public static Hood hood = new Hood();
-    public static Climber climber = new Climber();
-    private final Fire fire = new Fire(shooter, hood, magIntake, 0.02);
+    public static LightRing lightRing = new LightRing();
+    private final Fire teleopFire = new Fire(shooter, hood, magIntake, drive, lightRing, 0.02);
+    private final Intake intake = new Intake(magIntake);
+    private final Outtake outtake = new Outtake(magIntake);
 
     @Override
     public void robotInit() {
@@ -31,6 +31,7 @@ public class Robot extends TimedRobot {
         magIntake.setDefaultCommand(new MagIntakeDefault(magIntake));
         hood.setDefaultCommand(new HoodDefault(hood));
         shooter.setDefaultCommand(new ShooterDefault(shooter));
+        lightRing.setDefaultCommand(new LightRingDefault(lightRing));
     }
 
     @Override
@@ -55,7 +56,10 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
         drive.teleopInit();
-        OI.operatorX.whileHeld(fire);
+        OI.operatorX.whileHeld(teleopFire);
+        OI.operatorRB.whileHeld(intake);
+        OI.operatorLB.whileHeld(outtake);
+        OI.operatorX.whenReleased(new SetHoodPosition(hood, 0));
     }
 
     @Override
