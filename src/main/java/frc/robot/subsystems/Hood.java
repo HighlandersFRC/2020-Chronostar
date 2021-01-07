@@ -7,7 +7,6 @@ import com.revrobotics.CANDigitalInput.LimitSwitch;
 import com.revrobotics.CANDigitalInput.LimitSwitchPolarity;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.EncoderType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -53,15 +52,14 @@ public class Hood extends SubsystemBase {
     @Override
     public void periodic() {
         if (lowerHoodSwitch.get()) {
-            encValue = 0;
+            hoodMotor.getEncoder().setPosition(0);
         } else if (upperHoodSwitch.get()) {
-            encValue = 22;
-        } else {
-            encValue = hoodMotor.getEncoder(EncoderType.kHallSensor, 42).getPosition();
+            hoodMotor.getEncoder().setPosition(22);
         }
         hoodPID.updatePID(encValue);
         hoodPID.setSetPoint(hoodTarget);
         hoodMotor.set(hoodPID.getResult());
         SmartDashboard.putNumber("hood enc value", encValue);
+        encValue = hoodMotor.getEncoder().getPosition();
     }
 }

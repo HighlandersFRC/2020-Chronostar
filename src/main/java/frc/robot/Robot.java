@@ -57,9 +57,8 @@ public class Robot extends TimedRobot {
     public void teleopInit() {
         drive.teleopInit();
         OI.operatorX.whileHeld(teleopFire);
-        OI.operatorRB.whileHeld(intake);
-        OI.operatorLB.whileHeld(outtake);
-        OI.operatorX.whenReleased(new SetHoodPosition(hood, 0));
+        OI.operatorRT.whileHeld(intake);
+        OI.operatorLT.whileHeld(outtake);
     }
 
     @Override

@@ -20,7 +20,7 @@ public class Fire extends SequentialCommandGroup {
             Drive drive,
             LightRing lightRing,
             double waitTime) {
-        addRequirements(shooter, hood, magIntake);
+        addRequirements(shooter, hood, magIntake, drive, lightRing);
         addCommands(
                 new ParallelCommandGroup(
                         new SetHoodPosition(hood, 8),
