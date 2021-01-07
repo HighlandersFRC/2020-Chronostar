@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
+import frc.robot.tools.extrabuttons.TriggerButton;
+
 public class OI {
     public static XboxController driverController = new XboxController(0);
     public static XboxController operatorController = new XboxController(1);
@@ -21,6 +23,8 @@ public class OI {
             new JoystickButton(driverController, Constants.START);
     public static JoystickButton driverLS = new JoystickButton(driverController, Constants.LS);
     public static JoystickButton driverRS = new JoystickButton(driverController, Constants.RS);
+    public static TriggerButton driverLT = new TriggerButton(driverController, 2);
+    public static TriggerButton driverRT = new TriggerButton(driverController, 3);
 
     public static JoystickButton operatorA = new JoystickButton(operatorController, Constants.A);
     public static JoystickButton operatorB = new JoystickButton(operatorController, Constants.B);
@@ -34,6 +38,8 @@ public class OI {
             new JoystickButton(operatorController, Constants.START);
     public static JoystickButton operatorLS = new JoystickButton(operatorController, Constants.LS);
     public static JoystickButton operatorRS = new JoystickButton(operatorController, Constants.RS);
+    public static TriggerButton operatorLT = new TriggerButton(operatorController, 2);
+    public static TriggerButton operatorRT = new TriggerButton(operatorController, 3);
 
     public static double getDriverLeftX() {
         return driverController.getX(Hand.kLeft);
@@ -51,41 +57,11 @@ public class OI {
         return driverController.getY(Hand.kRight);
     }
 
-    public static double getDriverLeftTrigger() {
-        return driverController.getTriggerAxis(Hand.kLeft);
-    }
-
-    public static double getDriverRightTrigger() {
-        return driverController.getTriggerAxis(Hand.kRight);
-    }
-
-    public static double getOperatorLeftTrigger() {
-        return OI.operatorController.getTriggerAxis(Hand.kLeft);
-    }
-
-    public static double getOperatorRightTrigger() {
-        return operatorController.getTriggerAxis(Hand.kRight);
-    }
-
     public static int getOperatorPOV() {
         return operatorController.getPOV();
     }
 
     public static int getDriverPOV() {
         return driverController.getPOV();
-    }
-
-    public static boolean operatorRightTriggerTrue() {
-        if (getOperatorRightTrigger() > 0.5) {
-            return true;
-        }
-        return false;
-    }
-
-    public static boolean operatorLeftTriggerTrue() {
-        if (getOperatorLeftTrigger() > 0.5) {
-            return true;
-        }
-        return false;
     }
 }

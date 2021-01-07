@@ -13,6 +13,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
@@ -88,5 +89,9 @@ public class MagIntake extends SubsystemBase {
     }
 
     @Override
-    public void periodic() {}
+    public void periodic() {
+        SmartDashboard.putBoolean("beam break 1", getBeamBreak1());
+        SmartDashboard.putBoolean("beam break 2", getBeamBreak2());
+        SmartDashboard.putBoolean("beam break 3", getBeamBreak3());
+    }
 }
