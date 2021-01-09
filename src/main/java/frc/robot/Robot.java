@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import frc.robot.commands.basic.Intake;
 import frc.robot.commands.basic.Outtake;
-import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.composite.Fire;
 import frc.robot.commands.defaults.DriveDefault;
 import frc.robot.commands.defaults.HoodDefault;
@@ -44,7 +43,6 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
         hood.periodic();
-        // hood.periodic();
     }
 
     @Override

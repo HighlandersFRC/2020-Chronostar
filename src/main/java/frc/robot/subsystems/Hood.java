@@ -74,9 +74,15 @@ public class Hood extends SubsystemBase {
         } else if (upperHoodSwitch.get()) {
             hoodMotor.getEncoder().setPosition(maxpoint);
         }
+        // Ensures that the hood is at lowest position
+        if ((hoodTarget == 0) && (hoodMotor.getEncoder().getPosition() <= 0.5)) {
+            hoodMotor.set(-0.1);
+        }
         SmartDashboard.putNumber("Current Value", hoodMotor.getEncoder().getPosition());
         SmartDashboard.putNumber("Output Current", hoodMotor.getOutputCurrent());
         SmartDashboard.putNumber("Target Point", hoodTarget);
         SmartDashboard.putBoolean("XReleased", OI.operatorX.get());
+        SmartDashboard.putBoolean("TopLimit", upperHoodSwitch.get());
+        SmartDashboard.putBoolean("LowerLimit", lowerHoodSwitch.get());
     }
 }
