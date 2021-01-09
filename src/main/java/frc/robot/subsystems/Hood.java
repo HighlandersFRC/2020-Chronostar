@@ -73,27 +73,6 @@ public class Hood extends SubsystemBase {
 
     public Hood() {}
 
-    /*public void init() {
-            hoodMotor.setInverted(true);
-            // hoodPIDController = hoodMotor.getPIDController();
-            hoodPIDController.setP(kP);
-            hoodPIDController.setI(kI);
-            hoodPIDController.setD(kD);
-            hoodPIDController.setFF(kF);
-            hoodPIDController.setOutputRange(-1, 1);
-            hoodMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
-            hoodMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
-            hoodMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, maxPoint);
-            hoodMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, maxPoint);
-            hoodMotor.enableVoltageCompensation(11.3);
-            hoodPIDController.setSmartMotionMaxVelocity(160, 0);
-            hoodPIDController.setSmartMotionMinOutputVelocity(-160, 0);
-            hoodPIDController.setSmartMotionMaxAccel(100, 0);
-            hoodPIDController.setSmartMotionAllowedClosedLoopError(0.1, 0);
-            hoodPIDController.setIZone(0.2);
-            // setDefaultCommand(new HoodDefault(this));
-        }
-    */
     public void setHoodTarget(double target) {
         hoodTarget = target;
         mpidController.setReference(hoodTarget, ControlType.kSmartMotion);
@@ -112,6 +91,9 @@ public class Hood extends SubsystemBase {
         } else {
             encValue = hoodMotor.getEncoder().getPosition();
         }
+        if ((hoodTarget == 0) && (hoodMotor.getEncoder().getPosition() <= 0.5)) {
+            hoodMotor.set(-0.1);
+        }
         /*hoodPID.updatePID(encValue);
         hoodPID.setSetPoint(hoodTarget);
         hoodMotor.set(hoodPID.getResult());
@@ -120,5 +102,7 @@ public class Hood extends SubsystemBase {
         SmartDashboard.putNumber("Output Current", hoodMotor.getOutputCurrent());
         SmartDashboard.putNumber("Target Point", hoodTarget);
         SmartDashboard.putBoolean("XReleased", OI.operatorX.get());
+        SmartDashboard.putBoolean("TopLimit", upperHoodSwitch.get());
+        SmartDashboard.putBoolean("LowerLimit", lowerHoodSwitch.get());
     }
 }

@@ -22,11 +22,10 @@ public class Fire extends SequentialCommandGroup {
         addRequirements(shooter, hood, magIntake);
         addCommands(
                 new ParallelCommandGroup(
-                        new SetHoodPosition(hood, 5),
+                        new SetHoodPosition(hood, 8),
                         new SpinFlywheel(shooter, 4000),
                         new VisionAlignment(lightRing, drive)),
-                new EjectMagazine(magIntake),
-                // new WaitCommand(waitTime));
-                new SetHoodPosition(hood, 0));
+                new EjectMagazine(magIntake));
+        // new WaitCommand(waitTime));
     }
 }
