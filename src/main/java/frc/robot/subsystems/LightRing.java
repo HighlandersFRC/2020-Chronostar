@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LightRing extends SubsystemBase {
@@ -16,16 +17,16 @@ public class LightRing extends SubsystemBase {
 
     public LightRing() {}
 
-    public void lightRingOn() {
-        visionRelay.set(Relay.Value.kForward);
+    public void init() {}
+
+    public void turnOn() {
+        visionRelay.set(Value.kForward);
     }
 
-    public void lightRingOff() {
-        visionRelay.set(Relay.Value.kReverse);
+    public void turnOff() {
+        visionRelay.set(Value.kReverse);
     }
 
     @Override
-    public void periodic() {
-        // This method will be called once per scheduler run
-    }
+    public void periodic() {}
 }

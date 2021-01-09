@@ -5,10 +5,12 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
+import frc.robot.commands.basic.LightRingOn;
 import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SpinFlywheel;
 import frc.robot.commands.defaults.DriveDefault;
 import frc.robot.commands.defaults.HoodDefault;
+import frc.robot.commands.defaults.LightRingDefault;
 import frc.robot.commands.defaults.MagIntakeDefault;
 import frc.robot.commands.defaults.PeripheralsDefault;
 import frc.robot.commands.defaults.ShooterDefault;
@@ -22,6 +24,7 @@ public class Robot extends TimedRobot {
     public static Hood hood = new Hood();
     public static Climber climber = new Climber();
     public static Peripherals peripherals = new Peripherals();
+    public static LightRing lightRing = new LightRing();
     private final SpinFlywheel spinFlywheel4500 = new SpinFlywheel(shooter, 4500);
     ;
 
@@ -37,6 +40,7 @@ public class Robot extends TimedRobot {
         hood.setDefaultCommand(new HoodDefault(hood));
         shooter.setDefaultCommand(new ShooterDefault(shooter));
         peripherals.setDefaultCommand(new PeripheralsDefault(peripherals));
+        lightRing.setDefaultCommand(new LightRingDefault(lightRing));
     }
 
     @Override
@@ -65,6 +69,7 @@ public class Robot extends TimedRobot {
         OI.operatorA.whenPressed(new SetHoodPosition(hood, 0));
         OI.operatorB.whenPressed(new SetHoodPosition(hood, 11));
         OI.operatorY.whenPressed(new SetHoodPosition(hood, 22));
+        OI.operatorRB.whileHeld(new LightRingOn(lightRing));
     }
 
     @Override

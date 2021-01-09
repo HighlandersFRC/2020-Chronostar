@@ -31,7 +31,7 @@ public class Peripherals extends SubsystemBase {
 
         SerialPort jevois = null;
         try {
-            jevois = new SerialPort(115200, SerialPort.Port.kUSB2);
+            jevois = new SerialPort(115200, SerialPort.Port.kUSB1);
         } catch (final Exception e) {
             System.err.println("CV cam's serial port failed to connect. Reason: " + e);
         }
@@ -41,10 +41,12 @@ public class Peripherals extends SubsystemBase {
     public Peripherals() {}
 
     public double getCamAngle() {
+        visionCam.updateVision();
         return visionCam.getAngle();
     }
 
     public double getCamDistance() {
+        visionCam.updateVision();
         return visionCam.getDistance();
     }
 
