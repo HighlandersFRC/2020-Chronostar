@@ -20,7 +20,7 @@ public class HoodDefault extends CommandBase {
 
     @Override
     public void execute() {
-        hood.setHoodTarget(0);
+        // hood.setHoodTarget(0);
     }
 
     @Override
