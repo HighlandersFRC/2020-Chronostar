@@ -5,6 +5,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
+import frc.robot.commands.basic.LightRingOn;
 import frc.robot.commands.basic.SimpleIntake;
 import frc.robot.commands.basic.SmartIntake;
 import frc.robot.commands.basic.SpinFlywheel;
@@ -64,6 +65,7 @@ public class Robot extends TimedRobot {
         OI.operatorRB.whileHeld(new SimpleIntake(magIntake, SimpleIntake.IntakeDirection.IN));
         OI.operatorLT.whileHeld(new SmartIntake(magIntake, SmartIntake.IntakeDirection.OUT));
         OI.operatorRT.whileHeld(new SmartIntake(magIntake, SmartIntake.IntakeDirection.IN));
+        OI.operatorA.whileHeld(new LightRingOn(lightRing));
     }
 
     @Override

@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.SerialPort;
 
+import frc.robot.commands.defaults.PeripheralsDefault;
 import frc.robot.sensors.LidarLite;
 import frc.robot.sensors.Navx;
 import frc.robot.sensors.VisionCamera;
@@ -30,20 +31,23 @@ public class Peripherals extends SubsystemBaseEnhanced {
 
         SerialPort jevois = null;
         try {
-            jevois = new SerialPort(115200, SerialPort.Port.kUSB2);
+            jevois = new SerialPort(115200, SerialPort.Port.kUSB1);
         } catch (final Exception e) {
             System.err.println("CV cam's serial port failed to connect. Reason: " + e);
         }
         visionCam = new VisionCamera(jevois);
+        setDefaultCommand(new PeripheralsDefault(this));
     }
 
     public Peripherals() {}
 
     public double getCamAngle() {
+        visionCam.updateVision();
         return visionCam.getAngle();
     }
 
     public double getCamDistance() {
+        visionCam.updateVision();
         return visionCam.getDistance();
     }
 

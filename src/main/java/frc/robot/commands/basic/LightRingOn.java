@@ -5,34 +5,42 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.defaults;
+package frc.robot.commands.basic;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+import frc.robot.OI;
 import frc.robot.subsystems.LightRing;
 
-public class LightRingDefault extends CommandBase {
-    /** Creates a new LightRingDefault. */
+public class LightRingOn extends CommandBase {
+    /** Creates a new LightRingOn. */
     private LightRing lightRing;
 
-    public LightRingDefault(LightRing lightRing) {
+    public LightRingOn(LightRing lightRing) {
         this.lightRing = lightRing;
         addRequirements(lightRing);
     }
 
+    // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        lightRing.turnOff();
+        lightRing.turnOn();
     }
 
+    // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {}
 
+    // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {}
 
+    // Returns true when the command should end.
     @Override
     public boolean isFinished() {
+        if (!OI.operatorRB.get()) {
+            return true;
+        }
         return false;
     }
 }
