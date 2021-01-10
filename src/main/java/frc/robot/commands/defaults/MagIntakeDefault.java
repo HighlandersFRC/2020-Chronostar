@@ -25,9 +25,9 @@ public class MagIntakeDefault extends CommandBase {
         // Intake stuff
         magIntake.setIntake(0, 0);
         magIntake.intakePistonDown();
-        if (OI.getOperatorRightTrigger() >= 0.5) {
+        if (OI.operatorRT.get()) {
             magIntake.setIntake(0.8, -0.6);
-        } else if (OI.getOperatorLeftTrigger() >= 0.5) {
+        } else if (OI.operatorLT.get()) {
             magIntake.setIntake(-0.8, 0.6);
         } else {
             magIntake.setIntake(0, 0);
@@ -37,27 +37,27 @@ public class MagIntakeDefault extends CommandBase {
         SmartDashboard.putBoolean("beam break 1", magIntake.getBeamBreak1());
         SmartDashboard.putBoolean("beam break 2", magIntake.getBeamBreak2());
         SmartDashboard.putBoolean("beam break 3", magIntake.getBeamBreak3());
-        if (OI.getOperatorLeftTrigger() >= 0.5) {
-            magIntake.setMagPercent(-0.4, -0.2);
+        if (OI.operatorLT.get()) {
+            // magIntake.setMagPercent(-0.4, -0.2);
         } else if (magIntake.getBeamBreak1()
                 & magIntake.getBeamBreak2()
                 & magIntake.getBeamBreak3()
-                & OI.getOperatorLeftTrigger() < 0.5) {
-            magIntake.setMagPercent(0, 0);
-        } else if (!magIntake.getBeamBreak3() & OI.getOperatorLeftTrigger() < 0.5) {
-            magIntake.setMagPercent(0, 0);
+                & OI.operatorRT.get()) {
+            // magIntake.setMagPercent(0, 0);
+        } else if (!magIntake.getBeamBreak3() & OI.operatorRT.get()) {
+            // magIntake.setMagPercent(0, 0);
         } else if (!magIntake.getBeamBreak1() & magIntake.getBeamBreak2()) {
-            magIntake.setMagPercent(0.5, 0);
+            // magIntake.setMagPercent(0.5, 0);
         } else if (!magIntake.getBeamBreak2() & magIntake.getBeamBreak1()) {
-            magIntake.setMagPercent(-0.3, 0.4);
+            // magIntake.setMagPercent(-0.3, 0.4);
         } else if (!magIntake.getBeamBreak2() & !magIntake.getBeamBreak1()) {
-            magIntake.setMagPercent(0.3, 0.25);
+            // magIntake.setMagPercent(0.3, 0.25);
         } else if (!magIntake.getBeamBreak3() & !magIntake.getBeamBreak2()) {
-            magIntake.setMagPercent(0.2, 0);
+            // magIntake.setMagPercent(0.2, 0);
         } else if (!magIntake.getBeamBreak2() & magIntake.getBeamBreak3()) {
-            magIntake.setMagPercent(0.3, -0.4);
+            // magIntake.setMagPercent(0.3, -0.4);
         } else {
-            magIntake.setMagPercent(-0.3, 0.2);
+            // magIntake.setMagPercent(-0.3, 0.2);
         }
     }
 

@@ -4,6 +4,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
+
+import frc.robot.tools.extrabuttons.TriggerButton;
 
 public class OI {
     public static Joystick driverController = new Joystick(0);
@@ -20,6 +23,10 @@ public class OI {
             new JoystickButton(driverController, Constants.START);
     public static JoystickButton driverLS = new JoystickButton(driverController, Constants.LS);
     public static JoystickButton driverRS = new JoystickButton(driverController, Constants.RS);
+    public static TriggerButton driverLT = new TriggerButton(driverController, 2);
+    public static TriggerButton driverRT = new TriggerButton(driverController, 3);
+    public static POVButton driverPOVDown = new POVButton(driverController, 180);
+    public static POVButton driverPOVUp = new POVButton(driverController, 0);
 
     public static JoystickButton operatorA = new JoystickButton(operatorController, Constants.A);
     public static JoystickButton operatorB = new JoystickButton(operatorController, Constants.B);
@@ -33,6 +40,8 @@ public class OI {
             new JoystickButton(operatorController, Constants.START);
     public static JoystickButton operatorLS = new JoystickButton(operatorController, Constants.LS);
     public static JoystickButton operatorRS = new JoystickButton(operatorController, Constants.RS);
+    public static TriggerButton operatorLT = new TriggerButton(operatorController, 2);
+    public static TriggerButton operatorRT = new TriggerButton(operatorController, 3);
 
     public static double getDriverLeftX() {
         return driverController.getRawAxis(0);
@@ -48,29 +57,5 @@ public class OI {
 
     public static double getDriverRightY() {
         return driverController.getRawAxis(5);
-    }
-
-    public static double getDriverLeftTrigger() {
-        return driverController.getRawAxis(2);
-    }
-
-    public static double getDriverRightTrigger() {
-        return driverController.getRawAxis(3);
-    }
-
-    public static double getOperatorLeftTrigger() {
-        return OI.operatorController.getRawAxis(2);
-    }
-
-    public static double getOperatorRightTrigger() {
-        return operatorController.getRawAxis(3);
-    }
-
-    public static int getOperatorPOV() {
-        return operatorController.getPOV();
-    }
-
-    public static int getDriverPOV() {
-        return driverController.getPOV();
     }
 }

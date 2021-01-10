@@ -1,18 +1,20 @@
 // Copyrights (c) 2018-2019 FIRST, 2020 Highlanders FRC. All Rights Reserved.
 
-package frc.robot.commands.defaults;
+package frc.robot.commands.basic;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.Climber;
 
-public class ClimberDefault extends CommandBase {
+public class SetArmMotor extends CommandBase {
 
-    private final Climber climber;
+    private Climber climber;
+    private double position;
 
-    public ClimberDefault(final Climber climber) {
+    public SetArmMotor(Climber climber, double position) {
         this.climber = climber;
-        addRequirements(this.climber);
+        this.position = position;
+        addRequirements(climber);
     }
 
     @Override
@@ -20,12 +22,12 @@ public class ClimberDefault extends CommandBase {
 
     @Override
     public void execute() {
-        climber.ratchetPistonReverse();
-        climber.setWinchMotor(0);
-        climber.setArmMotor(0);
+        climber.setArmMotor(position);
     }
 
     @Override
+    public void end(boolean interrupted) {}
+
     public boolean isFinished() {
         return false;
     }

@@ -5,6 +5,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
+import frc.robot.commands.basic.SetArmMotor;
+import frc.robot.commands.basic.SetClimberPiston;
 import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SpinFlywheel;
 import frc.robot.commands.defaults.ClimberDefault;
@@ -22,7 +24,6 @@ public class Robot extends TimedRobot {
     public static Hood hood = new Hood();
     public static Climber climber = new Climber();
     private final SpinFlywheel spinFlywheel4500 = new SpinFlywheel(shooter, 4500);
-    ;
 
     @Override
     public void robotInit() {
@@ -30,6 +31,7 @@ public class Robot extends TimedRobot {
         shooter.init();
         drive.init();
         hood.init();
+        climber.init();
         drive.setDefaultCommand(new DriveDefault(drive));
         magIntake.setDefaultCommand(new MagIntakeDefault(magIntake));
         hood.setDefaultCommand(new HoodDefault(hood));
@@ -63,6 +65,10 @@ public class Robot extends TimedRobot {
         OI.operatorA.whenPressed(new SetHoodPosition(hood, 0));
         OI.operatorB.whenPressed(new SetHoodPosition(hood, 11));
         OI.operatorY.whenPressed(new SetHoodPosition(hood, 22));
+        OI.driverLB.whenPressed(new SetClimberPiston(climber, true));
+        OI.driverRB.whenPressed(new SetClimberPiston(climber, false));
+        OI.driverA.whenPressed(new SetArmMotor(climber, 20));
+        OI.driverY.whenPressed(new SetArmMotor(climber, 35));
     }
 
     @Override
