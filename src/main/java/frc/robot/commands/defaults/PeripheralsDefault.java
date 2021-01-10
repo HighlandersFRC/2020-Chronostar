@@ -29,9 +29,11 @@ public class PeripheralsDefault extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        System.out.println(peripherals.getCamDistance());
+        System.out.println(peripherals.getCamAngle());
 
-        SmartDashboard.putNumber("Vision Distance", peripherals.getCamDistance());
-        SmartDashboard.putNumber("Vision Angle", peripherals.getCamAngle());
+        // SmartDashboard.putNumber("Vision Distance", peripherals.getCamDistance());
+        // SmartDashboard.putNumber("Vision Angle", peripherals.getCamAngle());
         SmartDashboard.putNumber("Lidar Distance", peripherals.getLidarDistance());
         SmartDashboard.putNumber("Navx Angle", peripherals.getNavxAngle());
     }
