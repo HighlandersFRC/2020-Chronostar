@@ -13,6 +13,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class VisionCamera {
+    public String debugString;
     private JSONParser parser = new JSONParser();
     private SerialPort port;
     private double lastParseTime;
@@ -34,6 +35,7 @@ public class VisionCamera {
                         if (port.getBytesReceived() > 0) {
                             buffer += port.readString();
                         }
+                        debugString = buffer;
                         // Consume bytes until the '{'
                         if (buffer.length() > 0) {
                             int index = buffer.indexOf('{', 0);
