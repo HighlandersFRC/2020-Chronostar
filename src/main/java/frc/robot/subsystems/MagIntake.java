@@ -56,15 +56,15 @@ public class MagIntake extends SubsystemBase {
     }
 
     public boolean getBeamBreak1() {
-        return beamBreak1.get();
+        return !beamBreak1.get();
     }
 
     public boolean getBeamBreak2() {
-        return beamBreak2.get();
+        return !beamBreak2.get();
     }
 
     public boolean getBeamBreak3() {
-        return beamBreak3.get();
+        return !beamBreak3.get();
     }
 
     public void setIntake(double lowIntakePercent, double highIntakePercent) {

@@ -19,8 +19,9 @@ public class Outtake extends CommandBase {
 
     @Override
     public void execute() {
-        magIntake.setIntake(-0.8, -0.6);
-        magIntake.setMagazine(-1, -0.6);
+        magIntake.intakePistonUp();
+        magIntake.setIntake(-0.8, -0.8);
+        magIntake.setMagazine(-0.7, -0.6);
     }
 
     @Override
