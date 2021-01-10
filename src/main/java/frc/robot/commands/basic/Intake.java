@@ -11,6 +11,7 @@ public class Intake extends CommandBase {
 
     public Intake(MagIntake magIntake) {
         this.magIntake = magIntake;
+        addRequirements(magIntake);
     }
 
     @Override
@@ -18,8 +19,34 @@ public class Intake extends CommandBase {
 
     @Override
     public void execute() {
-
         magIntake.setIntake(0.8, 0.6);
+        
+        if (magIntake.getBeamBreak1() || magIntake.getBeamBreak2() || magIntake.getBeamBreak3()) {
+            if (magIntake.getBeamBreak3()) {
+                new StopHighMag(magIntake).schedule();
+            } else if (magIntake.getBeamBreak2()) {
+                new BumpHighMag(magIntake).schedule();
+                new BumpLowMag(magIntake).schedule();
+            }
+            if (magIntake.getBeamBreak1()) {
+                if (catchCounter <= 50) {
+                    new BumpLowMag(magIntake).schedule();
+                } else {
+                    if (tryCounter <= 25) {
+                        tryCounter++;
+                    } else {
+                        new BumpLowMag(magIntake).schedule();
+                        catchCounter = 0;
+                        tryCounter = 0;
+                    }
+                }
+                catchCounter++;
+            } else {
+                catchCounter = 0;
+            }
+        } else {
+            magIntake.setMagazine(0, 0);
+        }
     }
 
     @Override
