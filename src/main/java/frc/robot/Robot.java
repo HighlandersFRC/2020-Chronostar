@@ -12,11 +12,11 @@ import frc.robot.subsystems.*;
 
 public class Robot extends TimedRobot {
 
-    public static MagIntake magIntake = new MagIntake();
-    public static Drive drive = new Drive();
-    public static Shooter shooter = new Shooter();
-    public static Hood hood = new Hood();
-    public static LightRing lightRing = new LightRing();
+    private final MagIntake magIntake = new MagIntake();
+    private final Drive drive = new Drive();
+    private final Shooter shooter = new Shooter();
+    private final Hood hood = new Hood();
+    private final LightRing lightRing = new LightRing();
     private final Fire teleopFire = new Fire(shooter, hood, magIntake, drive, lightRing, 0.02);
     private final Intake intake = new Intake(magIntake);
     private final Outtake outtake = new Outtake(magIntake);

@@ -16,13 +16,13 @@ public class EjectMagazine extends InstantCommand {
     }
 
     @Override
-    public void initialize() {
+    public void initialize() {}
+
+    @Override
+    public void execute() {
         magIntake.setMagazine(0.25, 0.8);
         magIntake.setIntake(0, 0.8);
     }
-
-    @Override
-    public void execute() {}
 
     @Override
     public void end(boolean interrupted) {}
