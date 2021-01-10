@@ -6,12 +6,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.Climber;
 
-public class SetArmMotor extends CommandBase {
+public class SetArmPosition extends CommandBase {
 
     private Climber climber;
     private double position;
 
-    public SetArmMotor(Climber climber, double position) {
+    public SetArmPosition(Climber climber, double position) {
         this.climber = climber;
         this.position = position;
         addRequirements(climber);

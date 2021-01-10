@@ -20,9 +20,9 @@ public class SetClimberPiston extends InstantCommand {
     @Override
     public void initialize() {
         if (direction) {
-            climber.climberReleaseForward();
+            climber.engageClimberRelease();
         } else {
-            climber.climberReleaseReverse();
+            climber.disengageClimberRelease();
         }
     }
 

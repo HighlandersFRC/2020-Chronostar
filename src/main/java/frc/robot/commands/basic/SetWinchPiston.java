@@ -17,9 +17,9 @@ public class SetWinchPiston extends InstantCommand {
     @Override
     public void initialize() {
         if (direction) {
-            climber.ratchetPistonForward();
+            climber.engageRatchetPiston();
         } else {
-            climber.ratchetPistonReverse();
+            climber.disengageRatchetPiston();
         }
     }
 

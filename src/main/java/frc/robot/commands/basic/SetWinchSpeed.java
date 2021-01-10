@@ -10,6 +10,7 @@ public class SetWinchSpeed extends CommandBase {
 
     private Climber climber;
     private boolean direction;
+    private double speed = 0.8;
 
     public SetWinchSpeed(Climber climber, boolean direction) {
         this.climber = climber;
@@ -18,7 +19,11 @@ public class SetWinchSpeed extends CommandBase {
 
     @Override
     public void initialize() {
-        climber.setWinchMotor(direction ? 0.8 : -0.8);
+        if (direction) {
+            climber.setWinchMotor(speed);
+        } else {
+            climber.setWinchMotor(-speed);
+        }
     }
 
     @Override

@@ -5,7 +5,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
-import frc.robot.commands.basic.SetArmMotor;
+import frc.robot.commands.basic.SetArmPosition;
 import frc.robot.commands.basic.SetClimberPiston;
 import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SpinFlywheel;
@@ -67,8 +67,8 @@ public class Robot extends TimedRobot {
         OI.operatorY.whenPressed(new SetHoodPosition(hood, 22));
         OI.driverLB.whenPressed(new SetClimberPiston(climber, true));
         OI.driverRB.whenPressed(new SetClimberPiston(climber, false));
-        OI.driverA.whenPressed(new SetArmMotor(climber, 20));
-        OI.driverY.whenPressed(new SetArmMotor(climber, 35));
+        OI.driverA.whenPressed(new SetArmPosition(climber, 20));
+        OI.driverY.whenPressed(new SetArmPosition(climber, 35));
     }
 
     @Override

@@ -20,7 +20,7 @@ public class ClimberDefault extends CommandBase {
 
     @Override
     public void execute() {
-        climber.ratchetPistonReverse();
+        climber.disengageRatchetPiston();
         climber.setWinchMotor(0);
         climber.setArmMotor(0);
     }

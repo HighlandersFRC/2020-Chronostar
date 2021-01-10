@@ -54,19 +54,19 @@ public class Climber extends SubsystemBase {
         armMotor.setIdleMode(IdleMode.kBrake);
     }
 
-    public void ratchetPistonForward() {
+    public void engageRatchetPiston() {
         ratchetPiston.set(Value.kForward);
     }
 
-    public void ratchetPistonReverse() {
+    public void disengageRatchetPiston() {
         ratchetPiston.set(Value.kReverse);
     }
 
-    public void climberReleaseForward() {
+    public void engageClimberRelease() {
         climberRelease.set(Value.kForward);
     }
 
-    public void climberReleaseReverse() {
+    public void disengageClimberRelease() {
         climberRelease.set(Value.kReverse);
     }
 
