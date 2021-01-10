@@ -19,7 +19,7 @@ public class SetHighMag extends InstantCommand {
 
     @Override
     public void initialize() {
-        magIntake.setHighMagPercent(direction ? -power : power);
+        magIntake.setHighMagPercent(direction ? power : -power);
     }
 
     @Override
