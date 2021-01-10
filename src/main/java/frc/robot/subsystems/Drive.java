@@ -24,14 +24,14 @@ public class Drive extends SubsystemBase {
         leftDriveLead, rightDriveLead, leftDriveFollower, rightDriveFollower
     };
 
-    double deadzone = 0.01;
-    private double vkF = 0.0455925;
-    private double vkP = 0.21;
-    private double vkI = 0.000002;
-    private double vkD = 0;
-    private double akP = 0.01;
-    private double akI = 0.00006;
-    private double akD = 0.01;
+    private final double deadzone = 0.01;
+    private final double vkF = 0.0455925;
+    private final double vkP = 0.21;
+    private final double vkI = 0.000002;
+    private final double vkD = 0;
+    private final double akP = 0.01;
+    private final double akI = 0.00006;
+    private final double akD = 0.01;
     private PID aPID;
 
     public Drive() {}
