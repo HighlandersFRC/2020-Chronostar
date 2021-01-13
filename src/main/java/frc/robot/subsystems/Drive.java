@@ -24,14 +24,14 @@ public class Drive extends SubsystemBase {
         leftDriveLead, rightDriveLead, leftDriveFollower, rightDriveFollower
     };
 
-    double deadzone = 0.01;
-    private double vkF = 0.0455925;
-    private double vkP = 0.21;
-    private double vkI = 0.000002;
-    private double vkD = 0;
-    private double akP = 0.01;
-    private double akI = 0.00006;
-    private double akD = 0.01;
+    private final double deadzone = 0.01;
+    private final double vkF = 0.0455925;
+    private final double vkP = 0.21;
+    private final double vkI = 0.000002;
+    private final double vkD = 0;
+    private final double akP = 0.01;
+    private final double akI = 0.00006;
+    private final double akD = 0.01;
     private PID aPID;
 
     public Drive() {}
@@ -112,6 +112,13 @@ public class Drive extends SubsystemBase {
     public void setRightSpeed(double fps) {
         rightDriveLead.set(ControlMode.Velocity, Constants.driveFPSToUnitsPer100MS(fps));
     }
+    
+    public double safelyDivide(double i, double j) {
+        if (j == 0) {
+            return 0;
+        }
+        return i / j;
+    }
 
     public void arcadeDrive(double throttle, double turn) {
         double left, right;
@@ -126,10 +133,10 @@ public class Drive extends SubsystemBase {
         left = throttle + differential;
         right = throttle - differential;
         if (Math.abs(left) > 1) {
-            right = Math.abs(right / left) * Math.signum(right);
+            right = Math.abs(safelyDivide(right, left)) * Math.signum(right);
             left = Math.signum(left);
         } else if (Math.abs(right) > 1) {
-            left = Math.abs(left / right) * Math.signum(left);
+            left = Math.abs(safelyDivide(left, right)) * Math.signum(left);
             right = Math.signum(right);
         }
         setLeftPercent(left);

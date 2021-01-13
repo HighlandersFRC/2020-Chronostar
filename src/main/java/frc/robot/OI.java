@@ -74,4 +74,18 @@ public class OI {
     public static int getDriverPOV() {
         return driverController.getPOV();
     }
+
+    public static boolean operatorRightTriggerTrue() {
+        if (getOperatorRightTrigger() > 0.5) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean operatorLeftTriggerTrue() {
+        if (getOperatorLeftTrigger() > 0.5) {
+            return true;
+        }
+        return false;
+    }
 }
