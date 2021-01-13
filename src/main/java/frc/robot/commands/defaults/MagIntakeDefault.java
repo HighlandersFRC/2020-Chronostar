@@ -2,6 +2,7 @@
 
 package frc.robot.commands.defaults;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.MagIntake;
@@ -23,6 +24,9 @@ public class MagIntakeDefault extends CommandBase {
         magIntake.setIntake(0, 0);
         magIntake.intakePistonDown();
         magIntake.setMagazine(0, 0);
+        SmartDashboard.putBoolean("Beam Break 1", magIntake.getBeamBreak1());
+        SmartDashboard.putBoolean("Beam Break 2", magIntake.getBeamBreak2());
+        SmartDashboard.putBoolean("Beam Break 3", magIntake.getBeamBreak3());
     }
 
     @Override

@@ -19,9 +19,7 @@ public class HoodDefault extends CommandBase {
     public void initialize() {}
 
     @Override
-    public void execute() {
-        hood.setHoodTarget(0);
-    }
+    public void execute() {}
 
     @Override
     public void end(boolean interrupted) {}
