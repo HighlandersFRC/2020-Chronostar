@@ -15,13 +15,12 @@ import frc.robot.subsystems.*;
 
 public class Robot extends TimedRobot {
 
-    public static MagIntake magIntake = new MagIntake();
-    public static Drive drive = new Drive();
-    public static Shooter shooter = new Shooter();
-    public static Hood hood = new Hood();
-    public static Climber climber = new Climber();
+    private final MagIntake magIntake = new MagIntake();
+    private final Drive drive = new Drive();
+    private final Shooter shooter = new Shooter();
+    private final Hood hood = new Hood();
+    private final Climber climber = new Climber();
     private final SpinFlywheel spinFlywheel4500 = new SpinFlywheel(shooter, 4500);
-    ;
 
     @Override
     public void robotInit() {
