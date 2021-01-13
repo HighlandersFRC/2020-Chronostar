@@ -112,7 +112,7 @@ public class Drive extends SubsystemBase {
     public void setRightSpeed(double fps) {
         rightDriveLead.set(ControlMode.Velocity, Constants.driveFPSToUnitsPer100MS(fps));
     }
-    
+
     public double safelyDivide(double i, double j) {
         if (j == 0) {
             return 0;
