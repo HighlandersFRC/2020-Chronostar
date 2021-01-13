@@ -16,11 +16,6 @@ import frc.robot.subsystems.Drive;
 
 public class DriveDefaultCommand extends CommandBase {
     private Drive drive;
-    private double turn;
-    private double rightPower;
-    private double leftPower;
-    private double finalLeft = 0;
-    private double finalRight = 0;
 
     public DriveDefaultCommand(Drive drive) {
         this.drive = drive;
@@ -34,6 +29,11 @@ public class DriveDefaultCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        double turn;
+        double rightPower;
+        double leftPower;
+        double finalLeft = 0;
+        double finalRight = 0;
         if (Math.abs(OI.getDriverRightX()) > 0.1) {
             turn = OI.getDriverRightX();
         } else {
