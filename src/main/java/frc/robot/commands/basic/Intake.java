@@ -9,6 +9,9 @@ import frc.robot.subsystems.MagIntake;
 public class Intake extends CommandBase {
 
     private MagIntake magIntake;
+    private double highMagTimer = 0.0, lowMagTimer = 0.0;
+    private static final double HIGH_MAG_POWER = 0.425, LOW_MAG_POWER = 0.0;
+    private static final double LOOP_TIME = 0.02;
 
     public Intake(MagIntake magIntake) {
         this.magIntake = magIntake;
@@ -21,37 +24,40 @@ public class Intake extends CommandBase {
     @Override
     public void execute() {
         magIntake.setIntake(0.8, 0.6);
-        
-        if (magIntake.getBeamBreak1() || magIntake.getBeamBreak2() || magIntake.getBeamBreak3()) {
-            if (magIntake.getBeamBreak3()) {
-                new StopHighMag(magIntake).schedule();
-            } else if (magIntake.getBeamBreak2()) {
-                new BumpHighMag(magIntake).schedule();
-                new BumpLowMag(magIntake).schedule();
-            }
-            if (magIntake.getBeamBreak1()) {
-                if (catchCounter <= 50) {
-                    new BumpLowMag(magIntake).schedule();
-                } else {
-                    if (tryCounter <= 25) {
-                        tryCounter++;
-                    } else {
-                        new BumpLowMag(magIntake).schedule();
-                        catchCounter = 0;
-                        tryCounter = 0;
-                    }
-                }
-                catchCounter++;
-            } else {
-                catchCounter = 0;
-            }
+
+        // Magazine motor time countdown
+        if (highMagTimer > 0) {
+            magIntake.setHighMagPercent(HIGH_MAG_POWER);
+            highMagTimer -= LOOP_TIME;
         } else {
-            magIntake.setMagazine(0, 0);
+            magIntake.setHighIntakePercent(0);
+            highMagTimer = 0;
+        }
+        if (lowMagTimer > 0) {
+            magIntake.setLowIntakePercent(LOW_MAG_POWER);
+            lowMagTimer -= LOOP_TIME;
+        } else {
+            magIntake.setLowIntakePercent(0);
+            lowMagTimer = 0;
+        }
+
+        // Checking beam breaks to initialize countdowns
+        if (magIntake.getBeamBreak1()) {
+            lowMagTimer = 0.15;
+        }
+        if (magIntake.getBeamBreak3()) {
+            highMagTimer = 0;
+        } else if (magIntake.getBeamBreak2()) {
+            lowMagTimer = 0.15;
+            highMagTimer = 0.15;
         }
     }
 
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        highMagTimer = 0;
+        lowMagTimer = 0;
+    }
 
     @Override
     public boolean isFinished() {

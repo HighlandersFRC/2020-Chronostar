@@ -22,9 +22,6 @@ public class Robot extends TimedRobot {
     public static Shooter shooter = new Shooter();
     public static Hood hood = new Hood();
     public static LightRing lightRing = new LightRing();
-    private final Fire teleopFire = new Fire(shooter, hood, magIntake, drive, lightRing, 0);
-    private final Intake intake = new Intake(magIntake);
-    private final Outtake outtake = new Outtake(magIntake);
 
     @Override
     public void robotInit() {
@@ -62,9 +59,9 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
         drive.teleopInit();
-        OI.operatorX.whileHeld(teleopFire);
-        OI.operatorRT.whileHeld(intake);
-        OI.operatorLT.whileHeld(outtake);
+        OI.operatorX.whileHeld(new Fire(shooter, hood, magIntake, drive, lightRing, 0));
+        OI.operatorRT.whileHeld(new Intake(magIntake));
+        OI.operatorLT.whileHeld(new Outtake(magIntake));
     }
 
     @Override
