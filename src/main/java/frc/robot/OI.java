@@ -40,15 +40,15 @@ public class OI {
     }
 
     public static double getDriverLeftY() {
-        return driverController.getRawAxis(1);
+        return driverController.getY(Hand.kLeft);
     }
 
     public static double getDriverRightX() {
-        return driverController.getRawAxis(4);
+        return driverController.getX(Hand.kRight);
     }
 
     public static double getDriverRightY() {
-        return driverController.getRawAxis(5);
+        return driverController.getY(Hand.kRight);
     }
 
     public static double getDriverLeftTrigger() {
