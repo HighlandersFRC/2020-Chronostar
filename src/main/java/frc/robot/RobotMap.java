@@ -2,11 +2,23 @@
 
 package frc.robot;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.I2C.Port;
 
 import frc.robot.sensors.*;
 
 public class RobotMap {
+
+    /*
+     * TODO Om, you need to move your subsystems' hardware declarations into their
+     * TODO own subsystems. You'll also have to create classes for your subsystems,
+     * TODO and create default commands. Use Adi's and my code as a reference.
+     */
+
+    public static AHRS ahrs = new AHRS(Port.kMXP);
+    public static Navx navx = new Navx(ahrs);
 
     public static Counter lidarPort = new Counter(2);
     public static LidarLite lidar = new LidarLite(lidarPort);
