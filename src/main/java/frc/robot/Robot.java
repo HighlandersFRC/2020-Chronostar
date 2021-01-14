@@ -9,7 +9,6 @@ import frc.robot.commands.basic.Intake;
 import frc.robot.commands.basic.Outtake;
 import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SpinFlywheel;
-import frc.robot.commands.basic.TestAutoDrive;
 import frc.robot.commands.defaults.DriveDefault;
 import frc.robot.commands.defaults.HoodDefault;
 import frc.robot.commands.defaults.MagIntakeDefault;
@@ -24,7 +23,6 @@ public class Robot extends TimedRobot {
     public static Hood hood = new Hood();
     public static Climber climber = new Climber();
     private final SpinFlywheel spinFlywheel4500 = new SpinFlywheel(shooter, 4500);
-    private final TestAutoDrive autoDrive = new TestAutoDrive(drive);
 
     @Override
     public void robotInit() {
@@ -52,7 +50,6 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         drive.autoInit();
-        // autoDrive.schedule();
     }
 
     @Override
