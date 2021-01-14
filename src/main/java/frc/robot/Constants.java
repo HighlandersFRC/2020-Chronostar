@@ -43,7 +43,6 @@ public class Constants {
     public static int MAX_SHOOTER_RPM = 6000;
     public static double MAX_SHOOTER_PERCENTAGE = 0.7;
     public static int SHOOTER_INTEGRAL_RANGE = 439;
-    public static int climberMotorID;
 
     // Drive constants
     public static final double DRIVE_MAX_VOLTAGE = 11.7;
