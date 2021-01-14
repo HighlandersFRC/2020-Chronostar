@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.Constants;
 import frc.robot.OI;
+import frc.robot.commands.defaults.HoodDefault;
 
 public class Hood extends SubsystemBaseEnhanced {
 
@@ -53,6 +54,8 @@ public class Hood extends SubsystemBaseEnhanced {
         pidController.setSmartMotionMinOutputVelocity(-160, 0);
         pidController.setSmartMotionMaxAccel(100, 0);
         pidController.setSmartMotionAllowedClosedLoopError(.1, 0);
+        hoodMotor.setInverted(true);
+        setDefaultCommand(new HoodDefault(this));
     }
 
     @Override
