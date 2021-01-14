@@ -64,6 +64,8 @@ public class Robot extends TimedRobot {
         OI.driverRB.whenPressed(new SetClimberPiston(climber, false));
         OI.driverA.whenPressed(new SetArmPosition(climber, 20));
         OI.driverY.whenPressed(new SetArmPosition(climber, 35));
+        OI.operatorRB.whenPressed(new SetClimberPiston(climber, true));
+        OI.operatorLB.whenPressed(new SetClimberPiston(climber, false));
     }
 
     @Override

@@ -30,9 +30,9 @@ public class Climber extends SubsystemBaseEnhanced {
     private final float minValue = 0;
     private final float maxValue = 44;
     private double kf = 0;
-    private double kp = 1;
-    private double ki = 0;
-    private double kd = 0;
+    private double kp = 2;
+    private double ki = 0.005;
+    private double kd = 20;
 
     public Climber() {}
 
@@ -43,12 +43,12 @@ public class Climber extends SubsystemBaseEnhanced {
         armMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, maxValue);
         armMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, minValue);
 
-        pidController.setOutputRange(-0.1, 0.1);
-        pidController.setSmartMotionMaxVelocity(5, 0);
-        pidController.setSmartMotionMinOutputVelocity(-5, 0);
-        pidController.setSmartMotionMaxAccel(.1, 0);
-        pidController.setSmartMotionAllowedClosedLoopError(.1, 0);
-        armMotor.setSmartCurrentLimit(1);
+        pidController.setOutputRange(-0.25, 0.25);
+        pidController.setSmartMotionMaxVelocity(120, 0);
+        pidController.setSmartMotionMinOutputVelocity(-120, 0);
+        pidController.setSmartMotionMaxAccel(10, 0);
+        pidController.setSmartMotionAllowedClosedLoopError(10, 0);
+        armMotor.setSmartCurrentLimit(15);
         armMotor.setIdleMode(IdleMode.kBrake);
         setDefaultCommand(new ClimberDefault(this));
     }
@@ -90,14 +90,14 @@ public class Climber extends SubsystemBaseEnhanced {
         SmartDashboard.putNumber("kP", kp);
         SmartDashboard.putNumber("kI", ki);
         SmartDashboard.putNumber("kD", kd);
-        kf = SmartDashboard.getNumber("kF", kf);
-        kp = SmartDashboard.getNumber("kP", kp);
-        ki = SmartDashboard.getNumber("kI", ki);
-        kd = SmartDashboard.getNumber("kD", kd);
+        /*kf = SmartDashboard.getNumber("kF", kf);
+            kp = SmartDashboard.getNumber("kP", kp);
+            ki = SmartDashboard.getNumber("kI", ki);
+            kd = SmartDashboard.getNumber("kD", kd);
 
-        pidController.setFF(kf);
-        pidController.setP(kp);
-        pidController.setI(ki);
-        pidController.setD(kd);
-    }
+            pidController.setFF(kf);
+            pidController.setP(kp);
+            pidController.setI(ki);
+            pidController.setD(kd);
+        */ }
 }
