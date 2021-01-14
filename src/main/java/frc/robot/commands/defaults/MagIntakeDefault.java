@@ -20,6 +20,7 @@ public class MagIntakeDefault extends CommandBase {
 
     @Override
     public void execute() {
+        // Intake stuff
         magIntake.setIntake(0, 0);
         magIntake.intakePistonDown();
         magIntake.setMagPercent(0, 0);
