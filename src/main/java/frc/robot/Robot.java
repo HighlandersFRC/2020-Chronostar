@@ -5,9 +5,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
+import frc.robot.commands.basic.Intake;
 import frc.robot.commands.basic.SetArmPosition;
 import frc.robot.commands.basic.SetClimberPiston;
-import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SpinFlywheel;
 import frc.robot.subsystems.*;
 
@@ -57,9 +57,8 @@ public class Robot extends TimedRobot {
             s.teleopInit();
         }
         OI.operatorX.whileHeld(spinFlywheel4500);
-        OI.operatorA.whenPressed(new SetHoodPosition(hood, 0));
-        OI.operatorB.whenPressed(new SetHoodPosition(hood, 11));
-        OI.operatorY.whenPressed(new SetHoodPosition(hood, 22));
+        OI.operatorRT.whileHeld(new Intake(magIntake));
+        OI.operatorLT.whileHeld(new Outtake(magIntake));
         OI.driverLB.whenPressed(new SetClimberPiston(climber, true));
         OI.driverRB.whenPressed(new SetClimberPiston(climber, false));
         OI.driverA.whenPressed(new SetArmPosition(climber, 20));
