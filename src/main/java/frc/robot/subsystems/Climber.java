@@ -29,10 +29,10 @@ public class Climber extends SubsystemBaseEnhanced {
     private final CANEncoder armEncoder = armMotor.getEncoder();
     private final float minValue = 0;
     private final float maxValue = 44;
-    private final double kf = 0;
-    private final double kp = 1;
-    private final double ki = 0;
-    private final double kd = 0;
+    private double kf = 0;
+    private double kp = 1;
+    private double ki = 0;
+    private double kd = 0;
 
     public Climber() {}
 
@@ -42,10 +42,7 @@ public class Climber extends SubsystemBaseEnhanced {
         armMotor.setInverted(false);
         armMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, maxValue);
         armMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, minValue);
-        pidController.setFF(kf);
-        pidController.setP(kp);
-        pidController.setI(ki);
-        pidController.setD(kd);
+
         pidController.setOutputRange(-0.1, 0.1);
         pidController.setSmartMotionMaxVelocity(5, 0);
         pidController.setSmartMotionMinOutputVelocity(-5, 0);
@@ -89,5 +86,18 @@ public class Climber extends SubsystemBaseEnhanced {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("encoder value", armEncoder.getPosition());
+        SmartDashboard.putNumber("kF", kf);
+        SmartDashboard.putNumber("kP", kp);
+        SmartDashboard.putNumber("kI", ki);
+        SmartDashboard.putNumber("kD", kd);
+        kf = SmartDashboard.getNumber("kF", kf);
+        kp = SmartDashboard.getNumber("kP", kp);
+        ki = SmartDashboard.getNumber("kI", ki);
+        kd = SmartDashboard.getNumber("kD", kd);
+
+        pidController.setFF(kf);
+        pidController.setP(kp);
+        pidController.setI(ki);
+        pidController.setD(kd);
     }
 }
