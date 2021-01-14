@@ -13,12 +13,11 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
+import frc.robot.commands.defaults.MagIntakeDefault;
 
-public class MagIntake extends SubsystemBase {
-    public MagIntake() {}
+public class MagIntake extends SubsystemBaseEnhanced {
 
     private final DigitalInput beamBreak1 = new DigitalInput(Constants.BEAM_BREAK_1_ID);
     private final DigitalInput beamBreak2 = new DigitalInput(Constants.BEAM_BREAK_3_ID);
@@ -31,13 +30,23 @@ public class MagIntake extends SubsystemBase {
     private final VictorSPX highIntake = new VictorSPX(Constants.HIGH_INTAKE_ID);
     private final DoubleSolenoid intakePiston = new DoubleSolenoid(0, 1);
 
+    public MagIntake() {}
+
+    @Override
     public void init() {
         lowMag.setNeutralMode(NeutralMode.Brake);
         highMag.setIdleMode(IdleMode.kBrake);
         lowMag.configVoltageCompSaturation(11.7);
         lowMag.enableVoltageCompensation(true);
         lowIntake.setInverted(true);
+        setDefaultCommand(new MagIntakeDefault(this));
     }
+
+    @Override
+    public void autoInit() {}
+
+    @Override
+    public void teleopInit() {}
 
     public void setLowMagPercent(double power) {
         lowMag.set(ControlMode.PercentOutput, power);

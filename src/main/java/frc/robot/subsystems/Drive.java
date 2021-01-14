@@ -8,12 +8,11 @@ import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 import frc.robot.Constants;
+import frc.robot.commands.defaults.DriveDefault;
 import frc.robot.tools.controlloops.PID;
 
-public class Drive extends SubsystemBase {
+public class Drive extends SubsystemBaseEnhanced {
 
     private final TalonFX leftDriveLead = new TalonFX(Constants.LEFT_DRIVE_LEAD_ID);
     private final TalonFX rightDriveLead = new TalonFX(Constants.RIGHT_DRIVE_LEAD_ID);
@@ -36,6 +35,7 @@ public class Drive extends SubsystemBase {
 
     public Drive() {}
 
+    @Override
     public void init() {
         aPID = new PID(akP, akI, akD);
         aPID.setMaxOutput(0.75);
@@ -62,13 +62,16 @@ public class Drive extends SubsystemBase {
         leftDriveLead.config_kD(0, vkD);
         rightDriveLead.config_kD(0, vkD);
         setCurrentLimitsEnabled();
+        setDefaultCommand(new DriveDefault(this));
     }
 
+    @Override
     public void autoInit() {
         setVoltageCompensation(Constants.DRIVE_MAX_VOLTAGE);
         setDriveBrake();
     }
 
+    @Override
     public void teleopInit() {
         setDriveCoast();
     }
