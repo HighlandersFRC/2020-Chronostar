@@ -2,15 +2,15 @@
 
 package frc.robot.tools.extrabuttons;
 
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.button.Button;
 
 public class TriggerButton extends Button {
     private final double THRESHOLD = 0.5;
-    private Joystick joystick;
+    private GenericHID joystick;
     private int axis;
 
-    public TriggerButton(Joystick joystick, int axisNumber) {
+    public TriggerButton(GenericHID joystick, int axisNumber) {
         this.joystick = joystick;
         axis = axisNumber;
     }

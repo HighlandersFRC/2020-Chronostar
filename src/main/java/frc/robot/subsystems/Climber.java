@@ -14,11 +14,11 @@ import com.revrobotics.ControlType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
+import frc.robot.commands.defaults.ClimberDefault;
 
-public class Climber extends SubsystemBase {
+public class Climber extends SubsystemBaseEnhanced {
 
     private final TalonFX winch = new TalonFX(Constants.WINCH_ID);
     private final DoubleSolenoid ratchetPiston = new DoubleSolenoid(2, 3);
@@ -36,6 +36,7 @@ public class Climber extends SubsystemBase {
 
     public Climber() {}
 
+    @Override
     public void init() {
         armEncoder.setPosition(0);
         armMotor.setInverted(false);
@@ -52,7 +53,14 @@ public class Climber extends SubsystemBase {
         pidController.setSmartMotionAllowedClosedLoopError(.1, 0);
         armMotor.setSmartCurrentLimit(1);
         armMotor.setIdleMode(IdleMode.kBrake);
+        setDefaultCommand(new ClimberDefault(this));
     }
+
+    @Override
+    public void autoInit() {}
+
+    @Override
+    public void teleopInit() {}
 
     public void engageRatchetPiston() {
         ratchetPiston.set(Value.kForward);

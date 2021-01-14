@@ -2,15 +2,16 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 
 import frc.robot.tools.extrabuttons.TriggerButton;
 
 public class OI {
-    public static Joystick driverController = new Joystick(0);
-    public static Joystick operatorController = new Joystick(1);
+    public static XboxController driverController = new XboxController(0);
+    public static XboxController operatorController = new XboxController(1);
 
     public static JoystickButton driverA = new JoystickButton(driverController, Constants.A);
     public static JoystickButton driverB = new JoystickButton(driverController, Constants.B);
@@ -44,18 +45,18 @@ public class OI {
     public static TriggerButton operatorRT = new TriggerButton(operatorController, 3);
 
     public static double getDriverLeftX() {
-        return driverController.getRawAxis(0);
+        return driverController.getX(Hand.kLeft);
     }
 
     public static double getDriverLeftY() {
-        return driverController.getRawAxis(1);
+        return driverController.getY(Hand.kLeft);
     }
 
     public static double getDriverRightX() {
-        return driverController.getRawAxis(4);
+        return driverController.getX(Hand.kRight);
     }
 
     public static double getDriverRightY() {
-        return driverController.getRawAxis(5);
+        return driverController.getY(Hand.kRight);
     }
 }
