@@ -19,11 +19,10 @@ public class VisionCamera {
     private double lastParseTime;
     private double distance;
     private double angle;
-    private static final double BAD_ANGLE = -100.0;
-    private static final double BAD_DISTANCE = -11.0;
     private Point targetPoint = new Point(0, 0);
     private AtomicBoolean shouldStop = new AtomicBoolean(false);
     private ConcurrentLinkedQueue<JSONObject> jsonResults = new ConcurrentLinkedQueue<JSONObject>();
+    private ConcurrentLinkedQueue<String> stringResults = new ConcurrentLinkedQueue<String>();
 
     public VisionCamera(SerialPort jevois) {
         port = jevois;
@@ -33,7 +32,9 @@ public class VisionCamera {
                     while (!shouldStop.get()) {
                         // Gets bytes from serial port
                         if (port.getBytesReceived() > 0) {
-                            buffer += port.readString();
+                            String temp = port.readString();
+                            buffer += temp;
+                            stringResults.add(temp);
                         }
                         debugString = buffer;
                         // Consume bytes until the '{'
@@ -51,6 +52,7 @@ public class VisionCamera {
                             if (index != -1) {
                                 String section = buffer.substring(0, index + 1);
                                 try {
+                                    System.out.println(section);
                                     JSONObject json = (JSONObject) parser.parse(section);
                                     if (jsonResults.size() > 16) {
                                         jsonResults.poll();
@@ -78,16 +80,19 @@ public class VisionCamera {
                 json = temp;
             }
         }
+        // System.out.println(stringResults.size());
+        // for (int i = 0; i < stringResults.size(); i++) {
+        //     System.out.println(stringResults.poll());
+        // }
         // Use JSON results if present
         if (json != null) {
-            double tempDistance = (double) json.get("Distance");
-            double tempAngle = (double) json.get("Angle");
-
-            if (tempDistance != BAD_DISTANCE) {
-                distance = tempDistance;
+            Object tempDistance = json.get("Distance");
+            if (tempDistance != null) {
+                distance = (double) tempDistance;
             }
-            if (tempAngle != BAD_ANGLE) {
-                angle = tempAngle;
+            Object tempAngle = json.get("Angle");
+            if (tempAngle != null) {
+                angle = (double) tempAngle;
             }
         }
     }
