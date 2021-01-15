@@ -4,61 +4,63 @@ package frc.robot.commands.basic;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.robot.OI;
 import frc.robot.subsystems.MagIntake;
 
 public class Intake extends CommandBase {
-    /** Creates a new Intake. */
+
     private MagIntake magIntake;
+    private double highMagTimer = 0.0, lowMagTimer = 0.0;
+    private static final double HIGH_MAG_POWER = 0.425, LOW_MAG_POWER = 0.0;
+    private static final double LOOP_TIME = 0.02;
 
     public Intake(MagIntake magIntake) {
         this.magIntake = magIntake;
         addRequirements(magIntake);
-        // Use addRequirements() here to declare subsystem dependencies.
     }
 
-    // Called when the command is initially scheduled.
     @Override
     public void initialize() {}
 
-    // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (OI.operatorRB.get()) {
-            magIntake.setIntake(0.8, -0.6);
-        }
-        if (magIntake.getBeamBreak1()
-                & magIntake.getBeamBreak2()
-                & magIntake.getBeamBreak3()
-                & OI.operatorLT.get()) {
-            magIntake.setMagPercent(0, 0);
-        } else if (!magIntake.getBeamBreak3() & !OI.operatorLT.get()) {
-            magIntake.setMagPercent(0, 0);
-        } else if (!magIntake.getBeamBreak1() & magIntake.getBeamBreak2()) {
-            magIntake.setMagPercent(0.5, 0);
-        } else if (!magIntake.getBeamBreak2() & magIntake.getBeamBreak1()) {
-            magIntake.setMagPercent(-0.3, 0.4);
-        } else if (!magIntake.getBeamBreak2() & !magIntake.getBeamBreak1()) {
-            magIntake.setMagPercent(0.3, 0.25);
-        } else if (!magIntake.getBeamBreak3() & !magIntake.getBeamBreak2()) {
-            magIntake.setMagPercent(0.2, 0);
-        } else if (!magIntake.getBeamBreak2() & magIntake.getBeamBreak3()) {
-            magIntake.setMagPercent(0.3, -0.4);
+        magIntake.setIntake(0.8, 0.6);
+
+        // Magazine motor time countdown
+        if (highMagTimer > 0) {
+            magIntake.setHighMagPercent(HIGH_MAG_POWER);
+            highMagTimer -= LOOP_TIME;
         } else {
-            magIntake.setMagPercent(-0.3, 0.2);
+            magIntake.setHighIntakePercent(0);
+            highMagTimer = 0;
+        }
+        if (lowMagTimer > 0) {
+            magIntake.setLowIntakePercent(LOW_MAG_POWER);
+            lowMagTimer -= LOOP_TIME;
+        } else {
+            magIntake.setLowIntakePercent(0);
+            lowMagTimer = 0;
+        }
+
+        // Checking beam breaks to initialize countdowns
+        if (magIntake.getBeamBreak1()) {
+            lowMagTimer = 0.15;
+        }
+        if (magIntake.getBeamBreak3()) {
+            highMagTimer = 0;
+        } else if (magIntake.getBeamBreak2()) {
+            lowMagTimer = 0.15;
+            highMagTimer = 0.15;
         }
     }
 
-    // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        highMagTimer = 0;
+        lowMagTimer = 0;
+    }
 
-    // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if (!OI.operatorRB.get()) {
-            return true;
-        }
         return false;
     }
 }
