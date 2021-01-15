@@ -5,6 +5,7 @@ package frc.robot.commands.basic;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.MagIntake;
+import frc.robot.subsystems.MagIntake.BeamBreakID;
 
 public class SmartIntake extends CommandBase {
 
@@ -31,7 +32,7 @@ public class SmartIntake extends CommandBase {
     @Override
     public void execute() {
         if (direction == IntakeDirection.IN) {
-            magIntake.setIntake(0.8, 0.6);
+            magIntake.setIntakePercent(0.8, 0.6);
 
             // Magazine motor time countdown
             if (highMagTimer > 0) {
@@ -50,17 +51,17 @@ public class SmartIntake extends CommandBase {
             }
 
             // Checking beam breaks to initialize countdowns
-            if (magIntake.getBeamBreak1()) {
+            if (magIntake.getBeamBreak(BeamBreakID.ONE)) {
                 lowMagTimer = 0.15;
             }
-            if (magIntake.getBeamBreak3()) {
+            if (magIntake.getBeamBreak(BeamBreakID.THREE)) {
                 highMagTimer = 0;
-            } else if (magIntake.getBeamBreak2()) {
+            } else if (magIntake.getBeamBreak(BeamBreakID.TWO)) {
                 lowMagTimer = 0.15;
                 highMagTimer = 0.15;
             }
         } else if (direction == IntakeDirection.OUT) {
-            magIntake.setIntake(-0.8, 0.6);
+            magIntake.setIntakePercent(-0.8, 0.6);
             magIntake.setMagPercent(-0.4, -0.2);
         }
     }
