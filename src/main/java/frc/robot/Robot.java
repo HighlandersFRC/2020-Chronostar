@@ -56,8 +56,8 @@ public class Robot extends TimedRobot {
             s.teleopInit();
         }
         OI.operatorX.whileHeld(spinFlywheel4500);
-        OI.operatorLB.whileHeld(new SimpleIntake(magIntake, SmartIntake.IntakeDirection.OUT));
-        OI.operatorRB.whileHeld(new SimpleIntake(magIntake, SmartIntake.IntakeDirection.IN));
+        OI.operatorLB.whileHeld(new SimpleIntake(magIntake, SimpleIntake.IntakeDirection.OUT));
+        OI.operatorRB.whileHeld(new SimpleIntake(magIntake, SimpleIntake.IntakeDirection.IN));
         OI.operatorLT.whileHeld(new SmartIntake(magIntake, SmartIntake.IntakeDirection.OUT));
         OI.operatorRT.whileHeld(new SmartIntake(magIntake, SmartIntake.IntakeDirection.IN));
     }

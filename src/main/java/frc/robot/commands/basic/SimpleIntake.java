@@ -4,10 +4,14 @@ package frc.robot.commands.basic;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.robot.commands.basic.SmartIntake.IntakeDirection;
 import frc.robot.subsystems.MagIntake;
 
 public class SimpleIntake extends CommandBase {
+
+    public enum IntakeDirection {
+        IN,
+        OUT
+    }
 
     private MagIntake magIntake;
     private static final double HIGH_MAG_POWER = 0.425, LOW_MAG_POWER = 0.4;
