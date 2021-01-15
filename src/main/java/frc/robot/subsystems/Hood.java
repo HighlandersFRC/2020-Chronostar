@@ -9,13 +9,11 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.EncoderType;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 import frc.robot.Constants;
 import frc.robot.commands.defaults.HoodDefault;
 import frc.robot.tools.controlloops.PID;
 
-public class Hood extends SubsystemBase {
+public class Hood extends SubsystemBaseEnhanced {
 
     private final CANSparkMax hoodMotor = new CANSparkMax(Constants.HOOD_ID, MotorType.kBrushless);
     private final CANDigitalInput lowerHoodSwitch =
@@ -32,6 +30,7 @@ public class Hood extends SubsystemBase {
 
     public Hood() {}
 
+    @Override
     public void init() {
         hoodMotor.setInverted(true);
         hoodPID = new PID(kP, kI, kD);
@@ -40,6 +39,12 @@ public class Hood extends SubsystemBase {
         hoodPID.setSetPoint(0);
         setDefaultCommand(new HoodDefault(this));
     }
+
+    @Override
+    public void autoInit() {}
+
+    @Override
+    public void teleopInit() {}
 
     public void setHoodTarget(double target) {
         hoodTarget = target;

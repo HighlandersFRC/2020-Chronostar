@@ -4,13 +4,11 @@ package frc.robot.commands.defaults;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.robot.commands.basic.Intake;
 import frc.robot.subsystems.MagIntake;
 
 public class MagIntakeDefault extends CommandBase {
 
     private MagIntake magIntake;
-    private Intake intake;
 
     public MagIntakeDefault(MagIntake magIntake) {
         this.magIntake = magIntake;

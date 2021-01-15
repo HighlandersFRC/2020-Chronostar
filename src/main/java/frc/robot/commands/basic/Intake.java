@@ -30,9 +30,9 @@ public class Intake extends CommandBase {
         if (magIntake.getBeamBreak1()
                 & magIntake.getBeamBreak2()
                 & magIntake.getBeamBreak3()
-                & OI.getOperatorLeftTrigger() < 0.5) {
+                & OI.operatorLT.get()) {
             magIntake.setMagPercent(0, 0);
-        } else if (!magIntake.getBeamBreak3() & OI.getOperatorLeftTrigger() < 0.5) {
+        } else if (!magIntake.getBeamBreak3() & !OI.operatorLT.get()) {
             magIntake.setMagPercent(0, 0);
         } else if (!magIntake.getBeamBreak1() & magIntake.getBeamBreak2()) {
             magIntake.setMagPercent(0.5, 0);

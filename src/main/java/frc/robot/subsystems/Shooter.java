@@ -7,17 +7,17 @@ import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 import frc.robot.Constants;
+import frc.robot.commands.defaults.ShooterDefault;
 
-public class Shooter extends SubsystemBase {
+public class Shooter extends SubsystemBaseEnhanced {
 
     private final TalonFX leftFlywheel = new TalonFX(Constants.LEFT_FLYWHEEL_ID);
     private final TalonFX rightFlywheel = new TalonFX(Constants.RIGHT_FLYWHEEL_ID);
 
     public Shooter() {}
 
+    @Override
     public void init() {
         rightFlywheel.setNeutralMode(NeutralMode.Coast);
         leftFlywheel.setNeutralMode(NeutralMode.Coast);
@@ -36,7 +36,14 @@ public class Shooter extends SubsystemBase {
         leftFlywheel.config_kI(0, 0.001);
         leftFlywheel.config_kD(0, 10);
         leftFlywheel.config_IntegralZone(0, Constants.SHOOTER_INTEGRAL_RANGE);
+        setDefaultCommand(new ShooterDefault(this));
     }
+
+    @Override
+    public void autoInit() {}
+
+    @Override
+    public void teleopInit() {}
 
     @Override
     public void periodic() {}
