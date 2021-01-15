@@ -8,16 +8,16 @@ import frc.robot.subsystems.MagIntake;
 
 public class SmartIntake extends CommandBase {
 
+    public enum IntakeDirection {
+        IN,
+        OUT
+    }
+
     private MagIntake magIntake;
     private double highMagTimer = 0.0, lowMagTimer = 0.0;
     private static final double HIGH_MAG_POWER = 0.425, LOW_MAG_POWER = 0.0;
     private static final double LOOP_TIME = 0.02;
     private IntakeDirection direction;
-
-    public enum IntakeDirection {
-        in,
-        out
-    }
 
     public SmartIntake(MagIntake magIntake, IntakeDirection direction) {
         this.magIntake = magIntake;
@@ -30,7 +30,7 @@ public class SmartIntake extends CommandBase {
 
     @Override
     public void execute() {
-        if (direction == IntakeDirection.in) {
+        if (direction == IntakeDirection.IN) {
             magIntake.setIntake(0.8, 0.6);
 
             // Magazine motor time countdown
@@ -59,7 +59,7 @@ public class SmartIntake extends CommandBase {
                 lowMagTimer = 0.15;
                 highMagTimer = 0.15;
             }
-        } else if (direction == IntakeDirection.out) {
+        } else if (direction == IntakeDirection.OUT) {
             magIntake.setIntake(-0.8, 0.6);
             magIntake.setMagPercent(-0.4, -0.2);
         }
