@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import frc.robot.commands.basic.Intake;
 import frc.robot.commands.basic.Outtake;
-import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SpinFlywheel;
 import frc.robot.subsystems.*;
 
@@ -57,11 +56,8 @@ public class Robot extends TimedRobot {
             s.teleopInit();
         }
         OI.operatorX.whileHeld(spinFlywheel4500);
-        OI.operatorA.whenPressed(new SetHoodPosition(hood, 0));
-        OI.operatorB.whenPressed(new SetHoodPosition(hood, 11));
-        OI.operatorY.whenPressed(new SetHoodPosition(hood, 22));
-        OI.operatorRB.whenPressed(new Intake(magIntake));
-        OI.operatorLB.whenPressed(new Outtake(magIntake));
+        OI.operatorLT.whileHeld(new Outtake(magIntake));
+        OI.operatorRT.whileHeld(new Intake(magIntake));
     }
 
     @Override
