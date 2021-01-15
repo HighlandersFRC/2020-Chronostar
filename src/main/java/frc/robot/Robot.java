@@ -5,6 +5,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
+import frc.robot.commands.basic.SimpleIntake;
 import frc.robot.commands.basic.SmartIntake;
 import frc.robot.commands.basic.SpinFlywheel;
 import frc.robot.subsystems.*;
@@ -55,6 +56,8 @@ public class Robot extends TimedRobot {
             s.teleopInit();
         }
         OI.operatorX.whileHeld(spinFlywheel4500);
+        OI.operatorLB.whileHeld(new SimpleIntake(magIntake, SmartIntake.IntakeDirection.OUT));
+        OI.operatorRB.whileHeld(new SimpleIntake(magIntake, SmartIntake.IntakeDirection.IN));
         OI.operatorLT.whileHeld(new SmartIntake(magIntake, SmartIntake.IntakeDirection.OUT));
         OI.operatorRT.whileHeld(new SmartIntake(magIntake, SmartIntake.IntakeDirection.IN));
     }

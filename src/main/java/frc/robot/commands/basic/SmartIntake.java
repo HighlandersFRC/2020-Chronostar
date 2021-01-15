@@ -16,8 +16,10 @@ public class SmartIntake extends CommandBase {
 
     private MagIntake magIntake;
     private double highMagTimer = 0.0, lowMagTimer = 0.0;
-    private static final double HIGH_MAG_POWER = 0.425, LOW_MAG_POWER = 0.0;
+    private static final double HIGH_MAG_POWER = 0.425, LOW_MAG_POWER = 0.4;
     private static final double LOOP_TIME = 0.02;
+    private static final double PULSE_DURATION = 0.15;
+    private static final double LOW_INTAKE_POWER = 0.8, HIGH_INTAKE_POWER = 0.6;
     private IntakeDirection direction;
 
     public SmartIntake(MagIntake magIntake, IntakeDirection direction) {
@@ -32,7 +34,7 @@ public class SmartIntake extends CommandBase {
     @Override
     public void execute() {
         if (direction == IntakeDirection.IN) {
-            magIntake.setIntakePercent(0.8, 0.6);
+            magIntake.setIntakePercent(LOW_INTAKE_POWER, HIGH_INTAKE_POWER);
 
             // Magazine motor time countdown
             if (highMagTimer > 0) {
@@ -52,17 +54,17 @@ public class SmartIntake extends CommandBase {
 
             // Checking beam breaks to initialize countdowns
             if (magIntake.getBeamBreak(BeamBreakID.ONE)) {
-                lowMagTimer = 0.15;
+                lowMagTimer = PULSE_DURATION;
             }
             if (magIntake.getBeamBreak(BeamBreakID.THREE)) {
                 highMagTimer = 0;
             } else if (magIntake.getBeamBreak(BeamBreakID.TWO)) {
-                lowMagTimer = 0.15;
-                highMagTimer = 0.15;
+                lowMagTimer = PULSE_DURATION;
+                highMagTimer = PULSE_DURATION;
             }
         } else if (direction == IntakeDirection.OUT) {
-            magIntake.setIntakePercent(-0.8, 0.6);
-            magIntake.setMagPercent(-0.4, -0.2);
+            magIntake.setIntakePercent(-LOW_INTAKE_POWER, -HIGH_INTAKE_POWER);
+            magIntake.setMagPercent(-HIGH_MAG_POWER, -LOW_MAG_POWER);
         }
     }
 
