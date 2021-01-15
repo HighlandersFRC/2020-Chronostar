@@ -21,10 +21,14 @@ public class SimpleIntake extends CommandBase {
     public SimpleIntake(MagIntake magIntake, IntakeDirection direction) {
         this.magIntake = magIntake;
         this.direction = direction;
+        addRequirements(magIntake);
     }
 
     @Override
-    public void initialize() {
+    public void initialize() {}
+
+    @Override
+    public void execute() {
         if (direction == IntakeDirection.IN) {
             magIntake.setIntakePercent(LOW_INTAKE_POWER, HIGH_INTAKE_POWER);
             magIntake.setMagPercent(LOW_MAG_POWER, HIGH_MAG_POWER);
@@ -33,9 +37,6 @@ public class SimpleIntake extends CommandBase {
             magIntake.setMagPercent(-LOW_MAG_POWER, -HIGH_MAG_POWER);
         }
     }
-
-    @Override
-    public void execute() {}
 
     @Override
     public void end(boolean interrupted) {}
