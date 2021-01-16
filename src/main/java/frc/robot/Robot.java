@@ -63,8 +63,8 @@ public class Robot extends TimedRobot {
         OI.operatorX.whileHeld(teleopFire);
         OI.operatorX.whenReleased(new SetHoodPosition(hood, 0));
         OI.operatorX.whenReleased(new LightRingOff(lightRing));
-        OI.operatorLT.whileHeld(new Outtake(magIntake));
-        OI.operatorRT.whileHeld(new SmartIntake(magIntake));
+        OI.driverLT.whileHeld(new Outtake(magIntake));
+        OI.driverRT.whileHeld(new SmartIntake(magIntake));
     }
 
     @Override
