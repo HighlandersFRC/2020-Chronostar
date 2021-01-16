@@ -80,10 +80,7 @@ public class VisionCamera {
                 json = temp;
             }
         }
-        // System.out.println(stringResults.size());
-        // for (int i = 0; i < stringResults.size(); i++) {
-        //     System.out.println(stringResults.poll());
-        // }
+
         // Use JSON results if present
         if (json != null) {
             Object tempDistance = json.get("Distance");
