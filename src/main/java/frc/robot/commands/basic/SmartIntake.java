@@ -37,8 +37,8 @@ public class SmartIntake extends CommandBase {
 
     @Override
     public void execute() {
-        if (OI.operatorRB.get()) {
-            magIntake.setIntakePercent(INTAKING_POWER, 0);
+        if (OI.operatorRT.get()) {
+            magIntake.setIntakePercent(INTAKING_POWER, INTAKING_POWER);
         }
         if (magIntake.getBeamBreak(BeamBreakID.ONE)
                 & magIntake.getBeamBreak(BeamBreakID.TWO)
