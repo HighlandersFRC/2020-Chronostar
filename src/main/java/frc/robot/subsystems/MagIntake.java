@@ -19,6 +19,12 @@ import frc.robot.commands.defaults.MagIntakeDefault;
 
 public class MagIntake extends SubsystemBaseEnhanced {
 
+    public enum BeamBreakID {
+        ONE,
+        TWO,
+        THREE
+    }
+
     private final DigitalInput beamBreak1 = new DigitalInput(Constants.BEAM_BREAK_1_ID);
     private final DigitalInput beamBreak2 = new DigitalInput(Constants.BEAM_BREAK_3_ID);
     private final DigitalInput beamBreak3 = new DigitalInput(Constants.BEAM_BREAK_2_ID);
@@ -39,6 +45,8 @@ public class MagIntake extends SubsystemBaseEnhanced {
         lowMag.configVoltageCompSaturation(11.7);
         lowMag.enableVoltageCompensation(true);
         lowIntake.setInverted(true);
+        highIntake.setInverted(true);
+        highMag.setInverted(true);
         setDefaultCommand(new MagIntakeDefault(this));
     }
 
@@ -61,19 +69,19 @@ public class MagIntake extends SubsystemBaseEnhanced {
         setHighMagPercent(highPower);
     }
 
-    public boolean getBeamBreak1() {
-        return beamBreak1.get();
+    public boolean getBeamBreak(BeamBreakID id) {
+        switch (id) {
+            case ONE:
+                return beamBreak1.get();
+            case TWO:
+                return beamBreak2.get();
+            case THREE:
+                return beamBreak3.get();
+        }
+        return false;
     }
 
-    public boolean getBeamBreak2() {
-        return beamBreak2.get();
-    }
-
-    public boolean getBeamBreak3() {
-        return beamBreak3.get();
-    }
-
-    public void setIntake(double frontIntakePercent, double backIntakePercent) {
+    public void setIntakePercent(double frontIntakePercent, double backIntakePercent) {
         lowIntake.set(ControlMode.PercentOutput, frontIntakePercent);
         highIntake.set(ControlMode.PercentOutput, backIntakePercent);
     }
