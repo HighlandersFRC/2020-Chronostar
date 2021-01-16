@@ -9,6 +9,9 @@ import frc.robot.subsystems.MagIntake;
 public class EjectMagazine extends InstantCommand {
 
     private MagIntake magIntake;
+    private final double LOW_MAG_PERCENT = 0.25;
+    private final double HIGH_MAG_PERCENT = 0.8;
+    private final double HIGH_INTAKE_PERCENT = 0.8;
 
     public EjectMagazine(MagIntake magIntake) {
         this.magIntake = magIntake;
@@ -20,8 +23,8 @@ public class EjectMagazine extends InstantCommand {
 
     @Override
     public void execute() {
-        magIntake.setMagPercent(0.25, 0.8);
-        magIntake.setIntakePercent(0, 0.8);
+        magIntake.setMagPercent(LOW_MAG_PERCENT, HIGH_MAG_PERCENT);
+        magIntake.setIntakePercent(0, HIGH_INTAKE_PERCENT);
     }
 
     @Override

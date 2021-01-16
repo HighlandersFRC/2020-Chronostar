@@ -83,9 +83,9 @@ public class MagIntake extends SubsystemBaseEnhanced {
         return false;
     }
 
-    public void setIntakePercent(double frontIntakePercent, double backIntakePercent) {
-        lowIntake.set(ControlMode.PercentOutput, frontIntakePercent);
-        highIntake.set(ControlMode.PercentOutput, backIntakePercent);
+    public void setIntakePercent(double lowIntakePercent, double highIntakePercent) {
+        lowIntake.set(ControlMode.PercentOutput, lowIntakePercent);
+        highIntake.set(ControlMode.PercentOutput, highIntakePercent);
     }
 
     public void setLowIntakePercent(double power) {
