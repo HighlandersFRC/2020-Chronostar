@@ -4,8 +4,6 @@ package frc.robot.sensors;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import frc.robot.RobotMap;
-
 public class Navx {
     private double originalAngle;
     private double originalYaw;
@@ -72,10 +70,10 @@ public class Navx {
     }
 
     public void softResetAngle() {
-        originalAngle = RobotMap.ahrs.getAngle();
+        originalAngle = imu.getAngle();
     }
 
     public void softResetYaw() {
-        originalYaw = RobotMap.ahrs.getYaw();
+        originalYaw = imu.getYaw();
     }
 }

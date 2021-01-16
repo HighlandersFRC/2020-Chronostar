@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
+import frc.robot.commands.basic.LightRingOn;
 import frc.robot.commands.basic.Outtake;
 import frc.robot.commands.basic.SmartIntake;
 import frc.robot.subsystems.*;
@@ -16,7 +17,11 @@ public class Robot extends TimedRobot {
     private final Drive drive = new Drive();
     private final Shooter shooter = new Shooter();
     private final Climber climber = new Climber();
-    private final SubsystemBaseEnhanced[] subsystems = {magIntake, drive, shooter, climber};
+    private final Peripherals peripherals = new Peripherals();
+    private final LightRing lightRing = new LightRing();
+    private final SubsystemBaseEnhanced[] subsystems = {
+        magIntake, drive, shooter, climber, peripherals, lightRing
+    };
 
     public Robot() {}
 
@@ -56,6 +61,8 @@ public class Robot extends TimedRobot {
         for (SubsystemBaseEnhanced s : subsystems) {
             s.teleopInit();
         }
+
+        OI.operatorA.whileHeld(new LightRingOn(lightRing));
         OI.operatorRB.whileHeld(new SmartIntake(magIntake));
         OI.operatorLB.whileHeld(new Outtake(magIntake));
     }
