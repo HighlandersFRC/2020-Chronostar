@@ -69,13 +69,13 @@ public class MagIntake extends SubsystemBaseEnhanced {
         setHighMagPercent(highPower);
     }
 
-    public boolean getBeamBreak(BeamBreakID id) {
+    public boolean getBeamBreak(int id) {
         switch (id) {
-            case ONE:
+            case 1:
                 return beamBreak1.get();
-            case TWO:
+            case 2:
                 return beamBreak2.get();
-            case THREE:
+            case 3:
                 return beamBreak3.get();
         }
         return false;
