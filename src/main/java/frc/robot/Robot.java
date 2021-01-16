@@ -5,7 +5,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
-import frc.robot.commands.basic.LightRingOff;
 import frc.robot.commands.basic.Outtake;
 import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SmartIntake;
@@ -21,7 +20,9 @@ public class Robot extends TimedRobot {
     private final Climber climber = new Climber();
     private final Peripherals peripherals = new Peripherals();
     private final LightRing lightRing = new LightRing();
-    private final SubsystemBaseEnhanced[] subsystems = {magIntake, drive, shooter, hood, climber};
+    private final SubsystemBaseEnhanced[] subsystems = {
+        magIntake, drive, shooter, hood, climber, peripherals, lightRing
+    };
     private final Fire teleopFire = new Fire(shooter, hood, magIntake, drive, lightRing, 0);
 
     public Robot() {}
@@ -62,7 +63,6 @@ public class Robot extends TimedRobot {
         }
         OI.operatorX.whileHeld(teleopFire);
         OI.operatorX.whenReleased(new SetHoodPosition(hood, 0));
-        OI.operatorX.whenReleased(new LightRingOff(lightRing));
         OI.driverLT.whileHeld(new Outtake(magIntake));
         OI.driverRT.whileHeld(new SmartIntake(magIntake));
     }
