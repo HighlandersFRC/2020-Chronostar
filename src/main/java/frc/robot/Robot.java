@@ -70,7 +70,7 @@ public class Robot extends TimedRobot {
         OI.operatorB.whenPressed(new SetHoodPosition(hood, 11));
         OI.operatorY.whenPressed(new SetHoodPosition(hood, 22));
         OI.operatorRB.whileHeld(new LightRingOn(lightRing));
-        OI.driverRB.whileHeld(new LightRingOn(lightRing));
+        // OI.driverRB.whileHeld(new LightRingOn(lightRing));
     }
 
     @Override
