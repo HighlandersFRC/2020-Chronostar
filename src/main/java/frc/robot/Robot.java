@@ -6,41 +6,32 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import frc.robot.commands.basic.LightRingOn;
-import frc.robot.commands.basic.SetHoodPosition;
+import frc.robot.commands.basic.SimpleIntake;
+import frc.robot.commands.basic.SmartIntake;
 import frc.robot.commands.basic.SpinFlywheel;
-import frc.robot.commands.defaults.DriveDefault;
-import frc.robot.commands.defaults.HoodDefault;
-import frc.robot.commands.defaults.LightRingDefault;
-import frc.robot.commands.defaults.MagIntakeDefault;
-import frc.robot.commands.defaults.PeripheralsDefault;
-import frc.robot.commands.defaults.ShooterDefault;
 import frc.robot.subsystems.*;
 
 public class Robot extends TimedRobot {
 
-    public static MagIntake magIntake = new MagIntake();
-    public static Drive drive = new Drive();
-    public static Shooter shooter = new Shooter();
-    public static Hood hood = new Hood();
-    public static Climber climber = new Climber();
-    public static Peripherals peripherals = new Peripherals();
-    public static LightRing lightRing = new LightRing();
+    private final MagIntake magIntake = new MagIntake();
+    private final Drive drive = new Drive();
+    private final Shooter shooter = new Shooter();
+    private final Hood hood = new Hood();
+    private final Climber climber = new Climber();
+    private final Peripherals peripherals = new Peripherals();
+    private final LightRing lightRing = new LightRing();
+    private final SubsystemBaseEnhanced[] subsystems = {
+        magIntake, drive, shooter, hood, climber, lightRing, peripherals
+    };
     private final SpinFlywheel spinFlywheel4500 = new SpinFlywheel(shooter, 4500);
-    ;
+
+    public Robot() {}
 
     @Override
     public void robotInit() {
-        magIntake.init();
-        shooter.init();
-        drive.init();
-        hood.init();
-        peripherals.init();
-        drive.setDefaultCommand(new DriveDefault(drive));
-        magIntake.setDefaultCommand(new MagIntakeDefault(magIntake));
-        hood.setDefaultCommand(new HoodDefault(hood));
-        shooter.setDefaultCommand(new ShooterDefault(shooter));
-        peripherals.setDefaultCommand(new PeripheralsDefault(peripherals));
-        lightRing.setDefaultCommand(new LightRingDefault(lightRing));
+        for (SubsystemBaseEnhanced s : subsystems) {
+            s.init();
+        }
     }
 
     @Override
@@ -56,7 +47,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        drive.autoInit();
+        for (SubsystemBaseEnhanced s : subsystems) {
+            s.autoInit();
+        }
     }
 
     @Override
@@ -64,13 +57,15 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        drive.teleopInit();
+        for (SubsystemBaseEnhanced s : subsystems) {
+            s.teleopInit();
+        }
         OI.operatorX.whileHeld(spinFlywheel4500);
-        OI.operatorA.whenPressed(new SetHoodPosition(hood, 0));
-        OI.operatorB.whenPressed(new SetHoodPosition(hood, 11));
-        OI.operatorY.whenPressed(new SetHoodPosition(hood, 22));
+        OI.operatorLB.whileHeld(new SimpleIntake(magIntake, SimpleIntake.IntakeDirection.OUT));
+        OI.operatorRB.whileHeld(new SimpleIntake(magIntake, SimpleIntake.IntakeDirection.IN));
+        OI.operatorLT.whileHeld(new SmartIntake(magIntake, SmartIntake.IntakeDirection.OUT));
+        OI.operatorRT.whileHeld(new SmartIntake(magIntake, SmartIntake.IntakeDirection.IN));
         OI.operatorRB.whileHeld(new LightRingOn(lightRing));
-        // OI.driverRB.whileHeld(new LightRingOn(lightRing));
     }
 
     @Override

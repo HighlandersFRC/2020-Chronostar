@@ -1,9 +1,4 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
+// Copyrights (c) 2018-2019 FIRST, 2020 Highlanders FRC. All Rights Reserved.
 
 package frc.robot.subsystems;
 
@@ -12,14 +7,13 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import frc.robot.commands.defaults.PeripheralsDefault;
 import frc.robot.sensors.LidarLite;
 import frc.robot.sensors.Navx;
 import frc.robot.sensors.VisionCamera;
 
-public class Peripherals extends SubsystemBase {
-    /** Creates a new Peripherals. */
+public class Peripherals extends SubsystemBaseEnhanced {
     private final AHRS ahrs = new AHRS(Port.kMXP);
 
     private final Navx navx = new Navx(ahrs);
@@ -27,6 +21,9 @@ public class Peripherals extends SubsystemBase {
     private final LidarLite lidar = new LidarLite(lidarPort);
     private VisionCamera visionCam;
 
+    public Peripherals() {}
+
+    @Override
     public void init() {
 
         SerialPort jevois = null;
@@ -36,13 +33,12 @@ public class Peripherals extends SubsystemBase {
             System.err.println("CV cam's serial port failed to connect. Reason: " + e);
         }
         visionCam = new VisionCamera(jevois);
-    }
 
-    public Peripherals() {}
+        setDefaultCommand(new PeripheralsDefault(this));
+    }
 
     public double getCamAngle() {
         visionCam.updateVision();
-        // SmartDashboard.putString("Debug String", visionCam.debugString);
         return visionCam.getAngle();
     }
 
@@ -60,7 +56,11 @@ public class Peripherals extends SubsystemBase {
     }
 
     @Override
-    public void periodic() {
-        // This method will be called once per scheduler run
-    }
+    public void periodic() {}
+
+    @Override
+    public void autoInit() {}
+
+    @Override
+    public void teleopInit() {}
 }

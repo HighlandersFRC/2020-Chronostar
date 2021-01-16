@@ -13,12 +13,17 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
+import frc.robot.commands.defaults.MagIntakeDefault;
 
-public class MagIntake extends SubsystemBase {
-    public MagIntake() {}
+public class MagIntake extends SubsystemBaseEnhanced {
+
+    public enum BeamBreakID {
+        ONE,
+        TWO,
+        THREE
+    }
 
     private final DigitalInput beamBreak1 = new DigitalInput(Constants.BEAM_BREAK_1_ID);
     private final DigitalInput beamBreak2 = new DigitalInput(Constants.BEAM_BREAK_3_ID);
@@ -31,13 +36,25 @@ public class MagIntake extends SubsystemBase {
     private final VictorSPX highIntake = new VictorSPX(Constants.HIGH_INTAKE_ID);
     private final DoubleSolenoid intakePiston = new DoubleSolenoid(0, 1);
 
+    public MagIntake() {}
+
+    @Override
     public void init() {
         lowMag.setNeutralMode(NeutralMode.Brake);
         highMag.setIdleMode(IdleMode.kBrake);
         lowMag.configVoltageCompSaturation(11.7);
         lowMag.enableVoltageCompensation(true);
         lowIntake.setInverted(true);
+        highIntake.setInverted(true);
+        highMag.setInverted(true);
+        setDefaultCommand(new MagIntakeDefault(this));
     }
+
+    @Override
+    public void autoInit() {}
+
+    @Override
+    public void teleopInit() {}
 
     public void setLowMagPercent(double power) {
         lowMag.set(ControlMode.PercentOutput, power);
@@ -52,19 +69,19 @@ public class MagIntake extends SubsystemBase {
         setHighMagPercent(highPower);
     }
 
-    public boolean getBeamBreak1() {
-        return beamBreak1.get();
+    public boolean getBeamBreak(BeamBreakID id) {
+        switch (id) {
+            case ONE:
+                return beamBreak1.get();
+            case TWO:
+                return beamBreak2.get();
+            case THREE:
+                return beamBreak3.get();
+        }
+        return false;
     }
 
-    public boolean getBeamBreak2() {
-        return beamBreak2.get();
-    }
-
-    public boolean getBeamBreak3() {
-        return beamBreak3.get();
-    }
-
-    public void setIntake(double frontIntakePercent, double backIntakePercent) {
+    public void setIntakePercent(double frontIntakePercent, double backIntakePercent) {
         lowIntake.set(ControlMode.PercentOutput, frontIntakePercent);
         highIntake.set(ControlMode.PercentOutput, backIntakePercent);
     }

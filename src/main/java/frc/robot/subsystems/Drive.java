@@ -8,12 +8,11 @@ import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 import frc.robot.Constants;
+import frc.robot.commands.defaults.DriveDefault;
 import frc.robot.tools.controlloops.PID;
 
-public class Drive extends SubsystemBase {
+public class Drive extends SubsystemBaseEnhanced {
 
     private final TalonFX leftDriveLead = new TalonFX(Constants.LEFT_DRIVE_LEAD_ID);
     private final TalonFX rightDriveLead = new TalonFX(Constants.RIGHT_DRIVE_LEAD_ID);
@@ -24,18 +23,19 @@ public class Drive extends SubsystemBase {
         leftDriveLead, rightDriveLead, leftDriveFollower, rightDriveFollower
     };
 
-    double deadzone = 0.01;
-    private double vkF = 0.0455925;
-    private double vkP = 0.21;
-    private double vkI = 0.000002;
-    private double vkD = 0;
-    private double akP = 0.01;
-    private double akI = 0.00006;
-    private double akD = 0.01;
+    private final double deadzone = 0.01;
+    private final double vkF = 0.0455925;
+    private final double vkP = 0.21;
+    private final double vkI = 0.000002;
+    private final double vkD = 0;
+    private final double akP = 0.01;
+    private final double akI = 0.00006;
+    private final double akD = 0.01;
     private PID aPID;
 
     public Drive() {}
 
+    @Override
     public void init() {
         aPID = new PID(akP, akI, akD);
         aPID.setMaxOutput(0.75);
@@ -62,13 +62,16 @@ public class Drive extends SubsystemBase {
         leftDriveLead.config_kD(0, vkD);
         rightDriveLead.config_kD(0, vkD);
         setCurrentLimitsEnabled();
+        setDefaultCommand(new DriveDefault(this));
     }
 
+    @Override
     public void autoInit() {
         setVoltageCompensation(Constants.DRIVE_MAX_VOLTAGE);
         setDriveBrake();
     }
 
+    @Override
     public void teleopInit() {
         setDriveCoast();
     }
@@ -113,6 +116,13 @@ public class Drive extends SubsystemBase {
         rightDriveLead.set(ControlMode.Velocity, Constants.driveFPSToUnitsPer100MS(fps));
     }
 
+    public double safelyDivide(double i, double j) {
+        if (j == 0) {
+            return 0;
+        }
+        return i / j;
+    }
+
     public void arcadeDrive(double throttle, double turn) {
         double left, right;
         double differential;
@@ -122,14 +132,14 @@ public class Drive extends SubsystemBase {
         if (Math.abs(turn) < deadzone) {
             turn = 0;
         }
-        differential = turn;
+        differential = turn * 1.3;
         left = throttle + differential;
         right = throttle - differential;
         if (Math.abs(left) > 1) {
-            right = Math.abs(right / left) * Math.signum(right);
+            right = Math.abs(safelyDivide(right, left)) * Math.signum(right);
             left = Math.signum(left);
         } else if (Math.abs(right) > 1) {
-            left = Math.abs(left / right) * Math.signum(left);
+            left = Math.abs(safelyDivide(left, right)) * Math.signum(left);
             right = Math.signum(right);
         }
         setLeftPercent(left);
