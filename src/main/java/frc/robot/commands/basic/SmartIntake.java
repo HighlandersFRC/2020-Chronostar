@@ -41,14 +41,14 @@ public class SmartIntake extends CommandBase {
                 magIntake.setHighMagPercent(HIGH_MAG_POWER);
                 highMagTimer -= LOOP_TIME;
             } else {
-                magIntake.setHighIntakePercent(0);
+                magIntake.setHighMagPercent(0);
                 highMagTimer = 0;
             }
             if (lowMagTimer > 0) {
-                magIntake.setLowIntakePercent(LOW_MAG_POWER);
+                magIntake.setLowMagPercent(LOW_MAG_POWER);
                 lowMagTimer -= LOOP_TIME;
             } else {
-                magIntake.setLowIntakePercent(0);
+                magIntake.setLowMagPercent(0);
                 lowMagTimer = 0;
             }
 
