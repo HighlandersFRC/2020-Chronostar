@@ -46,9 +46,9 @@ public class Intake extends CommandBase {
         if (magIntake.getBeamBreak(BeamBreakID.ONE)) {
             lowMagTimer = 0.15;
         }
-        if (magIntake.getBeamBreak3(BeamBreakID.TWO)) {
+        if (magIntake.getBeamBreak(BeamBreakID.THREE)) {
             highMagTimer = 0;
-        } else if (magIntake.getBeamBreak2(BeamBreakID.THREE)) {
+        } else if (magIntake.getBeamBreak(BeamBreakID.TWO)) {
             lowMagTimer = 0.15;
             highMagTimer = 0.15;
         }

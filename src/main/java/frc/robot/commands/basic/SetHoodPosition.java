@@ -1,5 +1,3 @@
-// Copyrights (c) 2018-2019 FIRST, 2020 Highlanders FRC. All Rights Reserved.
-
 package frc.robot.commands.basic;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -8,28 +6,27 @@ import frc.robot.subsystems.Hood;
 
 public class SetHoodPosition extends CommandBase {
 
-    private final Hood hood;
-    private final double position;
+    private Hood hood;
+    private double target;
 
-    public SetHoodPosition(final Hood hood, final double position) {
+    public SetHoodPosition(Hood hood, double target) {
         this.hood = hood;
-        this.position = position;
-        addRequirements(this.hood);
+        this.target = target;
     }
 
     @Override
-    public void initialize() {
-        hood.setHoodTarget(position);
+    public void initialize() {}
+
+    @Override
+    public void execute() {
+        hood.setHoodTarget(target);
     }
 
     @Override
-    public void execute() {}
-
-    @Override
-    public void end(final boolean interrupted) {}
+    public void end(boolean interrupted) {}
 
     @Override
     public boolean isFinished() {
-        return true;
+        return false;
     }
 }
