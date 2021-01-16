@@ -10,15 +10,14 @@ public class HoodDefault extends CommandBase {
 
     public HoodDefault(Hood hood) {
         this.hood = hood;
+        addRequirements(hood);
     }
 
     @Override
     public void initialize() {}
 
     @Override
-    public void execute() {
-        hood.setHoodTarget(0);
-    }
+    public void execute() {}
 
     @Override
     public void end(boolean interrupted) {}
