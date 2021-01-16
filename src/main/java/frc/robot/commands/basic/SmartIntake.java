@@ -9,24 +9,35 @@ import frc.robot.OI;
 import frc.robot.subsystems.MagIntake;
 
 public class SmartIntake extends CommandBase {
-    /** Creates a new Intake. */
     private MagIntake magIntake;
+
+    private static final double INTAKING_POWER = 0.8;
+    private static final double MIDDLE_BREAK_3_POWER = 0.3;
+    private static final double LOW_MAG_BREAK_1_POWER = 0.5;
+    private static final double HIGH_MAG_BREAK_1_POWER = 0.2;
+    private static final double MIDDLE_WHEEL_BREAK_1_POWER = 0.6;
+    private static final double LOW_MAG_BREAK_2_NO_1_POWER = -0.2;
+    private static final double HIGH_MAG_BREAK_2_NO_1_POWER = 0.4;
+    private static final double LOW_MAG_BREAK_2_AND_1_POWER = 0.25;
+    private static final double HIGH_MAG_BREAK_2_AND_1_POWER = 0.35;
+    private static final double LOW_MAG_BREAK_2_AND_3_POWER = 0.2;
+    private static final double LOW_MAG_BREAK_2_NO_3_POWER = 0.3;
+    private static final double HIGH_MAG_BREAK_2_NO_3_POWER = -0.4;
+    private static final double LOW_MAG_ELSE_POWER = -0.3;
+    private static final double HIGH_MAG_ELSE_POWER = 0.2;
 
     public SmartIntake(MagIntake magIntake) {
         this.magIntake = magIntake;
         addRequirements(magIntake);
-        // Use addRequirements() here to declare subsystem dependencies.
     }
 
-    // Called when the command is initially scheduled.
     @Override
     public void initialize() {}
 
-    // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
         if (OI.operatorRB.get()) {
-            magIntake.setIntakePercent(0.8, 0);
+            magIntake.setIntakePercent(INTAKING_POWER, 0);
         }
         if (magIntake.getBeamBreak(1)
                 & magIntake.getBeamBreak(2)
@@ -35,28 +46,26 @@ public class SmartIntake extends CommandBase {
             magIntake.setMagPercent(0, 0);
         } else if (!magIntake.getBeamBreak(3) & !OI.operatorController.getBumper(Hand.kLeft)) {
             magIntake.setMagPercent(0, 0);
-            magIntake.setIntakePercent(0, 0.3);
+            magIntake.setIntakePercent(0, MIDDLE_BREAK_3_POWER);
         } else if (!magIntake.getBeamBreak(1) & magIntake.getBeamBreak(2)) {
-            magIntake.setMagPercent(0.5, 0.2);
-            magIntake.setIntakePercent(0, 0.6);
+            magIntake.setMagPercent(LOW_MAG_BREAK_1_POWER, HIGH_MAG_BREAK_1_POWER);
+            magIntake.setIntakePercent(0, MIDDLE_WHEEL_BREAK_1_POWER);
         } else if (!magIntake.getBeamBreak(2) & magIntake.getBeamBreak(1)) {
-            magIntake.setMagPercent(-0.2, 0.4);
+            magIntake.setMagPercent(LOW_MAG_BREAK_2_NO_1_POWER, HIGH_MAG_BREAK_2_NO_1_POWER);
         } else if (!magIntake.getBeamBreak(2) & !magIntake.getBeamBreak(1)) {
-            magIntake.setMagPercent(0.25, 0.35);
+            magIntake.setMagPercent(LOW_MAG_BREAK_2_AND_1_POWER, HIGH_MAG_BREAK_2_AND_1_POWER);
         } else if (!magIntake.getBeamBreak(3) & !magIntake.getBeamBreak(2)) {
-            magIntake.setMagPercent(0.2, 0);
+            magIntake.setMagPercent(LOW_MAG_BREAK_2_AND_3_POWER, 0);
         } else if (!magIntake.getBeamBreak(2) & magIntake.getBeamBreak(3)) {
-            magIntake.setMagPercent(0.3, -0.4);
+            magIntake.setMagPercent(LOW_MAG_BREAK_2_NO_3_POWER, HIGH_MAG_BREAK_2_NO_3_POWER);
         } else {
-            magIntake.setMagPercent(-0.3, 0.2);
+            magIntake.setMagPercent(LOW_MAG_ELSE_POWER, HIGH_MAG_ELSE_POWER);
         }
     }
 
-    // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {}
 
-    // Returns true when the command should end.
     @Override
     public boolean isFinished() {
         return false;
