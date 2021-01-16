@@ -30,7 +30,7 @@ public class Outtake extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        magIntake.setMagPercent(-0.6, -0.3);
+        magIntake.setMagPercent(-0.7, -0.3);
         magIntake.setIntakePercent(-0.5, -0.6);
     }
 

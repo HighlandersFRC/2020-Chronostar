@@ -7,8 +7,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import frc.robot.commands.basic.Outtake;
+import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SmartIntake;
 import frc.robot.commands.basic.SpinFlywheel;
+import frc.robot.commands.composite.Fire;
 import frc.robot.subsystems.*;
 
 public class Robot extends TimedRobot {
@@ -62,6 +64,8 @@ public class Robot extends TimedRobot {
         OI.operatorX.whileHeld(spinFlywheel4500);
         OI.operatorRB.whileHeld(new SmartIntake(magIntake));
         OI.operatorLB.whileHeld(new Outtake(magIntake));
+        OI.operatorX.whileHeld(new Fire(shooter, hood, magIntake, drive, 0));
+        OI.operatorX.whenReleased(new SetHoodPosition(hood, 0));
         /*OI.operatorLT.whileHeld(new SmartIntake(magIntake, SmartIntake.IntakeDirection.OUT));
             OI.operatorRT.whileHeld(new SmartIntake(magIntake, SmartIntake.IntakeDirection.IN));
         */ }

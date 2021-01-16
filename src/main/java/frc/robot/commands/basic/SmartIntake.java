@@ -62,7 +62,7 @@ public class SmartIntake extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if (!OI.operatorRB.get()) {
+        if (!OI.operatorController.getBumper(Hand.kRight)) {
             return true;
         }
         return false;
