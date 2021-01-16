@@ -20,7 +20,6 @@ public class PeripheralsDefault extends CommandBase {
 
     @Override
     public void execute() {
-
         peripherals.getCamDistance();
 
         SmartDashboard.putNumber("Vision Distance", peripherals.getCamDistance());
