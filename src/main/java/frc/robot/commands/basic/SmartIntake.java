@@ -2,10 +2,8 @@
 
 package frc.robot.commands.basic;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.robot.OI;
 import frc.robot.subsystems.MagIntake;
 import frc.robot.subsystems.MagIntake.BeamBreakID;
 
@@ -40,11 +38,9 @@ public class SmartIntake extends CommandBase {
         magIntake.setIntakePercent(INTAKING_POWER, INTAKING_POWER);
         if (magIntake.getBeamBreak(BeamBreakID.ONE)
                 & magIntake.getBeamBreak(BeamBreakID.TWO)
-                & magIntake.getBeamBreak(BeamBreakID.THREE)
-                & !OI.operatorController.getBumper(Hand.kLeft)) {
+                & magIntake.getBeamBreak(BeamBreakID.THREE)) {
             magIntake.setMagPercent(0, 0);
-        } else if (!magIntake.getBeamBreak(BeamBreakID.THREE)
-                & !OI.operatorController.getBumper(Hand.kLeft)) {
+        } else if (!magIntake.getBeamBreak(BeamBreakID.THREE)) {
             magIntake.setMagPercent(0, 0);
             magIntake.setIntakePercent(0, MIDDLE_BREAK_3_POWER);
         } else if (!magIntake.getBeamBreak(BeamBreakID.ONE)
