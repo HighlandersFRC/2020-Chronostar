@@ -19,8 +19,6 @@ public class Robot extends TimedRobot {
     private final Climber climber = new Climber();
     private final SubsystemBaseEnhanced[] subsystems = {magIntake, drive, shooter, hood, climber};
     private final SpinFlywheel spinFlywheel4500 = new SpinFlywheel(shooter, 4500);
-    private final SmartIntake intake = new SmartIntake(magIntake, SmartIntake.IntakeDirection.IN);
-    private final SmartIntake outtake = new SmartIntake(magIntake, SmartIntake.IntakeDirection.OUT);
 
     public Robot() {}
 
@@ -60,8 +58,8 @@ public class Robot extends TimedRobot {
         OI.operatorX.whileHeld(spinFlywheel4500);
         OI.operatorLB.whileHeld(new SimpleIntake(magIntake, SimpleIntake.IntakeDirection.OUT));
         OI.operatorRB.whileHeld(new SimpleIntake(magIntake, SimpleIntake.IntakeDirection.IN));
-        OI.operatorLT.whileHeld(outtake);
-        OI.operatorRT.whileHeld(intake);
+        OI.operatorLT.whileHeld(new SmartIntake(magIntake, SmartIntake.IntakeDirection.OUT));
+        OI.operatorRT.whileHeld(new SmartIntake(magIntake, SmartIntake.IntakeDirection.IN));
     }
 
     @Override
