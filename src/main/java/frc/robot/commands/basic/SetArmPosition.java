@@ -18,12 +18,13 @@ public class SetArmPosition extends CommandBase {
     }
 
     @Override
-    public void initialize() {}
-
-    @Override
-    public void execute() {
+    public void initialize() {
+        System.out.println("Om is dumb");
         climber.setArmMotor(position);
     }
+
+    @Override
+    public void execute() {}
 
     @Override
     public void end(boolean interrupted) {}

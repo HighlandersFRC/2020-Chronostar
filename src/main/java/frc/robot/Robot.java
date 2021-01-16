@@ -5,11 +5,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
-import frc.robot.commands.basic.Intake;
-import frc.robot.commands.basic.Outtake;
-import frc.robot.commands.basic.SetArmPosition;
-import frc.robot.commands.basic.SetClimberPiston;
-import frc.robot.commands.basic.SpinFlywheel;
+import frc.robot.commands.basic.*;
 import frc.robot.subsystems.*;
 
 public class Robot extends TimedRobot {

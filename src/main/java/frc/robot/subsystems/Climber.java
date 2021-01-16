@@ -30,14 +30,16 @@ public class Climber extends SubsystemBaseEnhanced {
     private final float minValue = 0;
     private final float maxValue = 44;
     private double kf = 0;
-    private double kp = 2;
-    private double ki = 0.005;
-    private double kd = 20;
+    private double kp = 0.001;
+    private double ki = 0;
+    private double kd = 0;
+    private double setPoint = 0;
 
     public Climber() {}
 
     @Override
     public void init() {
+        System.out.println("got to here 1");
         armEncoder.setPosition(0);
         armMotor.setInverted(false);
         armMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, maxValue);
@@ -46,8 +48,8 @@ public class Climber extends SubsystemBaseEnhanced {
         pidController.setOutputRange(-0.25, 0.25);
         pidController.setSmartMotionMaxVelocity(120, 0);
         pidController.setSmartMotionMinOutputVelocity(-120, 0);
-        pidController.setSmartMotionMaxAccel(10, 0);
-        pidController.setSmartMotionAllowedClosedLoopError(10, 0);
+        pidController.setSmartMotionMaxAccel(30, 0);
+        pidController.setSmartMotionAllowedClosedLoopError(30, 0);
         armMotor.setSmartCurrentLimit(15);
         armMotor.setIdleMode(IdleMode.kBrake);
         setDefaultCommand(new ClimberDefault(this));
@@ -76,6 +78,8 @@ public class Climber extends SubsystemBaseEnhanced {
     }
 
     public void setArmMotor(double percent) {
+        System.out.println("got to here 2");
+        setPoint = percent;
         pidController.setReference(percent, ControlType.kSmartMotion);
     }
 
@@ -90,6 +94,7 @@ public class Climber extends SubsystemBaseEnhanced {
         SmartDashboard.putNumber("kP", kp);
         SmartDashboard.putNumber("kI", ki);
         SmartDashboard.putNumber("kD", kd);
+        SmartDashboard.putNumber("setPoint", setPoint);
         /*kf = SmartDashboard.getNumber("kF", kf);
             kp = SmartDashboard.getNumber("kP", kp);
             ki = SmartDashboard.getNumber("kI", ki);
