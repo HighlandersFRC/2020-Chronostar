@@ -52,7 +52,7 @@ public class VisionCamera {
                             if (index != -1) {
                                 String section = buffer.substring(0, index + 1);
                                 try {
-                                    System.out.println(section);
+
                                     JSONObject json = (JSONObject) parser.parse(section);
                                     if (jsonResults.size() > 16) {
                                         jsonResults.poll();
