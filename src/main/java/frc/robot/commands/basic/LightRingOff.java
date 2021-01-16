@@ -6,17 +6,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.LightRing;
 
-public class LightRingOn extends CommandBase {
+public class LightRingOff extends CommandBase {
     private LightRing lightRing;
 
-    public LightRingOn(LightRing lightRing) {
+    public LightRingOff(LightRing lightRing) {
         this.lightRing = lightRing;
         addRequirements(lightRing);
     }
 
     @Override
     public void initialize() {
-        lightRing.turnOn();
+        lightRing.turnOff();
     }
 
     @Override

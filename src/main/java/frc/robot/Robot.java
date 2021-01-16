@@ -5,6 +5,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
+import frc.robot.commands.basic.LightRingOff;
 import frc.robot.commands.basic.Outtake;
 import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SmartIntake;
@@ -61,6 +62,7 @@ public class Robot extends TimedRobot {
         }
         OI.operatorX.whileHeld(teleopFire);
         OI.operatorX.whenReleased(new SetHoodPosition(hood, 0));
+        OI.operatorX.whenReleased(new LightRingOff(lightRing));
         OI.operatorLT.whileHeld(new Outtake(magIntake));
         OI.operatorRT.whileHeld(new SmartIntake(magIntake));
     }
