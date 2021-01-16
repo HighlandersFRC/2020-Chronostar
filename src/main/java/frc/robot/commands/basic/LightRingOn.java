@@ -1,15 +1,9 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
+// Copyrights (c) 2018-2019 FIRST, 2020 Highlanders FRC. All Rights Reserved.
 
 package frc.robot.commands.basic;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.robot.OI;
 import frc.robot.subsystems.LightRing;
 
 public class LightRingOn extends CommandBase {
@@ -33,9 +27,7 @@ public class LightRingOn extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if (!OI.operatorRB.get()) {
-            return true;
-        }
+
         return false;
     }
 }
