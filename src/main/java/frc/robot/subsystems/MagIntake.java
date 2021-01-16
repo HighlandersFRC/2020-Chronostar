@@ -46,6 +46,7 @@ public class MagIntake extends SubsystemBaseEnhanced {
         lowMag.enableVoltageCompensation(true);
         lowIntake.setInverted(true);
         highIntake.setInverted(true);
+        highMag.setInverted(true);
         setDefaultCommand(new MagIntakeDefault(this));
     }
 
