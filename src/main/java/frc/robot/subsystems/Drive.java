@@ -8,12 +8,11 @@ import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 import frc.robot.Constants;
+import frc.robot.commands.defaults.DriveDefault;
 import frc.robot.tools.controlloops.PID;
 
-public class Drive extends SubsystemBase {
+public class Drive extends SubsystemBaseEnhanced {
 
     private final TalonFX leftDriveLead = new TalonFX(Constants.LEFT_DRIVE_LEAD_ID);
     private final TalonFX rightDriveLead = new TalonFX(Constants.RIGHT_DRIVE_LEAD_ID);
@@ -36,6 +35,7 @@ public class Drive extends SubsystemBase {
 
     public Drive() {}
 
+    @Override
     public void init() {
         aPID = new PID(akP, akI, akD);
         aPID.setMaxOutput(0.75);
@@ -62,13 +62,16 @@ public class Drive extends SubsystemBase {
         leftDriveLead.config_kD(0, vkD);
         rightDriveLead.config_kD(0, vkD);
         setCurrentLimitsEnabled();
+        setDefaultCommand(new DriveDefault(this));
     }
 
+    @Override
     public void autoInit() {
         setVoltageCompensation(Constants.DRIVE_MAX_VOLTAGE);
         setDriveBrake();
     }
 
+    @Override
     public void teleopInit() {
         setDriveCoast();
     }
@@ -112,7 +115,7 @@ public class Drive extends SubsystemBase {
     public void setRightSpeed(double fps) {
         rightDriveLead.set(ControlMode.Velocity, Constants.driveFPSToUnitsPer100MS(fps));
     }
-    
+
     public double safelyDivide(double i, double j) {
         if (j == 0) {
             return 0;
@@ -129,7 +132,7 @@ public class Drive extends SubsystemBase {
         if (Math.abs(turn) < deadzone) {
             turn = 0;
         }
-        differential = turn;
+        differential = turn * 1.3;
         left = throttle + differential;
         right = throttle - differential;
         if (Math.abs(left) > 1) {

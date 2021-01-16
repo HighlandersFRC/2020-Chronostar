@@ -20,8 +20,8 @@ public class EjectMagazine extends InstantCommand {
 
     @Override
     public void execute() {
-        magIntake.setMagazine(0.25, 0.8);
-        magIntake.setIntake(0, 0.8);
+        magIntake.setMagPercent(0.25, 0.8);
+        magIntake.setIntakePercent(0, 0.8);
     }
 
     @Override

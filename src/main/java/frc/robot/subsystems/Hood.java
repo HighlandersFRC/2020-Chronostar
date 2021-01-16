@@ -12,12 +12,11 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ControlType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
 import frc.robot.OI;
 
-public class Hood extends SubsystemBase {
+public class Hood extends SubsystemBaseEnhanced {
 
     private double kf = .02;
     private double kp = 0.00009;
@@ -35,6 +34,7 @@ public class Hood extends SubsystemBase {
     private CANPIDController pidController = new CANPIDController(hoodMotor);
     private CANEncoder hoodEncoder;
 
+    @Override
     public void init() {
         hoodMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
         hoodMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
@@ -55,7 +55,11 @@ public class Hood extends SubsystemBase {
         pidController.setSmartMotionAllowedClosedLoopError(.1, 0);
     }
 
-    public Hood() {}
+    @Override
+    public void autoInit() {}
+
+    @Override
+    public void teleopInit() {}
 
     public void setHoodTarget(double target) {
         hoodTarget = target;

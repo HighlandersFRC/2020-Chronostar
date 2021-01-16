@@ -20,8 +20,8 @@ public class Outtake extends CommandBase {
     @Override
     public void execute() {
         magIntake.intakePistonUp();
-        magIntake.setIntake(-0.8, -0.8);
-        magIntake.setMagazine(-0.7, -0.6);
+        magIntake.setIntakePercent(-0.8, -0.8);
+        magIntake.setMagPercent(-0.7, -0.6);
     }
 
     @Override

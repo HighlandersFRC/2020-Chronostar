@@ -17,8 +17,8 @@ public class StopMagIntake extends InstantCommand {
 
     @Override
     public void initialize() {
-        magIntake.setIntake(0, 0);
-        magIntake.setMagazine(0, 0);
+        magIntake.setIntakePercent(0, 0);
+        magIntake.setMagPercent(0, 0);
     }
 
     @Override
