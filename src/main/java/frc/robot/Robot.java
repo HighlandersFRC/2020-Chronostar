@@ -7,10 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import frc.robot.commands.basic.Outtake;
-import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SmartIntake;
-import frc.robot.commands.basic.SpinFlywheel;
-import frc.robot.commands.composite.Fire;
 import frc.robot.subsystems.*;
 
 public class Robot extends TimedRobot {
@@ -18,10 +15,8 @@ public class Robot extends TimedRobot {
     private final MagIntake magIntake = new MagIntake();
     private final Drive drive = new Drive();
     private final Shooter shooter = new Shooter();
-    private final Hood hood = new Hood();
     private final Climber climber = new Climber();
-    private final SubsystemBaseEnhanced[] subsystems = {magIntake, drive, shooter, hood, climber};
-    private final SpinFlywheel spinFlywheel4500 = new SpinFlywheel(shooter, 4500);
+    private final SubsystemBaseEnhanced[] subsystems = {magIntake, drive, shooter, climber};
 
     public Robot() {}
 
@@ -61,14 +56,9 @@ public class Robot extends TimedRobot {
         for (SubsystemBaseEnhanced s : subsystems) {
             s.teleopInit();
         }
-        OI.operatorX.whileHeld(spinFlywheel4500);
         OI.operatorRB.whileHeld(new SmartIntake(magIntake));
         OI.operatorLB.whileHeld(new Outtake(magIntake));
-        OI.operatorX.whileHeld(new Fire(shooter, hood, magIntake, drive, 0));
-        OI.operatorX.whenReleased(new SetHoodPosition(hood, 0));
-        /*OI.operatorLT.whileHeld(new SmartIntake(magIntake, SmartIntake.IntakeDirection.OUT));
-            OI.operatorRT.whileHeld(new SmartIntake(magIntake, SmartIntake.IntakeDirection.IN));
-        */ }
+    }
 
     @Override
     public void teleopPeriodic() {}

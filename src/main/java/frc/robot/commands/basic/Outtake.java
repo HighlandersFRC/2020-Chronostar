@@ -7,10 +7,8 @@
 
 package frc.robot.commands.basic;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.robot.OI;
 import frc.robot.subsystems.MagIntake;
 
 public class Outtake extends CommandBase {
@@ -41,9 +39,6 @@ public class Outtake extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if (!OI.operatorController.getBumper(Hand.kLeft)) {
-            return true;
-        }
         return false;
     }
 }

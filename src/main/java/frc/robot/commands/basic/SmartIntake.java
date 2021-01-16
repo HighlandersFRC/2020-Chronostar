@@ -25,10 +25,7 @@ public class SmartIntake extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        /*SmartDashboard.putBoolean("Beam Break 1", magIntake.getBeamBreak(1));
-        SmartDashboard.putBoolean("Beam Break 2", magIntake.getBeamBreak(2));
-        SmartDashboard.putBoolean("Beam Break 3", magIntake.getBeamBreak(3));
-        */ if (OI.operatorRB.get()) {
+        if (OI.operatorRB.get()) {
             magIntake.setIntakePercent(0.8, 0);
         }
         if (magIntake.getBeamBreak(1)
@@ -62,9 +59,6 @@ public class SmartIntake extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if (!OI.operatorController.getBumper(Hand.kRight)) {
-            return true;
-        }
         return false;
     }
 }
