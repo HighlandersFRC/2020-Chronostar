@@ -65,7 +65,7 @@ public class Robot extends TimedRobot {
         OI.operatorRB.whileHeld(new SimpleIntake(magIntake, SimpleIntake.IntakeDirection.IN));
         OI.operatorLT.whileHeld(new SmartIntake(magIntake, SmartIntake.IntakeDirection.OUT));
         OI.operatorRT.whileHeld(new SmartIntake(magIntake, SmartIntake.IntakeDirection.IN));
-        OI.operatorRB.whileHeld(new LightRingOn(lightRing));
+        OI.operatorA.whileHeld(new LightRingOn(lightRing));
     }
 
     @Override
