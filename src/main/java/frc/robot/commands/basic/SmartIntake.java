@@ -69,10 +69,7 @@ public class SmartIntake extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
-        highMagTimer = 0;
-        lowMagTimer = 0;
-    }
+    public void end(boolean interrupted) {}
 
     @Override
     public boolean isFinished() {
