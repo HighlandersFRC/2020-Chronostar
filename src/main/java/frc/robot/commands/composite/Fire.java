@@ -10,6 +10,7 @@ import frc.robot.commands.basic.EjectMagazine;
 import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SpinFlywheel;
 import frc.robot.commands.basic.VisionAlignment;
+import frc.robot.sensors.VisionCamera;
 import frc.robot.subsystems.*;
 
 public class Fire extends SequentialCommandGroup {
@@ -19,13 +20,14 @@ public class Fire extends SequentialCommandGroup {
             MagIntake magIntake,
             Drive drive,
             LightRing lightRing,
+            Peripherals peripherals,
             double waitTime) {
         addRequirements(shooter, hood, magIntake, drive, lightRing);
         addCommands(
                 new ParallelCommandGroup(
                         new SetHoodPosition(hood, 8),
                         new SpinFlywheel(shooter, 4000),
-                        new VisionAlignment(lightRing, drive)),
+                        new VisionAlignment(lightRing, drive, peripherals)),
                 new EjectMagazine(magIntake),
                 new WaitCommand(waitTime));
     }

@@ -21,11 +21,9 @@ public class Peripherals extends SubsystemBaseEnhanced {
     private final LidarLite lidar = new LidarLite(lidarPort);
     private VisionCamera visionCam;
 
-    public void init() {
-
-        SerialPort jevois = null;
+    public void init(SerialPort jevois) {
         try {
-            jevois = new SerialPort(115200, SerialPort.Port.kUSB1);
+            jevois = new SerialPort(115200, SerialPort.Port.kUSB);
         } catch (final Exception e) {
             System.err.println("CV cam's serial port failed to connect. Reason: " + e);
         }
@@ -61,4 +59,9 @@ public class Peripherals extends SubsystemBaseEnhanced {
 
     @Override
     public void teleopInit() {}
+
+    @Override
+    public void init() {
+
+    }
 }

@@ -2,13 +2,16 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import frc.robot.commands.basic.Outtake;
 import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SmartIntake;
+import frc.robot.commands.basic.VisionAlignment;
 import frc.robot.commands.composite.Fire;
+import frc.robot.sensors.VisionCamera;
 import frc.robot.subsystems.*;
 
 public class Robot extends TimedRobot {
@@ -21,7 +24,7 @@ public class Robot extends TimedRobot {
     private final Peripherals peripherals = new Peripherals();
     private final LightRing lightRing = new LightRing();
     private final SubsystemBaseEnhanced[] subsystems = {
-        hood, magIntake, drive, shooter, climber, peripherals, lightRing
+        hood, magIntake, drive, shooter, climber, lightRing, peripherals
     };
 
     public Robot() {}
@@ -59,10 +62,11 @@ public class Robot extends TimedRobot {
         for (SubsystemBaseEnhanced s : subsystems) {
             s.teleopInit();
         }
-        OI.driverX.whileHeld(new Fire(shooter, hood, magIntake, drive, lightRing, 0));
+        OI.driverX.whileHeld(new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 0));
         OI.driverX.whenReleased(new SetHoodPosition(hood, 0));
         OI.driverLT.whileHeld(new Outtake(magIntake));
         OI.driverRT.whileHeld(new SmartIntake(magIntake));
+        OI.operatorA.whileHeld(new VisionAlignment(lightRing, drive, peripherals));
     }
 
     @Override
