@@ -10,7 +10,6 @@ import frc.robot.commands.basic.EjectMagazine;
 import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SpinFlywheel;
 import frc.robot.commands.basic.VisionAlignment;
-import frc.robot.sensors.VisionCamera;
 import frc.robot.subsystems.*;
 
 public class Fire extends SequentialCommandGroup {

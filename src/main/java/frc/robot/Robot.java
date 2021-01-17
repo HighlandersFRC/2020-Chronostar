@@ -2,7 +2,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -11,7 +10,6 @@ import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SmartIntake;
 import frc.robot.commands.basic.VisionAlignment;
 import frc.robot.commands.composite.Fire;
-import frc.robot.sensors.VisionCamera;
 import frc.robot.subsystems.*;
 
 public class Robot extends TimedRobot {

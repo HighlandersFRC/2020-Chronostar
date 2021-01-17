@@ -4,7 +4,7 @@ package frc.robot.commands.basic;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.OI;
+
 import frc.robot.sensors.VisionCamera;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.LightRing;
@@ -43,7 +43,7 @@ public class VisionAlignment extends CommandBase {
     public void execute() {
         lightRing.turnOn();
         pid.updatePID(peripherals.getCamAngle());
-        SmartDashboard.putNumber("VisionPID Angle",peripherals.getCamAngle());
+        SmartDashboard.putNumber("VisionPID Angle", peripherals.getCamAngle());
         SmartDashboard.putNumber("Result", pid.getResult());
         SmartDashboard.putBoolean("Finished", false);
         drive.setRightPercent(pid.getResult());
@@ -59,12 +59,6 @@ public class VisionAlignment extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if(Math.abs(peripherals.getCamAngle()) <= 3){
-            return true;
-        } 
-        else if(!OI.operatorA.get()){
-            return true;
-        }
-        return false;
+        return Math.abs(peripherals.getCamAngle()) <= 3;
     }
 }
