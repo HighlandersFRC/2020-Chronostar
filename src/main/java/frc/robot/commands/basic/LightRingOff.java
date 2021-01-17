@@ -1,30 +1,29 @@
 // Copyrights (c) 2018-2019 FIRST, 2020 Highlanders FRC. All Rights Reserved.
 
-package frc.robot.commands.defaults;
+package frc.robot.commands.basic;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.LightRing;
 
-public class LightRingDefault extends CommandBase {
-
+public class LightRingOff extends CommandBase {
     private LightRing lightRing;
 
-    public LightRingDefault(LightRing lightRing) {
+    public LightRingOff(LightRing lightRing) {
         this.lightRing = lightRing;
         addRequirements(lightRing);
     }
 
     @Override
-    public void initialize() {}
-
-    @Override
-    public void execute() {
+    public void initialize() {
         lightRing.turnOff();
     }
 
     @Override
-    public void end(boolean interrupted) {}
+    public void execute() {}
+
+    @Override
+    public void end(final boolean interrupted) {}
 
     @Override
     public boolean isFinished() {

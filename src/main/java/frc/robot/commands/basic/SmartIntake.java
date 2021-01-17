@@ -2,11 +2,10 @@
 
 package frc.robot.commands.basic;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.robot.OI;
 import frc.robot.subsystems.MagIntake;
+import frc.robot.subsystems.MagIntake.BeamBreakID;
 
 public class SmartIntake extends CommandBase {
     private MagIntake magIntake;
@@ -36,27 +35,29 @@ public class SmartIntake extends CommandBase {
 
     @Override
     public void execute() {
-        if (OI.operatorRB.get()) {
-            magIntake.setIntakePercent(INTAKING_POWER, 0);
-        }
-        if (magIntake.getBeamBreak(1)
-                & magIntake.getBeamBreak(2)
-                & magIntake.getBeamBreak(3)
-                & !OI.operatorController.getBumper(Hand.kLeft)) {
+        magIntake.setIntakePercent(INTAKING_POWER, INTAKING_POWER);
+        if (magIntake.getBeamBreak(BeamBreakID.ONE)
+                & magIntake.getBeamBreak(BeamBreakID.TWO)
+                & magIntake.getBeamBreak(BeamBreakID.THREE)) {
             magIntake.setMagPercent(0, 0);
-        } else if (!magIntake.getBeamBreak(3) & !OI.operatorController.getBumper(Hand.kLeft)) {
+        } else if (!magIntake.getBeamBreak(BeamBreakID.THREE)) {
             magIntake.setMagPercent(0, 0);
             magIntake.setIntakePercent(0, MIDDLE_BREAK_3_POWER);
-        } else if (!magIntake.getBeamBreak(1) & magIntake.getBeamBreak(2)) {
+        } else if (!magIntake.getBeamBreak(BeamBreakID.ONE)
+                & magIntake.getBeamBreak(BeamBreakID.TWO)) {
             magIntake.setMagPercent(LOW_MAG_BREAK_1_POWER, HIGH_MAG_BREAK_1_POWER);
             magIntake.setIntakePercent(0, MIDDLE_WHEEL_BREAK_1_POWER);
-        } else if (!magIntake.getBeamBreak(2) & magIntake.getBeamBreak(1)) {
+        } else if (!magIntake.getBeamBreak(BeamBreakID.TWO)
+                & magIntake.getBeamBreak(BeamBreakID.ONE)) {
             magIntake.setMagPercent(LOW_MAG_BREAK_2_NO_1_POWER, HIGH_MAG_BREAK_2_NO_1_POWER);
-        } else if (!magIntake.getBeamBreak(2) & !magIntake.getBeamBreak(1)) {
+        } else if (!magIntake.getBeamBreak(BeamBreakID.TWO)
+                & !magIntake.getBeamBreak(BeamBreakID.ONE)) {
             magIntake.setMagPercent(LOW_MAG_BREAK_2_AND_1_POWER, HIGH_MAG_BREAK_2_AND_1_POWER);
-        } else if (!magIntake.getBeamBreak(3) & !magIntake.getBeamBreak(2)) {
+        } else if (!magIntake.getBeamBreak(BeamBreakID.THREE)
+                & !magIntake.getBeamBreak(BeamBreakID.TWO)) {
             magIntake.setMagPercent(LOW_MAG_BREAK_2_AND_3_POWER, 0);
-        } else if (!magIntake.getBeamBreak(2) & magIntake.getBeamBreak(3)) {
+        } else if (!magIntake.getBeamBreak(BeamBreakID.TWO)
+                & magIntake.getBeamBreak(BeamBreakID.THREE)) {
             magIntake.setMagPercent(LOW_MAG_BREAK_2_NO_3_POWER, HIGH_MAG_BREAK_2_NO_3_POWER);
         } else {
             magIntake.setMagPercent(LOW_MAG_ELSE_POWER, HIGH_MAG_ELSE_POWER);

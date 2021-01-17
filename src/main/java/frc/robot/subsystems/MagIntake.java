@@ -44,6 +44,7 @@ public class MagIntake extends SubsystemBaseEnhanced {
         highMag.setIdleMode(IdleMode.kBrake);
         lowMag.configVoltageCompSaturation(11.7);
         lowMag.enableVoltageCompensation(true);
+        highMag.setInverted(true);
         lowIntake.setInverted(true);
         highIntake.setInverted(true);
         highMag.setInverted(true);
@@ -69,21 +70,21 @@ public class MagIntake extends SubsystemBaseEnhanced {
         setHighMagPercent(highPower);
     }
 
-    public boolean getBeamBreak(int id) {
+    public boolean getBeamBreak(BeamBreakID id) {
         switch (id) {
-            case 1:
+            case ONE:
                 return beamBreak1.get();
-            case 2:
+            case TWO:
                 return beamBreak2.get();
-            case 3:
+            case THREE:
                 return beamBreak3.get();
         }
         return false;
     }
 
-    public void setIntakePercent(double frontIntakePercent, double backIntakePercent) {
-        lowIntake.set(ControlMode.PercentOutput, frontIntakePercent);
-        highIntake.set(ControlMode.PercentOutput, backIntakePercent);
+    public void setIntakePercent(double lowIntakePercent, double highIntakePercent) {
+        lowIntake.set(ControlMode.PercentOutput, lowIntakePercent);
+        highIntake.set(ControlMode.PercentOutput, highIntakePercent);
     }
 
     public void setLowIntakePercent(double power) {

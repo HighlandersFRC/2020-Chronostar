@@ -2,7 +2,6 @@
 
 package frc.robot.commands.basic;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.LightRing;
@@ -18,18 +17,16 @@ public class LightRingOn extends CommandBase {
     @Override
     public void initialize() {
         lightRing.turnOn();
-        SmartDashboard.putBoolean("LightRing", true);
     }
 
     @Override
     public void execute() {}
 
     @Override
-    public void end(boolean interrupted) {}
+    public void end(final boolean interrupted) {}
 
     @Override
     public boolean isFinished() {
-
         return false;
     }
 }
