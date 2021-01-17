@@ -32,8 +32,13 @@ public class Hood extends SubsystemBaseEnhanced {
             new CANDigitalInput(hoodMotor, LimitSwitch.kReverse, LimitSwitchPolarity.kNormallyOpen);
     private final CANDigitalInput upperHoodSwitch =
             new CANDigitalInput(hoodMotor, LimitSwitch.kForward, LimitSwitchPolarity.kNormallyOpen);
-    private CANPIDController pidController = new CANPIDController(hoodMotor);
-    private CANEncoder hoodEncoder;
+    private final CANPIDController pidController;
+    private final CANEncoder hoodEncoder;
+
+    public Hood() {
+        pidController = hoodMotor.getPIDController();
+        hoodEncoder = hoodMotor.getEncoder();
+    }
 
     @Override
     public void init() {
@@ -42,8 +47,6 @@ public class Hood extends SubsystemBaseEnhanced {
         hoodMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, maxpoint);
         hoodMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, minpoint);
         hoodMotor.enableVoltageCompensation(11.3);
-        pidController = hoodMotor.getPIDController();
-        hoodEncoder = hoodMotor.getEncoder();
         pidController.setFF(kf);
         pidController.setP(kp);
         pidController.setI(ki);
