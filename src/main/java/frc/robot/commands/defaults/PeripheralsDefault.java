@@ -2,7 +2,6 @@
 
 package frc.robot.commands.defaults;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.Peripherals;
@@ -19,14 +18,7 @@ public class PeripheralsDefault extends CommandBase {
     public void initialize() {}
 
     @Override
-    public void execute() {
-        peripherals.getCamDistance();
-
-        SmartDashboard.putNumber("Vision Distance", peripherals.getCamDistance());
-        SmartDashboard.putNumber("Vision Angle", peripherals.getCamAngle());
-        SmartDashboard.putNumber("Lidar Distance", peripherals.getLidarDistance());
-        SmartDashboard.putNumber("Navx Angle", peripherals.getNavxAngle());
-    }
+    public void execute() {}
 
     @Override
     public void end(final boolean interrupted) {}

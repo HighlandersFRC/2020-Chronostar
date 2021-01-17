@@ -11,10 +11,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ControlType;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import frc.robot.Constants;
-import frc.robot.OI;
 import frc.robot.commands.defaults.HoodDefault;
 
 public class Hood extends SubsystemBaseEnhanced {
@@ -87,11 +84,5 @@ public class Hood extends SubsystemBaseEnhanced {
         if ((hoodTarget == 0) && (hoodMotor.getEncoder().getPosition() <= 0.5)) {
             hoodMotor.set(-0.1);
         }
-        SmartDashboard.putNumber("Current Value", hoodMotor.getEncoder().getPosition());
-        SmartDashboard.putNumber("Output Current", hoodMotor.getOutputCurrent());
-        SmartDashboard.putNumber("Target Point", hoodTarget);
-        SmartDashboard.putBoolean("XReleased", OI.operatorX.get());
-        SmartDashboard.putBoolean("TopLimit", upperHoodSwitch.get());
-        SmartDashboard.putBoolean("LowerLimit", lowerHoodSwitch.get());
     }
 }

@@ -21,9 +21,8 @@ public class Robot extends TimedRobot {
     private final Peripherals peripherals = new Peripherals();
     private final LightRing lightRing = new LightRing();
     private final SubsystemBaseEnhanced[] subsystems = {
-        magIntake, drive, shooter, hood, climber, peripherals, lightRing
+        hood, magIntake, drive, shooter, climber, peripherals, lightRing
     };
-    private final Fire teleopFire = new Fire(shooter, hood, magIntake, drive, lightRing, 0);
 
     public Robot() {}
 
@@ -37,7 +36,6 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
-        hood.periodic();
     }
 
     @Override
@@ -61,7 +59,7 @@ public class Robot extends TimedRobot {
         for (SubsystemBaseEnhanced s : subsystems) {
             s.teleopInit();
         }
-        OI.driverX.whileHeld(teleopFire);
+        OI.driverX.whileHeld(new Fire(shooter, hood, magIntake, drive, lightRing, 0));
         OI.driverX.whenReleased(new SetHoodPosition(hood, 0));
         OI.driverLT.whileHeld(new Outtake(magIntake));
         OI.driverRT.whileHeld(new SmartIntake(magIntake));
