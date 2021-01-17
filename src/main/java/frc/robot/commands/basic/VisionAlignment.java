@@ -5,7 +5,6 @@ package frc.robot.commands.basic;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.robot.sensors.VisionCamera;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.LightRing;
 import frc.robot.subsystems.Peripherals;
@@ -16,7 +15,6 @@ public class VisionAlignment extends CommandBase {
     private LightRing lightRing;
     private Drive drive;
     private Peripherals peripherals;
-    private VisionCamera visionCam;
 
     private PID pid;
     private double kP = 0.01;
