@@ -123,6 +123,14 @@ public class Drive extends SubsystemBaseEnhanced {
         return i / j;
     }
 
+    public double getLeftPosition() {
+        return leftDriveLead.getSelectedSensorPosition();
+    }
+
+    public double getRightPosition() {
+        return rightDriveLead.getSelectedSensorPosition();
+    }
+
     public void arcadeDrive(double throttle, double turn) {
         double left, right;
         double differential;
