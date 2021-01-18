@@ -86,10 +86,14 @@ public class VisionCamera {
             Object tempDistance = json.get("Distance");
             if (tempDistance != null) {
                 distance = (double) tempDistance;
+            } else {
+                distance = 0;
             }
             Object tempAngle = json.get("Angle");
             if (tempAngle != null) {
                 angle = (double) tempAngle;
+            } else {
+                angle = 0;
             }
         }
     }

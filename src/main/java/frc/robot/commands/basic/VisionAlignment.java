@@ -17,8 +17,8 @@ public class VisionAlignment extends CommandBase {
     private Peripherals peripherals;
 
     private PID pid;
-    private double kP = 0.01;
-    private double kI = 0;
+    private double kP = 0.015;
+    private double kI = 0.001;
     private double kD = 0;
 
     public VisionAlignment(LightRing lightRing, Drive drive, Peripherals peripherals) {
@@ -44,12 +44,13 @@ public class VisionAlignment extends CommandBase {
         SmartDashboard.putNumber("VisionPID Angle", peripherals.getCamAngle());
         SmartDashboard.putNumber("Result", pid.getResult());
         SmartDashboard.putBoolean("Finished", false);
-        drive.setRightPercent(pid.getResult());
-        drive.setLeftPercent(-pid.getResult());
+        drive.setRightPercent(-pid.getResult());
+        drive.setLeftPercent(pid.getResult());
     }
 
     @Override
     public void end(boolean interrupted) {
+        System.out.println("maybe its ending");
         drive.setRightPercent(0);
         drive.setLeftPercent(0);
         lightRing.turnOff();
@@ -57,6 +58,6 @@ public class VisionAlignment extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return Math.abs(peripherals.getCamAngle()) <= 3;
+        return Math.abs(peripherals.getCamAngle()) <= 3 && peripherals.getCamAngle() != 0.000;
     }
 }
