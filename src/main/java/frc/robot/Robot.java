@@ -5,6 +5,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
+import frc.robot.commands.basic.LightRingOff;
 import frc.robot.commands.basic.Outtake;
 import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SmartIntake;
@@ -65,6 +66,7 @@ public class Robot extends TimedRobot {
         OI.driverLT.whileHeld(new Outtake(magIntake));
         OI.driverRT.whileHeld(new SmartIntake(magIntake));
         OI.driverA.whileHeld(new VisionAlignment(lightRing, drive, peripherals));
+        OI.driverA.whenReleased(new LightRingOff(lightRing));
     }
 
     @Override
