@@ -97,4 +97,14 @@ public class Constants {
     public static double convertLidar(double lidarDistance) {
         return 0;
     }
+
+    public static double boundHalfDegrees(double degrees) {
+        degrees %= 360;
+        if (degrees <= -180.0) {
+            degrees += 360.0;
+        } else if (degrees >= 180.0) {
+            degrees -= 360.0;
+        }
+        return degrees;
+    }
 }

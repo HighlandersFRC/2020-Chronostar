@@ -33,6 +33,14 @@ public class Odometry {
         startingCentre = (startingLeft + startingRight) / 2;
     }
 
+    public void setLeft(double left) {
+        currentLeft = left;
+    }
+
+    public void setRight(double right) {
+        currentRight = right;
+    }
+
     public double getLeft() {
         update();
         return currentLeft;
