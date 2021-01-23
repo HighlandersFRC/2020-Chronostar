@@ -18,8 +18,8 @@ public class VisionAlignment extends CommandBase {
 
     private PID pid;
     private double kP = 0.01;
-    private double kI = 0.00023;
-    private double kD = 0.002;
+    private double kI = 0.00006;
+    private double kD = 0.01;
 
     public VisionAlignment(LightRing lightRing, Drive drive, Peripherals peripherals) {
         this.drive = drive;
@@ -58,6 +58,7 @@ public class VisionAlignment extends CommandBase {
 
     @Override
     public boolean isFinished() {
+        SmartDashboard.putBoolean("Finished", true);
         return Math.abs(peripherals.getCamAngle()) <= 3 && peripherals.getCamAngle() != 0.000;
     }
 }

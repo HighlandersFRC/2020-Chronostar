@@ -25,7 +25,7 @@ public class Peripherals extends SubsystemBaseEnhanced {
     public void init() {
         SerialPort jevois = null;
         try {
-            jevois = new SerialPort(115200, SerialPort.Port.kUSB);
+            jevois = new SerialPort(115200, SerialPort.Port.kUSB2);
         } catch (final Exception e) {
             System.err.println("CV cam's serial port failed to connect. Reason: " + e);
         }
