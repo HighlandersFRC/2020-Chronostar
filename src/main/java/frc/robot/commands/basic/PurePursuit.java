@@ -1,30 +1,20 @@
 package frc.robot.commands.basic;
 
-import edu.wpi.first.wpilibj.Notifier;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+
 import frc.robot.Constants;
 import frc.robot.subsystems.Drive;
-import frc.robot.subsystems.Peripherals;
 import frc.robot.tools.math.Point;
 import frc.robot.tools.math.Vector;
 import frc.robot.tools.pathing.Odometry;
 
-import java.util.ArrayList;
-
 public class PurePursuit extends CommandBase {
 
-    private class PathRunnable implements Runnable {
-        public void run() {
-            algorithm();
-        }
-    }
-
-    private ArrayList<Trajectory> trajectories;
     private int closestSegment;
     private Point lookaheadPoint;
     private Point lastLookaheadPoint;
-    private Notifier pathNotifier;
     private int startingNumber;
     private double dx, dy;
     private double distToPoint;
@@ -48,29 +38,20 @@ public class PurePursuit extends CommandBase {
     private double k;
     private double endThetaError;
     private Drive drive;
-    private Peripherals peripherals;
     private Odometry odometry;
-    private int selectedPath;
-    private Trajectory selectedTrajectory;
+    private Trajectory trajectory;
 
     public PurePursuit(
             Drive drive,
-            Peripherals peripherals,
             Odometry odometry,
             double lookaheadDistance,
             double k,
-            int selectedPath,
-            Trajectory... trajectories) {
+            Trajectory trajectory) {
         this.lookaheadDistance = lookaheadDistance;
         this.k = k;
-        for (Trajectory t : trajectories) {
-            this.trajectories.add(t);
-        }
-        this.selectedPath = selectedPath;
         this.drive = drive;
-        this.peripherals = peripherals;
         this.odometry = odometry;
-        selectedTrajectory = trajectories[selectedPath];
+        this.trajectory = trajectory;
         addRequirements(this.drive);
     }
 
@@ -99,43 +80,67 @@ public class PurePursuit extends CommandBase {
         dx = 0;
         dy = 0;
         curveAdjustedVelocity = 0;
-        pathNotifier = new Notifier(new PathRunnable());
-        pathNotifier.startPeriodic(0.02);
     }
 
-    private void findRobotCurvature() {}
+    private void findRobotCurvature() {
+        double a = -Math.tan(Math.toRadians(odometry.getTheta()));
+        double b = 1;
+        double c =
+                Math.tan(Math.toRadians(odometry.getTheta())) * odometry.getX() - odometry.getY();
+        double x =
+                Math.abs(a * lookaheadPoint.getXPos() + b * lookaheadPoint.getYPos() + c)
+                        / Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+        double side =
+                Math.signum(
+                        Math.sin(Math.toRadians(odometry.getTheta()))
+                                        * (lookaheadPoint.getXPos() - odometry.getX())
+                                - Math.cos(Math.toRadians(odometry.getTheta()))
+                                        * (lookaheadPoint.getYPos() - odometry.getY()));
+        desiredCurvature = (2 * x / Math.pow(lookaheadDistance, 2)) * side;
+    }
 
-    private void setWheelVelocities(double targetVelocity, double curvature) {}
+    private void setWheelVelocities(double targetVelocity, double curvature) {
+        double leftVelocity, rightVelocity;
+        double v;
+        double c = -curvature;
+        if (closestSegment < 3) {
+            v = 0.6 + targetVelocity;
+        } else {
+            v = targetVelocity;
+        }
+        leftVelocity = v * (2 + c * Constants.DRIVE_WHEEL_BASE) / 2;
+        rightVelocity = v * (2 - c * Constants.DRIVE_WHEEL_BASE) / 2;
+        drive.setLeftSpeed(leftVelocity);
+        drive.setRightSpeed(rightVelocity);
+    }
 
-    private void algorithm() {
+    @Override
+    public void execute() {
+        SmartDashboard.putNumber("distToEndVector magnitude", distToEndVector.magnitude());
         odometry.setLeft(drive.getLeftPosition());
         odometry.setRight(drive.getRightPosition());
-        for (int i = startingNumber; i < selectedTrajectory.getStates().size() - 1; i++) {
-            dx =
-                    selectedTrajectory.getStates().get(i).poseMeters.getTranslation().getX()
-                            - odometry.getX();
-            dy =
-                    selectedTrajectory.getStates().get(i).poseMeters.getTranslation().getY()
-                            - odometry.getY();
+        for (int i = startingNumber; i < trajectory.getStates().size() - 1; i++) {
+            dx = trajectory.getStates().get(i).poseMeters.getTranslation().getX() - odometry.getX();
+            dy = trajectory.getStates().get(i).poseMeters.getTranslation().getY() - odometry.getY();
             distToPoint = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
             if (distToPoint < minDistToPoint) {
                 minDistToPoint = distToPoint;
                 closestSegment = i;
                 closestPoint.setLocation(
-                        selectedTrajectory.getStates().get(i).poseMeters.getTranslation().getX(),
-                        selectedTrajectory.getStates().get(i).poseMeters.getTranslation().getX());
+                        trajectory.getStates().get(i).poseMeters.getTranslation().getX(),
+                        trajectory.getStates().get(i).poseMeters.getTranslation().getX());
             }
         }
         startingNumber = closestSegment;
         minDistToPoint = 1000;
         firstLookaheadFound = false;
-        for (int i = startingNumberLA; i < selectedTrajectory.getStates().size() - 1; i++) {
+        for (int i = startingNumberLA; i < trajectory.getStates().size() - 1; i++) {
             startingPointOfLineSegment.setLocation(
-                    selectedTrajectory.getStates().get(i).poseMeters.getTranslation().getX(),
-                    selectedTrajectory.getStates().get(i).poseMeters.getTranslation().getY());
+                    trajectory.getStates().get(i).poseMeters.getTranslation().getX(),
+                    trajectory.getStates().get(i).poseMeters.getTranslation().getY());
             endPointOfLineSegment.setLocation(
-                    selectedTrajectory.getStates().get(i + 1).poseMeters.getTranslation().getX(),
-                    selectedTrajectory.getStates().get(i + 1).poseMeters.getTranslation().getY());
+                    trajectory.getStates().get(i + 1).poseMeters.getTranslation().getX(),
+                    trajectory.getStates().get(i + 1).poseMeters.getTranslation().getY());
             robotPosition.setLocation(odometry.getX(), odometry.getY());
             lineSegmentVector.setI(
                     endPointOfLineSegment.getXPos() - startingPointOfLineSegment.getXPos());
@@ -167,7 +172,7 @@ public class PurePursuit extends CommandBase {
             }
             if (firstLookaheadFound) {
                 break;
-            } else if (!firstLookaheadFound && i == selectedTrajectory.getStates().size() - 1) {
+            } else if (!firstLookaheadFound && i == trajectory.getStates().size() - 1) {
                 System.out.println("failed");
                 lookaheadPoint.setLocation(
                         lastLookaheadPoint.getXPos(), lastLookaheadPoint.getYPos());
@@ -178,17 +183,17 @@ public class PurePursuit extends CommandBase {
             lastPointIndex = partialPointIndex;
         }
         distToEndVector.setI(
-                selectedTrajectory
+                trajectory
                                 .getStates()
-                                .get(selectedTrajectory.getStates().size() - 1)
+                                .get(trajectory.getStates().size() - 1)
                                 .poseMeters
                                 .getTranslation()
                                 .getX()
                         - odometry.getX());
         distToEndVector.setJ(
-                selectedTrajectory
+                trajectory
                                 .getStates()
-                                .get(selectedTrajectory.getStates().size() - 1)
+                                .get(trajectory.getStates().size() - 1)
                                 .poseMeters
                                 .getTranslation()
                                 .getY()
@@ -200,23 +205,32 @@ public class PurePursuit extends CommandBase {
                 Math.min(
                         Math.abs(
                                 k
-                                        / selectedTrajectory
+                                        / trajectory
                                                 .getStates()
                                                 .get(closestSegment)
                                                 .curvatureRadPerMeter),
-                        selectedTrajectory.getStates().get(closestSegment).velocityMetersPerSecond);
+                        trajectory.getStates().get(closestSegment).velocityMetersPerSecond);
         setWheelVelocities(curveAdjustedVelocity, desiredCurvature);
-        endThetaError = Constants.boundHalfDegrees(Math.toDegrees(selectedTrajectory.getStates().get(selectedTrajectory.getStates().size() - 1).poseMeters.getRotation().getDegrees()) - odometry.getTheta();
+        endThetaError =
+                Constants.boundHalfDegrees(
+                        Math.toDegrees(
+                                        trajectory
+                                                .getStates()
+                                                .get(trajectory.getStates().size() - 1)
+                                                .poseMeters
+                                                .getRotation()
+                                                .getDegrees())
+                                - odometry.getTheta());
     }
 
     @Override
-    public void execute() {}
-
-    @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        drive.setLeftSpeed(0);
+        drive.setRightSpeed(0);
+    }
 
     @Override
     public boolean isFinished() {
-        return false;
+        return distToEndVector.magnitude() < 0.20;
     }
 }

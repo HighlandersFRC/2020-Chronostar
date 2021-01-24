@@ -44,11 +44,12 @@ public class Drive extends SubsystemBaseEnhanced {
         rightDriveLead.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
         leftDriveFollower.set(ControlMode.Follower, Constants.LEFT_DRIVE_LEAD_ID);
         rightDriveFollower.set(ControlMode.Follower, Constants.RIGHT_DRIVE_LEAD_ID);
-        rightDriveLead.setInverted(true);
+        rightDriveLead.setInverted(false);
         rightDriveFollower.setInverted(InvertType.FollowMaster);
+        leftDriveLead.setInverted(true);
         leftDriveFollower.setInverted(InvertType.FollowMaster);
-        leftDriveLead.setSensorPhase(false);
-        rightDriveLead.setSensorPhase(false);
+        leftDriveLead.setSensorPhase(true);
+        rightDriveLead.setSensorPhase(true);
         leftDriveLead.setSelectedSensorPosition(0);
         rightDriveLead.setSelectedSensorPosition(0);
         leftDriveLead.selectProfileSlot(0, 0);
@@ -69,6 +70,8 @@ public class Drive extends SubsystemBaseEnhanced {
     public void autoInit() {
         setVoltageCompensation(Constants.DRIVE_MAX_VOLTAGE);
         setDriveBrake();
+        leftDriveLead.setSelectedSensorPosition(0);
+        rightDriveLead.setSelectedSensorPosition(0);
     }
 
     @Override
@@ -124,11 +127,11 @@ public class Drive extends SubsystemBaseEnhanced {
     }
 
     public double getLeftPosition() {
-        return leftDriveLead.getSelectedSensorPosition();
+        return Constants.driveUnitsToFeet(leftDriveLead.getSelectedSensorPosition());
     }
 
     public double getRightPosition() {
-        return rightDriveLead.getSelectedSensorPosition();
+        return Constants.driveUnitsToFeet(rightDriveLead.getSelectedSensorPosition());
     }
 
     public void arcadeDrive(double throttle, double turn) {

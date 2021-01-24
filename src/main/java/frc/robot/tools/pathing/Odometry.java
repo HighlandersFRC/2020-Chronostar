@@ -2,7 +2,6 @@
 
 package frc.robot.tools.pathing;
 
-import frc.robot.Constants;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Peripherals;
 
@@ -25,8 +24,8 @@ public class Odometry {
     private Peripherals peripherals;
 
     public Odometry(Drive drive, Peripherals peripherals) {
-        startingLeft = Constants.driveUnitsToFeet(drive.getLeftPosition());
-        startingRight = Constants.driveUnitsToFeet(drive.getRightPosition());
+        startingLeft = drive.getLeftPosition();
+        startingRight = drive.getRightPosition();
         startingTheta = peripherals.getNavxAngle();
         this.drive = drive;
         this.peripherals = peripherals;
@@ -39,6 +38,14 @@ public class Odometry {
 
     public void setRight(double right) {
         currentRight = right;
+    }
+
+    public void setX(double x) {
+        currentX = x;
+    }
+
+    public void setY(double y) {
+        currentY = y;
     }
 
     public double getLeft() {
@@ -72,8 +79,8 @@ public class Odometry {
     }
 
     public void update() {
-        currentLeft = startingLeft + Constants.driveUnitsToFeet(drive.getLeftPosition());
-        currentRight = startingRight + Constants.driveUnitsToFeet(drive.getRightPosition());
+        currentLeft = startingLeft + drive.getLeftPosition();
+        currentRight = startingRight + drive.getRightPosition();
         currentTheta = startingTheta + peripherals.getNavxAngle();
         currentCentre = startingCentre + (currentLeft + currentRight) / 2;
         currentX = startingX + currentCentre * Math.cos(Math.toRadians(currentTheta));

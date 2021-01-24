@@ -3,13 +3,20 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import frc.robot.commands.basic.Outtake;
+import frc.robot.commands.basic.PurePursuit;
 import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SmartIntake;
 import frc.robot.commands.composite.Fire;
 import frc.robot.subsystems.*;
+import frc.robot.tools.pathing.Odometry;
+
+import java.io.IOException;
+import java.nio.file.Paths;
 
 public class Robot extends TimedRobot {
 
@@ -20,9 +27,11 @@ public class Robot extends TimedRobot {
     private final Climber climber = new Climber();
     private final Peripherals peripherals = new Peripherals();
     private final LightRing lightRing = new LightRing();
+    private Trajectory tenFeetForward;
     private final SubsystemBaseEnhanced[] subsystems = {
         hood, magIntake, drive, shooter, climber, peripherals, lightRing
     };
+    private final Odometry odometry = new Odometry(drive, peripherals);
 
     public Robot() {}
 
@@ -30,6 +39,13 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         for (SubsystemBaseEnhanced s : subsystems) {
             s.init();
+        }
+        try {
+            tenFeetForward =
+                    TrajectoryUtil.fromPathweaverJson(
+                            Paths.get("/home/lvuser/deploy/TenFeetForward.json"));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -49,6 +65,7 @@ public class Robot extends TimedRobot {
         for (SubsystemBaseEnhanced s : subsystems) {
             s.autoInit();
         }
+        new PurePursuit(drive, odometry, 2.5, 5.0, tenFeetForward).schedule();
     }
 
     @Override
