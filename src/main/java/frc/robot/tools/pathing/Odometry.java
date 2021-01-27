@@ -48,16 +48,6 @@ public class Odometry {
         currentY = y;
     }
 
-    public double getLeft() {
-        update();
-        return currentLeft;
-    }
-
-    public double getRight() {
-        update();
-        return currentRight;
-    }
-
     public double getX() {
         update();
         return currentX;
@@ -71,11 +61,6 @@ public class Odometry {
     public double getTheta() {
         update();
         return currentTheta;
-    }
-
-    public double getCentre() {
-        update();
-        return currentCentre;
     }
 
     public void update() {

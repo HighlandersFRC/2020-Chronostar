@@ -25,7 +25,7 @@ public class Drive extends SubsystemBaseEnhanced {
 
     private final double deadzone = 0.01;
     private final double vkF = 0.0455925;
-    private final double vkP = 0.21;
+    private final double vkP = 0.2;
     private final double vkI = 0.000002;
     private final double vkD = 0;
     private final double akP = 0.01;
@@ -77,6 +77,8 @@ public class Drive extends SubsystemBaseEnhanced {
     @Override
     public void teleopInit() {
         setDriveCoast();
+        leftDriveLead.setSelectedSensorPosition(0);
+        rightDriveLead.setSelectedSensorPosition(0);
     }
 
     public void setVoltageCompensation(double volts) {
@@ -119,19 +121,27 @@ public class Drive extends SubsystemBaseEnhanced {
         rightDriveLead.set(ControlMode.Velocity, Constants.driveFPSToUnitsPer100MS(fps));
     }
 
-    public double safelyDivide(double i, double j) {
-        if (j == 0) {
-            return 0;
-        }
-        return i / j;
-    }
-
     public double getLeftPosition() {
         return Constants.driveUnitsToFeet(leftDriveLead.getSelectedSensorPosition());
     }
 
     public double getRightPosition() {
         return Constants.driveUnitsToFeet(rightDriveLead.getSelectedSensorPosition());
+    }
+
+    public double getLeftSpeed() {
+        return Constants.driveUnitsPer100MSToFPS(leftDriveLead.getSelectedSensorVelocity());
+    }
+
+    public double getRightSpeed() {
+        return Constants.driveUnitsPer100MSToFPS(rightDriveLead.getSelectedSensorVelocity());
+    }
+
+    public double safelyDivide(double i, double j) {
+        if (j == 0 || j == Double.NaN) {
+            return 0;
+        }
+        return i / j;
     }
 
     public void arcadeDrive(double throttle, double turn) {

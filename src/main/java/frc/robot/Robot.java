@@ -3,6 +3,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -28,6 +29,7 @@ public class Robot extends TimedRobot {
     private final Peripherals peripherals = new Peripherals();
     private final LightRing lightRing = new LightRing();
     private Trajectory tenFeetForward;
+    private PurePursuit tenFeetForwardPurePursuit;
     private final SubsystemBaseEnhanced[] subsystems = {
         hood, magIntake, drive, shooter, climber, peripherals, lightRing
     };
@@ -44,6 +46,7 @@ public class Robot extends TimedRobot {
             tenFeetForward =
                     TrajectoryUtil.fromPathweaverJson(
                             Paths.get("/home/lvuser/deploy/TenFeetForward.json"));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -52,6 +55,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
+        SmartDashboard.putNumber("navx angle", peripherals.getNavxAngle());
     }
 
     @Override
@@ -65,11 +69,15 @@ public class Robot extends TimedRobot {
         for (SubsystemBaseEnhanced s : subsystems) {
             s.autoInit();
         }
-        new PurePursuit(drive, odometry, 2.5, 5.0, tenFeetForward).schedule();
+        tenFeetForwardPurePursuit = new PurePursuit(drive, odometry, 2.5, 5.0, tenFeetForward);
+        tenFeetForwardPurePursuit.schedule();
     }
 
     @Override
-    public void autonomousPeriodic() {}
+    public void autonomousPeriodic() {
+        SmartDashboard.putNumber("left fps", drive.getLeftSpeed());
+        SmartDashboard.putNumber("right fps", drive.getRightSpeed());
+    }
 
     @Override
     public void teleopInit() {
