@@ -14,8 +14,8 @@ import frc.robot.sensors.Navx;
 import frc.robot.sensors.VisionCamera;
 
 public class Peripherals extends SubsystemBaseEnhanced {
-    private final AHRS ahrs = new AHRS(Port.kMXP);
 
+    private final AHRS ahrs = new AHRS(Port.kMXP);
     private final Navx navx = new Navx(ahrs);
     private final Counter lidarPort = new Counter(2);
     private final LidarLite lidar = new LidarLite(lidarPort);
@@ -30,6 +30,7 @@ public class Peripherals extends SubsystemBaseEnhanced {
             System.err.println("CV cam's serial port failed to connect. Reason: " + e);
         }
         visionCam = new VisionCamera(jevois);
+        navx.softResetAngle();
         setDefaultCommand(new PeripheralsDefault(this));
     }
 
@@ -57,8 +58,12 @@ public class Peripherals extends SubsystemBaseEnhanced {
     public void periodic() {}
 
     @Override
-    public void autoInit() {}
+    public void autoInit() {
+        navx.softResetAngle();
+    }
 
     @Override
-    public void teleopInit() {}
+    public void teleopInit() {
+        navx.softResetAngle();
+    }
 }

@@ -138,7 +138,7 @@ public class Drive extends SubsystemBaseEnhanced {
     }
 
     public double safelyDivide(double i, double j) {
-        if (j == 0 || j == Double.NaN) {
+        if (j == 0 || j == Double.NaN || i == Double.NaN) {
             return 0;
         }
         return i / j;

@@ -39,6 +39,7 @@ public class PurePursuit extends CommandBase {
     private Drive drive;
     private Odometry odometry;
     private Trajectory trajectory;
+    private final double Y_OFFSET = 26.9375;
 
     public PurePursuit(
             Drive drive,
@@ -115,17 +116,20 @@ public class PurePursuit extends CommandBase {
 
     @Override
     public void execute() {
-        odometry.update();
         for (int i = startingNumber; i < trajectory.getStates().size() - 1; i++) {
             dx = trajectory.getStates().get(i).poseMeters.getTranslation().getX() - odometry.getX();
-            dy = trajectory.getStates().get(i).poseMeters.getTranslation().getY() - odometry.getY();
+            dy =
+                    trajectory.getStates().get(i).poseMeters.getTranslation().getY()
+                            - odometry.getY()
+                            - Y_OFFSET;
             distToPoint = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
             if (distToPoint < minDistToPoint) {
                 minDistToPoint = distToPoint;
                 closestSegment = i;
                 closestPoint.setLocation(
                         trajectory.getStates().get(i).poseMeters.getTranslation().getX(),
-                        trajectory.getStates().get(i).poseMeters.getTranslation().getY());
+                        trajectory.getStates().get(i).poseMeters.getTranslation().getY()
+                                - Y_OFFSET);
             }
         }
         startingNumber = closestSegment;
@@ -134,10 +138,11 @@ public class PurePursuit extends CommandBase {
         for (int i = startingNumberLA; i < trajectory.getStates().size() - 1; i++) {
             startingPointOfLineSegment.setLocation(
                     trajectory.getStates().get(i).poseMeters.getTranslation().getX(),
-                    trajectory.getStates().get(i).poseMeters.getTranslation().getY());
+                    trajectory.getStates().get(i).poseMeters.getTranslation().getY() - Y_OFFSET);
             endPointOfLineSegment.setLocation(
                     trajectory.getStates().get(i + 1).poseMeters.getTranslation().getX(),
-                    trajectory.getStates().get(i + 1).poseMeters.getTranslation().getY());
+                    trajectory.getStates().get(i + 1).poseMeters.getTranslation().getY()
+                            - Y_OFFSET);
             robotPosition.setLocation(odometry.getX(), odometry.getY());
             lineSegmentVector.setI(
                     endPointOfLineSegment.getX() - startingPointOfLineSegment.getX());
@@ -191,17 +196,31 @@ public class PurePursuit extends CommandBase {
                                 .poseMeters
                                 .getTranslation()
                                 .getY()
+                        - Y_OFFSET
                         - odometry.getY());
 
         startingNumberLA = (int) partialPointIndex;
         lastLookaheadPoint = lookaheadPoint;
         findRobotCurvature();
-        if (k == Double.NaN
-                || trajectory.getStates().get(closestSegment).curvatureRadPerMeter == Double.NaN) {
-            curveAdjustedVelocity = 0;
-        } else {
+        if (drive.safelyDivide(k, trajectory.getStates().get(closestSegment).curvatureRadPerMeter)
+                        != Double.NaN
+                && trajectory.getStates().get(closestSegment).velocityMetersPerSecond
+                        != Double.NaN) {
             curveAdjustedVelocity =
-                    trajectory.getStates().get(closestSegment).velocityMetersPerSecond;
+                    Math.abs(
+                            Math.min(
+                                    drive.safelyDivide(
+                                            k,
+                                            trajectory
+                                                    .getStates()
+                                                    .get(closestSegment)
+                                                    .curvatureRadPerMeter),
+                                    trajectory
+                                            .getStates()
+                                            .get(closestSegment)
+                                            .velocityMetersPerSecond));
+        } else {
+            curveAdjustedVelocity = 0;
         }
         setWheelVelocities(curveAdjustedVelocity, desiredCurvature);
         SmartDashboard.putNumber("dist to end", distToEndVector.magnitude());
@@ -218,6 +237,6 @@ public class PurePursuit extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return distToEndVector.magnitude() < 0.25;
+        return distToEndVector.magnitude() < 0.5;
     }
 }
