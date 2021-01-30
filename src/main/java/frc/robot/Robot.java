@@ -61,11 +61,11 @@ public class Robot extends TimedRobot {
         for (SubsystemBaseEnhanced s : subsystems) {
             s.teleopInit();
         }
-        OI.driverX.whileHeld(new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 0));
+        OI.driverX.whileHeld(new Fire(shooter, hood, magIntake, 0));
         OI.driverX.whenReleased(new SetHoodPosition(hood, 0));
         OI.driverLT.whileHeld(new Outtake(magIntake));
         OI.driverRT.whileHeld(new SmartIntake(magIntake));
-        OI.driverA.whileHeld(new VisionAlignment(lightRing, drive, peripherals));
+        OI.driverX.whenPressed(new VisionAlignment(lightRing, drive, peripherals));
         OI.driverA.whenReleased(new LightRingOff(lightRing));
     }
 
