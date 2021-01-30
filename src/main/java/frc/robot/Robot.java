@@ -28,9 +28,7 @@ public class Robot extends TimedRobot {
     private final Climber climber = new Climber();
     private final Peripherals peripherals = new Peripherals();
     private final LightRing lightRing = new LightRing();
-    private Trajectory tenFeetForward;
     private Trajectory wideTurn;
-    private PurePursuit tenFeetForwardPurePursuit;
     private PurePursuit wideTurnPurePursuit;
     private final SubsystemBaseEnhanced[] subsystems = {
         hood, magIntake, drive, shooter, climber, peripherals, lightRing
@@ -45,9 +43,6 @@ public class Robot extends TimedRobot {
             s.init();
         }
         try {
-            tenFeetForward =
-                    TrajectoryUtil.fromPathweaverJson(
-                            Paths.get("/home/lvuser/deploy/TenFeetForward.json"));
             wideTurn =
                     TrajectoryUtil.fromPathweaverJson(
                             Paths.get("/home/lvuser/deploy/WideTurn.json"));
@@ -73,7 +68,6 @@ public class Robot extends TimedRobot {
         for (SubsystemBaseEnhanced s : subsystems) {
             s.autoInit();
         }
-        tenFeetForwardPurePursuit = new PurePursuit(drive, odometry, 2.5, 5.0, tenFeetForward);
         wideTurnPurePursuit = new PurePursuit(drive, odometry, 2.5, 5.0, wideTurn);
         wideTurnPurePursuit.schedule();
     }
