@@ -25,7 +25,7 @@ public class Drive extends SubsystemBaseEnhanced {
 
     private final double deadzone = 0.01;
     private final double vkF = 0.0455925;
-    private final double vkP = 0.2;
+    private final double vkP = 0.21;
     private final double vkI = 0.000002;
     private final double vkD = 0;
     private final double akP = 0.01;

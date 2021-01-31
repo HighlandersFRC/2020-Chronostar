@@ -3,7 +3,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -28,10 +27,8 @@ public class Robot extends TimedRobot {
     private final Climber climber = new Climber();
     private final Peripherals peripherals = new Peripherals();
     private final LightRing lightRing = new LightRing();
-    private Trajectory tenFeetForward;
     private Trajectory wideTurn;
     private PurePursuit wideTurnPurePursuit;
-    private PurePursuit tenFeetPurePursuit;
     private final SubsystemBaseEnhanced[] subsystems = {
         hood, magIntake, drive, shooter, climber, peripherals, lightRing
     };
@@ -48,9 +45,6 @@ public class Robot extends TimedRobot {
             wideTurn =
                     TrajectoryUtil.fromPathweaverJson(
                             Paths.get("/home/lvuser/deploy/WideTurn.json"));
-            tenFeetForward =
-                    TrajectoryUtil.fromPathweaverJson(
-                            Paths.get("/home/lvuser/deploy/TenFeetForward.json"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -59,9 +53,6 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
-        SmartDashboard.putNumber("navx angle", peripherals.getNavxAngle());
-        SmartDashboard.putNumber("x", odometry.getX());
-        SmartDashboard.putNumber("y", odometry.getY());
     }
 
     @Override
@@ -75,17 +66,13 @@ public class Robot extends TimedRobot {
         for (SubsystemBaseEnhanced s : subsystems) {
             s.autoInit();
         }
+        odometry.zero();
         wideTurnPurePursuit = new PurePursuit(drive, odometry, 2.5, wideTurn);
-        tenFeetPurePursuit = new PurePursuit(drive, odometry, 2.5, tenFeetForward);
         wideTurnPurePursuit.schedule();
-        odometry = new Odometry(drive, peripherals);
     }
 
     @Override
-    public void autonomousPeriodic() {
-        SmartDashboard.putNumber("left fps", drive.getLeftSpeed());
-        SmartDashboard.putNumber("right fps", drive.getRightSpeed());
-    }
+    public void autonomousPeriodic() {}
 
     @Override
     public void teleopInit() {
@@ -96,7 +83,7 @@ public class Robot extends TimedRobot {
         OI.driverX.whenReleased(new SetHoodPosition(hood, 0));
         OI.driverLT.whileHeld(new Outtake(magIntake));
         OI.driverRT.whileHeld(new SmartIntake(magIntake));
-        odometry = new Odometry(drive, peripherals);
+        odometry.zero();
     }
 
     @Override
