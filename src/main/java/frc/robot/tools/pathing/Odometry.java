@@ -7,68 +7,89 @@ import frc.robot.subsystems.Peripherals;
 
 public class Odometry {
 
-    private double startingLeft;
+    private double left;
     private double currentLeft;
-    private double startingRight;
+    private double dLeft;
+    private double right;
     private double currentRight;
+    private double dRight;
     private double startingTheta;
+    private double theta;
     private double currentTheta;
-    private double startingCentre;
-    private double currentCentre;
-    private double startingX;
+    private double dCentre;
+    private double x;
     private double currentX;
-    private double startingY;
+    private double y;
     private double currentY;
-
     private Drive drive;
     private Peripherals peripherals;
 
     public Odometry(Drive drive, Peripherals peripherals) {
-        startingLeft = drive.getLeftPosition();
-        startingRight = drive.getRightPosition();
-        startingTheta = peripherals.getNavxAngle();
         this.drive = drive;
         this.peripherals = peripherals;
-        startingCentre = (startingLeft + startingRight) / 2;
+        peripherals.init();
+    }
+
+    public void zero() {
+        currentX = 0;
+        currentY = 0;
+        peripherals.init();
+        currentLeft = 0;
+        currentRight = 0;
+        left = 0;
+        right = 0;
+        x = 0;
+        y = 0;
+        theta = 0;
+        dLeft = 0;
+        dRight = 0;
+        dCentre = 0;
     }
 
     public void setLeft(double left) {
-        currentLeft = left;
+        this.left = left;
     }
 
     public void setRight(double right) {
-        currentRight = right;
+        this.right = right;
     }
 
     public void setX(double x) {
-        currentX = x;
+        this.x = x;
     }
 
     public void setY(double y) {
-        currentY = y;
+        this.y = y;
     }
 
     public double getX() {
         update();
-        return currentX;
+        return x;
     }
 
     public double getY() {
         update();
-        return currentY;
+        return y;
     }
 
     public double getTheta() {
         update();
-        return currentTheta;
+        return theta;
     }
 
     public void update() {
-        currentLeft = startingLeft + drive.getLeftPosition();
-        currentRight = startingRight + drive.getRightPosition();
-        currentTheta = startingTheta + peripherals.getNavxAngle();
-        currentCentre = startingCentre + (currentLeft + currentRight) / 2;
-        currentX = startingX + currentCentre * Math.cos(Math.toRadians(currentTheta));
-        currentY = startingY + currentCentre * Math.sin(Math.toRadians(currentTheta));
+        currentLeft = drive.getLeftPosition();
+        currentRight = drive.getRightPosition();
+        currentTheta = startingTheta - peripherals.getNavxAngle();
+        dLeft = currentLeft - left;
+        dRight = currentRight - right;
+        dCentre = (dLeft + dRight) / 2;
+        currentX = x + dCentre * Math.cos(Math.toRadians(currentTheta));
+        currentY = y + dCentre * Math.sin(Math.toRadians(currentTheta));
+        x = currentX;
+        y = currentY;
+        theta = currentTheta;
+        left = currentLeft;
+        right = currentRight;
     }
 }

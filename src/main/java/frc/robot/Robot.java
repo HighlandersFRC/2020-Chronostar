@@ -28,12 +28,14 @@ public class Robot extends TimedRobot {
     private final Climber climber = new Climber();
     private final Peripherals peripherals = new Peripherals();
     private final LightRing lightRing = new LightRing();
+    private Trajectory tenFeetForward;
     private Trajectory wideTurn;
     private PurePursuit wideTurnPurePursuit;
+    private PurePursuit tenFeetPurePursuit;
     private final SubsystemBaseEnhanced[] subsystems = {
         hood, magIntake, drive, shooter, climber, peripherals, lightRing
     };
-    private final Odometry odometry = new Odometry(drive, peripherals);
+    private Odometry odometry = new Odometry(drive, peripherals);
 
     public Robot() {}
 
@@ -46,6 +48,9 @@ public class Robot extends TimedRobot {
             wideTurn =
                     TrajectoryUtil.fromPathweaverJson(
                             Paths.get("/home/lvuser/deploy/WideTurn.json"));
+            tenFeetForward =
+                    TrajectoryUtil.fromPathweaverJson(
+                            Paths.get("/home/lvuser/deploy/TenFeetForward.json"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -55,6 +60,8 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
         SmartDashboard.putNumber("navx angle", peripherals.getNavxAngle());
+        SmartDashboard.putNumber("x", odometry.getX());
+        SmartDashboard.putNumber("y", odometry.getY());
     }
 
     @Override
@@ -68,8 +75,10 @@ public class Robot extends TimedRobot {
         for (SubsystemBaseEnhanced s : subsystems) {
             s.autoInit();
         }
-        wideTurnPurePursuit = new PurePursuit(drive, odometry, 2.5, 5.0, wideTurn);
+        wideTurnPurePursuit = new PurePursuit(drive, odometry, 2.5, wideTurn);
+        tenFeetPurePursuit = new PurePursuit(drive, odometry, 2.5, tenFeetForward);
         wideTurnPurePursuit.schedule();
+        odometry = new Odometry(drive, peripherals);
     }
 
     @Override
@@ -87,6 +96,7 @@ public class Robot extends TimedRobot {
         OI.driverX.whenReleased(new SetHoodPosition(hood, 0));
         OI.driverLT.whileHeld(new Outtake(magIntake));
         OI.driverRT.whileHeld(new SmartIntake(magIntake));
+        odometry = new Odometry(drive, peripherals);
     }
 
     @Override
