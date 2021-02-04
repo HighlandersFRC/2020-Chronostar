@@ -3,6 +3,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -32,7 +33,7 @@ public class Robot extends TimedRobot {
     private final SubsystemBaseEnhanced[] subsystems = {
         hood, magIntake, drive, shooter, climber, peripherals, lightRing
     };
-    private Odometry odometry = new Odometry(drive, peripherals);
+    private final Odometry odometry = new Odometry(drive, peripherals);
 
     public Robot() {}
 
@@ -53,6 +54,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
+        SmartDashboard.putNumber("navx angle", peripherals.getNavxAngle());
     }
 
     @Override
@@ -66,8 +68,7 @@ public class Robot extends TimedRobot {
         for (SubsystemBaseEnhanced s : subsystems) {
             s.autoInit();
         }
-        odometry.zero();
-        wideTurnPurePursuit = new PurePursuit(drive, odometry, 2.5, wideTurn);
+        wideTurnPurePursuit = new PurePursuit(drive, odometry, 2.5, 5.0, wideTurn);
         wideTurnPurePursuit.schedule();
     }
 
@@ -83,7 +84,6 @@ public class Robot extends TimedRobot {
         OI.driverX.whenReleased(new SetHoodPosition(hood, 0));
         OI.driverLT.whileHeld(new Outtake(magIntake));
         OI.driverRT.whileHeld(new SmartIntake(magIntake));
-        odometry.zero();
     }
 
     @Override

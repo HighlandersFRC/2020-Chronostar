@@ -27,7 +27,7 @@ public class Odometry {
     public Odometry(Drive drive, Peripherals peripherals) {
         this.drive = drive;
         this.peripherals = peripherals;
-        zero();
+        peripherals.init();
     }
 
     public void zero() {
@@ -44,7 +44,6 @@ public class Odometry {
         dLeft = 0;
         dRight = 0;
         dCentre = 0;
-        startingTheta = peripherals.getNavxAngle();
     }
 
     public void setLeft(double left) {
