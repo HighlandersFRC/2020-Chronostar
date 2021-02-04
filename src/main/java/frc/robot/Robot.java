@@ -65,7 +65,7 @@ public class Robot extends TimedRobot {
         OI.driverX.whenReleased(new SetHoodPosition(hood, 0));
         OI.driverLT.whileHeld(new Outtake(magIntake));
         OI.driverRT.whileHeld(new SmartIntake(magIntake));
-        OI.driverX.whenPressed(new VisionAlignment(lightRing, drive, peripherals));
+        OI.driverA.whileHeld(new VisionAlignment(lightRing, drive, peripherals));
         OI.driverA.whenReleased(new LightRingOff(lightRing));
     }
 
