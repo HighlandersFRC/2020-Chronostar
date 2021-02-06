@@ -1,6 +1,5 @@
 package frc.robot.commands.basic;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.Hood;
@@ -24,9 +23,7 @@ public class SetHoodPosition extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
-        SmartDashboard.putBoolean("VisionAlignment PID", true);
-    }
+    public void end(boolean interrupted) {}
 
     @Override
     public boolean isFinished() {
