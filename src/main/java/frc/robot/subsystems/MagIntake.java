@@ -55,7 +55,9 @@ public class MagIntake extends SubsystemBaseEnhanced {
     public void autoInit() {}
 
     @Override
-    public void teleopInit() {}
+    public void teleopInit() {
+        setDefaultCommand(new MagIntakeDefault(this));
+    }
 
     public void setLowMagPercent(double power) {
         lowMag.set(ControlMode.PercentOutput, power);
@@ -63,6 +65,10 @@ public class MagIntake extends SubsystemBaseEnhanced {
 
     public void setHighMagPercent(double power) {
         highMag.set(power);
+    }
+
+    public double getHighMagCurrent() {
+        return highMag.getOutputCurrent();
     }
 
     public void setMagPercent(double lowPower, double highPower) {

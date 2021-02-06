@@ -9,9 +9,13 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import com.revrobotics.ControlType;
 
 import frc.robot.Constants;
+import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.defaults.HoodDefault;
 
 public class Hood extends SubsystemBaseEnhanced {
@@ -61,10 +65,14 @@ public class Hood extends SubsystemBaseEnhanced {
     public void autoInit() {}
 
     @Override
-    public void teleopInit() {}
+    public void teleopInit() {
+        setDefaultCommand(new HoodDefault(this));
+        new SetHoodPosition(this, 0).schedule();
+    }
 
     public void setHoodTarget(double target) {
         hoodTarget = target;
+        SmartDashboard.putNumber("Hood Target", target);
         pidController.setReference(hoodTarget, ControlType.kSmartMotion);
     }
 
