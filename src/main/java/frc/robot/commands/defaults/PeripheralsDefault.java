@@ -2,6 +2,7 @@
 
 package frc.robot.commands.defaults;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.Peripherals;
@@ -18,7 +19,10 @@ public class PeripheralsDefault extends CommandBase {
     public void initialize() {}
 
     @Override
-    public void execute() {}
+    public void execute() {
+        SmartDashboard.putNumber("Ball Angle", peripherals.getBallAngle());
+        SmartDashboard.putNumber("Ball distance", peripherals.getBallDistance());
+    }
 
     @Override
     public void end(final boolean interrupted) {}

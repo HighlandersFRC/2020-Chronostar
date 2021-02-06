@@ -19,6 +19,8 @@ public class VisionCamera {
     private double lastParseTime;
     private double distance;
     private double angle;
+    private double ballDist;
+    private double ballAngle;
     private Point targetPoint = new Point(0, 0);
     private AtomicBoolean shouldStop = new AtomicBoolean(false);
     private ConcurrentLinkedQueue<JSONObject> jsonResults = new ConcurrentLinkedQueue<JSONObject>();
@@ -90,6 +92,30 @@ public class VisionCamera {
             Object tempAngle = json.get("Angle");
             if (tempAngle != null) {
                 angle = (double) tempAngle;
+            }
+        }
+    }
+
+    public void updateBallVision() {
+        // Drain existing objects out of queue and use most recent
+        JSONObject json = jsonResults.poll();
+        int jsonSize = jsonResults.size();
+        for (int i = 0; i < jsonSize; i++) {
+            JSONObject temp = jsonResults.poll();
+            if (temp != null) {
+                json = temp;
+            }
+        }
+
+        // Use JSON results if present
+        if (json != null) {
+            Object tempDistance = json.get("BallDistance");
+            if (tempDistance != null) {
+                ballDist = (double) tempDistance;
+            }
+            Object tempAngle = json.get("BallAngle");
+            if (tempAngle != null) {
+                ballAngle = (double) tempAngle;
             }
         }
     }
