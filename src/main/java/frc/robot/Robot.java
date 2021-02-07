@@ -28,10 +28,8 @@ public class Robot extends TimedRobot {
     private final Climber climber = new Climber();
     private final Peripherals peripherals = new Peripherals();
     private final LightRing lightRing = new LightRing();
-    private Trajectory tenFeetForward;
-    private Trajectory wideTurn;
-    private PurePursuit tenFeetForwardPurePursuit;
-    private PurePursuit wideTurnPurePursuit;
+    private Trajectory figureEight;
+    private PurePursuit figureEightFollower;
     private final SubsystemBaseEnhanced[] subsystems = {
         hood, magIntake, drive, shooter, climber, peripherals, lightRing
     };
@@ -45,15 +43,13 @@ public class Robot extends TimedRobot {
             s.init();
         }
         try {
-            tenFeetForward =
+            figureEight =
                     TrajectoryUtil.fromPathweaverJson(
-                            Paths.get("/home/lvuser/deploy/TenFeetForward.json"));
-            wideTurn =
-                    TrajectoryUtil.fromPathweaverJson(
-                            Paths.get("/home/lvuser/deploy/WideTurn.json"));
+                            Paths.get("/home/lvuser/deploy/FigureEight.json"));
         } catch (IOException e) {
             e.printStackTrace();
         }
+        odometry.zero();
     }
 
     @Override
@@ -73,15 +69,17 @@ public class Robot extends TimedRobot {
         for (SubsystemBaseEnhanced s : subsystems) {
             s.autoInit();
         }
-        tenFeetForwardPurePursuit = new PurePursuit(drive, odometry, 2.5, 5.0, tenFeetForward);
-        wideTurnPurePursuit = new PurePursuit(drive, odometry, 2.5, 5.0, wideTurn);
-        wideTurnPurePursuit.schedule();
+        odometry.zero();
+        figureEightFollower = new PurePursuit(drive, odometry, figureEight, 2.5, 5.0, false);
+        figureEightFollower.schedule();
     }
 
     @Override
     public void autonomousPeriodic() {
         SmartDashboard.putNumber("left fps", drive.getLeftSpeed());
         SmartDashboard.putNumber("right fps", drive.getRightSpeed());
+        SmartDashboard.putNumber("x", odometry.getX());
+        SmartDashboard.putNumber("y", odometry.getY());
     }
 
     @Override

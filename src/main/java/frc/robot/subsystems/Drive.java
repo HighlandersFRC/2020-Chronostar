@@ -2,6 +2,7 @@
 
 package frc.robot.subsystems;
 
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
@@ -44,12 +45,12 @@ public class Drive extends SubsystemBaseEnhanced {
         rightDriveLead.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
         leftDriveFollower.set(ControlMode.Follower, Constants.LEFT_DRIVE_LEAD_ID);
         rightDriveFollower.set(ControlMode.Follower, Constants.RIGHT_DRIVE_LEAD_ID);
-        rightDriveLead.setInverted(false);
+        rightDriveLead.setInverted(true);
         rightDriveFollower.setInverted(InvertType.FollowMaster);
-        leftDriveLead.setInverted(true);
+        leftDriveLead.setInverted(false);
         leftDriveFollower.setInverted(InvertType.FollowMaster);
-        leftDriveLead.setSensorPhase(true);
-        rightDriveLead.setSensorPhase(true);
+        leftDriveLead.setSensorPhase(false);
+        rightDriveLead.setSensorPhase(false);
         leftDriveLead.setSelectedSensorPosition(0);
         rightDriveLead.setSelectedSensorPosition(0);
         leftDriveLead.selectProfileSlot(0, 0);
@@ -148,7 +149,7 @@ public class Drive extends SubsystemBaseEnhanced {
         double left, right;
         double differential;
         if (Math.abs(throttle) > deadzone) {
-            throttle = Math.tanh(throttle) * 4 / Math.PI;
+            throttle = -Math.tanh(throttle) * 4 / Math.PI;
         } else throttle = 0;
         if (Math.abs(turn) < deadzone) {
             turn = 0;

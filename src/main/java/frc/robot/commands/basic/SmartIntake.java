@@ -31,7 +31,9 @@ public class SmartIntake extends CommandBase {
     }
 
     @Override
-    public void initialize() {}
+    public void initialize() {
+        magIntake.intakePistonDown();
+    }
 
     @Override
     public void execute() {

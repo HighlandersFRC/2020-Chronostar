@@ -19,10 +19,10 @@ public class Constants {
     public static final int RS = 10;
 
     // Motor IDs
-    public static final int LEFT_DRIVE_LEAD_ID = 1;
-    public static final int RIGHT_DRIVE_LEAD_ID = 3;
-    public static final int LEFT_DRIVE_FOLLOWER_ID = 2;
-    public static final int RIGHT_DRIVE_FOLLOWER_ID = 4;
+    public static final int LEFT_DRIVE_LEAD_ID = 3;
+    public static final int RIGHT_DRIVE_LEAD_ID = 1;
+    public static final int LEFT_DRIVE_FOLLOWER_ID = 4;
+    public static final int RIGHT_DRIVE_FOLLOWER_ID = 2;
     public static final int HIGH_INTAKE_ID = 10;
     public static final int MAG_BELT_ID = 8;
     public static final int MAG_WHEEL_ID = 9;
@@ -36,7 +36,7 @@ public class Constants {
     public static int BEAM_BREAK_2_ID = 3;
     public static int BEAM_BREAK_3_ID = 1;
 
-    // Shooter type beat
+    // Shooter constants
     public static int SHOOTER_TICKS_PER_ROTATION = 1317;
     public static int SHOOTER_MAX_RPM = 6000;
     public static double SHOOTER_MAX_PERCENTAGE = 0.7;
