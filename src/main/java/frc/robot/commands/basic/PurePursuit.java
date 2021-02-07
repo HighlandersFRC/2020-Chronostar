@@ -74,6 +74,7 @@ public class PurePursuit extends CommandBase {
         lineSegVector = new Vector(0, 0);
         robotPosVector = new Vector(0, 0);
         lastLookaheadPoint = new Point(0, 0);
+        closestPoint = new Point(0, 0);
         closestSegment = 0;
         minDistToPoint = 10000;
         startingNumber = 0;
@@ -144,6 +145,16 @@ public class PurePursuit extends CommandBase {
                                         + lookaheadIndexT1 * lineSegVector.getI(),
                                 startingPointOfLineSegment.getY()
                                         + lookaheadIndexT1 * lineSegVector.getJ());
+                        firstLookaheadFound = true;
+                    }
+                } else if (lookaheadIndexT2 >= 0 && lookaheadIndexT2 <= 1) {
+                    partialPointIndex = i + lookaheadIndexT2;
+                    if (partialPointIndex > lastPointIndex) {
+                        lookaheadPoint.setLocation(
+                                startingPointOfLineSegment.getX()
+                                        + lookaheadIndexT2 * lineSegVector.getI(),
+                                startingPointOfLineSegment.getY()
+                                        + lookaheadIndexT2 * lineSegVector.getJ());
                         firstLookaheadFound = true;
                     }
                 } else if (lookaheadIndexT2 >= 0 && lookaheadIndexT2 <= 1) {
