@@ -20,20 +20,17 @@ public class SetHoodPosition extends CommandBase {
     @Override
     public void initialize() {
         hoodPosCount = 0;
-        SmartDashboard.putBoolean("FinishedHoodPosition", false);
     }
 
     @Override
     public void execute() {
         hoodPosCount++;
-        SmartDashboard.putNumber("HoodCount", hoodPosCount);
+        SmartDashboard.putNumber("HoodPosition", hood.getHoodPosition());
         hood.setHoodTarget(target);
     }
 
     @Override
-    public void end(boolean interrupted) {
-        SmartDashboard.putBoolean("FinishedHoodPosition", true);
-    }
+    public void end(boolean interrupted) {}
 
     @Override
     public boolean isFinished() {

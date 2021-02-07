@@ -35,7 +35,6 @@ public class VisionAlignment extends CommandBase {
         pid.setSetPoint(0);
         pid.setMinOutput(-0.3);
         pid.setMaxOutput(0.3);
-        // seeing if this commits
     }
 
     @Override
