@@ -5,10 +5,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+
 import frc.robot.commands.basic.CancelMagazine;
+import frc.robot.commands.basic.LightRingOff;
 import frc.robot.commands.basic.Outtake;
 import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SmartIntake;
+import frc.robot.commands.basic.VisionAlignment;
 import frc.robot.commands.composite.Fire;
 import frc.robot.subsystems.*;
 
@@ -24,7 +27,7 @@ public class Robot extends TimedRobot {
     private final Peripherals peripherals = new Peripherals();
     private final LightRing lightRing = new LightRing();
     private final SubsystemBaseEnhanced[] subsystems = {
-        hood, magIntake, drive, shooter, climber, peripherals, lightRing
+        hood, magIntake, drive, shooter, climber, lightRing, peripherals
     };
 
     public Robot() {}
@@ -61,13 +64,15 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
         for (SubsystemBaseEnhanced s : subsystems) {
-            s.init();
+            s.teleopInit();
         }
-        OI.driverX.whenPressed(new Fire(shooter, hood, magIntake, drive, lightRing));
+        OI.driverX.whenPressed(new Fire(shooter, hood, magIntake, drive, lightRing, peripherals));
         OI.driverX.whenReleased(new SetHoodPosition(hood, 0));
         OI.driverX.whenReleased(new CancelMagazine(magIntake));
         OI.driverLT.whileHeld(new Outtake(magIntake));
         OI.driverRT.whileHeld(new SmartIntake(magIntake));
+        OI.driverA.whileHeld(new VisionAlignment(lightRing, drive, peripherals));
+        OI.driverA.whenReleased(new LightRingOff(lightRing));
     }
 
     @Override

@@ -6,10 +6,9 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.I2C.Port;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import frc.robot.commands.defaults.PeripheralsDefault;
 import frc.robot.sensors.LidarLite;
 import frc.robot.sensors.Navx;
 import frc.robot.sensors.VisionCamera;
@@ -18,28 +17,20 @@ public class Peripherals extends SubsystemBaseEnhanced {
     private final AHRS ahrs = new AHRS(Port.kMXP);
 
     private final Navx navx = new Navx(ahrs);
-    private final Counter lidarPort = new Counter(2);
+    private final Counter lidarPort = new Counter(0);
     private final LidarLite lidar = new LidarLite(lidarPort);
     private VisionCamera visionCam;
     private VisionCamera testCamera;
     private VisionCamera ballCam;
 
+    @Override
     public void init() {
-
         SerialPort jevois = null;
-        SerialPort ballTrackingJevois = null;
         try {
             jevois = new SerialPort(115200, SerialPort.Port.kUSB1);
             SmartDashboard.putBoolean("gotCamera", true);
         } catch (final Exception e) {
             SmartDashboard.putBoolean("gotCamera", false);
-            System.out.println("CV cam's serial port failed to connect. Reason: " + e);
-        }
-        try {
-            ballTrackingJevois = new SerialPort(115200, SerialPort.Port.kUSB2);
-            SmartDashboard.putBoolean("gotBallCam", true);
-        } catch (final Exception e) {
-            SmartDashboard.putBoolean("gotBallCam", false);
             System.out.println("CV cam's serial port failed to connect. Reason: " + e);
         }
 
@@ -49,8 +40,6 @@ public class Peripherals extends SubsystemBaseEnhanced {
         } catch (final Exception e) {
             System.err.println("TestCamera could not get angle. Reason: " + e);
         }
-        ballCam = new VisionCamera(ballTrackingJevois);
-        setDefaultCommand(new PeripheralsDefault(this));
     }
 
     public Peripherals() {}
