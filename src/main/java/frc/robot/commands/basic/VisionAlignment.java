@@ -58,6 +58,6 @@ public class VisionAlignment extends CommandBase {
     public boolean isFinished() {
         return Math.abs(peripherals.getCamAngle()) <= 0.8
                 && Math.abs(pid.getResult()) < 0.05
-                && peripherals.getCamAngle() != 0.000;
+                && peripherals.getCamAngle() != 6.000000;
     }
 }

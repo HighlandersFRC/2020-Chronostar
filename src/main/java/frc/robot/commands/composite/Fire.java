@@ -13,12 +13,19 @@ import frc.robot.subsystems.*;
 
 public class Fire extends SequentialCommandGroup {
 
-    public Fire(Shooter shooter, Hood hood, MagIntake magIntake, Drive drive, LightRing lightRing, 
-                    Peripherals peripherals) {
+    public Fire(
+            Shooter shooter,
+            Hood hood,
+            MagIntake magIntake,
+            Drive drive,
+            LightRing lightRing,
+            Peripherals peripherals) {
         addRequirements(shooter, hood, magIntake, drive, lightRing);
         addCommands(
                 new ParallelCommandGroup(
-                        new SetHoodPosition(hood, 8), new SpinFlywheel(shooter, magIntake, 5000), new VisionAlignment(lightRing, drive, peripherals)),
+                        new SetHoodPosition(hood, 8),
+                        new SpinFlywheel(shooter, magIntake, 5000),
+                        new VisionAlignment(lightRing, drive, peripherals)),
                 new EjectMagazine(magIntake));
     }
 }
