@@ -9,13 +9,14 @@ import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import frc.robot.commands.defaults.PeripheralsDefault;
 import frc.robot.sensors.LidarLite;
 import frc.robot.sensors.Navx;
 import frc.robot.sensors.VisionCamera;
 
 public class Peripherals extends SubsystemBaseEnhanced {
-    private final AHRS ahrs = new AHRS(Port.kMXP);
 
+    private final AHRS ahrs = new AHRS(Port.kMXP);
     private final Navx navx = new Navx(ahrs);
     private final Counter lidarPort = new Counter(0);
     private final LidarLite lidar = new LidarLite(lidarPort);
@@ -35,11 +36,8 @@ public class Peripherals extends SubsystemBaseEnhanced {
         }
 
         visionCam = new VisionCamera(jevois);
-        try {
-            visionCam.getAngle();
-        } catch (final Exception e) {
-            System.err.println("TestCamera could not get angle. Reason: " + e);
-        }
+        navx.softResetAngle();
+        setDefaultCommand(new PeripheralsDefault(this));
     }
 
     public Peripherals() {}
@@ -76,8 +74,12 @@ public class Peripherals extends SubsystemBaseEnhanced {
     public void periodic() {}
 
     @Override
-    public void autoInit() {}
+    public void autoInit() {
+        navx.softResetAngle();
+    }
 
     @Override
-    public void teleopInit() {}
+    public void teleopInit() {
+        navx.softResetAngle();
+    }
 }

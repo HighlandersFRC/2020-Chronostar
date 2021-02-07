@@ -33,7 +33,6 @@ public class SmartIntake extends CommandBase {
 
     @Override
     public void initialize() {
-        SmartDashboard.putBoolean("InsideSmartIntake", true);
         magIntake.intakePistonDown();
     }
 
