@@ -43,7 +43,9 @@ public class Shooter extends SubsystemBaseEnhanced {
     public void autoInit() {}
 
     @Override
-    public void teleopInit() {}
+    public void teleopInit() {
+        setDefaultCommand(new ShooterDefault(this));
+    }
 
     @Override
     public void periodic() {}

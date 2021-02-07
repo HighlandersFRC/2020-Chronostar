@@ -2,11 +2,11 @@
 
 package frc.robot.commands.basic;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.MagIntake;
 
-public class EjectMagazine extends InstantCommand {
+public class EjectMagazine extends CommandBase {
 
     private MagIntake magIntake;
     private final double LOW_MAG_PERCENT = 0.4;
@@ -29,4 +29,9 @@ public class EjectMagazine extends InstantCommand {
 
     @Override
     public void end(boolean interrupted) {}
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }
