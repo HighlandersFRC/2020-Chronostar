@@ -17,9 +17,9 @@ public class VisionAlignment extends CommandBase {
     private Peripherals peripherals;
 
     private PID pid;
-    private double kP = 0.00686;
-    private double kI = 0.00056;
-    private double kD = 0.0027;
+    private double kP = 0.02;
+    private double kI = 0;
+    private double kD = 0.2;
 
     public VisionAlignment(LightRing lightRing, Drive drive, Peripherals peripherals) {
         this.drive = drive;
@@ -33,8 +33,8 @@ public class VisionAlignment extends CommandBase {
     public void initialize() {
         pid = new PID(kP, kI, kD);
         pid.setSetPoint(0);
-        pid.setMinOutput(-0.5);
-        pid.setMaxOutput(0.5);
+        pid.setMinOutput(-0.3);
+        pid.setMaxOutput(0.3);
     }
 
     @Override
@@ -56,6 +56,6 @@ public class VisionAlignment extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return Math.abs(peripherals.getCamAngle()) <= 1.5 && peripherals.getCamAngle() != 0.000;
+        return Math.abs(peripherals.getCamAngle()) <= 0.8 && Math.abs(pid.getResult()) < 0.05 && peripherals.getCamAngle() != 0.000;
     }
 }

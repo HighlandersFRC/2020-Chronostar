@@ -64,9 +64,9 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
         for (SubsystemBaseEnhanced s : subsystems) {
-            s.init();
+            s.teleopInit();
         }
-        OI.driverX.whenPressed(new Fire(shooter, hood, magIntake, drive, lightRing));
+        OI.driverX.whenPressed(new Fire(shooter, hood, magIntake, drive, lightRing, peripherals));
         OI.driverX.whenReleased(new SetHoodPosition(hood, 0));
         OI.driverX.whenReleased(new CancelMagazine(magIntake));
         OI.driverLT.whileHeld(new Outtake(magIntake));

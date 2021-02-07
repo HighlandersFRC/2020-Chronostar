@@ -17,7 +17,7 @@ public class Peripherals extends SubsystemBaseEnhanced {
     private final AHRS ahrs = new AHRS(Port.kMXP);
 
     private final Navx navx = new Navx(ahrs);
-    private final Counter lidarPort = new Counter(2);
+    private final Counter lidarPort = new Counter(0);
     private final LidarLite lidar = new LidarLite(lidarPort);
     private VisionCamera visionCam;
     private VisionCamera testCamera;
