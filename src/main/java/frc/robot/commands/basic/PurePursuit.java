@@ -263,8 +263,7 @@ public class PurePursuit extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return trajectory.getStates().size() - closestSegment < 3
-                && distToEndVector.magnitude() < 0.5;
+        return trajectory.getStates().size() - closestSegment < 3;
     }
 
     @Override

@@ -52,16 +52,6 @@ public class Peripherals extends SubsystemBaseEnhanced {
         return visionCam.getDistance();
     }
 
-    public double getBallAngle() {
-        ballCam.updateBallVision();
-        return ballCam.getAngle();
-    }
-
-    public double getBallDistance() {
-        ballCam.updateBallVision();
-        return ballCam.getDistance();
-    }
-
     public double getLidarDistance() {
         return lidar.getDistance();
     }

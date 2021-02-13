@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import frc.robot.commands.basic.CancelMagazine;
 import frc.robot.commands.basic.LightRingOff;
@@ -24,8 +25,6 @@ import java.nio.file.Paths;
 
 public class Robot extends TimedRobot {
 
-    private int initCount = 0;
-
     private final MagIntake magIntake = new MagIntake();
     private final Drive drive = new Drive();
     private final Shooter shooter = new Shooter();
@@ -33,8 +32,12 @@ public class Robot extends TimedRobot {
     private final Climber climber = new Climber();
     private final Peripherals peripherals = new Peripherals();
     private final LightRing lightRing = new LightRing();
-    private Trajectory figureEight;
-    private PurePursuit figureEightFollower;
+    private Trajectory slalomPart1;
+    private Trajectory slalomPart2;
+    private Trajectory slalomPart3;
+    private PurePursuit slalomPart1Follower;
+    private PurePursuit slalomPart2Follower;
+    private PurePursuit slalomPart3Follower;
     private final SubsystemBaseEnhanced[] subsystems = {
         hood, magIntake, drive, shooter, climber, lightRing, peripherals
     };
@@ -48,9 +51,15 @@ public class Robot extends TimedRobot {
             s.init();
         }
         try {
-            figureEight =
+            slalomPart1 =
                     TrajectoryUtil.fromPathweaverJson(
-                            Paths.get("/home/lvuser/deploy/FigureEight.json"));
+                            Paths.get("/home/lvuser/deploy/SlalomPart1.json"));
+            slalomPart2 =
+                    TrajectoryUtil.fromPathweaverJson(
+                            Paths.get("/home/lvuser/deploy/SlalomPart2.json"));
+            slalomPart3 =
+                    TrajectoryUtil.fromPathweaverJson(
+                            Paths.get("/home/lvuser/deploy/SlalomPart3.json"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -76,8 +85,10 @@ public class Robot extends TimedRobot {
             s.autoInit();
         }
         odometry.zero();
-        figureEightFollower = new PurePursuit(drive, odometry, figureEight, 2.5, 5.0, false);
-        figureEightFollower.schedule();
+        slalomPart1Follower = new PurePursuit(drive, odometry, slalomPart1, 2.5, 5.0, false);
+        slalomPart2Follower = new PurePursuit(drive, odometry, slalomPart2, 2.5, 5.0, false);
+        slalomPart3Follower = new PurePursuit(drive, odometry, slalomPart3, 2.5, 5.0, false);
+        new SequentialCommandGroup(slalomPart1Follower, slalomPart2Follower).schedule();
     }
 
     @Override
