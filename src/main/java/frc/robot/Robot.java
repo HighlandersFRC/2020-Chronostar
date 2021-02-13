@@ -42,6 +42,7 @@ public class Robot extends TimedRobot {
         hood.periodic();
         CommandScheduler.getInstance().run();
         SmartDashboard.putNumber("Camera Distance", peripherals.getCamDistance());
+        SmartDashboard.putNumber("Hood Position", hood.getHoodPosition());
     }
 
     @Override
