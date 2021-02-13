@@ -1,7 +1,6 @@
 package frc.robot.commands.basic;
 
 import edu.wpi.first.wpilibj.Notifier;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -253,9 +252,6 @@ public class PurePursuit extends CommandBase {
                                         * (lookaheadPoint.getY() - odometry.getY()));
         double curvature = ((2 * x) / Math.pow(lookaheadDistance, 2)) * side;
         desiredRobotCurvature = curvature;
-        SmartDashboard.putNumber("dist to end", distToEndVector.magnitude());
-        SmartDashboard.putNumber("dist to end i", distToEndVector.getI());
-        SmartDashboard.putNumber("dist to end j", distToEndVector.getJ());
     }
 
     @Override

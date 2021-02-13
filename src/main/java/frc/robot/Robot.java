@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import frc.robot.commands.basic.CancelMagazine;
 import frc.robot.commands.basic.LightRingOff;
+import frc.robot.commands.basic.NavxTurn;
 import frc.robot.commands.basic.Outtake;
 import frc.robot.commands.basic.PurePursuit;
 import frc.robot.commands.basic.SetHoodPosition;
@@ -34,10 +35,11 @@ public class Robot extends TimedRobot {
     private final LightRing lightRing = new LightRing();
     private Trajectory slalomPart1;
     private Trajectory slalomPart2;
-    private Trajectory slalomPart3;
+    private Trajectory slalomPart4;
     private PurePursuit slalomPart1Follower;
     private PurePursuit slalomPart2Follower;
     private PurePursuit slalomPart3Follower;
+    private PurePursuit slalomPart4Follower;
     private final SubsystemBaseEnhanced[] subsystems = {
         hood, magIntake, drive, shooter, climber, lightRing, peripherals
     };
@@ -57,9 +59,9 @@ public class Robot extends TimedRobot {
             slalomPart2 =
                     TrajectoryUtil.fromPathweaverJson(
                             Paths.get("/home/lvuser/deploy/SlalomPart2.json"));
-            slalomPart3 =
+            slalomPart4 =
                     TrajectoryUtil.fromPathweaverJson(
-                            Paths.get("/home/lvuser/deploy/SlalomPart3.json"));
+                            Paths.get("/home/lvuser/deploy/SlalomPart4.json"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -70,7 +72,7 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         hood.periodic();
         CommandScheduler.getInstance().run();
-        SmartDashboard.putNumber("navx angle", peripherals.getNavxAngle());
+        SmartDashboard.putNumber("navx value", peripherals.getNavxAngle());
     }
 
     @Override
@@ -87,17 +89,19 @@ public class Robot extends TimedRobot {
         odometry.zero();
         slalomPart1Follower = new PurePursuit(drive, odometry, slalomPart1, 2.5, 5.0, false);
         slalomPart2Follower = new PurePursuit(drive, odometry, slalomPart2, 2.5, 5.0, false);
-        slalomPart3Follower = new PurePursuit(drive, odometry, slalomPart3, 2.5, 5.0, false);
-        new SequentialCommandGroup(slalomPart1Follower, slalomPart2Follower).schedule();
+        slalomPart3Follower = new PurePursuit(drive, odometry, slalomPart1, 2.5, 5.0, false);
+        slalomPart4Follower = new PurePursuit(drive, odometry, slalomPart4, 2.5, 5.0, false);
+        new SequentialCommandGroup(
+                        slalomPart1Follower,
+                        slalomPart2Follower,
+                        new NavxTurn(drive, peripherals, -180),
+                        slalomPart3Follower,
+                        slalomPart4Follower)
+                .schedule();
     }
 
     @Override
-    public void autonomousPeriodic() {
-        SmartDashboard.putNumber("left fps", drive.getLeftSpeed());
-        SmartDashboard.putNumber("right fps", drive.getRightSpeed());
-        SmartDashboard.putNumber("x", odometry.getX());
-        SmartDashboard.putNumber("y", odometry.getY());
-    }
+    public void autonomousPeriodic() {}
 
     @Override
     public void teleopInit() {
