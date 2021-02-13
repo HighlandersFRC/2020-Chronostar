@@ -2,7 +2,6 @@
 
 package frc.robot.commands.basic;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.MagIntake;
@@ -16,9 +15,7 @@ public class Outtake extends CommandBase {
     }
 
     @Override
-    public void initialize() {
-        SmartDashboard.putBoolean("InsideOuttake", true);
-    }
+    public void initialize() {}
 
     @Override
     public void execute() {
@@ -27,9 +24,7 @@ public class Outtake extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
-        SmartDashboard.putBoolean("InsideOuttake", false);
-    }
+    public void end(boolean interrupted) {}
 
     @Override
     public boolean isFinished() {

@@ -1,6 +1,5 @@
 package frc.robot.commands.basic;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.Hood;
@@ -25,7 +24,6 @@ public class SetHoodPosition extends CommandBase {
     @Override
     public void execute() {
         hoodPosCount++;
-        SmartDashboard.putNumber("HoodPosition", hood.getHoodPosition());
         hood.setHoodTarget(target);
     }
 

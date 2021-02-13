@@ -2,7 +2,6 @@
 
 package frc.robot.commands.basic;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.MagIntake;
@@ -33,15 +32,12 @@ public class SmartIntake extends CommandBase {
 
     @Override
     public void initialize() {
-        SmartDashboard.putBoolean("InsideSmartIntake", true);
         magIntake.intakePistonDown();
     }
 
     @Override
     public void execute() {
-        SmartDashboard.putBoolean("Beam Break 1", magIntake.getBeamBreak(BeamBreakID.ONE));
-        SmartDashboard.putBoolean("Beam Break 2", magIntake.getBeamBreak(BeamBreakID.TWO));
-        SmartDashboard.putBoolean("Beam Break 3", magIntake.getBeamBreak(BeamBreakID.THREE));
+
         magIntake.setIntakePercent(INTAKING_POWER, INTAKING_POWER);
         if (magIntake.getBeamBreak(BeamBreakID.ONE)
                 & magIntake.getBeamBreak(BeamBreakID.TWO)
@@ -72,9 +68,7 @@ public class SmartIntake extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
-        SmartDashboard.putBoolean("InsideSmartIntake", false);
-    }
+    public void end(boolean interrupted) {}
 
     @Override
     public boolean isFinished() {
