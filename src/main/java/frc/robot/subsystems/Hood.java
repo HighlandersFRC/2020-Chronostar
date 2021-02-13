@@ -17,10 +17,10 @@ import frc.robot.commands.defaults.HoodDefault;
 
 public class Hood extends SubsystemBaseEnhanced {
 
-    private double kf = .02;
-    private double kp = 0.0001;
+    private double kf = .015;
+    private double kp = 0.002;
     private double ki = 0.0;
-    private double kd = 0.003;
+    private double kd = 0.02;
     private double hoodTarget = 0.0;
     private float maxpoint = 22;
     private float minpoint = 0;

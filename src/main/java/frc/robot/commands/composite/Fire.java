@@ -20,12 +20,13 @@ public class Fire extends SequentialCommandGroup {
             MagIntake magIntake,
             Drive drive,
             LightRing lightRing,
-            Peripherals peripherals) {
-        double hoodPosition =
-                Math.pow(0.0003130020686 * peripherals.getCamDistance(), 3)
-                        + Math.pow(-0.0237452471 * peripherals.getCamDistance(), 2)
-                        + (0.6472634494 * peripherals.getCamDistance())
-                        + 6.395259911;
+            Peripherals peripherals,
+            double hoodPosition) {
+        //        double hoodPosition =
+        //                 Math.pow(0.0003130020686 * peripherals.getCamDistance(), 3)
+        //                         + Math.pow(-0.0237452471 * peripherals.getCamDistance(), 2)
+        //                         + (0.6472634494 * peripherals.getCamDistance())
+        //                         + 6.395259911;
         addRequirements(shooter, hood, magIntake, drive, lightRing);
         addCommands(
                 new ParallelCommandGroup(

@@ -7,6 +7,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.sensors.LidarLite;
 import frc.robot.sensors.Navx;
@@ -27,7 +28,9 @@ public class Peripherals extends SubsystemBaseEnhanced {
         SerialPort jevois = null;
         try {
             jevois = new SerialPort(115200, SerialPort.Port.kUSB1);
+            SmartDashboard.putBoolean("Got Camera", true);
         } catch (final Exception e) {
+            SmartDashboard.putBoolean("Got Camera", true);
             System.out.println("CV cam's serial port failed to connect. Reason: " + e);
         }
 
