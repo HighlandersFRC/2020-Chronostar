@@ -10,6 +10,7 @@ import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ControlType;
+import com.revrobotics.EncoderType;
 
 import frc.robot.Constants;
 import frc.robot.commands.basic.SetHoodPosition;
@@ -17,10 +18,10 @@ import frc.robot.commands.defaults.HoodDefault;
 
 public class Hood extends SubsystemBaseEnhanced {
 
-    private double kf = .015;
-    private double kp = 0.002;
+    private double kf = .002;
+    private double kp = 0.0;
     private double ki = 0.0;
-    private double kd = 0.02;
+    private double kd = 0.0;
     private double hoodTarget = 0.0;
     private float maxpoint = 22;
     private float minpoint = 0;
@@ -35,7 +36,7 @@ public class Hood extends SubsystemBaseEnhanced {
 
     public Hood() {
         pidController = hoodMotor.getPIDController();
-        hoodEncoder = hoodMotor.getEncoder();
+        hoodEncoder = hoodMotor.getEncoder(EncoderType.kHallSensor, 0);
     }
 
     @Override
@@ -73,6 +74,7 @@ public class Hood extends SubsystemBaseEnhanced {
     }
 
     public double getHoodPosition() {
+        // return hoodEncoder.getPosition();
         return hoodEncoder.getPosition();
     }
 

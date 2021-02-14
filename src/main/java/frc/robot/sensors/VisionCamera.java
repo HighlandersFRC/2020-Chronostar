@@ -129,6 +129,9 @@ public class VisionCamera {
     }
 
     public double getAngle() {
+        if (angle == 0) {
+            return angle;
+        }
         return angle;
     }
 
