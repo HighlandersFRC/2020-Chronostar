@@ -36,10 +36,18 @@ public class Robot extends TimedRobot {
     private Trajectory slalomPart1;
     private Trajectory slalomPart2;
     private Trajectory slalomPart4;
+    private Trajectory barrelRunPart1;
+    private Trajectory barrelRunPart2;
+    private Trajectory barrelRunPart3;
+    private Trajectory barrelRunPart4;
     private PurePursuit slalomPart1Follower;
     private PurePursuit slalomPart2Follower;
     private PurePursuit slalomPart3Follower;
     private PurePursuit slalomPart4Follower;
+    private PurePursuit barrelRunPart1Follower;
+    private PurePursuit barrelRunPart2Follower;
+    private PurePursuit barrelRunPart3Follower;
+    private PurePursuit barrelRunPart4Follower;
     private final SubsystemBaseEnhanced[] subsystems = {
         hood, magIntake, drive, shooter, climber, lightRing, peripherals
     };
@@ -62,6 +70,18 @@ public class Robot extends TimedRobot {
             slalomPart4 =
                     TrajectoryUtil.fromPathweaverJson(
                             Paths.get("/home/lvuser/deploy/SlalomPart4.json"));
+            barrelRunPart1 =
+                    TrajectoryUtil.fromPathweaverJson(
+                            Paths.get("/home/lvuser/deploy/BarrelRunPart1.json"));
+            barrelRunPart2 =
+                    TrajectoryUtil.fromPathweaverJson(
+                            Paths.get("/home/lvuser/deploy/BarrelRunPart2.json"));
+            barrelRunPart3 =
+                    TrajectoryUtil.fromPathweaverJson(
+                            Paths.get("/home/lvuser/deploy/BarrelRunPart3.json"));
+            barrelRunPart4 =
+                    TrajectoryUtil.fromPathweaverJson(
+                            Paths.get("/home/lvuser/deploy/BarrelRunPart4.json"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -91,6 +111,10 @@ public class Robot extends TimedRobot {
         slalomPart2Follower = new PurePursuit(drive, odometry, slalomPart2, 2.5, 5.0, false);
         slalomPart3Follower = new PurePursuit(drive, odometry, slalomPart1, 2.5, 5.0, false);
         slalomPart4Follower = new PurePursuit(drive, odometry, slalomPart4, 2.5, 5.0, false);
+        barrelRunPart1Follower = new PurePursuit(drive, odometry, barrelRunPart1, 2.5, 5.0, false);
+        barrelRunPart2Follower = new PurePursuit(drive, odometry, barrelRunPart2, 2.5, 5.0, false);
+        barrelRunPart3Follower = new PurePursuit(drive, odometry, barrelRunPart3, 2.5, 5.0, false);
+        barrelRunPart4Follower = new PurePursuit(drive, odometry, barrelRunPart4, 2.5, 5.0, false);
         new SequentialCommandGroup(
                         slalomPart1Follower,
                         slalomPart2Follower,
