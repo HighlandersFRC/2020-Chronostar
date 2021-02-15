@@ -115,12 +115,15 @@ public class Robot extends TimedRobot {
         barrelRunPart2Follower = new PurePursuit(drive, odometry, barrelRunPart2, 2.5, 5.0, false);
         barrelRunPart3Follower = new PurePursuit(drive, odometry, barrelRunPart3, 2.5, 5.0, false);
         barrelRunPart4Follower = new PurePursuit(drive, odometry, barrelRunPart4, 2.5, 5.0, false);
+
         new SequentialCommandGroup(
-                        slalomPart1Follower,
-                        slalomPart2Follower,
-                        new NavxTurn(drive, peripherals, -180),
-                        slalomPart3Follower,
-                        slalomPart4Follower)
+                        barrelRunPart1Follower,
+                        new NavxTurn(drive, peripherals, 180),
+                        barrelRunPart2Follower,
+                        new NavxTurn(drive, peripherals, Math.toDegrees(Math.atan(2.5 / 1.0))),
+                        barrelRunPart3Follower,
+                        new NavxTurn(drive, peripherals, 30),
+                        barrelRunPart4Follower)
                 .schedule();
     }
 
