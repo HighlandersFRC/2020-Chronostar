@@ -18,10 +18,10 @@ import frc.robot.commands.defaults.HoodDefault;
 
 public class Hood extends SubsystemBaseEnhanced {
 
-    private double kf = .002;
-    private double kp = 0.0;
-    private double ki = 0.0;
-    private double kd = 0.0;
+    private double kf = .004;
+    private double kp = 0.000002;
+    private double ki = 0.0000001;
+    private double kd = 0.0007;
     private double hoodTarget = 0.0;
     private float maxpoint = 22;
     private float minpoint = 0;
@@ -51,7 +51,7 @@ public class Hood extends SubsystemBaseEnhanced {
         pidController.setI(ki);
         pidController.setD(kd);
         pidController.setIZone(.2);
-        pidController.setOutputRange(-1, 1);
+        pidController.setOutputRange(-0.5, 0.5);
         pidController.setSmartMotionMaxVelocity(160, 0);
         pidController.setSmartMotionMinOutputVelocity(-160, 0);
         pidController.setSmartMotionMaxAccel(100, 0);
