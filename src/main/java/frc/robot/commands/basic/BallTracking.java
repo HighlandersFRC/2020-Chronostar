@@ -2,7 +2,6 @@
 
 package frc.robot.commands.basic;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.Drive;
@@ -10,19 +9,18 @@ import frc.robot.subsystems.LightRing;
 import frc.robot.subsystems.Peripherals;
 import frc.robot.tools.controlloops.PID;
 
-public class VisionAlignment extends CommandBase {
+public class BallTracking extends CommandBase {
 
     private LightRing lightRing;
     private Drive drive;
     private Peripherals peripherals;
 
     private PID pid;
-    private double kP = 0.0175;
-    private double kI = 0.0;
+    private double kP = 0.02;
+    private double kI = 0;
     private double kD = 0.2;
-    private int counter = 0;
 
-    public VisionAlignment(LightRing lightRing, Drive drive, Peripherals peripherals) {
+    public BallTracking(LightRing lightRing, Drive drive, Peripherals peripherals) {
         this.drive = drive;
         this.lightRing = lightRing;
         this.peripherals = peripherals;
@@ -32,37 +30,31 @@ public class VisionAlignment extends CommandBase {
 
     @Override
     public void initialize() {
-        counter = 0;
         pid = new PID(kP, kI, kD);
         pid.setSetPoint(0);
-        pid.setMinOutput(-0.5);
-        pid.setMaxOutput(0.5);
+        pid.setMinOutput(-0.3);
+        pid.setMaxOutput(0.3);
     }
 
     @Override
     public void execute() {
-        counter++;
         lightRing.turnOn();
-        // SmartDashboard.putNumber("vision Angle", peripherals.getCamAngle());
-        // System.out.println(peripherals.getCamAngle());
         pid.updatePID(peripherals.getCamAngle());
-        SmartDashboard.putNumber("PID Output", pid.getResult());
-        drive.setRightPercent(-pid.getResult());
-        drive.setLeftPercent(pid.getResult());
+        drive.setRightPercent(0.35 - pid.getResult());
+        drive.setLeftPercent(0.35 + pid.getResult());
     }
 
     @Override
     public void end(boolean interrupted) {
         drive.setRightPercent(0);
         drive.setLeftPercent(0);
-        // lightRing.turnOff();
+        lightRing.turnOff();
     }
 
     @Override
     public boolean isFinished() {
         return Math.abs(peripherals.getCamAngle()) <= 0.8
-                        && Math.abs(pid.getResult()) < 0.05
-                        && peripherals.getCamAngle() != 0
-                || counter > 35;
+                && Math.abs(pid.getResult()) < 0.05
+                && peripherals.getCamAngle() != 0.000000;
     }
 }

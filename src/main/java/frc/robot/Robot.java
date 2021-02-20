@@ -12,6 +12,7 @@ import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SmartIntake;
 import frc.robot.commands.composite.Fire;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.MagIntake.BeamBreakID;
 
 public class Robot extends TimedRobot {
 
@@ -40,9 +41,13 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         hood.periodic();
+        SmartDashboard.putNumber("HoodValue", hood.getHoodPosition());
+        SmartDashboard.putNumber("Cam angle", peripherals.getCamAngle());
         CommandScheduler.getInstance().run();
         SmartDashboard.putNumber("Camera Distance", peripherals.getCamDistance());
-        SmartDashboard.putNumber("Hood Position", hood.getHoodPosition());
+        SmartDashboard.putBoolean("BeamBreak 1", magIntake.getBeamBreak(BeamBreakID.ONE));
+        SmartDashboard.putBoolean("BeamBreak 2", magIntake.getBeamBreak(BeamBreakID.TWO));
+        SmartDashboard.putBoolean("BeamBreak 3", magIntake.getBeamBreak(BeamBreakID.THREE));
     }
 
     @Override
@@ -67,13 +72,13 @@ public class Robot extends TimedRobot {
             s.teleopInit();
         }
         OI.driverA.whenPressed(
-                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 9));
+                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 7));
         OI.driverB.whenPressed(
                 new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 11.25));
         OI.driverY.whenPressed(
                 new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 12.1));
         OI.driverX.whenPressed(
-                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 12.6));
+                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 12.7));
         OI.driverA.whenReleased(new SetHoodPosition(hood, 0));
         OI.driverA.whenReleased(new CancelMagazine(magIntake));
         OI.driverB.whenReleased(new SetHoodPosition(hood, 0));

@@ -10,6 +10,7 @@ import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ControlType;
+import com.revrobotics.EncoderType;
 
 import frc.robot.Constants;
 import frc.robot.commands.basic.SetHoodPosition;
@@ -17,10 +18,10 @@ import frc.robot.commands.defaults.HoodDefault;
 
 public class Hood extends SubsystemBaseEnhanced {
 
-    private double kf = 0.02;
-    private double kp = 0.009;
-    private double ki = 0.0;
-    private double kd = 0.0;
+    private double kf = .004;
+    private double kp = 0.000002;
+    private double ki = 0.0000001;
+    private double kd = 0.0007;
     private double hoodTarget = 0.0;
     private float maxpoint = 22;
     private float minpoint = 0;
@@ -35,7 +36,7 @@ public class Hood extends SubsystemBaseEnhanced {
 
     public Hood() {
         pidController = hoodMotor.getPIDController();
-        hoodEncoder = hoodMotor.getEncoder();
+        hoodEncoder = hoodMotor.getEncoder(EncoderType.kHallSensor, 0);
     }
 
     @Override
@@ -55,6 +56,7 @@ public class Hood extends SubsystemBaseEnhanced {
         pidController.setSmartMotionMinOutputVelocity(-160, 0);
         pidController.setSmartMotionMaxAccel(100, 0);
         pidController.setSmartMotionAllowedClosedLoopError(.1, 0);
+        hoodMotor.setInverted(false);
         setDefaultCommand(new HoodDefault(this));
     }
 
@@ -73,7 +75,8 @@ public class Hood extends SubsystemBaseEnhanced {
     }
 
     public double getHoodPosition() {
-        return hoodEncoder.getPosition();
+        // return hoodEncoder.getPosition();
+        return -hoodEncoder.getPosition();
     }
 
     @Override
@@ -82,7 +85,7 @@ public class Hood extends SubsystemBaseEnhanced {
         if (lowerHoodSwitch.get()) {
             hoodMotor.getEncoder().setPosition(minpoint);
         } else if (upperHoodSwitch.get()) {
-            hoodMotor.getEncoder().setPosition(maxpoint);
+            hoodMotor.getEncoder().setPosition(-maxpoint);
         }
         // Ensures that the hood is at lowest position
         if ((hoodTarget == 0) && (hoodMotor.getEncoder().getPosition() <= 0.5)) {
