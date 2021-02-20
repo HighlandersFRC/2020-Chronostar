@@ -42,12 +42,9 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         hood.periodic();
         SmartDashboard.putNumber("HoodValue", hood.getHoodPosition());
-        SmartDashboard.putNumber("Cam angle", peripherals.getCamAngle());
+        SmartDashboard.putBoolean("Upper Limit Switch", hood.getTopLimitSwitch());
+        SmartDashboard.putBoolean("Lower Limit Switch", hood.getLowerLimitSwitch());
         CommandScheduler.getInstance().run();
-        SmartDashboard.putNumber("Camera Distance", peripherals.getCamDistance());
-        SmartDashboard.putBoolean("BeamBreak 1", magIntake.getBeamBreak(BeamBreakID.ONE));
-        SmartDashboard.putBoolean("BeamBreak 2", magIntake.getBeamBreak(BeamBreakID.TWO));
-        SmartDashboard.putBoolean("BeamBreak 3", magIntake.getBeamBreak(BeamBreakID.THREE));
     }
 
     @Override
@@ -72,7 +69,7 @@ public class Robot extends TimedRobot {
             s.teleopInit();
         }
         OI.driverA.whenPressed(
-                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 7));
+                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 0));
         OI.driverB.whenPressed(
                 new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 11.25));
         OI.driverY.whenPressed(

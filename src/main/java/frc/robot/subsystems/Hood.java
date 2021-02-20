@@ -9,6 +9,9 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import com.revrobotics.ControlType;
 import com.revrobotics.EncoderType;
 
@@ -18,10 +21,10 @@ import frc.robot.commands.defaults.HoodDefault;
 
 public class Hood extends SubsystemBaseEnhanced {
 
-    private double kf = .004;
-    private double kp = 0.000002;
-    private double ki = 0.0000001;
-    private double kd = 0.0007;
+    private double kf = 0;
+    private double kp = 0.03;
+    private double ki = 0;
+    private double kd = 0;
     private double hoodTarget = 0.0;
     private float maxpoint = 22;
     private float minpoint = 0;
@@ -51,7 +54,7 @@ public class Hood extends SubsystemBaseEnhanced {
         pidController.setI(ki);
         pidController.setD(kd);
         pidController.setIZone(.2);
-        pidController.setOutputRange(-0.5, 0.5);
+        pidController.setOutputRange(-0.2, 0.2);
         pidController.setSmartMotionMaxVelocity(160, 0);
         pidController.setSmartMotionMinOutputVelocity(-160, 0);
         pidController.setSmartMotionMaxAccel(100, 0);
@@ -70,8 +73,17 @@ public class Hood extends SubsystemBaseEnhanced {
     }
 
     public void setHoodTarget(double target) {
+        SmartDashboard.putNumber("Hood target", target);
         hoodTarget = target;
-        pidController.setReference(hoodTarget, ControlType.kSmartMotion);
+        pidController.setReference(hoodTarget, ControlType.kPosition);
+    }
+
+    public boolean getTopLimitSwitch() {
+        return upperHoodSwitch.get();
+    }
+
+    public boolean getLowerLimitSwitch() {
+        return lowerHoodSwitch.get();
     }
 
     public double getHoodPosition() {
@@ -83,7 +95,8 @@ public class Hood extends SubsystemBaseEnhanced {
     public void periodic() {
         // Zeroing off the limit switches
         if (lowerHoodSwitch.get()) {
-            hoodMotor.getEncoder().setPosition(minpoint);
+            System.out.println("Hit lower, reset value");
+            hoodMotor.getEncoder().setPosition(-minpoint);
         } else if (upperHoodSwitch.get()) {
             hoodMotor.getEncoder().setPosition(-maxpoint);
         }
