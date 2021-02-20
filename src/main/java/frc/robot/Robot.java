@@ -120,9 +120,9 @@ public class Robot extends TimedRobot {
                         barrelRunPart1Follower,
                         new NavxTurn(drive, peripherals, 180),
                         barrelRunPart2Follower,
-                        new NavxTurn(drive, peripherals, Math.toDegrees(Math.atan(2.5 / 1.0))),
+                        new NavxTurn(drive, peripherals, 0),
                         barrelRunPart3Follower,
-                        new NavxTurn(drive, peripherals, 30),
+                        new NavxTurn(drive, peripherals, -270),
                         barrelRunPart4Follower)
                 .schedule();
     }

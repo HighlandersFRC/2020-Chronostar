@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import frc.robot.Constants;
 import frc.robot.commands.defaults.PeripheralsDefault;
 import frc.robot.sensors.LidarLite;
 import frc.robot.sensors.Navx;
@@ -58,7 +57,7 @@ public class Peripherals extends SubsystemBaseEnhanced {
     }
 
     public double getNavxAngle() {
-        return Constants.degreesToHalfDegrees(navx.currentAngle());
+        return navx.currentAngle();
     }
 
     public void resetNavxAngle() {
