@@ -9,11 +9,7 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import com.revrobotics.ControlType;
-import com.revrobotics.EncoderType;
 
 import frc.robot.Constants;
 import frc.robot.commands.basic.SetHoodPosition;
@@ -21,10 +17,10 @@ import frc.robot.commands.defaults.HoodDefault;
 
 public class Hood extends SubsystemBaseEnhanced {
 
-    private double kf = 0;
-    private double kp = 0.03;
-    private double ki = 0;
-    private double kd = 0;
+    private double kf = 0.004;
+    private double kp = 0.000002;
+    private double ki = 0.0000001;
+    private double kd = 0.0007;
     private double hoodTarget = 0.0;
     private float maxpoint = 22;
     private float minpoint = 0;
@@ -39,7 +35,7 @@ public class Hood extends SubsystemBaseEnhanced {
 
     public Hood() {
         pidController = hoodMotor.getPIDController();
-        hoodEncoder = hoodMotor.getEncoder(EncoderType.kHallSensor, 0);
+        hoodEncoder = hoodMotor.getEncoder();
     }
 
     @Override
@@ -59,7 +55,7 @@ public class Hood extends SubsystemBaseEnhanced {
         pidController.setSmartMotionMinOutputVelocity(-160, 0);
         pidController.setSmartMotionMaxAccel(100, 0);
         pidController.setSmartMotionAllowedClosedLoopError(.1, 0);
-        hoodMotor.setInverted(false);
+        hoodMotor.setInverted(true);
         setDefaultCommand(new HoodDefault(this));
     }
 
@@ -73,32 +69,22 @@ public class Hood extends SubsystemBaseEnhanced {
     }
 
     public void setHoodTarget(double target) {
-        SmartDashboard.putNumber("Hood target", target);
         hoodTarget = target;
-        pidController.setReference(hoodTarget, ControlType.kPosition);
-    }
-
-    public boolean getTopLimitSwitch() {
-        return upperHoodSwitch.get();
-    }
-
-    public boolean getLowerLimitSwitch() {
-        return lowerHoodSwitch.get();
+        pidController.setReference(hoodTarget, ControlType.kSmartMotion);
     }
 
     public double getHoodPosition() {
-        // return hoodEncoder.getPosition();
-        return -hoodEncoder.getPosition();
+        return hoodEncoder.getPosition();
     }
 
     @Override
     public void periodic() {
         // Zeroing off the limit switches
         if (lowerHoodSwitch.get()) {
-            System.out.println("Hit lower, reset value");
-            hoodMotor.getEncoder().setPosition(-minpoint);
+            // hoodMotor.getEncoder().setPosition(minpoint);
+            // System.out.println("Hit bottom limit");
         } else if (upperHoodSwitch.get()) {
-            hoodMotor.getEncoder().setPosition(-maxpoint);
+            hoodMotor.getEncoder().setPosition(maxpoint);
         }
         // Ensures that the hood is at lowest position
         if ((hoodTarget == 0) && (hoodMotor.getEncoder().getPosition() <= 0.5)) {
