@@ -56,6 +56,7 @@ public class Hood extends SubsystemBaseEnhanced {
         pidController.setSmartMotionMinOutputVelocity(-160, 0);
         pidController.setSmartMotionMaxAccel(100, 0);
         pidController.setSmartMotionAllowedClosedLoopError(.1, 0);
+        hoodMotor.setInverted(false);
         setDefaultCommand(new HoodDefault(this));
     }
 
@@ -75,7 +76,7 @@ public class Hood extends SubsystemBaseEnhanced {
 
     public double getHoodPosition() {
         // return hoodEncoder.getPosition();
-        return hoodEncoder.getPosition();
+        return -hoodEncoder.getPosition();
     }
 
     @Override
@@ -84,7 +85,7 @@ public class Hood extends SubsystemBaseEnhanced {
         if (lowerHoodSwitch.get()) {
             hoodMotor.getEncoder().setPosition(minpoint);
         } else if (upperHoodSwitch.get()) {
-            hoodMotor.getEncoder().setPosition(maxpoint);
+            hoodMotor.getEncoder().setPosition(-maxpoint);
         }
         // Ensures that the hood is at lowest position
         if ((hoodTarget == 0) && (hoodMotor.getEncoder().getPosition() <= 0.5)) {

@@ -132,7 +132,7 @@ public class VisionCamera {
         if (angle == 0) {
             return angle;
         }
-        return angle + 2;
+        return angle + 10;
     }
 
     public double getLastParseTime() {

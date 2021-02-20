@@ -17,8 +17,8 @@ public class VisionAlignment extends CommandBase {
     private Peripherals peripherals;
 
     private PID pid;
-    private double kP = 0.015;
-    private double kI = 0;
+    private double kP = 0.0175;
+    private double kI = 0.0;
     private double kD = 0.2;
     private int counter = 0;
 
@@ -35,8 +35,8 @@ public class VisionAlignment extends CommandBase {
         counter = 0;
         pid = new PID(kP, kI, kD);
         pid.setSetPoint(0);
-        pid.setMinOutput(-0.6);
-        pid.setMaxOutput(0.6);
+        pid.setMinOutput(-0.5);
+        pid.setMaxOutput(0.5);
     }
 
     @Override
@@ -63,6 +63,6 @@ public class VisionAlignment extends CommandBase {
         return Math.abs(peripherals.getCamAngle()) <= 0.8
                         && Math.abs(pid.getResult()) < 0.05
                         && peripherals.getCamAngle() != 0
-                || counter > 20;
+                || counter > 35;
     }
 }
