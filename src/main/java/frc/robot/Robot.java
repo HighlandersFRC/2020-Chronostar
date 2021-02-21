@@ -40,6 +40,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         hood.periodic();
+        SmartDashboard.putNumber("Lidar Dist", peripherals.getLidarDistance());
         SmartDashboard.putNumber("HoodValue", hood.getHoodPosition());
         CommandScheduler.getInstance().run();
     }
@@ -66,13 +67,14 @@ public class Robot extends TimedRobot {
             s.teleopInit();
         }
         OI.driverA.whenPressed(
-                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 7));
+                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 4, 3750, 0));
         OI.driverB.whenPressed(
-                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 11.25));
+                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 12.45, 5200, 7));
         OI.driverY.whenPressed(
-                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 13.5));
+                new Fire(
+                        shooter, hood, magIntake, drive, lightRing, peripherals, 13.75, 5500, 8.5));
         OI.driverX.whenPressed(
-                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 14.2));
+                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 15, 5700, 10));
         OI.driverA.whenReleased(new SetHoodPosition(hood, 0));
         OI.driverA.whenReleased(new CancelMagazine(magIntake));
         OI.driverB.whenReleased(new SetHoodPosition(hood, 0));

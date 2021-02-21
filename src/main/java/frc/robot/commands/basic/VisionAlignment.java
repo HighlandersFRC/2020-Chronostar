@@ -21,17 +21,21 @@ public class VisionAlignment extends CommandBase {
     private double kI = 0.0;
     private double kD = 0.2;
     private int counter = 0;
+    private double angleOffset = 0;
 
-    public VisionAlignment(LightRing lightRing, Drive drive, Peripherals peripherals) {
+    public VisionAlignment(
+            LightRing lightRing, Drive drive, Peripherals peripherals, Double offset) {
         this.drive = drive;
         this.lightRing = lightRing;
         this.peripherals = peripherals;
+        angleOffset = offset;
 
         addRequirements(this.drive, this.lightRing);
     }
 
     @Override
     public void initialize() {
+        SmartDashboard.putBoolean("finsihed vision", false);
         counter = 0;
         pid = new PID(kP, kI, kD);
         pid.setSetPoint(0);
@@ -43,9 +47,9 @@ public class VisionAlignment extends CommandBase {
     public void execute() {
         counter++;
         lightRing.turnOn();
-        // SmartDashboard.putNumber("vision Angle", peripherals.getCamAngle());
+        SmartDashboard.putNumber("vision Angle", peripherals.getCamAngle());
         // System.out.println(peripherals.getCamAngle());
-        pid.updatePID(peripherals.getCamAngle());
+        pid.updatePID(peripherals.getCamAngle() + angleOffset);
         SmartDashboard.putNumber("PID Output", pid.getResult());
         drive.setRightPercent(-pid.getResult());
         drive.setLeftPercent(pid.getResult());
@@ -55,6 +59,7 @@ public class VisionAlignment extends CommandBase {
     public void end(boolean interrupted) {
         drive.setRightPercent(0);
         drive.setLeftPercent(0);
+        SmartDashboard.putBoolean("finsihed vision", true);
         // lightRing.turnOff();
     }
 
@@ -62,7 +67,7 @@ public class VisionAlignment extends CommandBase {
     public boolean isFinished() {
         return Math.abs(peripherals.getCamAngle()) <= 0.8
                         && Math.abs(pid.getResult()) < 0.05
-                        && peripherals.getCamAngle() != 0
+                        && peripherals.getCamAngle() != angleOffset
                 || counter > 35;
     }
 }

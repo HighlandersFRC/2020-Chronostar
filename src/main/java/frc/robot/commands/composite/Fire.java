@@ -22,7 +22,9 @@ public class Fire extends SequentialCommandGroup {
             Drive drive,
             LightRing lightRing,
             Peripherals peripherals,
-            double hoodPosition) {
+            double hoodPosition,
+            double fireSpeed,
+            double angleOffset) {
         //        double hoodPosition =
         //                 Math.pow(0.0003130020686 * peripherals.getCamDistance(), 3)
         //                         + Math.pow(-0.0237452471 * peripherals.getCamDistance(), 2)
@@ -32,8 +34,8 @@ public class Fire extends SequentialCommandGroup {
         addCommands(
                 new ParallelCommandGroup(
                         new SetHoodPosition(hood, hoodPosition),
-                        new SpinFlywheel(shooter, magIntake, 5500),
-                        new VisionAlignment(lightRing, drive, peripherals),
+                        new SpinFlywheel(shooter, magIntake, fireSpeed),
+                        new VisionAlignment(lightRing, drive, peripherals, angleOffset),
                         new WaitCommand(2)),
                 new EjectMagazine(magIntake));
     }
