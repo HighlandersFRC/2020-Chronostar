@@ -67,14 +67,14 @@ public class Robot extends TimedRobot {
             s.teleopInit();
         }
         OI.driverA.whenPressed(
-                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 4, 3750, 0));
+                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 4, 3800, 0));
         OI.driverB.whenPressed(
-                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 12.45, 5200, 7));
+                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 12.45, 5200, 8));
         OI.driverY.whenPressed(
-                new Fire(
-                        shooter, hood, magIntake, drive, lightRing, peripherals, 13.75, 5500, 8.5));
+                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 13.9, 5500, 9));
         OI.driverX.whenPressed(
-                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 15, 5700, 10));
+                new Fire(
+                        shooter, hood, magIntake, drive, lightRing, peripherals, 14.5, 5700, 10.5));
         OI.driverA.whenReleased(new SetHoodPosition(hood, 0));
         OI.driverA.whenReleased(new CancelMagazine(magIntake));
         OI.driverB.whenReleased(new SetHoodPosition(hood, 0));
