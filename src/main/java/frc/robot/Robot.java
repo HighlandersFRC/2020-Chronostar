@@ -69,9 +69,9 @@ public class Robot extends TimedRobot {
         OI.driverA.whenPressed(
                 new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 4, 3800, 0));
         OI.driverB.whenPressed(
-                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 12.45, 5200, 8));
+                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 12.55, 5200, 8));
         OI.driverY.whenPressed(
-                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 13.9, 5500, 9));
+                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 14.5, 5500, 9));
         OI.driverX.whenPressed(
                 new Fire(
                         shooter, hood, magIntake, drive, lightRing, peripherals, 14.5, 5700, 10.5));
