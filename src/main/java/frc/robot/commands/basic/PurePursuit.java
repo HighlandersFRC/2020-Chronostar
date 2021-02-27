@@ -64,11 +64,7 @@ public class PurePursuit extends CommandBase {
         odometry.setX(trajectory.getStates().get(0).poseMeters.getTranslation().getX());
         odometry.setY(trajectory.getStates().get(0).poseMeters.getTranslation().getY());
         odometry.setTheta(trajectory.getStates().get(0).poseMeters.getRotation().getDegrees());
-        if (!inverted) {
-            odometry.setInverted(false);
-        } else {
-            odometry.setInverted(true);
-        }
+        odometry.setInverted(inverted);
         distToEndVector = new Vector(12, 12);
         lookaheadPoint = new Point(0, 0);
         closestPoint = new Point(0, 0);

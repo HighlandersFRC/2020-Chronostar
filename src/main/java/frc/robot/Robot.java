@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import frc.robot.commands.basic.CancelMagazine;
 import frc.robot.commands.basic.LightRingOff;
-import frc.robot.commands.basic.NavxTurn;
 import frc.robot.commands.basic.Outtake;
 import frc.robot.commands.basic.PurePursuit;
 import frc.robot.commands.basic.SetHoodPosition;
@@ -36,18 +35,26 @@ public class Robot extends TimedRobot {
     private Trajectory slalomPart1;
     private Trajectory slalomPart2;
     private Trajectory slalomPart4;
-    private Trajectory barrelRunPart1;
-    private Trajectory barrelRunPart2;
-    private Trajectory barrelRunPart3;
-    private Trajectory barrelRunPart4;
+    private Trajectory barrelPart1;
+    private Trajectory barrelPart2;
+    private Trajectory barrelPart3;
+    private Trajectory barrelPart4;
+    private Trajectory bouncePart1;
+    private Trajectory bouncePart2;
+    private Trajectory bouncePart3;
+    private Trajectory bouncePart4;
     private PurePursuit slalomPart1Follower;
     private PurePursuit slalomPart2Follower;
     private PurePursuit slalomPart3Follower;
     private PurePursuit slalomPart4Follower;
-    private PurePursuit barrelRunPart1Follower;
-    private PurePursuit barrelRunPart2Follower;
-    private PurePursuit barrelRunPart3Follower;
-    private PurePursuit barrelRunPart4Follower;
+    private PurePursuit barrelPart1Follower;
+    private PurePursuit barrelPart2Follower;
+    private PurePursuit barrelPart3Follower;
+    private PurePursuit barrelPart4Follower;
+    private PurePursuit bouncePart1Follower;
+    private PurePursuit bouncePart2Follower;
+    private PurePursuit bouncePart3Follower;
+    private PurePursuit bouncePart4Follower;
     private final SubsystemBaseEnhanced[] subsystems = {
         hood, magIntake, drive, shooter, climber, lightRing, peripherals
     };
@@ -70,18 +77,31 @@ public class Robot extends TimedRobot {
             slalomPart4 =
                     TrajectoryUtil.fromPathweaverJson(
                             Paths.get("/home/lvuser/deploy/SlalomPart4.json"));
-            barrelRunPart1 =
+            barrelPart1 =
                     TrajectoryUtil.fromPathweaverJson(
-                            Paths.get("/home/lvuser/deploy/BarrelRunPart1.json"));
-            barrelRunPart2 =
+                            Paths.get("/home/lvuser/deploy/BarrelPart1.json"));
+            barrelPart2 =
                     TrajectoryUtil.fromPathweaverJson(
-                            Paths.get("/home/lvuser/deploy/BarrelRunPart2.json"));
-            barrelRunPart3 =
+                            Paths.get("/home/lvuser/deploy/BarrelPart2.json"));
+            barrelPart3 =
                     TrajectoryUtil.fromPathweaverJson(
-                            Paths.get("/home/lvuser/deploy/BarrelRunPart3.json"));
-            barrelRunPart4 =
+                            Paths.get("/home/lvuser/deploy/BarrelPart3.json"));
+            barrelPart4 =
                     TrajectoryUtil.fromPathweaverJson(
-                            Paths.get("/home/lvuser/deploy/BarrelRunPart4.json"));
+                            Paths.get("/home/lvuser/deploy/BarrelPart4.json"));
+            bouncePart1 =
+                    TrajectoryUtil.fromPathweaverJson(
+                            Paths.get("/home/lvuser/deploy/BouncePart1.json"));
+            bouncePart2 =
+                    TrajectoryUtil.fromPathweaverJson(
+                            Paths.get("/home/lvuser/deploy/BouncePart2.json"));
+            bouncePart3 =
+                    TrajectoryUtil.fromPathweaverJson(
+                            Paths.get("/home/lvuser/deploy/BouncePart3.json"));
+            bouncePart4 =
+                    TrajectoryUtil.fromPathweaverJson(
+                            Paths.get("/home/lvuser/deploy/BouncePart4.json"));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -92,7 +112,9 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         hood.periodic();
         CommandScheduler.getInstance().run();
-        SmartDashboard.putNumber("navx value", peripherals.getNavxAngle());
+        SmartDashboard.putNumber("navx value", odometry.getTheta());
+        SmartDashboard.putNumber("x", odometry.getX());
+        SmartDashboard.putNumber("y", odometry.getY());
     }
 
     @Override
@@ -111,19 +133,16 @@ public class Robot extends TimedRobot {
         slalomPart2Follower = new PurePursuit(drive, odometry, slalomPart2, 2.5, 5.0, false);
         slalomPart3Follower = new PurePursuit(drive, odometry, slalomPart1, 2.5, 5.0, false);
         slalomPart4Follower = new PurePursuit(drive, odometry, slalomPart4, 2.5, 5.0, false);
-        barrelRunPart1Follower = new PurePursuit(drive, odometry, barrelRunPart1, 2.5, 5.0, false);
-        barrelRunPart2Follower = new PurePursuit(drive, odometry, barrelRunPart2, 2.5, 5.0, false);
-        barrelRunPart3Follower = new PurePursuit(drive, odometry, barrelRunPart3, 2.5, 5.0, false);
-        barrelRunPart4Follower = new PurePursuit(drive, odometry, barrelRunPart4, 2.5, 5.0, false);
+        barrelPart1Follower = new PurePursuit(drive, odometry, barrelPart1, 2.5, 5.0, false);
+        barrelPart2Follower = new PurePursuit(drive, odometry, barrelPart2, 2.5, 5.0, false);
+        barrelPart3Follower = new PurePursuit(drive, odometry, barrelPart3, 2.5, 5.0, false);
+        barrelPart4Follower = new PurePursuit(drive, odometry, barrelPart4, 2.5, 5.0, false);
+        bouncePart1Follower = new PurePursuit(drive, odometry, bouncePart1, 2.5, 5.0, false);
+        bouncePart2Follower = new PurePursuit(drive, odometry, bouncePart2, 2.5, 5.0, true);
+        bouncePart3Follower = new PurePursuit(drive, odometry, bouncePart3, 2.5, 5.0, false);
+        bouncePart4Follower = new PurePursuit(drive, odometry, bouncePart4, 2.5, 5.0, true);
 
-        new SequentialCommandGroup(
-                        barrelRunPart1Follower,
-                        new NavxTurn(drive, peripherals, 180),
-                        barrelRunPart2Follower,
-                        barrelRunPart3Follower,
-                        new NavxTurn(drive, peripherals, -270),
-                        barrelRunPart4Follower)
-                .schedule();
+        new SequentialCommandGroup(bouncePart2Follower).schedule();
     }
 
     @Override
