@@ -11,6 +11,7 @@ import frc.robot.commands.basic.Outtake;
 import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SmartIntake;
 import frc.robot.commands.composite.Fire;
+import frc.robot.commands.composite.FireBack;
 import frc.robot.subsystems.*;
 
 public class Robot extends TimedRobot {
@@ -73,8 +74,16 @@ public class Robot extends TimedRobot {
         OI.driverY.whenPressed(
                 new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 14.5, 5500, 9));
         OI.driverX.whenPressed(
-                new Fire(
-                        shooter, hood, magIntake, drive, lightRing, peripherals, 14.5, 5700, 10.5));
+                new FireBack(
+                        shooter,
+                        hood,
+                        magIntake,
+                        drive,
+                        lightRing,
+                        peripherals,
+                        14.75,
+                        5700,
+                        10.5));
         OI.driverA.whenReleased(new SetHoodPosition(hood, 0));
         OI.driverA.whenReleased(new CancelMagazine(magIntake));
         OI.driverB.whenReleased(new SetHoodPosition(hood, 0));

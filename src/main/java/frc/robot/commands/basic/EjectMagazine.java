@@ -2,12 +2,10 @@
 
 package frc.robot.commands.basic;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import frc.robot.subsystems.MagIntake;
-import frc.robot.subsystems.MagIntake.BeamBreakID;
 
 public class EjectMagazine extends CommandBase {
 
@@ -15,6 +13,8 @@ public class EjectMagazine extends CommandBase {
     private final double LOW_MAG_PERCENT = 0.4;
     private final double HIGH_MAG_PERCENT = 1;
     private final double HIGH_INTAKE_PERCENT = 0.8;
+    WaitCommand waitCommand;
+    private int counter = 0;
 
     public EjectMagazine(MagIntake magIntake) {
         this.magIntake = magIntake;
@@ -23,21 +23,22 @@ public class EjectMagazine extends CommandBase {
 
     @Override
     public void initialize() {
+        waitCommand = new WaitCommand(10);
+        counter = 0;
     }
 
     @Override
     public void execute() {
+        counter++;
         magIntake.setMagPercent(LOW_MAG_PERCENT, HIGH_MAG_PERCENT);
         magIntake.setIntakePercent(0, HIGH_INTAKE_PERCENT);
     }
 
     @Override
-    public void end(boolean interrupted) {
-    }
+    public void end(boolean interrupted) {}
 
     @Override
     public boolean isFinished() {
         return false;
     }
-
 }
