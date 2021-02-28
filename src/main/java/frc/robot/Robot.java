@@ -13,6 +13,7 @@ import frc.robot.commands.basic.SmartIntake;
 import frc.robot.commands.composite.Fire;
 import frc.robot.commands.composite.FireBack;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.MagIntake.BeamBreakID;
 
 public class Robot extends TimedRobot {
 
@@ -43,6 +44,9 @@ public class Robot extends TimedRobot {
         hood.periodic();
         SmartDashboard.putNumber("Lidar Dist", peripherals.getLidarDistance());
         SmartDashboard.putNumber("HoodValue", hood.getHoodPosition());
+        SmartDashboard.putBoolean("BeamBreak1", magIntake.getBeamBreak(BeamBreakID.ONE));
+        SmartDashboard.putBoolean("BeamBreak2", magIntake.getBeamBreak(BeamBreakID.TWO));
+        SmartDashboard.putBoolean("BreamBreak3", magIntake.getBeamBreak(BeamBreakID.THREE));
         CommandScheduler.getInstance().run();
     }
 
@@ -68,7 +72,7 @@ public class Robot extends TimedRobot {
             s.teleopInit();
         }
         OI.driverA.whenPressed(
-                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 4, 3800, 0));
+                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 4, 3800, 4));
         OI.driverB.whenPressed(
                 new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 12.55, 5200, 8));
         OI.driverY.whenPressed(
@@ -100,6 +104,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
+
         hood.periodic();
     }
 

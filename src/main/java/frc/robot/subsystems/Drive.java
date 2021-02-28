@@ -132,7 +132,7 @@ public class Drive extends SubsystemBaseEnhanced {
         if (Math.abs(turn) < deadzone) {
             turn = 0;
         }
-        differential = turn * 1.15;
+        differential = turn * 1;
         left = throttle + differential;
         right = throttle - differential;
         if (Math.abs(left) > 1) {
