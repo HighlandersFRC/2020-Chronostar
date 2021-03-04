@@ -1,7 +1,6 @@
 package frc.robot.commands.basic;
 
 import edu.wpi.first.wpilibj.Notifier;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -65,6 +64,7 @@ public class PurePursuit extends CommandBase {
         odometry.setX(trajectory.getStates().get(0).poseMeters.getTranslation().getX());
         odometry.setY(trajectory.getStates().get(0).poseMeters.getTranslation().getY());
         odometry.setTheta(trajectory.getStates().get(0).poseMeters.getRotation().getDegrees());
+        odometry.setInverted(inverted);
         distToEndVector = new Vector(12, 12);
         lookaheadPoint = new Point(0, 0);
         closestPoint = new Point(0, 0);
@@ -253,9 +253,6 @@ public class PurePursuit extends CommandBase {
                                         * (lookaheadPoint.getY() - odometry.getY()));
         double curvature = ((2 * x) / Math.pow(lookaheadDistance, 2)) * side;
         desiredRobotCurvature = curvature;
-        SmartDashboard.putNumber("dist to end", distToEndVector.magnitude());
-        SmartDashboard.putNumber("dist to end i", distToEndVector.getI());
-        SmartDashboard.putNumber("dist to end j", distToEndVector.getJ());
     }
 
     @Override
@@ -263,8 +260,7 @@ public class PurePursuit extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return trajectory.getStates().size() - closestSegment < 3
-                && distToEndVector.magnitude() < 0.5;
+        return trajectory.getStates().size() - closestSegment < 3;
     }
 
     @Override

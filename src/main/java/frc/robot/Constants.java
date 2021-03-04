@@ -100,11 +100,8 @@ public class Constants {
     }
 
     public static double degreesToHalfDegrees(double degrees) {
-        degrees %= 360;
-        if (degrees <= -180.0) {
-            degrees += 360.0;
-        } else if (degrees >= 180.0) {
-            degrees -= 360.0;
+        while (Math.abs(degrees) > 180) {
+            degrees %= 360;
         }
         return degrees;
     }

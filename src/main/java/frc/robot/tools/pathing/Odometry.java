@@ -100,17 +100,12 @@ public class Odometry {
         if (inverted) {
             currentLeft = drive.getLeftPosition();
             currentRight = drive.getRightPosition();
-            currentTheta = startingTheta + peripherals.getNavxAngle();
+            currentTheta = startingTheta - peripherals.getNavxAngle();
             dLeft = currentLeft - left;
             dRight = currentRight - right;
             dCentre = (dLeft + dRight) / 2;
             currentX = x - dCentre * Math.cos(Math.toRadians(currentTheta));
             currentY = y - dCentre * Math.sin(Math.toRadians(currentTheta));
-            x = currentX;
-            y = currentY;
-            theta = currentTheta;
-            left = currentLeft;
-            right = currentRight;
         } else {
             currentLeft = drive.getLeftPosition();
             currentRight = drive.getRightPosition();
@@ -120,11 +115,11 @@ public class Odometry {
             dCentre = (dLeft + dRight) / 2;
             currentX = x + dCentre * Math.cos(Math.toRadians(currentTheta));
             currentY = y + dCentre * Math.sin(Math.toRadians(currentTheta));
-            x = currentX;
-            y = currentY;
-            theta = currentTheta;
-            left = currentLeft;
-            right = currentRight;
         }
+        x = currentX;
+        y = currentY;
+        theta = currentTheta;
+        left = currentLeft;
+        right = currentRight;
     }
 }
