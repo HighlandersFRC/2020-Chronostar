@@ -106,11 +106,10 @@ public class Odometry {
             dCentre = (dLeft + dRight) / 2;
             currentX = x - dCentre * Math.cos(Math.toRadians(currentTheta));
             currentY = y - dCentre * Math.sin(Math.toRadians(currentTheta));
-
         } else {
             currentLeft = drive.getLeftPosition();
             currentRight = drive.getRightPosition();
-            currentTheta = startingTheta - peripherals.getNavxAngle();
+            currentTheta = startingTheta + peripherals.getNavxAngle();
             dLeft = currentLeft - left;
             dRight = currentRight - right;
             dCentre = (dLeft + dRight) / 2;

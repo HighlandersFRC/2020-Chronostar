@@ -10,12 +10,11 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import frc.robot.commands.basic.CancelMagazine;
-import frc.robot.commands.basic.LightRingOff;
+import frc.robot.commands.basic.NavxTurn;
 import frc.robot.commands.basic.Outtake;
 import frc.robot.commands.basic.PurePursuit;
 import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SmartIntake;
-import frc.robot.commands.basic.VisionAlignment;
 import frc.robot.commands.composite.Fire;
 import frc.robot.subsystems.*;
 import frc.robot.tools.pathing.Odometry;
@@ -43,6 +42,8 @@ public class Robot extends TimedRobot {
     private Trajectory bouncePart2;
     private Trajectory bouncePart3;
     private Trajectory bouncePart4;
+    private Trajectory threePart1;
+    private Trajectory threePart2;
     private PurePursuit slalomPart1Follower;
     private PurePursuit slalomPart2Follower;
     private PurePursuit slalomPart3Follower;
@@ -55,6 +56,12 @@ public class Robot extends TimedRobot {
     private PurePursuit bouncePart2Follower;
     private PurePursuit bouncePart3Follower;
     private PurePursuit bouncePart4Follower;
+    private PurePursuit threePart1Follower;
+    private PurePursuit threePart2Follower;
+    private SequentialCommandGroup slalom;
+    private SequentialCommandGroup barrel;
+    private SequentialCommandGroup bounce;
+    private SequentialCommandGroup three;
     private final SubsystemBaseEnhanced[] subsystems = {
         hood, magIntake, drive, shooter, climber, lightRing, peripherals
     };
@@ -101,7 +108,12 @@ public class Robot extends TimedRobot {
             bouncePart4 =
                     TrajectoryUtil.fromPathweaverJson(
                             Paths.get("/home/lvuser/deploy/BouncePart4.json"));
-
+            threePart1 =
+                    TrajectoryUtil.fromPathweaverJson(
+                            Paths.get("/home/lvuser/deploy/ThreePart1.json"));
+            threePart2 =
+                    TrajectoryUtil.fromPathweaverJson(
+                            Paths.get("/home/lvuser/deploy/ThreePart1.json"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -110,7 +122,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotPeriodic() {
+        SmartDashboard.putNumber("Vision Angle", peripherals.getCamAngle());
         hood.periodic();
+        magIntake.periodic();
         CommandScheduler.getInstance().run();
         SmartDashboard.putNumber("navx value", odometry.getTheta());
         SmartDashboard.putNumber("x", odometry.getX());
@@ -129,6 +143,7 @@ public class Robot extends TimedRobot {
             s.autoInit();
         }
         odometry.zero();
+
         slalomPart1Follower = new PurePursuit(drive, odometry, slalomPart1, 2.5, 5.0, false);
         slalomPart2Follower = new PurePursuit(drive, odometry, slalomPart2, 2.5, 5.0, false);
         slalomPart3Follower = new PurePursuit(drive, odometry, slalomPart1, 2.5, 5.0, false);
@@ -142,7 +157,32 @@ public class Robot extends TimedRobot {
         bouncePart3Follower = new PurePursuit(drive, odometry, bouncePart3, 2.5, 5.0, false);
         bouncePart4Follower = new PurePursuit(drive, odometry, bouncePart4, 2.5, 5.0, true);
 
-        new SequentialCommandGroup(bouncePart2Follower).schedule();
+        slalom =
+                new SequentialCommandGroup(
+                        slalomPart1Follower,
+                        slalomPart2Follower,
+                        new NavxTurn(drive, peripherals, -180),
+                        slalomPart3Follower,
+                        slalomPart4Follower);
+        barrel =
+                new SequentialCommandGroup(
+                        barrelPart1Follower,
+                        new NavxTurn(drive, peripherals, 180),
+                        barrelPart2Follower,
+                        new NavxTurn(drive, peripherals, 0),
+                        barrelPart3Follower,
+                        new NavxTurn(drive, peripherals, -270),
+                        barrelPart4Follower);
+        bounce =
+                new SequentialCommandGroup(
+                        bouncePart1Follower,
+                        new NavxTurn(drive, peripherals, -90),
+                        bouncePart2Follower,
+                        new NavxTurn(drive, peripherals, -180),
+                        bouncePart3Follower,
+                        new NavxTurn(drive, peripherals, -180),
+                        bouncePart4Follower);
+        barrel.schedule();
     }
 
     @Override
@@ -153,13 +193,12 @@ public class Robot extends TimedRobot {
         for (SubsystemBaseEnhanced s : subsystems) {
             s.teleopInit();
         }
-        OI.driverX.whenPressed(new Fire(shooter, hood, magIntake, drive, lightRing, peripherals));
+        OI.driverX.whenPressed(
+                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 14.75, 5700, 8));
         OI.driverX.whenReleased(new SetHoodPosition(hood, 0));
         OI.driverX.whenReleased(new CancelMagazine(magIntake));
         OI.driverLT.whileHeld(new Outtake(magIntake));
         OI.driverRT.whileHeld(new SmartIntake(magIntake));
-        OI.driverA.whileHeld(new VisionAlignment(lightRing, drive, peripherals));
-        OI.driverA.whenReleased(new LightRingOff(lightRing));
     }
 
     @Override

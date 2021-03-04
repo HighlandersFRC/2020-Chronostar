@@ -42,7 +42,6 @@ public class NavxTurn extends CommandBase {
     public void end(boolean interrupted) {
         drive.setLeftPercent(0);
         drive.setRightPercent(0);
-        peripherals.resetNavxAngle();
     }
 
     @Override
