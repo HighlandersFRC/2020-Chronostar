@@ -118,32 +118,6 @@ public class Robot extends TimedRobot {
             e.printStackTrace();
         }
         odometry.zero();
-    }
-
-    @Override
-    public void robotPeriodic() {
-        SmartDashboard.putNumber("Vision Angle", peripherals.getCamAngle());
-        hood.periodic();
-        magIntake.periodic();
-        CommandScheduler.getInstance().run();
-        SmartDashboard.putNumber("navx value", odometry.getTheta());
-        SmartDashboard.putNumber("x", odometry.getX());
-        SmartDashboard.putNumber("y", odometry.getY());
-    }
-
-    @Override
-    public void disabledInit() {}
-
-    @Override
-    public void disabledPeriodic() {}
-
-    @Override
-    public void autonomousInit() {
-        for (SubsystemBaseEnhanced s : subsystems) {
-            s.autoInit();
-        }
-        odometry.zero();
-
         slalomPart1Follower = new PurePursuit(drive, odometry, slalomPart1, 2.5, 5.0, false);
         slalomPart2Follower = new PurePursuit(drive, odometry, slalomPart2, 2.5, 5.0, false);
         slalomPart3Follower = new PurePursuit(drive, odometry, slalomPart1, 2.5, 5.0, false);
@@ -182,7 +156,33 @@ public class Robot extends TimedRobot {
                         bouncePart3Follower,
                         new NavxTurn(drive, peripherals, -180),
                         bouncePart4Follower);
-        barrel.schedule();
+        three = new SequentialCommandGroup(threePart1Follower, threePart2Follower);
+    }
+
+    @Override
+    public void robotPeriodic() {
+        SmartDashboard.putNumber("Vision Angle", peripherals.getCamAngle());
+        hood.periodic();
+        magIntake.periodic();
+        CommandScheduler.getInstance().run();
+        SmartDashboard.putNumber("navx value", odometry.getTheta());
+        SmartDashboard.putNumber("x", odometry.getX());
+        SmartDashboard.putNumber("y", odometry.getY());
+    }
+
+    @Override
+    public void disabledInit() {}
+
+    @Override
+    public void disabledPeriodic() {}
+
+    @Override
+    public void autonomousInit() {
+        for (SubsystemBaseEnhanced s : subsystems) {
+            s.autoInit();
+        }
+        odometry.zero();
+        three.schedule();
     }
 
     @Override
@@ -190,6 +190,13 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+        if (bounce.isScheduled()) {
+            bounce.cancel();
+        } else if (barrel.isScheduled()) {
+            barrel.cancel();
+        } else if (slalom.isScheduled()) {
+            slalom.cancel();
+        }
         for (SubsystemBaseEnhanced s : subsystems) {
             s.teleopInit();
         }
