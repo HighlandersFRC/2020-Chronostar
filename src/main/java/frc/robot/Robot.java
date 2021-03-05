@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
+import frc.robot.commands.autos.InLineAuto;
 import frc.robot.commands.basic.CancelMagazine;
 import frc.robot.commands.basic.NavxTurn;
 import frc.robot.commands.basic.Outtake;
@@ -42,8 +43,6 @@ public class Robot extends TimedRobot {
     private Trajectory bouncePart2;
     private Trajectory bouncePart3;
     private Trajectory bouncePart4;
-    private Trajectory threePart1;
-    private Trajectory threePart2;
     private PurePursuit slalomPart1Follower;
     private PurePursuit slalomPart2Follower;
     private PurePursuit slalomPart3Follower;
@@ -56,12 +55,10 @@ public class Robot extends TimedRobot {
     private PurePursuit bouncePart2Follower;
     private PurePursuit bouncePart3Follower;
     private PurePursuit bouncePart4Follower;
-    private PurePursuit threePart1Follower;
-    private PurePursuit threePart2Follower;
     private SequentialCommandGroup slalom;
     private SequentialCommandGroup barrel;
     private SequentialCommandGroup bounce;
-    private SequentialCommandGroup three;
+    private InLineAuto inLineAuto;
     private final SubsystemBaseEnhanced[] subsystems = {
         hood, magIntake, drive, shooter, climber, lightRing, peripherals
     };
@@ -108,12 +105,8 @@ public class Robot extends TimedRobot {
             bouncePart4 =
                     TrajectoryUtil.fromPathweaverJson(
                             Paths.get("/home/lvuser/deploy/BouncePart4.json"));
-            threePart1 =
-                    TrajectoryUtil.fromPathweaverJson(
-                            Paths.get("/home/lvuser/deploy/ThreePart1.json"));
-            threePart2 =
-                    TrajectoryUtil.fromPathweaverJson(
-                            Paths.get("/home/lvuser/deploy/ThreePart1.json"));
+
+            TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/ThreePart1.json"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -156,7 +149,7 @@ public class Robot extends TimedRobot {
                         bouncePart3Follower,
                         new NavxTurn(drive, peripherals, -180),
                         bouncePart4Follower);
-        three = new SequentialCommandGroup(threePart1Follower, threePart2Follower);
+        inLineAuto = new InLineAuto(drive, odometry, peripherals, magIntake, shooter);
     }
 
     @Override
@@ -182,7 +175,7 @@ public class Robot extends TimedRobot {
             s.autoInit();
         }
         odometry.zero();
-        three.schedule();
+        inLineAuto.schedule();
     }
 
     @Override
@@ -196,6 +189,8 @@ public class Robot extends TimedRobot {
             barrel.cancel();
         } else if (slalom.isScheduled()) {
             slalom.cancel();
+        } else if (inLineAuto.isScheduled()) {
+            inLineAuto.cancel();
         }
         for (SubsystemBaseEnhanced s : subsystems) {
             s.teleopInit();
