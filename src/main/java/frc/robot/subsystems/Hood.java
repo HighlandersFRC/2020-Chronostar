@@ -17,10 +17,10 @@ import frc.robot.commands.defaults.HoodDefault;
 
 public class Hood extends SubsystemBaseEnhanced {
 
-    private double kf = 0.004;
-    private double kp = 0.000002;
-    private double ki = 0.0000001;
-    private double kd = 0.0007;
+    private double kf = 0.005;
+    private double kp = 0;
+    private double ki = 0;
+    private double kd = 0;
     private double hoodTarget = 0.0;
     private float maxpoint = 22;
     private float minpoint = 0;
@@ -40,6 +40,7 @@ public class Hood extends SubsystemBaseEnhanced {
 
     @Override
     public void init() {
+        hoodMotor.getEncoder().setPosition(0);
         hoodMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
         hoodMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
         hoodMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, maxpoint);
@@ -50,7 +51,7 @@ public class Hood extends SubsystemBaseEnhanced {
         pidController.setI(ki);
         pidController.setD(kd);
         pidController.setIZone(.2);
-        pidController.setOutputRange(-0.2, 0.2);
+        pidController.setOutputRange(-0.5, 0.5);
         pidController.setSmartMotionMaxVelocity(160, 0);
         pidController.setSmartMotionMinOutputVelocity(-160, 0);
         pidController.setSmartMotionMaxAccel(100, 0);
@@ -81,10 +82,10 @@ public class Hood extends SubsystemBaseEnhanced {
     public void periodic() {
         // Zeroing off the limit switches
         if (lowerHoodSwitch.get()) {
-            // hoodMotor.getEncoder().setPosition(minpoint);
+            //hoodMotor.getEncoder().setPosition(minpoint);
             // System.out.println("Hit bottom limit");
         } else if (upperHoodSwitch.get()) {
-            hoodMotor.getEncoder().setPosition(maxpoint);
+            //hoodMotor.getEncoder().setPosition(maxpoint);
         }
         // Ensures that the hood is at lowest position
         if ((hoodTarget == 0) && (hoodMotor.getEncoder().getPosition() <= 0.5)) {
