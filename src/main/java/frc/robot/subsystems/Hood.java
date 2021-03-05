@@ -9,10 +9,9 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.ControlType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import com.revrobotics.ControlType;
 
 import frc.robot.Constants;
 import frc.robot.commands.basic.SetHoodPosition;
@@ -62,7 +61,9 @@ public class Hood extends SubsystemBaseEnhanced {
     }
 
     @Override
-    public void autoInit() {}
+    public void autoInit() {
+        hoodMotor.getEncoder().setPosition(0);
+    }
 
     @Override
     public void teleopInit() {
@@ -84,7 +85,7 @@ public class Hood extends SubsystemBaseEnhanced {
     public void periodic() {
         // Zeroing off the limit switches
         if (lowerHoodSwitch.get()) {
-            hoodMotor.getEncoder().setPosition(minpoint);
+            // hoodMotor.getEncoder().setPosition(minpoint);
         } else if (upperHoodSwitch.get()) {
             hoodMotor.getEncoder().setPosition(maxpoint);
         }

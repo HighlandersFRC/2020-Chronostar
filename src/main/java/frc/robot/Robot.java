@@ -58,6 +58,7 @@ public class Robot extends TimedRobot {
     private SequentialCommandGroup slalom;
     private SequentialCommandGroup barrel;
     private SequentialCommandGroup bounce;
+    private SequentialCommandGroup shootAuto;
     private InLineAuto inLineAuto;
     private final SubsystemBaseEnhanced[] subsystems = {
         hood, magIntake, drive, shooter, climber, lightRing, peripherals
@@ -150,6 +151,20 @@ public class Robot extends TimedRobot {
                         new NavxTurn(drive, peripherals, -180),
                         bouncePart4Follower);
         inLineAuto = new InLineAuto(drive, odometry, peripherals, magIntake, shooter);
+        shootAuto =
+                new SequentialCommandGroup(
+                        inLineAuto,
+                        new Fire(
+                                shooter,
+                                hood,
+                                magIntake,
+                                drive,
+                                lightRing,
+                                peripherals,
+                                12.55,
+                                5200,
+                                1));
+        // shootAuto.schedule();
     }
 
     @Override
@@ -159,6 +174,7 @@ public class Robot extends TimedRobot {
         magIntake.periodic();
         CommandScheduler.getInstance().run();
         SmartDashboard.putNumber("navx value", odometry.getTheta());
+        SmartDashboard.putNumber("Hood Value", hood.getHoodPosition());
         SmartDashboard.putNumber("x", odometry.getX());
         SmartDashboard.putNumber("y", odometry.getY());
     }
@@ -175,7 +191,7 @@ public class Robot extends TimedRobot {
             s.autoInit();
         }
         odometry.zero();
-        inLineAuto.schedule();
+        shootAuto.schedule();
     }
 
     @Override
