@@ -22,10 +22,7 @@ public class EjectMagazine extends CommandBase {
     }
 
     @Override
-    public void initialize() {
-        waitCommand = new WaitCommand(10);
-        counter = 0;
-    }
+    public void initialize() {}
 
     @Override
     public void execute() {

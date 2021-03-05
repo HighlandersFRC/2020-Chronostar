@@ -51,32 +51,14 @@ public class VisionAlignment extends CommandBase {
     @Override
     public void execute() {
         counter++;
-        tapCounter++;
-        thirdCounter++;
         lightRing.turnOn();
         SmartDashboard.putNumber("vision Angle", peripherals.getCamAngle());
         // System.out.println(peripherals.getCamAngle());
-        if (OI.driverLB.get() && tapCounter < 4 && thirdCounter > 8) {
-            tapCounter++;
-            drive.setLeftPercent(0.2);
-            if (tapCounter == 4) {
-                thirdCounter = 0;
-            }
-        } else if (OI.driverRB.get() && tapCounter < 4 && thirdCounter > 8) {
-            tapCounter++;
-            drive.setRightPercent(0.2);
-            if (tapCounter == 4) {
-                thirdCounter = 0;
-            }
-        } else {
-            tapCounter = 0;
-            thirdCounter++;
-            pid.updatePID(peripherals.getCamAngle() + angleOffset);
-            SmartDashboard.putNumber("PID Output", pid.getResult());
-            SmartDashboard.putNumber("Counter", counter);
-            drive.setRightPercent(-pid.getResult());
-            drive.setLeftPercent(pid.getResult());
-        }
+        pid.updatePID(peripherals.getCamAngle() + angleOffset);
+        SmartDashboard.putNumber("PID Output", pid.getResult());
+        SmartDashboard.putNumber("Counter", counter);
+        drive.setRightPercent(-pid.getResult());
+        drive.setLeftPercent(pid.getResult());
     }
 
     @Override

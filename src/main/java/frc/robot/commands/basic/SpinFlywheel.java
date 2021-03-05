@@ -2,6 +2,7 @@
 
 package frc.robot.commands.basic;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.MagIntake;
@@ -30,10 +31,15 @@ public class SpinFlywheel extends CommandBase {
     @Override
     public void execute() {
         spinShooterCount++;
+        SmartDashboard.putNumber("Shooter Count", spinShooterCount);
+        SmartDashboard.putNumber("Shooter rpm", shooter.getShooterRPM());
     }
 
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        SmartDashboard.putBoolean("FinishedFlywheelCommand", true);
+        // System.out.println("Hola Amigo");
+    }
 
     @Override
     public boolean isFinished() {

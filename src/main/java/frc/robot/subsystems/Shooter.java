@@ -24,7 +24,7 @@ public class Shooter extends SubsystemBaseEnhanced {
         rightFlywheel.set(ControlMode.Follower, Constants.LEFT_FLYWHEEL_ID);
         leftFlywheel.setInverted(true);
         rightFlywheel.setInverted(InvertType.OpposeMaster);
-        leftFlywheel.configClosedLoopPeakOutput(0, Constants.MAX_SHOOTER_PERCENTAGE);
+        leftFlywheel.configClosedLoopPeakOutput(0, Constants.SHOOTER_MAX_PERCENTAGE);
         leftFlywheel.configPeakOutputForward(0.7);
         leftFlywheel.configPeakOutputReverse(0);
         leftFlywheel.configVoltageCompSaturation(11.7);

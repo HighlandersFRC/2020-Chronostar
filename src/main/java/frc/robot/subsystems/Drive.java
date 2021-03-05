@@ -2,6 +2,7 @@
 
 package frc.robot.subsystems;
 
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
@@ -46,6 +47,7 @@ public class Drive extends SubsystemBaseEnhanced {
         rightDriveFollower.set(ControlMode.Follower, Constants.RIGHT_DRIVE_LEAD_ID);
         rightDriveLead.setInverted(true);
         rightDriveFollower.setInverted(InvertType.FollowMaster);
+        leftDriveLead.setInverted(false);
         leftDriveFollower.setInverted(InvertType.FollowMaster);
         leftDriveLead.setSensorPhase(false);
         rightDriveLead.setSensorPhase(false);
@@ -69,11 +71,15 @@ public class Drive extends SubsystemBaseEnhanced {
     public void autoInit() {
         setVoltageCompensation(Constants.DRIVE_MAX_VOLTAGE);
         setDriveBrake();
+        leftDriveLead.setSelectedSensorPosition(0);
+        rightDriveLead.setSelectedSensorPosition(0);
     }
 
     @Override
     public void teleopInit() {
         setDriveCoast();
+        leftDriveLead.setSelectedSensorPosition(0);
+        rightDriveLead.setSelectedSensorPosition(0);
     }
 
     public void setVoltageCompensation(double volts) {
@@ -116,8 +122,24 @@ public class Drive extends SubsystemBaseEnhanced {
         rightDriveLead.set(ControlMode.Velocity, Constants.driveFPSToUnitsPer100MS(fps));
     }
 
+    public double getLeftPosition() {
+        return Constants.driveUnitsToFeet(leftDriveLead.getSelectedSensorPosition());
+    }
+
+    public double getRightPosition() {
+        return Constants.driveUnitsToFeet(rightDriveLead.getSelectedSensorPosition());
+    }
+
+    public double getLeftSpeed() {
+        return Constants.driveUnitsPer100MSToFPS(leftDriveLead.getSelectedSensorVelocity());
+    }
+
+    public double getRightSpeed() {
+        return Constants.driveUnitsPer100MSToFPS(rightDriveLead.getSelectedSensorVelocity());
+    }
+
     public double safelyDivide(double i, double j) {
-        if (j == 0) {
+        if (j == 0 || j == Double.NaN || i == Double.NaN) {
             return 0;
         }
         return i / j;
@@ -127,7 +149,7 @@ public class Drive extends SubsystemBaseEnhanced {
         double left, right;
         double differential;
         if (Math.abs(throttle) > deadzone) {
-            throttle = Math.tanh(throttle) * 4 / Math.PI;
+            throttle = -Math.tanh(throttle) * 4 / Math.PI;
         } else throttle = 0;
         if (Math.abs(turn) < deadzone) {
             turn = 0;

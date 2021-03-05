@@ -10,7 +10,7 @@ import frc.robot.subsystems.MagIntake.BeamBreakID;
 public class SmartIntake extends CommandBase {
     private MagIntake magIntake;
 
-    private static final double INTAKING_POWER = 0.55;
+    private static final double INTAKING_POWER = 1;
     private static final double MIDDLE_BREAK_3_POWER = 0.3;
     private static final double LOW_MAG_BREAK_1_POWER = 0.5;
     private static final double HIGH_MAG_BREAK_1_POWER = 0.2;
@@ -24,10 +24,19 @@ public class SmartIntake extends CommandBase {
     private static final double HIGH_MAG_BREAK_2_NO_3_POWER = -0.4;
     private static final double LOW_MAG_ELSE_POWER = -0.3;
     private static final double HIGH_MAG_ELSE_POWER = 0.2;
+    private double duration;
+    private int counter;
 
     public SmartIntake(MagIntake magIntake) {
         this.magIntake = magIntake;
         addRequirements(magIntake);
+    }
+
+    public SmartIntake(MagIntake magIntake, double duration) {
+        this.magIntake = magIntake;
+        addRequirements(magIntake);
+
+        this.duration = duration / 0.02;
     }
 
     @Override
@@ -37,8 +46,8 @@ public class SmartIntake extends CommandBase {
 
     @Override
     public void execute() {
-
-        magIntake.setIntakePercent(0.6, 0.4);
+        counter++;
+        magIntake.setIntakePercent(INTAKING_POWER, INTAKING_POWER);
         if (magIntake.getBeamBreak(BeamBreakID.ONE)
                 & magIntake.getBeamBreak(BeamBreakID.TWO)
                 & magIntake.getBeamBreak(BeamBreakID.THREE)) {
@@ -72,6 +81,9 @@ public class SmartIntake extends CommandBase {
 
     @Override
     public boolean isFinished() {
+        if (duration != 0) {
+            return counter >= duration;
+        }
         return false;
     }
 }
