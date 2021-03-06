@@ -45,12 +45,12 @@ public class Peripherals extends SubsystemBaseEnhanced {
     public Peripherals() {}
 
     public double getCamAngle() {
-        visionCam.updateVision();
+        //visionCam.updateVision();
         return visionCam.getAngle();
     }
 
     public double getCamDistance() {
-        visionCam.updateVision();
+        //visionCam.updateVision();
         return visionCam.getDistance();
     }
 
