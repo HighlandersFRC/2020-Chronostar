@@ -17,6 +17,7 @@ import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SmartIntake;
 import frc.robot.commands.composite.Fire;
 import frc.robot.commands.composite.FireBack;
+import frc.robot.sensors.Navx;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.MagIntake.BeamBreakID;
 import frc.robot.tools.pathing.Odometry;
@@ -188,7 +189,7 @@ public class Robot extends TimedRobot {
                         bouncePart3Follower,
                         new NavxTurn(drive, peripherals, -180),
                         bouncePart4Follower);
-        barrel.schedule();
+        bounce.schedule();
     }
 
     @Override

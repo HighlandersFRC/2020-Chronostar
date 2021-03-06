@@ -39,6 +39,7 @@ public class Peripherals extends SubsystemBaseEnhanced {
         } catch (final Exception e) {
             System.err.println("TestCamera could not get angle. Reason: " + e);
         }
+        zeroNavx();
     }
 
     public Peripherals() {}
@@ -59,6 +60,10 @@ public class Peripherals extends SubsystemBaseEnhanced {
 
     public double getNavxAngle() {
         return navx.currentAngle();
+    }
+
+    public void zeroNavx() {
+        navx.softResetAngle();
     }
 
     @Override
