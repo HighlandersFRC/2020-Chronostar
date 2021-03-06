@@ -25,7 +25,6 @@ public class SpinFlywheel extends CommandBase {
     @Override
     public void initialize() {
         spinShooterCount = 0;
-        SmartDashboard.putBoolean("FinishedFlywheelCommand", false);
         shooter.setRPM(rpm);
     }
 
