@@ -34,7 +34,7 @@ public class Fire extends SequentialCommandGroup {
         addCommands(
                 new ParallelCommandGroup(
                         new SetHoodPosition(hood, hoodPosition),
-                        new SpinFlywheel(shooter, magIntake, fireSpeed),
+                        new SpinFlywheel(shooter, fireSpeed),
                         new VisionAlignment(lightRing, drive, peripherals, angleOffset),
                         new WaitCommand(2)),
                 new EjectMagazine(magIntake));

@@ -5,10 +5,12 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Value;
 
+import frc.robot.Constants;
 import frc.robot.commands.defaults.LightRingDefault;
 
 public class LightRing extends SubsystemBaseEnhanced {
-    private final Relay visionRelay = new Relay(0);
+    private final Relay visionRelay = new Relay(Constants.VISION_TARGET_LIGHT_RING_ID);
+    private final Relay ballRelay = new Relay(Constants.BALL_TRACKING_LIGHT_RING_ID);
 
     public LightRing() {}
 
@@ -17,12 +19,20 @@ public class LightRing extends SubsystemBaseEnhanced {
         setDefaultCommand(new LightRingDefault(this));
     }
 
-    public void turnOn() {
+    public void turnVisionOn() {
         visionRelay.set(Value.kForward);
     }
 
-    public void turnOff() {
+    public void turnVisionOff() {
         visionRelay.set(Value.kReverse);
+    }
+
+    public void turnBallOn() {
+        ballRelay.set(Value.kForward);
+    }
+
+    public void turnBallOff() {
+        ballRelay.set(Value.kReverse);
     }
 
     @Override

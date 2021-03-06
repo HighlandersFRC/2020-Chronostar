@@ -16,7 +16,7 @@ public class LightRingOff extends CommandBase {
 
     @Override
     public void initialize() {
-        lightRing.turnOff();
+        lightRing.turnVisionOff();
     }
 
     @Override
