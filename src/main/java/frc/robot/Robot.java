@@ -11,6 +11,7 @@ import frc.robot.commands.basic.Outtake;
 import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SmartIntake;
 import frc.robot.commands.composite.Fire;
+import frc.robot.commands.composite.FireBack;
 import frc.robot.subsystems.*;
 import frc.robot.tools.pathing.Odometry;
 
@@ -33,7 +34,6 @@ public class Robot extends TimedRobot {
 
     public Robot() {}
 
-    @Override
     public void robotInit() {
         for (SubsystemBaseEnhanced s : subsystems) {
             s.init();
@@ -76,8 +76,29 @@ public class Robot extends TimedRobot {
         for (SubsystemBaseEnhanced s : subsystems) {
             s.teleopInit();
         }
+        OI.driverA.whenPressed(
+                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 4, 3800, 4));
+        OI.driverB.whenPressed(
+                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 12.55, 5200, 8));
+        OI.driverY.whenPressed(
+                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 14.5, 5500, 9));
         OI.driverX.whenPressed(
-                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 14.75, 5700, 8));
+                new FireBack(
+                        shooter,
+                        hood,
+                        magIntake,
+                        drive,
+                        lightRing,
+                        peripherals,
+                        14.75,
+                        5700,
+                        10.5));
+        OI.driverA.whenReleased(new SetHoodPosition(hood, 0));
+        OI.driverA.whenReleased(new CancelMagazine(magIntake));
+        OI.driverB.whenReleased(new SetHoodPosition(hood, 0));
+        OI.driverB.whenReleased(new CancelMagazine(magIntake));
+        OI.driverY.whenReleased(new SetHoodPosition(hood, 0));
+        OI.driverY.whenReleased(new CancelMagazine(magIntake));
         OI.driverX.whenReleased(new SetHoodPosition(hood, 0));
         OI.driverX.whenReleased(new CancelMagazine(magIntake));
         OI.driverLT.whileHeld(new Outtake(magIntake));
@@ -86,7 +107,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
-        SmartDashboard.putNumber("Hood Val", hood.getHoodPosition());
+
+        hood.periodic();
     }
 
     @Override

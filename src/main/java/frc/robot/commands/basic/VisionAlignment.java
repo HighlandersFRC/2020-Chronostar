@@ -21,6 +21,8 @@ public class VisionAlignment extends CommandBase {
     private double kI = 0.0;
     private double kD = 0.3;
     private int counter = 0;
+    private int tapCounter = 0;
+    private int thirdCounter = 0;
     private double angleOffset = 0;
 
     public VisionAlignment(
@@ -37,6 +39,8 @@ public class VisionAlignment extends CommandBase {
     public void initialize() {
         SmartDashboard.putBoolean("finsihed vision", false);
         counter = 0;
+        tapCounter = 0;
+        thirdCounter = 0;
         pid = new PID(kP, kI, kD);
         pid.setSetPoint(0);
         pid.setMinOutput(-0.5);
@@ -51,6 +55,7 @@ public class VisionAlignment extends CommandBase {
         // System.out.println(peripherals.getCamAngle());
         pid.updatePID(peripherals.getCamAngle() + angleOffset);
         SmartDashboard.putNumber("PID Output", pid.getResult());
+        SmartDashboard.putNumber("Counter", counter);
         drive.setRightPercent(-pid.getResult());
         drive.setLeftPercent(pid.getResult());
     }

@@ -20,14 +20,13 @@ public class Peripherals extends SubsystemBaseEnhanced {
     private final Counter lidarPort = new Counter(0);
     private final LidarLite lidar = new LidarLite(lidarPort);
     private VisionCamera visionCam;
-    private VisionCamera testCamera;
-    private VisionCamera ballCam;
 
     @Override
     public void init() {
         SerialPort jevois = null;
         try {
             jevois = new SerialPort(115200, SerialPort.Port.kUSB1);
+            System.out.println("Hola om");
             SmartDashboard.putBoolean("Got Camera", true);
         } catch (final Exception e) {
             SmartDashboard.putBoolean("Got Camera", false);
@@ -40,7 +39,7 @@ public class Peripherals extends SubsystemBaseEnhanced {
         } catch (final Exception e) {
             System.err.println("TestCamera could not get angle. Reason: " + e);
         }
-        navx.softResetAngle();
+        zeroNavx();
     }
 
     public Peripherals() {}
@@ -53,16 +52,6 @@ public class Peripherals extends SubsystemBaseEnhanced {
     public double getCamDistance() {
         visionCam.updateVision();
         return visionCam.getDistance();
-    }
-
-    public double getBallAngle() {
-        ballCam.updateBallVision();
-        return ballCam.getAngle();
-    }
-
-    public double getBallDistance() {
-        ballCam.updateBallVision();
-        return ballCam.getDistance();
     }
 
     public double getLidarDistance() {
