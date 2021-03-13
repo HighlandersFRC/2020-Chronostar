@@ -3,7 +3,6 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANDigitalInput;
-import com.revrobotics.CANDigitalInput.LimitSwitch;
 import com.revrobotics.CANDigitalInput.LimitSwitchPolarity;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
@@ -27,9 +26,9 @@ public class Hood extends SubsystemBaseEnhanced {
 
     private final CANSparkMax hoodMotor = new CANSparkMax(Constants.HOOD_ID, MotorType.kBrushless);
     private final CANDigitalInput lowerHoodSwitch =
-            new CANDigitalInput(hoodMotor, LimitSwitch.kReverse, LimitSwitchPolarity.kNormallyOpen);
+            hoodMotor.getReverseLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
     private final CANDigitalInput upperHoodSwitch =
-            new CANDigitalInput(hoodMotor, LimitSwitch.kForward, LimitSwitchPolarity.kNormallyOpen);
+            hoodMotor.getForwardLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
     private final CANPIDController pidController;
     private final CANEncoder hoodEncoder;
 
@@ -51,17 +50,19 @@ public class Hood extends SubsystemBaseEnhanced {
         pidController.setI(ki);
         pidController.setD(kd);
         pidController.setIZone(.2);
-        pidController.setOutputRange(-0.5, 0.5);
-        pidController.setSmartMotionMaxVelocity(160, 0);
-        pidController.setSmartMotionMinOutputVelocity(-160, 0);
-        pidController.setSmartMotionMaxAccel(100, 0);
+        pidController.setOutputRange(-1, 1);
+        pidController.setSmartMotionMaxVelocity(200, 0);
+        pidController.setSmartMotionMinOutputVelocity(-200, 0);
+        pidController.setSmartMotionMaxAccel(200, 0);
         pidController.setSmartMotionAllowedClosedLoopError(.1, 0);
         hoodMotor.setInverted(true);
         setDefaultCommand(new HoodDefault(this));
     }
 
     @Override
-    public void autoInit() {}
+    public void autoInit() {
+        hoodMotor.getEncoder().setPosition(0);
+    }
 
     @Override
     public void teleopInit() {
@@ -82,10 +83,9 @@ public class Hood extends SubsystemBaseEnhanced {
     public void periodic() {
         // Zeroing off the limit switches
         if (lowerHoodSwitch.get()) {
-            //hoodMotor.getEncoder().setPosition(minpoint);
-            // System.out.println("Hit bottom limit");
+            // hoodMotor.getEncoder().setPosition(minpoint);
         } else if (upperHoodSwitch.get()) {
-            //hoodMotor.getEncoder().setPosition(maxpoint);
+            // hoodMotor.getEncoder().setPosition(maxpoint);
         }
         // Ensures that the hood is at lowest position
         if ((hoodTarget == 0) && (hoodMotor.getEncoder().getPosition() <= 0.5)) {

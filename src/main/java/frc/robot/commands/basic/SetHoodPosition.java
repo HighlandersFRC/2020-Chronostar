@@ -6,7 +6,6 @@ import frc.robot.subsystems.Hood;
 
 public class SetHoodPosition extends CommandBase {
 
-    private int hoodPosCount = 0;
     private Hood hood;
     private double target;
 
@@ -17,13 +16,10 @@ public class SetHoodPosition extends CommandBase {
     }
 
     @Override
-    public void initialize() {
-        hoodPosCount = 0;
-    }
+    public void initialize() {}
 
     @Override
     public void execute() {
-        hoodPosCount++;
         hood.setHoodTarget(target);
     }
 
@@ -32,6 +28,6 @@ public class SetHoodPosition extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return true;
+        return Math.abs(target - hood.getHoodPosition()) < 0.1;
     }
 }

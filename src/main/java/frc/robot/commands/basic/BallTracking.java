@@ -38,7 +38,7 @@ public class BallTracking extends CommandBase {
 
     @Override
     public void execute() {
-        lightRing.turnOn();
+        lightRing.turnVisionOn();
         pid.updatePID(peripherals.getCamAngle());
         drive.setRightPercent(0.35 - pid.getResult());
         drive.setLeftPercent(0.35 + pid.getResult());
@@ -48,7 +48,7 @@ public class BallTracking extends CommandBase {
     public void end(boolean interrupted) {
         drive.setRightPercent(0);
         drive.setLeftPercent(0);
-        lightRing.turnOff();
+        lightRing.turnVisionOff();
     }
 
     @Override

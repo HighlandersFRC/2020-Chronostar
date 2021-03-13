@@ -2,6 +2,7 @@
 
 package frc.robot.commands.basic;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.MagIntake;
@@ -10,7 +11,7 @@ import frc.robot.subsystems.MagIntake.BeamBreakID;
 public class SmartIntake extends CommandBase {
     private MagIntake magIntake;
 
-    private static final double INTAKING_POWER = 1;
+    private static final double INTAKING_POWER = 0.5;
     private static final double MIDDLE_BREAK_3_POWER = 0.3;
     private static final double LOW_MAG_BREAK_1_POWER = 0.5;
     private static final double HIGH_MAG_BREAK_1_POWER = 0.2;
@@ -25,7 +26,6 @@ public class SmartIntake extends CommandBase {
     private static final double LOW_MAG_ELSE_POWER = -0.3;
     private static final double HIGH_MAG_ELSE_POWER = 0.2;
     private double duration;
-    private int counter;
 
     public SmartIntake(MagIntake magIntake) {
         this.magIntake = magIntake;
@@ -35,18 +35,17 @@ public class SmartIntake extends CommandBase {
     public SmartIntake(MagIntake magIntake, double duration) {
         this.magIntake = magIntake;
         addRequirements(magIntake);
-
-        this.duration = duration / 0.02;
+        this.duration = duration;
     }
 
     @Override
     public void initialize() {
         magIntake.intakePistonDown();
+        duration += Timer.getFPGATimestamp();
     }
 
     @Override
     public void execute() {
-        counter++;
         magIntake.setIntakePercent(INTAKING_POWER, INTAKING_POWER);
         if (magIntake.getBeamBreak(BeamBreakID.ONE)
                 & magIntake.getBeamBreak(BeamBreakID.TWO)
@@ -54,11 +53,9 @@ public class SmartIntake extends CommandBase {
             magIntake.setMagPercent(0, 0);
         } else if (!magIntake.getBeamBreak(BeamBreakID.THREE)) {
             magIntake.setMagPercent(0, 0);
-            magIntake.setIntakePercent(0, 0.5);
         } else if (!magIntake.getBeamBreak(BeamBreakID.ONE)
                 & magIntake.getBeamBreak(BeamBreakID.TWO)) {
             magIntake.setMagPercent(LOW_MAG_BREAK_1_POWER, HIGH_MAG_BREAK_1_POWER);
-            magIntake.setIntakePercent(0, MIDDLE_WHEEL_BREAK_1_POWER);
         } else if (!magIntake.getBeamBreak(BeamBreakID.TWO)
                 & magIntake.getBeamBreak(BeamBreakID.ONE)) {
             magIntake.setMagPercent(LOW_MAG_BREAK_2_NO_1_POWER, HIGH_MAG_BREAK_2_NO_1_POWER);
@@ -77,12 +74,16 @@ public class SmartIntake extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        magIntake.setIntakePercent(0, 0);
+        magIntake.intakePistonUp();
+        magIntake.setMagPercent(0, 0);
+    }
 
     @Override
     public boolean isFinished() {
-        if (duration != 0) {
-            return counter >= duration;
+        if (duration != 0 && duration != Double.NaN) {
+            return Timer.getFPGATimestamp() >= duration;
         }
         return false;
     }

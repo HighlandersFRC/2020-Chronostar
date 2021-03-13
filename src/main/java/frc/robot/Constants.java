@@ -31,6 +31,10 @@ public class Constants {
     public static final int RIGHT_FLYWHEEL_ID = 6;
     public static final int HOOD_ID = 7;
 
+    // Light ring ports
+    public static final int VISION_TARGET_LIGHT_RING_ID = 0;
+    public static final int BALL_TRACKING_LIGHT_RING_ID = 1;
+
     // Sensor ports
     public static int BEAM_BREAK_1_ID = 1;
     public static int BEAM_BREAK_2_ID = 3;
