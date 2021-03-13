@@ -16,7 +16,7 @@ public class LightRingOn extends CommandBase {
 
     @Override
     public void initialize() {
-        lightRing.turnOn();
+        lightRing.turnVisionOn();
     }
 
     @Override

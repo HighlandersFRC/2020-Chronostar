@@ -3,38 +3,38 @@
 package frc.robot.tools.math;
 
 public class Point {
-    private double xpos;
-    private double ypos;
+    private double x;
+    private double y;
     private double theta;
 
     public Point(double x, double y) {
-        xpos = x;
-        ypos = y;
+        this.x = x;
+        this.y = y;
     }
 
-    public Point(double x, double y, double angle) {
-        xpos = x;
-        ypos = y;
-        theta = angle;
+    public Point(double x, double y, double theta) {
+        this.x = x;
+        this.y = y;
+        this.theta = theta;
     }
 
     public void setLocation(double x, double y) {
-        xpos = x;
-        ypos = y;
+        this.x = x;
+        this.y = y;
     }
 
     public void setLocation(double x, double y, double t) {
-        xpos = x;
-        ypos = y;
+        this.x = x;
+        this.y = y;
         theta = t;
     }
 
-    public double getXPos() {
-        return xpos;
+    public double getX() {
+        return x;
     }
 
-    public double getYPos() {
-        return ypos;
+    public double getY() {
+        return y;
     }
 
     public double getTheta() {

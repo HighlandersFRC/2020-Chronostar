@@ -11,6 +11,7 @@ public class SetHoodPosition extends CommandBase {
 
     public SetHoodPosition(Hood hood, double target) {
         this.hood = hood;
+        addRequirements(hood);
         this.target = target;
     }
 
@@ -27,6 +28,6 @@ public class SetHoodPosition extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return true;
+        return Math.abs(target - hood.getHoodPosition()) < 0.1;
     }
 }
