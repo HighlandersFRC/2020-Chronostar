@@ -2,11 +2,11 @@
 
 package frc.robot.commands.basic;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 import frc.robot.subsystems.LightRing;
 
-public class LightRingOff extends CommandBase {
+public class LightRingOff extends InstantCommand {
     private LightRing lightRing;
 
     public LightRingOff(LightRing lightRing) {
@@ -24,9 +24,4 @@ public class LightRingOff extends CommandBase {
 
     @Override
     public void end(final boolean interrupted) {}
-
-    @Override
-    public boolean isFinished() {
-        return false;
-    }
 }

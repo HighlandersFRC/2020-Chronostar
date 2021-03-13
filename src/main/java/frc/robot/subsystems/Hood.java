@@ -3,7 +3,6 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANDigitalInput;
-import com.revrobotics.CANDigitalInput.LimitSwitch;
 import com.revrobotics.CANDigitalInput.LimitSwitchPolarity;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
@@ -29,9 +28,9 @@ public class Hood extends SubsystemBaseEnhanced {
 
     private final CANSparkMax hoodMotor = new CANSparkMax(Constants.HOOD_ID, MotorType.kBrushless);
     private final CANDigitalInput lowerHoodSwitch =
-            new CANDigitalInput(hoodMotor, LimitSwitch.kReverse, LimitSwitchPolarity.kNormallyOpen);
+            hoodMotor.getReverseLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
     private final CANDigitalInput upperHoodSwitch =
-            new CANDigitalInput(hoodMotor, LimitSwitch.kForward, LimitSwitchPolarity.kNormallyOpen);
+            hoodMotor.getForwardLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
     private final CANPIDController pidController;
     private final CANEncoder hoodEncoder;
 
@@ -53,9 +52,9 @@ public class Hood extends SubsystemBaseEnhanced {
         pidController.setD(kd);
         pidController.setIZone(.2);
         pidController.setOutputRange(-1, 1);
-        pidController.setSmartMotionMaxVelocity(160, 0);
-        pidController.setSmartMotionMinOutputVelocity(-160, 0);
-        pidController.setSmartMotionMaxAccel(100, 0);
+        pidController.setSmartMotionMaxVelocity(200, 0);
+        pidController.setSmartMotionMinOutputVelocity(-200, 0);
+        pidController.setSmartMotionMaxAccel(200, 0);
         pidController.setSmartMotionAllowedClosedLoopError(.1, 0);
         setDefaultCommand(new HoodDefault(this));
     }

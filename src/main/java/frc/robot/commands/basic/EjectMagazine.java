@@ -2,6 +2,7 @@
 
 package frc.robot.commands.basic;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.MagIntake;
@@ -9,6 +10,7 @@ import frc.robot.subsystems.MagIntake;
 public class EjectMagazine extends CommandBase {
 
     private MagIntake magIntake;
+    private double time;
     private final double LOW_MAG_PERCENT = 0.4;
     private final double HIGH_MAG_PERCENT = 1;
     private final double HIGH_INTAKE_PERCENT = 0.8;
@@ -18,8 +20,16 @@ public class EjectMagazine extends CommandBase {
         addRequirements(this.magIntake);
     }
 
+    public EjectMagazine(MagIntake magIntake, double time) {
+        this.magIntake = magIntake;
+        addRequirements(magIntake);
+        this.time = time;
+    }
+
     @Override
-    public void initialize() {}
+    public void initialize() {
+        time += Timer.getFPGATimestamp();
+    }
 
     @Override
     public void execute() {
@@ -32,6 +42,9 @@ public class EjectMagazine extends CommandBase {
 
     @Override
     public boolean isFinished() {
+        if (time != 0) {
+            return Timer.getFPGATimestamp() >= time;
+        }
         return false;
     }
 }

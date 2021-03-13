@@ -29,7 +29,7 @@ public class Robot extends TimedRobot {
     private final Odometry odometry = new Odometry(drive, peripherals);
 
     private final AutoSuite autoSuite =
-            new AutoSuite(drive, odometry, peripherals, shooter, magIntake, hood);
+            new AutoSuite(drive, odometry, peripherals, shooter, magIntake, hood, lightRing);
 
     public Robot() {}
 
