@@ -4,10 +4,12 @@ package frc.robot.commands.autos;
 
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import frc.robot.commands.basic.NavxTurn;
 import frc.robot.commands.basic.PurePursuit;
+import frc.robot.commands.basic.SmartIntake;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.MagIntake;
 import frc.robot.subsystems.Peripherals;
@@ -43,6 +45,8 @@ public class SixBallAuto extends SequentialCommandGroup {
         sixBallPart1Follower = new PurePursuit(drive, odometry, sixBallPart1, 2.5, 5.0, true);
         sixBallPart2Follower = new PurePursuit(drive, odometry, sixBallPart2, 2.5, 5.0, true);
         addCommands(
-                sixBallPart1Follower, new NavxTurn(drive, peripherals, -5), sixBallPart2Follower);
+                sixBallPart1Follower,
+                new NavxTurn(drive, peripherals, 10),
+                new ParallelCommandGroup(new SmartIntake(magIntake, 10), sixBallPart2Follower));
     }
 }

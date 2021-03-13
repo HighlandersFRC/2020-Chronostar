@@ -44,7 +44,6 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         SmartDashboard.putNumber("Vision Angle", peripherals.getCamAngle());
-        // hood.periodic();
         CommandScheduler.getInstance().run();
         SmartDashboard.putNumber("navx value", odometry.getTheta());
         SmartDashboard.putNumber("Hood Value", hood.getHoodPosition());
@@ -60,11 +59,12 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        autoSuite.schedule();
+        peripherals.zeroNavx();
         for (SubsystemBaseEnhanced s : subsystems) {
             s.autoInit();
         }
         odometry.zero();
+        autoSuite.schedule();
     }
 
     @Override

@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
+import frc.robot.commands.basic.NavxTurn;
 import frc.robot.commands.basic.PurePursuit;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Peripherals;
@@ -37,7 +38,6 @@ public class BounceRun extends SequentialCommandGroup {
                     TrajectoryUtil.fromPathweaverJson(
                             Paths.get("/home/lvuser/deploy/BouncePart4.json"));
 
-            TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/ThreePart1.json"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -46,6 +46,13 @@ public class BounceRun extends SequentialCommandGroup {
         bouncePart2Follower = new PurePursuit(drive, odometry, bouncePart2, 2.5, 5.0, true);
         bouncePart3Follower = new PurePursuit(drive, odometry, bouncePart3, 2.5, 5.0, false);
         bouncePart4Follower = new PurePursuit(drive, odometry, bouncePart4, 2.5, 5.0, true);
-        addCommands();
+        addCommands(
+                bouncePart1Follower,
+                new NavxTurn(drive, peripherals, 90),
+                bouncePart2Follower,
+                new NavxTurn(drive, peripherals, 90),
+                bouncePart3Follower,
+                new NavxTurn(drive, peripherals, 90),
+                bouncePart4Follower);
     }
 }

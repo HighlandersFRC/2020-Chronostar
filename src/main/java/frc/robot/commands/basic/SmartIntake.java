@@ -11,7 +11,7 @@ import frc.robot.subsystems.MagIntake.BeamBreakID;
 public class SmartIntake extends CommandBase {
     private MagIntake magIntake;
 
-    private static final double INTAKING_POWER = 1;
+    private static final double INTAKING_POWER = 0.5;
     private static final double MIDDLE_BREAK_3_POWER = 0.3;
     private static final double LOW_MAG_BREAK_1_POWER = 0.5;
     private static final double HIGH_MAG_BREAK_1_POWER = 0.2;
@@ -53,11 +53,9 @@ public class SmartIntake extends CommandBase {
             magIntake.setMagPercent(0, 0);
         } else if (!magIntake.getBeamBreak(BeamBreakID.THREE)) {
             magIntake.setMagPercent(0, 0);
-            magIntake.setIntakePercent(0, MIDDLE_BREAK_3_POWER);
         } else if (!magIntake.getBeamBreak(BeamBreakID.ONE)
                 & magIntake.getBeamBreak(BeamBreakID.TWO)) {
             magIntake.setMagPercent(LOW_MAG_BREAK_1_POWER, HIGH_MAG_BREAK_1_POWER);
-            magIntake.setIntakePercent(0, MIDDLE_WHEEL_BREAK_1_POWER);
         } else if (!magIntake.getBeamBreak(BeamBreakID.TWO)
                 & magIntake.getBeamBreak(BeamBreakID.ONE)) {
             magIntake.setMagPercent(LOW_MAG_BREAK_2_NO_1_POWER, HIGH_MAG_BREAK_2_NO_1_POWER);
