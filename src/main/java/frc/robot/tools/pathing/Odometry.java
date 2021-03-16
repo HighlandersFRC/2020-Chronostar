@@ -28,7 +28,7 @@ public class Odometry {
     public Odometry(Drive drive, Peripherals peripherals) {
         this.drive = drive;
         this.peripherals = peripherals;
-        peripherals.init();
+        // peripherals.init();
     }
 
     public Odometry(Drive drive, Peripherals peripherals, boolean inverted) {
@@ -40,7 +40,7 @@ public class Odometry {
     public void zero() {
         currentX = 0;
         currentY = 0;
-        peripherals.init();
+        // peripherals.init();
         currentLeft = 0;
         currentRight = 0;
         left = 0;

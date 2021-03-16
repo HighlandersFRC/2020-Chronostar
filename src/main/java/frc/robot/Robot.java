@@ -16,7 +16,6 @@ import frc.robot.commands.basic.PurePursuit;
 import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SmartIntake;
 import frc.robot.commands.composite.Fire;
-import frc.robot.commands.composite.FireBack;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.MagIntake.BeamBreakID;
 import frc.robot.tools.pathing.Odometry;
@@ -200,22 +199,13 @@ public class Robot extends TimedRobot {
             s.teleopInit();
         }
         OI.driverA.whenPressed(
-                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 4, 3800, 4));
+                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 3, 3400, 4));
         OI.driverB.whenPressed(
-                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 12.55, 5200, 8));
+                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 12.25, 4600, 8));
         OI.driverY.whenPressed(
-                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 14.5, 5500, 9));
+                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 12.5, 4800, 9));
         OI.driverX.whenPressed(
-                new FireBack(
-                        shooter,
-                        hood,
-                        magIntake,
-                        drive,
-                        lightRing,
-                        peripherals,
-                        14.75,
-                        5700,
-                        10.5));
+                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 15, 5500, 10.25));
         OI.driverA.whenReleased(new SetHoodPosition(hood, 0));
         OI.driverA.whenReleased(new CancelMagazine(magIntake));
         OI.driverB.whenReleased(new SetHoodPosition(hood, 0));
