@@ -44,6 +44,10 @@ public class Peripherals extends SubsystemBaseEnhanced {
 
     public Peripherals() {}
 
+    public boolean isNavxConnected() {
+        return navx.isConnected();
+    }
+
     public double getCamAngle() {
         visionCam.updateVision();
         return visionCam.getAngle();

@@ -64,7 +64,9 @@ public class Robot extends TimedRobot {
             s.autoInit();
         }
         odometry.zero();
-        autoSuite.schedule();
+        if (peripherals.isNavxConnected()) {
+            autoSuite.schedule();
+        }
     }
 
     @Override

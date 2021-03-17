@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-import frc.robot.commands.basic.NavxTurn;
 import frc.robot.commands.basic.PurePursuit;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Peripherals;
@@ -50,12 +49,6 @@ public class BarrelRun extends SequentialCommandGroup {
         barrelPart4Follower = new PurePursuit(drive, odometry, barrelPart4, 2.5, 5.0, false);
 
         addCommands(
-                barrelPart1Follower,
-                new NavxTurn(drive, peripherals, 180),
-                barrelPart2Follower,
-                new NavxTurn(drive, peripherals, 0),
-                barrelPart3Follower,
-                new NavxTurn(drive, peripherals, -270),
-                barrelPart4Follower);
+                barrelPart1Follower, barrelPart2Follower, barrelPart3Follower, barrelPart4Follower);
     }
 }
