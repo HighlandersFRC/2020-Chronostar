@@ -212,8 +212,8 @@ public class Robot extends TimedRobot {
                         drive,
                         lightRing,
                         peripherals,
-                        14.8,
-                        5450,
+                        15.45,
+                        5650,
                         10.25));
         OI.driverA.whenReleased(new SetHoodPosition(hood, 0));
         OI.driverA.whenReleased(new CancelMagazine(magIntake));
