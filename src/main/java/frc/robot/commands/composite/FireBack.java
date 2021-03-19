@@ -36,6 +36,6 @@ public class FireBack extends SequentialCommandGroup {
                         new SpinFlywheel(shooter, magIntake, fireSpeed),
                         //  new VisionAlignment(lightRing, drive, peripherals, angleOffset),
                         new WaitCommand(2)),
-                new EjectMagazine(magIntake));
+                new EjectMagazine(magIntake, drive));
     }
 }
