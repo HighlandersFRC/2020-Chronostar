@@ -9,7 +9,8 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-import frc.robot.commands.basic.BallTracking;
+import frc.robot.commands.basic.BallRingOff;
+import frc.robot.commands.basic.BallRingOn;
 import frc.robot.commands.basic.CancelMagazine;
 import frc.robot.commands.basic.NavxTurn;
 import frc.robot.commands.basic.Outtake;
@@ -17,6 +18,7 @@ import frc.robot.commands.basic.PurePursuit;
 import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SmartIntake;
 import frc.robot.commands.composite.Fire;
+import frc.robot.commands.composite.GalacticSearch;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.MagIntake.BeamBreakID;
 import frc.robot.tools.pathing.Odometry;
@@ -207,7 +209,9 @@ public class Robot extends TimedRobot {
                 new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 12.45, 4800, 9));
         OI.driverX.whenPressed(
                 new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 15.25, 5650, 7));
-        OI.driverA.whenPressed(new BallTracking(lightRing, drive, peripherals, 2.0, magIntake));
+        OI.driverBack.whenPressed(new BallRingOn(lightRing));
+        OI.driverBack.whenReleased(new BallRingOff(lightRing));
+        OI.operatorA.whenPressed(new GalacticSearch(drive, peripherals, magIntake, lightRing, 10));
         OI.driverA.whenReleased(new SetHoodPosition(hood, 0));
         OI.driverA.whenReleased(new CancelMagazine(magIntake));
         OI.driverB.whenReleased(new SetHoodPosition(hood, 0));
