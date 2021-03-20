@@ -9,6 +9,7 @@ import frc.robot.commands.defaults.LightRingDefault;
 
 public class LightRing extends SubsystemBaseEnhanced {
     private final Relay visionRelay = new Relay(0);
+    private final Relay ballRelay = new Relay(1);
 
     public LightRing() {}
 
@@ -17,12 +18,20 @@ public class LightRing extends SubsystemBaseEnhanced {
         setDefaultCommand(new LightRingDefault(this));
     }
 
-    public void turnOn() {
+    public void turnVisionOn() {
         visionRelay.set(Value.kForward);
     }
 
-    public void turnOff() {
+    public void turnVisionOff() {
         visionRelay.set(Value.kReverse);
+    }
+
+    public void turnBallOn() {
+        ballRelay.set(Value.kForward);
+    }
+
+    public void turnBallOff() {
+        ballRelay.set(Value.kReverse);
     }
 
     @Override
