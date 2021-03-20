@@ -17,11 +17,11 @@ public class LightRing extends SubsystemBaseEnhanced {
         setDefaultCommand(new LightRingDefault(this));
     }
 
-    public void turnOn() {
+    public void turnOff() {
         visionRelay.set(Value.kForward);
     }
 
-    public void turnOff() {
+    public void turnOn() {
         visionRelay.set(Value.kReverse);
     }
 

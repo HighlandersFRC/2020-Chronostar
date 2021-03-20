@@ -16,6 +16,7 @@ import frc.robot.commands.basic.PurePursuit;
 import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SmartIntake;
 import frc.robot.commands.composite.Fire;
+import frc.robot.commands.composite.FireBack;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.MagIntake.BeamBreakID;
 import frc.robot.tools.pathing.Odometry;
@@ -205,7 +206,7 @@ public class Robot extends TimedRobot {
         OI.driverY.whenPressed(
                 new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 12.45, 4800, 9));
         OI.driverX.whenPressed(
-                new Fire(
+                new FireBack(
                         shooter,
                         hood,
                         magIntake,
