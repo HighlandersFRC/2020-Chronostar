@@ -4,11 +4,13 @@ package frc.robot.commands.basic;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+import frc.robot.subsystems.LightRing;
 import frc.robot.subsystems.MagIntake;
 import frc.robot.subsystems.MagIntake.BeamBreakID;
 
 public class SmartIntake extends CommandBase {
     private MagIntake magIntake;
+    private LightRing lightRing;
 
     private static final double INTAKING_POWER = 1;
     private static final double MIDDLE_BREAK_3_POWER = 0.3;
@@ -27,9 +29,10 @@ public class SmartIntake extends CommandBase {
     private double duration;
     private int counter;
 
-    public SmartIntake(MagIntake magIntake) {
+    public SmartIntake(MagIntake magIntake, LightRing lightRing) {
         this.magIntake = magIntake;
         addRequirements(magIntake);
+        this.lightRing = lightRing;
     }
 
     public SmartIntake(MagIntake magIntake, double duration) {
@@ -41,6 +44,7 @@ public class SmartIntake extends CommandBase {
 
     @Override
     public void initialize() {
+        lightRing.ballTurnOff();
         magIntake.intakePistonDown();
     }
 

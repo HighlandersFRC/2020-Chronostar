@@ -21,7 +21,7 @@ public class LightRingDefault extends CommandBase {
     @Override
     public void execute() {
         lightRing.turnOff();
-        lightRing.ballTurnOff();
+        // lightRing.ballTurnOff();
     }
 
     @Override

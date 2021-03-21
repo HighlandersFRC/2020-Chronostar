@@ -3,7 +3,6 @@
 package frc.robot.commands.composite;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import frc.robot.commands.basic.BallTracking;
 import frc.robot.commands.basic.SmartIntake;
@@ -24,8 +23,7 @@ public class GalacticSearch extends SequentialCommandGroup {
         addRequirements(drive, magIntake);
         addCommands(
                 new BallTracking(lightRing, drive, peripherals, angleOffset, magIntake),
-                new WaitCommand(1),
-                new SmartIntake(magIntake));
+                new SmartIntake(magIntake, lightRing));
     }
 
     public boolean isFinished() {

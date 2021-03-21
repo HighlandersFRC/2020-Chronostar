@@ -211,7 +211,7 @@ public class Robot extends TimedRobot {
                 new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 15.25, 5650, 7));
         OI.driverBack.whenPressed(new BallRingOn(lightRing));
         OI.driverBack.whenReleased(new BallRingOff(lightRing));
-        OI.operatorA.whenPressed(new GalacticSearch(drive, peripherals, magIntake, lightRing, 10));
+        OI.operatorA.whenPressed(new GalacticSearch(drive, peripherals, magIntake, lightRing, 0));
         OI.driverA.whenReleased(new SetHoodPosition(hood, 0));
         OI.driverA.whenReleased(new CancelMagazine(magIntake));
         OI.driverB.whenReleased(new SetHoodPosition(hood, 0));
@@ -221,7 +221,7 @@ public class Robot extends TimedRobot {
         OI.driverX.whenReleased(new SetHoodPosition(hood, 0));
         OI.driverX.whenReleased(new CancelMagazine(magIntake));
         OI.driverLT.whileHeld(new Outtake(magIntake));
-        OI.driverRT.whileHeld(new SmartIntake(magIntake));
+        OI.driverRT.whileHeld(new SmartIntake(magIntake, lightRing));
     }
 
     @Override
