@@ -3,6 +3,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import frc.robot.commands.autos.BarrelRun;
 import frc.robot.commands.autos.BounceRun;
@@ -37,6 +38,7 @@ public class AutoSuite {
         bounce = new BounceRun(drive, peripherals, odometry);
         sixBall =
                 new SixBallAuto(drive, peripherals, odometry, magIntake, shooter, hood, lightRing);
+        auto = new SequentialCommandGroup();
     }
 
     public void schedule() {

@@ -29,8 +29,7 @@ public class Robot extends TimedRobot {
     };
     private final Odometry odometry = new Odometry(drive, peripherals);
 
-    private final AutoSuite autoSuite =
-            new AutoSuite(drive, odometry, peripherals, shooter, magIntake, hood, lightRing);
+    private AutoSuite autoSuite;
 
     public Robot() {}
 
@@ -38,6 +37,8 @@ public class Robot extends TimedRobot {
         for (SubsystemBaseEnhanced s : subsystems) {
             s.init();
         }
+        autoSuite =
+                new AutoSuite(drive, odometry, peripherals, shooter, magIntake, hood, lightRing);
         odometry.zero();
     }
 
@@ -49,6 +50,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Hood Value", hood.getHoodPosition());
         SmartDashboard.putNumber("x", odometry.getX());
         SmartDashboard.putNumber("y", odometry.getY());
+        SmartDashboard.putNumber("left encoder", drive.getLeftPosition());
     }
 
     @Override

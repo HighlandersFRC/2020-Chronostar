@@ -50,7 +50,7 @@ public class VisionAlignment extends CommandBase {
     @Override
     public void execute() {
         counter++;
-        lightRing.turnVisionOn();
+        lightRing.turnVisionOff();
         // SmartDashboard.putNumber("vision Angle", peripherals.getCamAngle());
         // System.out.println(peripherals.getCamAngle());
         pid.updatePID(peripherals.getCamAngle() + angleOffset);
