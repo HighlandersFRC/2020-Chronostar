@@ -29,8 +29,7 @@ public class Robot extends TimedRobot {
     };
     private final Odometry odometry = new Odometry(drive, peripherals);
 
-    private final AutoSuite autoSuite =
-            new AutoSuite(drive, odometry, peripherals, shooter, magIntake, hood, lightRing);
+    private AutoSuite autoSuite;
 
     public Robot() {}
 
@@ -39,6 +38,8 @@ public class Robot extends TimedRobot {
             s.init();
         }
         odometry.zero();
+        autoSuite =
+                new AutoSuite(drive, odometry, peripherals, shooter, magIntake, hood, lightRing);
     }
 
     @Override
@@ -52,7 +53,9 @@ public class Robot extends TimedRobot {
     }
 
     @Override
-    public void disabledInit() {}
+    public void disabledInit() {
+        drive.setDriveCoast();
+    }
 
     @Override
     public void disabledPeriodic() {}

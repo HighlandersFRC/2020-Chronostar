@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-import frc.robot.commands.basic.NavxTurn;
 import frc.robot.commands.basic.PurePursuit;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Peripherals;
@@ -42,17 +41,11 @@ public class BounceRun extends SequentialCommandGroup {
             e.printStackTrace();
         }
 
-        bouncePart1Follower = new PurePursuit(drive, odometry, bouncePart1, 2.5, 5.0, false);
-        bouncePart2Follower = new PurePursuit(drive, odometry, bouncePart2, 2.5, 5.0, true);
-        bouncePart3Follower = new PurePursuit(drive, odometry, bouncePart3, 2.5, 5.0, false);
-        bouncePart4Follower = new PurePursuit(drive, odometry, bouncePart4, 2.5, 5.0, true);
+        bouncePart1Follower = new PurePursuit(drive, odometry, bouncePart1, 2.5, 5.0, false, 0);
+        bouncePart2Follower = new PurePursuit(drive, odometry, bouncePart2, 2.5, 5.0, true, 0);
+        bouncePart3Follower = new PurePursuit(drive, odometry, bouncePart3, 2.5, 5.0, false, 0);
+        bouncePart4Follower = new PurePursuit(drive, odometry, bouncePart4, 2.5, 5.0, true, 0);
         addCommands(
-                bouncePart1Follower,
-                new NavxTurn(drive, peripherals, 90),
-                bouncePart2Follower,
-                new NavxTurn(drive, peripherals, 90),
-                bouncePart3Follower,
-                new NavxTurn(drive, peripherals, 90),
-                bouncePart4Follower);
+                bouncePart1Follower, bouncePart2Follower, bouncePart3Follower, bouncePart4Follower);
     }
 }
