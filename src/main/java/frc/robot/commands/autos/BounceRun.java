@@ -42,9 +42,9 @@ public class BounceRun extends SequentialCommandGroup {
         }
 
         bouncePart1Follower = new PurePursuit(drive, odometry, bouncePart1, 2.5, 5.0, false, 0);
-        bouncePart2Follower = new PurePursuit(drive, odometry, bouncePart2, 2.5, 5.0, true, 0);
-        bouncePart3Follower = new PurePursuit(drive, odometry, bouncePart3, 2.5, 5.0, false, 0);
-        bouncePart4Follower = new PurePursuit(drive, odometry, bouncePart4, 2.5, 5.0, true, 0);
+        bouncePart2Follower = new PurePursuit(drive, odometry, bouncePart2, 2.5, 5.0, true, -180);
+        bouncePart3Follower = new PurePursuit(drive, odometry, bouncePart3, 2.5, 5.0, false, 360);
+        bouncePart4Follower = new PurePursuit(drive, odometry, bouncePart4, 2.5, 5.0, true, -180);
         addCommands(
                 bouncePart1Follower, bouncePart2Follower, bouncePart3Follower, bouncePart4Follower);
     }
