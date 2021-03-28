@@ -28,11 +28,11 @@ public class LightRing extends SubsystemBaseEnhanced {
     }
 
     public void turnBallOn() {
-        ballRelay.set(Value.kForward);
+        ballRelay.set(Value.kReverse);
     }
 
     public void turnBallOff() {
-        ballRelay.set(Value.kReverse);
+        ballRelay.set(Value.kForward);
     }
 
     @Override

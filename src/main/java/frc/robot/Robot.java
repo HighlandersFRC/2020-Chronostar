@@ -28,8 +28,8 @@ public class Robot extends TimedRobot {
         hood, magIntake, drive, shooter, climber, lightRing, peripherals
     };
     private final Odometry odometry = new Odometry(drive, peripherals);
-
     private AutoSuite autoSuite;
+    private int disabledCounter = -1;
 
     public Robot() {}
 
@@ -48,12 +48,13 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().run();
         SmartDashboard.putNumber("navx value", odometry.getTheta());
         SmartDashboard.putNumber("Hood Value", hood.getHoodPosition());
-        SmartDashboard.putNumber("x", odometry.getX());
-        SmartDashboard.putNumber("y", odometry.getY());
+        SmartDashboard.putNumber("ball dist", peripherals.getCamDistance());
+        SmartDashboard.putNumber("disabled counter", disabledCounter);
     }
 
     @Override
     public void disabledInit() {
+        disabledCounter++;
         drive.setDriveCoast();
     }
 
@@ -67,6 +68,7 @@ public class Robot extends TimedRobot {
             s.autoInit();
         }
         odometry.zero();
+        autoSuite.setGalacticSearch(disabledCounter);
         if (peripherals.isNavxConnected()) {
             autoSuite.schedule();
         }
@@ -108,11 +110,18 @@ public class Robot extends TimedRobot {
         OI.driverX.whenReleased(new CancelMagazine(magIntake));
         OI.driverLT.whileHeld(new Outtake(magIntake));
         OI.driverRT.whileHeld(new SmartIntake(magIntake));
+        OI.driverBack.whileHeld(
+                () -> {
+                    lightRing.turnBallOn();
+                });
+        OI.driverBack.whenReleased(
+                () -> {
+                    lightRing.turnBallOff();
+                });
     }
 
     @Override
     public void teleopPeriodic() {
-
         hood.periodic();
     }
 
