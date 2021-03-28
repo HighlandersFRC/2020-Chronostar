@@ -61,12 +61,12 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        peripherals.zeroNavx();
+        drive.resetNavx();
         for (SubsystemBaseEnhanced s : subsystems) {
             s.autoInit();
         }
         odometry.zero();
-        if (peripherals.isNavxConnected()) {
+        if (drive.isNavxConnected()) {
             autoSuite.schedule();
         }
     }

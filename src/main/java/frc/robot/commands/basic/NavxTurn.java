@@ -33,7 +33,7 @@ public class NavxTurn extends CommandBase {
 
     @Override
     public void execute() {
-        pid.updatePID(peripherals.getNavxAngle());
+        pid.updatePID(drive.getNavxAngle());
         drive.setLeftPercent(pid.getResult());
         drive.setRightPercent(-pid.getResult());
     }
@@ -42,11 +42,11 @@ public class NavxTurn extends CommandBase {
     public void end(boolean interrupted) {
         drive.setLeftPercent(0);
         drive.setRightPercent(0);
-        peripherals.zeroNavx();
+        drive.resetNavx();
     }
 
     @Override
     public boolean isFinished() {
-        return Math.abs(target - peripherals.getNavxAngle()) < 5;
+        return Math.abs(target - drive.getNavxAngle()) < 5;
     }
 }
