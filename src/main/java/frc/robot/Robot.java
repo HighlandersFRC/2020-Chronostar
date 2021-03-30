@@ -44,17 +44,21 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotPeriodic() {
+        drive.periodic();
         SmartDashboard.putNumber("Vision Angle", peripherals.getCamAngle());
         CommandScheduler.getInstance().run();
-        SmartDashboard.putNumber("navx value", odometry.getTheta());
         SmartDashboard.putNumber("Hood Value", hood.getHoodPosition());
-        SmartDashboard.putNumber("x", odometry.getX());
-        SmartDashboard.putNumber("y", odometry.getY());
-        SmartDashboard.putNumber("left encoder", drive.getLeftPosition());
+        SmartDashboard.putNumber("x", drive.getPose().getX());
+        SmartDashboard.putNumber("y", drive.getPose().getY());
+        SmartDashboard.putNumber("left", drive.getLeftPosition());
+        SmartDashboard.putNumber("right", drive.getRightPosition());
+        SmartDashboard.putNumber("theta", drive.getNavxAngle());
     }
 
     @Override
-    public void disabledInit() {}
+    public void disabledInit() {
+        drive.setDriveCoast();
+    }
 
     @Override
     public void disabledPeriodic() {}
@@ -76,7 +80,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        autoSuite.cancel();
+        autoSuite.beginTeleop();
         for (SubsystemBaseEnhanced s : subsystems) {
             s.teleopInit();
         }

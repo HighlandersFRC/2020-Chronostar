@@ -50,6 +50,7 @@ public class OI {
     public static JoystickButton slalom = new JoystickButton(autoBox, 2);
     public static JoystickButton barrel = new JoystickButton(autoBox, 3);
     public static JoystickButton bounce = new JoystickButton(autoBox, 4);
+    public static JoystickButton ramTest = new JoystickButton(autoBox, 5);
 
     public static double getDriverLeftX() {
         return driverController.getX(Hand.kLeft);

@@ -2,7 +2,6 @@
 
 package frc.robot.subsystems;
 
-
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,7 +20,6 @@ public class Peripherals extends SubsystemBaseEnhanced {
         SerialPort jevois = null;
         try {
             jevois = new SerialPort(115200, SerialPort.Port.kUSB1);
-            System.out.println("Hola om");
             SmartDashboard.putBoolean("Got Camera", true);
         } catch (final Exception e) {
             SmartDashboard.putBoolean("Got Camera", false);

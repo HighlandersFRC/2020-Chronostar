@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import frc.robot.commands.autos.BarrelRun;
 import frc.robot.commands.autos.BounceRun;
+import frc.robot.commands.autos.RamseteTest;
 import frc.robot.commands.autos.SixBallAuto;
 import frc.robot.commands.autos.SlalomRun;
 import frc.robot.subsystems.Drive;
@@ -23,6 +24,7 @@ public class AutoSuite {
     private BarrelRun barrel;
     private BounceRun bounce;
     private SixBallAuto sixBall;
+    private RamseteTest ramseteTest;
     private Command auto;
 
     public AutoSuite(
@@ -38,6 +40,7 @@ public class AutoSuite {
         bounce = new BounceRun(drive, peripherals, odometry);
         sixBall =
                 new SixBallAuto(drive, peripherals, odometry, magIntake, shooter, hood, lightRing);
+        ramseteTest = new RamseteTest(drive);
         auto = new SequentialCommandGroup();
     }
 
@@ -50,13 +53,13 @@ public class AutoSuite {
             auto = barrel;
         } else if (OI.bounce.get()) {
             auto = bounce;
+        } else if (OI.ramTest.get()) {
+            auto = ramseteTest;
         }
         auto.schedule();
     }
 
-    public void cancel() {
-        if (auto.isScheduled()) {
-            auto.cancel();
-        }
+    public void beginTeleop() {
+        auto.cancel();
     }
 }

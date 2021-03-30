@@ -11,10 +11,15 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 
 import frc.robot.Constants;
 import frc.robot.commands.defaults.DriveDefault;
@@ -34,6 +39,15 @@ public class Drive extends SubsystemBaseEnhanced {
     private final DifferentialDrive drive = new DifferentialDrive(leftMotors, rightMotors);
     private final AHRS navx = new AHRS(Port.kMXP);
     private DifferentialDriveOdometry odometry;
+    public static final DifferentialDriveKinematics kinematics =
+            new DifferentialDriveKinematics(2.1);
+    public static final DifferentialDriveVoltageConstraint autoVoltageConstraint =
+            new DifferentialDriveVoltageConstraint(
+                    new SimpleMotorFeedforward(
+                            Constants.ramseteKS, Constants.ramseteKV, Constants.ramseteKA),
+                    kinematics,
+                    10);
+    public static final TrajectoryConfig autoTrajectoryConfig = new TrajectoryConfig(12, 12);
 
     private final WPI_TalonFX[] driveMotors = {
         leftDriveLead, rightDriveLead, leftDriveFollower, rightDriveFollower
@@ -81,6 +95,8 @@ public class Drive extends SubsystemBaseEnhanced {
         rightDriveLead.config_kD(0, vkD);
         setCurrentLimitsEnabled();
         setDefaultCommand(new DriveDefault(this));
+        resetOdometry(new Pose2d(0.0, 0.0, new Rotation2d()));
+        resetNavx();
     }
 
     @Override
@@ -89,6 +105,7 @@ public class Drive extends SubsystemBaseEnhanced {
         setDriveBrake();
         leftDriveLead.setSelectedSensorPosition(0);
         rightDriveLead.setSelectedSensorPosition(0);
+        resetNavx();
     }
 
     @Override
@@ -183,8 +200,8 @@ public class Drive extends SubsystemBaseEnhanced {
     }
 
     public void tankDriveVolts(double leftVolts, double rightVolts) {
-        leftMotors.setVoltage(leftVolts);
-        rightMotors.setVoltage(-rightVolts);
+        leftMotors.setVoltage(-leftVolts);
+        rightMotors.setVoltage(rightVolts);
         drive.feed();
     }
 
@@ -198,7 +215,7 @@ public class Drive extends SubsystemBaseEnhanced {
 
     public void resetOdometry(Pose2d pose) {
         resetEncoders();
-        odometry.resetPosition(pose, navx.getRotation2d());
+        odometry.resetPosition(pose, new Rotation2d(navx.getAngle()));
     }
 
     public double getAverageEncoderDistance() {
@@ -221,6 +238,6 @@ public class Drive extends SubsystemBaseEnhanced {
 
     @Override
     public void periodic() {
-        odometry.update(navx.getRotation2d(), getLeftPosition(), getRightPosition());
+        odometry.update(new Rotation2d(navx.getAngle()), getLeftPosition(), getRightPosition());
     }
 }
