@@ -18,7 +18,7 @@ public class DriveDefault extends CommandBase {
 
     @Override
     public void execute() {
-        drive.arcadeDrive(OI.getDriverLeftY(), -Math.tanh(OI.getDriverRightX()) * 4 / Math.PI);
+        drive.arcadeDrive(-OI.getDriverLeftY(), Math.tanh(OI.getDriverRightX()) * 4 / Math.PI);
     }
 
     @Override

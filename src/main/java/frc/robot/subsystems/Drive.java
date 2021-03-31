@@ -47,7 +47,7 @@ public class Drive extends SubsystemBaseEnhanced {
                             Constants.ramseteKS, Constants.ramseteKV, Constants.ramseteKA),
                     kinematics,
                     10);
-    public static final TrajectoryConfig autoTrajectoryConfig = new TrajectoryConfig(12, 12);
+    public static final TrajectoryConfig autoTrajectoryConfig = new TrajectoryConfig(1, 1);
 
     private final WPI_TalonFX[] driveMotors = {
         leftDriveLead, rightDriveLead, leftDriveFollower, rightDriveFollower
@@ -73,9 +73,9 @@ public class Drive extends SubsystemBaseEnhanced {
         aPID.setMinOutput(-0.75);
         leftDriveLead.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
         rightDriveLead.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
-        leftDriveFollower.set(ControlMode.Follower, Constants.LEFT_DRIVE_LEAD_ID);
-        rightDriveFollower.set(ControlMode.Follower, Constants.RIGHT_DRIVE_LEAD_ID);
-        rightDriveLead.setInverted(true);
+        leftDriveFollower.follow(leftDriveLead);
+        rightDriveFollower.follow(rightDriveLead);
+        rightDriveLead.setInverted(false);
         rightDriveFollower.setInverted(InvertType.FollowMaster);
         leftDriveLead.setInverted(false);
         leftDriveFollower.setInverted(InvertType.FollowMaster);
@@ -95,8 +95,8 @@ public class Drive extends SubsystemBaseEnhanced {
         rightDriveLead.config_kD(0, vkD);
         setCurrentLimitsEnabled();
         setDefaultCommand(new DriveDefault(this));
-        resetOdometry(new Pose2d(0.0, 0.0, new Rotation2d()));
         resetNavx();
+        resetOdometry(new Pose2d(0.0, 0.0, new Rotation2d(0)));
     }
 
     @Override
@@ -160,7 +160,7 @@ public class Drive extends SubsystemBaseEnhanced {
     }
 
     public double getRightPosition() {
-        return Constants.driveUnitsToFeet(rightDriveLead.getSelectedSensorPosition());
+        return -Constants.driveUnitsToFeet(rightDriveLead.getSelectedSensorPosition());
     }
 
     public double getLeftSpeed() {
@@ -168,7 +168,7 @@ public class Drive extends SubsystemBaseEnhanced {
     }
 
     public double getRightSpeed() {
-        return Constants.driveUnitsPer100MSToFPS(rightDriveLead.getSelectedSensorVelocity());
+        return -Constants.driveUnitsPer100MSToFPS(rightDriveLead.getSelectedSensorVelocity());
     }
 
     public double getNavxAngle() {
@@ -192,7 +192,7 @@ public class Drive extends SubsystemBaseEnhanced {
     }
 
     public void arcadeDrive(double throttle, double turn) {
-        drive.arcadeDrive(throttle, turn);
+        drive.arcadeDrive(throttle, turn, false);
     }
 
     public void tankDrive(double left, double right) {
@@ -200,8 +200,8 @@ public class Drive extends SubsystemBaseEnhanced {
     }
 
     public void tankDriveVolts(double leftVolts, double rightVolts) {
-        leftMotors.setVoltage(-leftVolts);
-        rightMotors.setVoltage(rightVolts);
+        leftMotors.setVoltage(leftVolts);
+        rightMotors.setVoltage(-rightVolts);
         drive.feed();
     }
 
@@ -210,12 +210,12 @@ public class Drive extends SubsystemBaseEnhanced {
     }
 
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-        return new DifferentialDriveWheelSpeeds(getLeftSpeed() * 10, getRightSpeed() * 10);
+        return new DifferentialDriveWheelSpeeds(getLeftSpeed(), getRightSpeed());
     }
 
     public void resetOdometry(Pose2d pose) {
         resetEncoders();
-        odometry.resetPosition(pose, new Rotation2d(navx.getAngle()));
+        odometry.resetPosition(pose, navx.getRotation2d());
     }
 
     public double getAverageEncoderDistance() {
@@ -238,6 +238,6 @@ public class Drive extends SubsystemBaseEnhanced {
 
     @Override
     public void periodic() {
-        odometry.update(new Rotation2d(navx.getAngle()), getLeftPosition(), getRightPosition());
+        odometry.update(navx.getRotation2d(), getLeftPosition(), getRightPosition());
     }
 }

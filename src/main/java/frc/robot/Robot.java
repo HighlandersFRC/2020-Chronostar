@@ -53,19 +53,17 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("left", drive.getLeftPosition());
         SmartDashboard.putNumber("right", drive.getRightPosition());
         SmartDashboard.putNumber("theta", drive.getNavxAngle());
+        SmartDashboard.putString("drive wheel speeds", drive.getWheelSpeeds().toString());
     }
 
     @Override
-    public void disabledInit() {
-        drive.setDriveCoast();
-    }
+    public void disabledInit() {}
 
     @Override
     public void disabledPeriodic() {}
 
     @Override
     public void autonomousInit() {
-        drive.resetNavx();
         for (SubsystemBaseEnhanced s : subsystems) {
             s.autoInit();
         }
@@ -76,7 +74,9 @@ public class Robot extends TimedRobot {
     }
 
     @Override
-    public void autonomousPeriodic() {}
+    public void autonomousPeriodic() {
+        drive.periodic();
+    }
 
     @Override
     public void teleopInit() {

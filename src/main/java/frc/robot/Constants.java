@@ -32,10 +32,10 @@ public class Constants {
     public static final int HOOD_ID = 7;
 
     // Drive ramsete controller values
-    public static final double ramseteKS = 0.684;
-    public static final double ramseteKV = 0.953;
-    public static final double ramseteKA = 0.0676;
-    public static final double ramseteKP = 2.66;
+    public static final double ramseteKS = 0.644;
+    public static final double ramseteKV = 1.49;
+    public static final double ramseteKA = 0.114;
+    public static final double ramseteKP = 2.73;
 
     // Light ring ports
     public static final int VISION_TARGET_LIGHT_RING_ID = 0;
