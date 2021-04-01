@@ -35,7 +35,7 @@ public class Constants {
     public static final double ramseteKS = 0.644;
     public static final double ramseteKV = 1.49;
     public static final double ramseteKA = 0.114;
-    public static final double ramseteKP = 2.73;
+    public static final double ramseteKP = 0.0204;
 
     // Light ring ports
     public static final int VISION_TARGET_LIGHT_RING_ID = 0;

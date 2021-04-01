@@ -46,7 +46,7 @@ public class Drive extends SubsystemBaseEnhanced {
                     new SimpleMotorFeedforward(
                             Constants.ramseteKS, Constants.ramseteKV, Constants.ramseteKA),
                     kinematics,
-                    10);
+                    5);
     public static final TrajectoryConfig autoTrajectoryConfig = new TrajectoryConfig(1, 1);
 
     private final WPI_TalonFX[] driveMotors = {
