@@ -25,6 +25,7 @@ import java.nio.file.Paths;
 
 public class AutoSuite {
 
+    private Drive drive;
     private SixBallAuto sixBall;
     private Command auto;
     private RamseteCommand slalom;
@@ -40,6 +41,7 @@ public class AutoSuite {
             MagIntake magIntake,
             Hood hood,
             LightRing lightRing) {
+        this.drive = drive;
         sixBall =
                 new SixBallAuto(drive, peripherals, odometry, magIntake, shooter, hood, lightRing);
         try {
@@ -47,7 +49,6 @@ public class AutoSuite {
                     TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Slalom.json"));
             barrelTrajectory =
                     TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Barrel.json"));
-            drive.resetOdometry(slalomTrajectory.getInitialPose());
             slalom =
                     new RamseteCommand(
                             slalomTrajectory,
@@ -85,8 +86,10 @@ public class AutoSuite {
             auto = sixBall;
         } else if (OI.slalom.get()) {
             auto = slalom;
+            drive.resetOdometry(slalomTrajectory.getInitialPose());
         } else if (OI.barrel.get()) {
             auto = barrel;
+            drive.resetOdometry(barrelTrajectory.getInitialPose());
         }
         auto.schedule();
     }
