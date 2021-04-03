@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-import frc.robot.commands.autos.SixBallAuto;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.LightRing;
@@ -26,7 +25,6 @@ import java.nio.file.Paths;
 public class AutoSuite {
 
     private Drive drive;
-    private SixBallAuto sixBall;
     private Command auto;
     private RamseteCommand slalom;
     private Trajectory slalomTrajectory;
@@ -42,8 +40,6 @@ public class AutoSuite {
             Hood hood,
             LightRing lightRing) {
         this.drive = drive;
-        sixBall =
-                new SixBallAuto(drive, peripherals, odometry, magIntake, shooter, hood, lightRing);
         try {
             slalomTrajectory =
                     TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Slalom.json"));
@@ -82,9 +78,7 @@ public class AutoSuite {
     }
 
     public void schedule() {
-        if (OI.sixBall.get()) {
-            auto = sixBall;
-        } else if (OI.slalom.get()) {
+        if (OI.slalom.get()) {
             auto = slalom;
             drive.resetOdometry(slalomTrajectory.getInitialPose());
         } else if (OI.barrel.get()) {
