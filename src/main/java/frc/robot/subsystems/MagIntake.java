@@ -4,8 +4,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -13,7 +13,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.Constants;
 import frc.robot.commands.defaults.MagIntakeDefault;
@@ -33,7 +32,7 @@ public class MagIntake extends SubsystemBaseEnhanced {
     private final CANSparkMax highMag =
             new CANSparkMax(Constants.MAG_WHEEL_ID, MotorType.kBrushless);
 
-    private final TalonFX lowIntake = new TalonFX(Constants.LOW_INTAKE_ID);
+    private final WPI_TalonFX lowIntake = new WPI_TalonFX(Constants.LOW_INTAKE_ID);
     private final VictorSPX highIntake = new VictorSPX(Constants.HIGH_INTAKE_ID);
     private final DoubleSolenoid intakePiston = new DoubleSolenoid(0, 1);
 
@@ -111,6 +110,5 @@ public class MagIntake extends SubsystemBaseEnhanced {
     }
 
     @Override
-    public void periodic() {
-    }
+    public void periodic() {}
 }
