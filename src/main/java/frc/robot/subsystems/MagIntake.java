@@ -63,7 +63,7 @@ public class MagIntake extends SubsystemBaseEnhanced {
     public void setLowMagPercent(double power) {
         lowMag.set(ControlMode.PercentOutput, power);
     }
-
+    
     public void setHighMagPercent(double power) {
         highMag.set(power);
     }

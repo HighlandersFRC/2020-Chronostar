@@ -9,6 +9,9 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import com.revrobotics.ControlType;
 
 import frc.robot.Constants;
@@ -82,11 +85,12 @@ public class Hood extends SubsystemBaseEnhanced {
     public void periodic() {
         // Zeroing off the limit switches
         if (lowerHoodSwitch.get()) {
-            // hoodMotor.getEncoder().setPosition(minpoint);
-            // System.out.println("Hit bottom limit");
+            hoodMotor.getEncoder().setPosition(minpoint);
         } else if (upperHoodSwitch.get()) {
-            // hoodMotor.getEncoder().setPosition(maxpoint);
+            hoodMotor.getEncoder().setPosition(maxpoint);
         }
+        SmartDashboard.putBoolean("lower hood", lowerHoodSwitch.get());
+        SmartDashboard.putBoolean("upper hood", upperHoodSwitch.get());
         // Ensures that the hood is at lowest position
         if ((hoodTarget == 0) && (hoodMotor.getEncoder().getPosition() <= 0.5)) {
             hoodMotor.set(-0.1);

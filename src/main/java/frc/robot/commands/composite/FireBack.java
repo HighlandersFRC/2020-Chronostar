@@ -31,11 +31,6 @@ public class FireBack extends SequentialCommandGroup {
         //                         + 6.395259911;
         addRequirements(shooter, hood, magIntake, drive, lightRing);
         addCommands(
-                new ParallelCommandGroup(
-                        new SetHoodPosition(hood, hoodPosition),
-                        new SpinFlywheel(shooter, magIntake, fireSpeed),
-                        //  new VisionAlignment(lightRing, drive, peripherals, angleOffset),
-                        new WaitCommand(2)),
                 new EjectMagazine(magIntake, drive));
     }
 }

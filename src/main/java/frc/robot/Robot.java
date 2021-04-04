@@ -16,6 +16,7 @@ import frc.robot.commands.basic.PurePursuit;
 import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SmartIntake;
 import frc.robot.commands.composite.Fire;
+import frc.robot.commands.composite.FireBack;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.MagIntake.BeamBreakID;
 import frc.robot.tools.pathing.Odometry;
@@ -199,21 +200,21 @@ public class Robot extends TimedRobot {
             s.teleopInit();
         }
         OI.driverA.whenPressed(
-                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 3, 3400, 4));
+                new FireBack(shooter, hood, magIntake, drive, lightRing, peripherals, 3, 3400, 4));
         OI.driverB.whenPressed(
-                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 12.15, 4600, 8));
+                new FireBack(shooter, hood, magIntake, drive, lightRing, peripherals, 12.15, 4600, 8));
         OI.driverY.whenPressed(
-                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 12.45, 4800, 9));
+                new FireBack(shooter, hood, magIntake, drive, lightRing, peripherals, 12.45, 4800, 9));
         OI.driverX.whenPressed(
-                new Fire(
+                new FireBack(
                         shooter,
                         hood,
                         magIntake,
                         drive,
                         lightRing,
                         peripherals,
-                        15.45,
-                        5650,
+                        15.55,
+                        5550,
                         10.25));
         OI.driverA.whenReleased(new SetHoodPosition(hood, 0));
         OI.driverA.whenReleased(new CancelMagazine(magIntake));
@@ -221,16 +222,15 @@ public class Robot extends TimedRobot {
         OI.driverB.whenReleased(new CancelMagazine(magIntake));
         OI.driverY.whenReleased(new SetHoodPosition(hood, 0));
         OI.driverY.whenReleased(new CancelMagazine(magIntake));
-        OI.driverX.whenReleased(new SetHoodPosition(hood, 0));
+        OI.driverX.whenReleased(new SetHoodPosition(hood, 10));
         OI.driverX.whenReleased(new CancelMagazine(magIntake));
         OI.driverLT.whileHeld(new Outtake(magIntake));
         OI.driverRT.whileHeld(new SmartIntake(magIntake));
+        drive.setDriveBrake();
     }
 
     @Override
     public void teleopPeriodic() {
-
-        hood.periodic();
     }
 
     @Override

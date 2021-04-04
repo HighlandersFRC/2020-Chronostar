@@ -14,9 +14,9 @@ public class EjectMagazine extends CommandBase {
 
     private MagIntake magIntake;
     private Drive drive;
-    private final double LOW_MAG_PERCENT = 0.4;
+    private final double LOW_MAG_PERCENT = 0.7;
     private final double HIGH_MAG_PERCENT = 1;
-    private final double HIGH_INTAKE_PERCENT = 0.8;
+    private final double HIGH_INTAKE_PERCENT = 0.5;
     WaitCommand waitCommand;
     private int counter = 0;
 
