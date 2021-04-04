@@ -55,7 +55,6 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledInit() {
         disabledCounter++;
-        drive.setDriveCoast();
     }
 
     @Override
@@ -68,7 +67,6 @@ public class Robot extends TimedRobot {
             s.autoInit();
         }
         odometry.zero();
-        autoSuite.setGalacticSearch(disabledCounter);
         if (peripherals.isNavxConnected()) {
             autoSuite.schedule();
         }

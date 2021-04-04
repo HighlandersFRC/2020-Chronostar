@@ -116,17 +116,21 @@ public class AutoSuite {
         }
         avgDistance /= 5.0;
         SmartDashboard.putNumber("avg distance", avgDistance);
-        if (avgDistance > 3.5 && avgDistance < 8.0) {
+        if (avgDistance > 3.5 && avgDistance < 10.0) {
             if (disabledCounter % 2 == 0) {
                 auto = galacticA1;
+                SmartDashboard.putString("auto run", "ga1");
             } else {
                 auto = galacticB1;
+                SmartDashboard.putString("auto run", "gb1");
             }
-        } else if (avgDistance > 8.0 && avgDistance < 16.0) {
+        } else if (avgDistance > 10.0 && avgDistance < 16.0) {
             if (disabledCounter % 2 == 0) {
                 auto = galacticA2;
+                SmartDashboard.putString("auto run", "ga2");
             } else {
                 auto = galacticB2;
+                SmartDashboard.putString("auto run", "gb2");
             }
         }
     }
