@@ -18,7 +18,7 @@ public class HoodDefault extends CommandBase {
 
     @Override
     public void execute() {
-        hood.setHoodTarget(13); 
+        hood.setHoodTarget(13); // TODO change if necessary, higher value = lower arc
     }
 
     @Override

@@ -199,13 +199,16 @@ public class Robot extends TimedRobot {
         for (SubsystemBaseEnhanced s : subsystems) {
             s.teleopInit();
         }
-        OI.driverA.whenPressed(
+
+        // TODO numbers for the FireBack constructor in order: angle, RPM, hood position
+
+        OI.driverA.whenPressed( // TODO this is the closest
                 new FireBack(shooter, hood, magIntake, drive, lightRing, peripherals, 3, 3400, 4));
-        OI.driverB.whenPressed(
+        OI.driverB.whenPressed( // TODO this is the second farthest
                 new FireBack(shooter, hood, magIntake, drive, lightRing, peripherals, 12.15, 4600, 8));
-        OI.driverY.whenPressed(
+        OI.driverY.whenPressed( // TODO this is the third farthest
                 new FireBack(shooter, hood, magIntake, drive, lightRing, peripherals, 12.45, 4800, 9));
-        OI.driverX.whenPressed(
+        OI.driverX.whenPressed( // TODO this is the farthest
                 new FireBack(
                         shooter,
                         hood,

@@ -22,8 +22,8 @@ public class Hood extends SubsystemBaseEnhanced {
 
     private double kf = 0.005;
     private double kp = 0;
-    private double ki = 0.005;
-    private double kd = 0.05;
+    private double ki = 0.005; // TODO change this if necessary
+    private double kd = 0.05; // TODO change this if necessary
     private double hoodTarget = 0.0;
     private float maxpoint = 22;
     private float minpoint = 0;

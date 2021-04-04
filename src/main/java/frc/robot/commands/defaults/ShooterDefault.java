@@ -20,7 +20,7 @@ public class ShooterDefault extends CommandBase {
 
     @Override
     public void execute() {
-        shooter.setRPM(4925); // 4600 for initiation line
+        shooter.setRPM(4925); // TODO change if necessary, 4600 for initiation line
     }
 
     @Override
