@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-import frc.robot.commands.basic.NavxTurn;
 import frc.robot.commands.basic.PurePursuit;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Peripherals;
@@ -38,15 +37,11 @@ public class SlalomRun extends SequentialCommandGroup {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        slalomPart1Follower = new PurePursuit(drive, odometry, slalomPart1, 2.5, 5.0, false);
-        slalomPart2Follower = new PurePursuit(drive, odometry, slalomPart2, 2.5, 5.0, false);
-        slalomPart3Follower = new PurePursuit(drive, odometry, slalomPart1, 2.5, 5.0, false);
-        slalomPart4Follower = new PurePursuit(drive, odometry, slalomPart4, 2.5, 5.0, false);
+        slalomPart1Follower = new PurePursuit(drive, odometry, slalomPart1, 2.5, 5.0, false, 0);
+        slalomPart2Follower = new PurePursuit(drive, odometry, slalomPart2, 2.5, 5.0, false, 0);
+        slalomPart3Follower = new PurePursuit(drive, odometry, slalomPart1, 2.5, 5.0, false, -180);
+        slalomPart4Follower = new PurePursuit(drive, odometry, slalomPart4, 2.5, 5.0, false, 0);
         addCommands(
-                slalomPart1Follower,
-                slalomPart2Follower,
-                new NavxTurn(drive, peripherals, -180),
-                slalomPart3Follower,
-                slalomPart4Follower);
+                slalomPart1Follower, slalomPart2Follower, slalomPart3Follower, slalomPart4Follower);
     }
 }

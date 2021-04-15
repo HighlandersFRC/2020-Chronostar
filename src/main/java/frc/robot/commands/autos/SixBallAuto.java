@@ -26,6 +26,7 @@ public class SixBallAuto extends SequentialCommandGroup {
 
     private Trajectory sixBallPart1;
     private Trajectory sixBallPart2;
+    private Trajectory sixBallPart3;
     private PurePursuit sixBallPart1Follower;
     private PurePursuit sixBallPart2Follower;
     private PurePursuit sixBallPart3Follower;
@@ -45,31 +46,22 @@ public class SixBallAuto extends SequentialCommandGroup {
             sixBallPart2 =
                     TrajectoryUtil.fromPathweaverJson(
                             Paths.get("/home/lvuser/deploy/SixBallPart2.json"));
+            sixBallPart3 =
+                    TrajectoryUtil.fromPathweaverJson(
+                            Paths.get("/home/lvuser/deploy/SixBallPart3.json"));
         } catch (IOException e) {
             cancel();
         }
         sixBallPart1Follower = new PurePursuit(drive, odometry, sixBallPart1, 2.5, 5.0, true);
         sixBallPart2Follower = new PurePursuit(drive, odometry, sixBallPart2, 2.5, 5.0, true);
-        sixBallPart3Follower = new PurePursuit(drive, odometry, sixBallPart2, 2.5, 5.0, false);
+        sixBallPart3Follower = new PurePursuit(drive, odometry, sixBallPart3, 2.5, 5.0, false);
         addCommands(
                 new Fire(
-                        shooter, hood, magIntake, drive, lightRing, peripherals, 12.55, 5200, 8, 2),
-                new NavxTurn(drive, peripherals, 0),
+                        shooter, hood, magIntake, drive, lightRing, peripherals, 12.55, 5200, 0, 1),
+                new NavxTurn(drive, peripherals, 30),
                 sixBallPart1Follower,
-                new NavxTurn(drive, peripherals, 0),
                 new ParallelRaceGroup(new SmartIntake(magIntake, 8), sixBallPart2Follower),
-                new NavxTurn(drive, peripherals, 0),
                 sixBallPart3Follower,
-                new Fire(
-                        shooter,
-                        hood,
-                        magIntake,
-                        drive,
-                        lightRing,
-                        peripherals,
-                        14.75,
-                        5500,
-                        10,
-                        3));
+                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 15, 5500, 10, 4));
     }
 }

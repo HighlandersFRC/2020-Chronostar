@@ -2,6 +2,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj2.command.Command;
+
 import frc.robot.commands.autos.BarrelRun;
 import frc.robot.commands.autos.BounceRun;
 import frc.robot.commands.autos.SixBallAuto;
@@ -19,7 +21,8 @@ public class AutoSuite {
     private SlalomRun slalom;
     private BarrelRun barrel;
     private BounceRun bounce;
-    private SixBallAuto sixBallAuto;
+    private SixBallAuto sixBall;
+    private Command auto;
 
     public AutoSuite(
             Drive drive,
@@ -32,15 +35,26 @@ public class AutoSuite {
         slalom = new SlalomRun(drive, peripherals, odometry);
         barrel = new BarrelRun(drive, peripherals, odometry);
         bounce = new BounceRun(drive, peripherals, odometry);
-        sixBallAuto =
+        sixBall =
                 new SixBallAuto(drive, peripherals, odometry, magIntake, shooter, hood, lightRing);
     }
 
     public void schedule() {
-        sixBallAuto.schedule();
+        if (OI.sixBall.get()) {
+            auto = sixBall;
+        } else if (OI.slalom.get()) {
+            auto = slalom;
+        } else if (OI.barrel.get()) {
+            auto = barrel;
+        } else if (OI.bounce.get()) {
+            auto = bounce;
+        }
+        auto.schedule();
     }
 
     public void cancel() {
-        sixBallAuto.cancel();
+        if (auto.isScheduled()) {
+            auto.cancel();
+        }
     }
 }

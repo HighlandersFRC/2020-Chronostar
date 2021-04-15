@@ -21,6 +21,10 @@ public class Navx {
         originalYaw = imu.getYaw();
     }
 
+    public boolean isConnected() {
+        return imu.isConnected();
+    }
+
     public double currentAngle() {
         return imu.getAngle() - originalAngle;
     }
