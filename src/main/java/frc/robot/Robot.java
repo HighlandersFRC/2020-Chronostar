@@ -29,8 +29,7 @@ public class Robot extends TimedRobot {
     };
     private final Odometry odometry = new Odometry(drive, peripherals);
 
-    private final AutoSuite autoSuite =
-            new AutoSuite(drive, odometry, peripherals, shooter, magIntake, hood, lightRing);
+    private AutoSuite autoSuite;
 
     public Robot() {}
 
@@ -38,17 +37,23 @@ public class Robot extends TimedRobot {
         for (SubsystemBaseEnhanced s : subsystems) {
             s.init();
         }
+        autoSuite =
+                new AutoSuite(drive, odometry, peripherals, shooter, magIntake, hood, lightRing);
         odometry.zero();
     }
 
     @Override
     public void robotPeriodic() {
+        drive.periodic();
         SmartDashboard.putNumber("Vision Angle", peripherals.getCamAngle());
         CommandScheduler.getInstance().run();
-        SmartDashboard.putNumber("navx value", odometry.getTheta());
         SmartDashboard.putNumber("Hood Value", hood.getHoodPosition());
-        SmartDashboard.putNumber("x", odometry.getX());
-        SmartDashboard.putNumber("y", odometry.getY());
+        SmartDashboard.putNumber("x", drive.getPose().getX());
+        SmartDashboard.putNumber("y", drive.getPose().getY());
+        SmartDashboard.putNumber("left", drive.getLeftPosition());
+        SmartDashboard.putNumber("right", drive.getRightPosition());
+        SmartDashboard.putNumber("theta", drive.getNavxAngle());
+        SmartDashboard.putString("drive wheel speeds", drive.getWheelSpeeds().toString());
     }
 
     @Override
@@ -59,20 +64,23 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        peripherals.zeroNavx();
         for (SubsystemBaseEnhanced s : subsystems) {
             s.autoInit();
         }
         odometry.zero();
-        autoSuite.schedule();
+        if (drive.isNavxConnected()) {
+            autoSuite.schedule();
+        }
     }
 
     @Override
-    public void autonomousPeriodic() {}
+    public void autonomousPeriodic() {
+        drive.periodic();
+    }
 
     @Override
     public void teleopInit() {
-        autoSuite.cancel();
+        autoSuite.beginTeleop();
         for (SubsystemBaseEnhanced s : subsystems) {
             s.teleopInit();
         }
