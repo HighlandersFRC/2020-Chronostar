@@ -6,7 +6,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import frc.robot.Constants;
 import frc.robot.commands.defaults.DriveDefault;
@@ -14,12 +14,13 @@ import frc.robot.tools.controlloops.PID;
 
 public class Drive extends SubsystemBaseEnhanced {
 
-    private final TalonFX leftDriveLead = new TalonFX(Constants.LEFT_DRIVE_LEAD_ID);
-    private final TalonFX rightDriveLead = new TalonFX(Constants.RIGHT_DRIVE_LEAD_ID);
-    private final TalonFX leftDriveFollower = new TalonFX(Constants.LEFT_DRIVE_FOLLOWER_ID);
-    private final TalonFX rightDriveFollower = new TalonFX(Constants.RIGHT_DRIVE_FOLLOWER_ID);
+    private final WPI_TalonFX leftDriveLead = new WPI_TalonFX(Constants.LEFT_DRIVE_LEAD_ID);
+    private final WPI_TalonFX rightDriveLead = new WPI_TalonFX(Constants.RIGHT_DRIVE_LEAD_ID);
+    private final WPI_TalonFX leftDriveFollower = new WPI_TalonFX(Constants.LEFT_DRIVE_FOLLOWER_ID);
+    private final WPI_TalonFX rightDriveFollower =
+            new WPI_TalonFX(Constants.RIGHT_DRIVE_FOLLOWER_ID);
 
-    private final TalonFX[] driveMotors = {
+    private final WPI_TalonFX[] driveMotors = {
         leftDriveLead, rightDriveLead, leftDriveFollower, rightDriveFollower
     };
 
@@ -82,25 +83,25 @@ public class Drive extends SubsystemBaseEnhanced {
     }
 
     public void setVoltageCompensation(double volts) {
-        for (TalonFX t : driveMotors) {
+        for (WPI_TalonFX t : driveMotors) {
             t.configVoltageCompSaturation(volts);
         }
     }
 
     public void setCurrentLimitsEnabled() {
-        for (TalonFX t : driveMotors) {
+        for (WPI_TalonFX t : driveMotors) {
             t.configSupplyCurrentLimit(Constants.currentLimitEnabled);
         }
     }
 
     public void setDriveBrake() {
-        for (TalonFX t : driveMotors) {
+        for (WPI_TalonFX t : driveMotors) {
             t.setNeutralMode(NeutralMode.Brake);
         }
     }
 
     public void setDriveCoast() {
-        for (TalonFX t : driveMotors) {
+        for (WPI_TalonFX t : driveMotors) {
             t.setNeutralMode(NeutralMode.Coast);
         }
     }

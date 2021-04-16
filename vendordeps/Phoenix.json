@@ -56,7 +56,7 @@
         },
         {
             "groupId": "com.ctre.phoenix.sim",
-            "artifactId": "simWPI_VictorSPX",
+            "artifactId": "simWPI_WPI_VictorSPX",
             "version": "5.19.4",
             "isJar": false,
             "skipInvalidPlatforms": true,
@@ -198,9 +198,9 @@
         },
         {
             "groupId": "com.ctre.phoenix.sim",
-            "artifactId": "simWPI_VictorSPX",
+            "artifactId": "simWPI_WPI_VictorSPX",
             "version": "5.19.4",
-            "libName": "CTRE_SimWPI_VictorSPX",
+            "libName": "CTRE_SimWPI_WPI_VictorSPX",
             "headerClassifier": "headers",
             "sharedLibrary": true,
             "skipInvalidPlatforms": true,
