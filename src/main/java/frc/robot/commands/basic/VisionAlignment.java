@@ -5,7 +5,6 @@ package frc.robot.commands.basic;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.robot.OI;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.LightRing;
 import frc.robot.subsystems.Peripherals;
@@ -18,9 +17,9 @@ public class VisionAlignment extends CommandBase {
     private Peripherals peripherals;
 
     private PID pid;
-    private double kP = 0.015;
+    private double kP = 0.025;
     private double kI = 0.0;
-    private double kD = 0.3;
+    private double kD = 0.0;
     private int counter = 0;
     private int tapCounter = 0;
     private int thirdCounter = 0;

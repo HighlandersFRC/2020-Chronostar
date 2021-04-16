@@ -4,8 +4,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -13,7 +13,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.Constants;
 import frc.robot.commands.defaults.MagIntakeDefault;
@@ -29,12 +28,12 @@ public class MagIntake extends SubsystemBaseEnhanced {
     private final DigitalInput beamBreak1 = new DigitalInput(Constants.BEAM_BREAK_1_ID);
     private final DigitalInput beamBreak2 = new DigitalInput(Constants.BEAM_BREAK_2_ID);
     private final DigitalInput beamBreak3 = new DigitalInput(Constants.BEAM_BREAK_3_ID);
-    private final VictorSPX lowMag = new VictorSPX(Constants.MAG_BELT_ID);
+    private final WPI_VictorSPX lowMag = new WPI_VictorSPX(Constants.MAG_BELT_ID);
     private final CANSparkMax highMag =
             new CANSparkMax(Constants.MAG_WHEEL_ID, MotorType.kBrushless);
 
-    private final TalonFX lowIntake = new TalonFX(Constants.LOW_INTAKE_ID);
-    private final VictorSPX highIntake = new VictorSPX(Constants.HIGH_INTAKE_ID);
+    private final WPI_TalonFX lowIntake = new WPI_TalonFX(Constants.LOW_INTAKE_ID);
+    private final WPI_VictorSPX highIntake = new WPI_VictorSPX(Constants.HIGH_INTAKE_ID);
     private final DoubleSolenoid intakePiston = new DoubleSolenoid(0, 1);
 
     public MagIntake() {}
@@ -111,6 +110,5 @@ public class MagIntake extends SubsystemBaseEnhanced {
     }
 
     @Override
-    public void periodic() {
-    }
+    public void periodic() {}
 }
