@@ -5,15 +5,15 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import frc.robot.Constants;
 import frc.robot.commands.defaults.ShooterDefault;
 
 public class Shooter extends SubsystemBaseEnhanced {
 
-    private final WPI_WPI_TalonFX leftFlywheel = new WPI_WPI_TalonFX(Constants.LEFT_FLYWHEEL_ID);
-    private final WPI_WPI_TalonFX rightFlywheel = new WPI_WPI_TalonFX(Constants.RIGHT_FLYWHEEL_ID);
+    private final WPI_TalonFX leftFlywheel = new WPI_TalonFX(Constants.LEFT_FLYWHEEL_ID);
+    private final WPI_TalonFX rightFlywheel = new WPI_TalonFX(Constants.RIGHT_FLYWHEEL_ID);
 
     public Shooter() {}
 
