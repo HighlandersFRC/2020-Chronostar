@@ -40,7 +40,7 @@ public class Drive extends SubsystemBaseEnhanced {
     private final AHRS navx = new AHRS(Port.kMXP);
     private DifferentialDriveOdometry odometry;
     public static final DifferentialDriveKinematics kinematics =
-            new DifferentialDriveKinematics(2.1);
+            new DifferentialDriveKinematics(Constants.DRIVE_WHEEL_BASE);
     public static final DifferentialDriveVoltageConstraint autoVoltageConstraint =
             new DifferentialDriveVoltageConstraint(
                     new SimpleMotorFeedforward(
@@ -148,27 +148,27 @@ public class Drive extends SubsystemBaseEnhanced {
     }
 
     public void setLeftSpeed(double fps) {
-        leftDriveLead.set(ControlMode.Velocity, Constants.driveFPSToUnitsPer100MS(fps));
+        leftDriveLead.set(ControlMode.Velocity, Constants.driveMPSToUnitsPer100MS(fps));
     }
 
     public void setRightSpeed(double fps) {
-        rightDriveLead.set(ControlMode.Velocity, Constants.driveFPSToUnitsPer100MS(fps));
+        rightDriveLead.set(ControlMode.Velocity, Constants.driveMPSToUnitsPer100MS(fps));
     }
 
     public double getLeftPosition() {
-        return Constants.driveUnitsToFeet(leftDriveLead.getSelectedSensorPosition());
+        return Constants.driveUnitsToMeters(leftDriveLead.getSelectedSensorPosition());
     }
 
     public double getRightPosition() {
-        return -Constants.driveUnitsToFeet(rightDriveLead.getSelectedSensorPosition());
+        return -Constants.driveUnitsToMeters(rightDriveLead.getSelectedSensorPosition());
     }
 
     public double getLeftSpeed() {
-        return Constants.driveUnitsPer100MSToFPS(leftDriveLead.getSelectedSensorVelocity());
+        return Constants.driveUnitsPer100MSToMPS(leftDriveLead.getSelectedSensorVelocity());
     }
 
     public double getRightSpeed() {
-        return -Constants.driveUnitsPer100MSToFPS(rightDriveLead.getSelectedSensorVelocity());
+        return -Constants.driveUnitsPer100MSToMPS(rightDriveLead.getSelectedSensorVelocity());
     }
 
     public double getNavxAngle() {

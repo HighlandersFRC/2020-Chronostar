@@ -26,10 +26,7 @@ public class AutoSuite {
 
     private Drive drive;
     private Command auto;
-    private RamseteCommand slalom;
-    private Trajectory slalomTrajectory;
-    private RamseteCommand barrel;
-    private Trajectory barrelTrajectory;
+    private Trajectory testTrajectory;
 
     public AutoSuite(
             Drive drive,
@@ -40,51 +37,31 @@ public class AutoSuite {
             Hood hood,
             LightRing lightRing) {
         this.drive = drive;
+        auto = new SequentialCommandGroup();
         try {
-            slalomTrajectory =
-                    TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Slalom.json"));
-            barrelTrajectory =
-                    TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Barrel.json"));
-            slalom =
-                    new RamseteCommand(
-                            slalomTrajectory,
-                            drive::getPose,
-                            new RamseteController(),
-                            new SimpleMotorFeedforward(
-                                    Constants.ramseteKS, Constants.ramseteKV, Constants.ramseteKA),
-                            Drive.kinematics,
-                            drive::getWheelSpeeds,
-                            new PIDController(Constants.ramseteKP, 0, 0),
-                            new PIDController(Constants.ramseteKP, 0, 0),
-                            drive::tankDriveVolts,
-                            drive);
-            barrel =
-                    new RamseteCommand(
-                            barrelTrajectory,
-                            drive::getPose,
-                            new RamseteController(),
-                            new SimpleMotorFeedforward(
-                                    Constants.ramseteKS, Constants.ramseteKV, Constants.ramseteKA),
-                            Drive.kinematics,
-                            drive::getWheelSpeeds,
-                            new PIDController(Constants.ramseteKP, 0, 0),
-                            new PIDController(Constants.ramseteKP, 0, 0),
-                            drive::tankDriveVolts,
-                            drive);
+            testTrajectory =
+                    TrajectoryUtil.fromPathweaverJson(
+                            Paths.get("/home/lvuser/deploy/output/Test.wpilib.json"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        auto = new SequentialCommandGroup();
     }
 
     public void schedule() {
-        if (OI.slalom.get()) {
-            auto = slalom;
-            drive.resetOdometry(slalomTrajectory.getInitialPose());
-        } else if (OI.barrel.get()) {
-            auto = barrel;
-            drive.resetOdometry(barrelTrajectory.getInitialPose());
-        }
+        auto =
+                new RamseteCommand(
+                        testTrajectory,
+                        drive::getPose,
+                        new RamseteController(),
+                        new SimpleMotorFeedforward(
+                                Constants.ramseteKS, Constants.ramseteKV, Constants.ramseteKA),
+                        Drive.kinematics,
+                        drive::getWheelSpeeds,
+                        new PIDController(Constants.ramseteKP, 0, 0),
+                        new PIDController(Constants.ramseteKP, 0, 0),
+                        drive::tankDriveVolts,
+                        drive);
+        drive.resetOdometry(testTrajectory.getInitialPose());
         auto.schedule();
     }
 

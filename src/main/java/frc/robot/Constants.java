@@ -4,6 +4,8 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 
+import edu.wpi.first.wpilibj.util.Units;
+
 public class Constants {
 
     // Controller IDs
@@ -58,9 +60,9 @@ public class Constants {
     public static final double DRIVE_CURRENT_PEAK_TIME = 10;
     public static final double DRIVE_MAX_CURRENT = 39;
     public static final double DRIVE_TICKS_PER_ROTATION = 28672;
-    public static final double DRIVE_WHEEL_DIAMETER = 0.5;
+    public static final double DRIVE_WHEEL_DIAMETER = Units.feetToMeters(0.5);
     public static final double DRIVE_WHEEL_CIRCUMFERENCE = DRIVE_WHEEL_DIAMETER * Math.PI;
-    public static final double DRIVE_WHEEL_BASE = 2.1;
+    public static final double DRIVE_WHEEL_BASE = Units.feetToMeters(2.1);
 
     public static final SupplyCurrentLimitConfiguration currentLimitEnabled =
             new SupplyCurrentLimitConfiguration(
@@ -73,24 +75,20 @@ public class Constants {
                     DRIVE_CURRENT_PEAK_THRESHOLD,
                     DRIVE_CURRENT_PEAK_TIME);
 
-    public static double driveUnitsToFeet(double ticks) {
+    public static double driveUnitsToMeters(double ticks) {
         return ticks / DRIVE_TICKS_PER_ROTATION * DRIVE_WHEEL_CIRCUMFERENCE;
     }
 
-    public static double driveFeetToUnits(double feet) {
-        return feet * DRIVE_TICKS_PER_ROTATION / DRIVE_WHEEL_CIRCUMFERENCE;
+    public static double driveMetersToUnits(double meters) {
+        return meters * DRIVE_TICKS_PER_ROTATION / DRIVE_WHEEL_CIRCUMFERENCE;
     }
 
-    public static double driveUnitsPer100MSToFPS(double velocity) {
-        return driveUnitsToFeet(velocity) * 10;
+    public static double driveUnitsPer100MSToMPS(double velocity) {
+        return driveUnitsToMeters(velocity) * 10;
     }
 
-    public static double driveFPSToUnitsPer100MS(double fps) {
-        return driveFeetToUnits(fps) / 10;
-    }
-
-    public static double unitsPer100MsToRPM(double units) {
-        return (units * 600) / Constants.SHOOTER_TICKS_PER_ROTATION;
+    public static double driveMPSToUnitsPer100MS(double mps) {
+        return driveMetersToUnits(mps) / 10;
     }
 
     public static int shooterRPMToUnitsPer100MS(double rpm) {

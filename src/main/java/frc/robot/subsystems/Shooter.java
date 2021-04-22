@@ -51,7 +51,7 @@ public class Shooter extends SubsystemBaseEnhanced {
     public void periodic() {}
 
     public double getShooterRPM() {
-        return Constants.unitsPer100MsToRPM(leftFlywheel.getSelectedSensorVelocity());
+        return Constants.shooterUnitsPer100MsToRPM(leftFlywheel.getSelectedSensorVelocity());
     }
 
     public void setRPM(double rpm) {

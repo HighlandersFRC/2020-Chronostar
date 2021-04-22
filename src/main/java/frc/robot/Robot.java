@@ -40,6 +40,8 @@ public class Robot extends TimedRobot {
         autoSuite =
                 new AutoSuite(drive, odometry, peripherals, shooter, magIntake, hood, lightRing);
         odometry.zero();
+        autoSuite =
+                new AutoSuite(drive, odometry, peripherals, shooter, magIntake, hood, lightRing);
     }
 
     @Override
