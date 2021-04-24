@@ -208,16 +208,7 @@ public class Robot extends TimedRobot {
                 new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 12.45, 4800, 9));
         // new SetHoodPosition(hood, 18));
         OI.driverX.whenPressed(
-                new Fire(
-                        shooter,
-                        hood,
-                        magIntake,
-                        drive,
-                        lightRing,
-                        peripherals,
-                        15.45,
-                        5650,
-                        10.25));
+                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 15.45, 5650, 8));
         OI.driverA.whenReleased(new SetHoodPosition(hood, 0));
         OI.driverA.whenReleased(new CancelMagazine(magIntake));
         OI.driverB.whenReleased(new SetHoodPosition(hood, 0));
