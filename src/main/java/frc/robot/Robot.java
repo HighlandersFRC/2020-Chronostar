@@ -203,11 +203,12 @@ public class Robot extends TimedRobot {
                 new FireBack(shooter, hood, magIntake, drive, lightRing, peripherals, 3, 3400, 4));
         OI.driverB.whenPressed(
                 new FireBack(
-                        shooter, hood, magIntake, drive, lightRing, peripherals, 12.15, 4600, 8));
+                        shooter, hood, magIntake, drive, lightRing, peripherals, 11.15, 4600, 8));
         OI.driverY.whenPressed(
                 new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 12.45, 4800, 9));
+        // new SetHoodPosition(hood, 18));
         OI.driverX.whenPressed(
-                new FireBack(
+                new Fire(
                         shooter,
                         hood,
                         magIntake,
