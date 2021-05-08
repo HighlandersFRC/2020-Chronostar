@@ -15,8 +15,6 @@ import frc.robot.commands.basic.Outtake;
 import frc.robot.commands.basic.PurePursuit;
 import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SmartIntake;
-import frc.robot.commands.composite.Fire;
-import frc.robot.commands.composite.FireBack;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.MagIntake.BeamBreakID;
 import frc.robot.tools.pathing.Odometry;
@@ -199,16 +197,20 @@ public class Robot extends TimedRobot {
         for (SubsystemBaseEnhanced s : subsystems) {
             s.teleopInit();
         }
-        OI.driverA.whenPressed(
-                new FireBack(shooter, hood, magIntake, drive, lightRing, peripherals, 3, 3400, 4));
-        OI.driverB.whenPressed(
-                new FireBack(
-                        shooter, hood, magIntake, drive, lightRing, peripherals, 11.15, 4600, 8));
-        OI.driverY.whenPressed(
-                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 12.45, 4800, 9));
-        // new SetHoodPosition(hood, 18));
-        OI.driverX.whenPressed(
-                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 15.45, 5650, 8));
+        OI.driverA.whileHeld(
+                // new FireBack(shooter, hood, magIntake, drive, lightRing, peripherals, 3, 3400,
+                // 4));
+                new SetHoodPosition(hood, 0.368));
+        OI.driverB.whileHeld(
+                // new FireBack(
+                //         shooter, hood, magIntake, drive, lightRing, peripherals, 11.15, 4600,
+                // 8));
+                new SetHoodPosition(hood, 1.368));
+        OI.driverY.whileHeld(new SetHoodPosition(hood, 1.528));
+        OI.driverX.whileHeld(
+                // new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 15.45, 5650,
+                // 8));
+                new SetHoodPosition(hood, 1.896));
         OI.driverA.whenReleased(new SetHoodPosition(hood, 0));
         OI.driverA.whenReleased(new CancelMagazine(magIntake));
         OI.driverB.whenReleased(new SetHoodPosition(hood, 0));
