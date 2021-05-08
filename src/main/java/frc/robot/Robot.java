@@ -127,7 +127,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Vision Angle", peripherals.getCamAngle());
         hood.periodic();
         SmartDashboard.putNumber("Lidar Dist", peripherals.getLidarDistance());
-        SmartDashboard.putNumber("HoodValue", hood.getHoodPosition());
+        //SmartDashboard.putNumber("HoodValue", hood.getHoodPosition());
         SmartDashboard.putBoolean("BeamBreak1", magIntake.getBeamBreak(BeamBreakID.ONE));
         SmartDashboard.putBoolean("BeamBreak2", magIntake.getBeamBreak(BeamBreakID.TWO));
         SmartDashboard.putBoolean("BreamBreak3", magIntake.getBeamBreak(BeamBreakID.THREE));
@@ -205,8 +205,8 @@ public class Robot extends TimedRobot {
                 new FireBack(
                         shooter, hood, magIntake, drive, lightRing, peripherals, 11.15, 4600, 8));
         OI.driverY.whenPressed(
-                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 12.45, 4800, 9));
-        // new SetHoodPosition(hood, 18));
+                //new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 12.45, 5650, 9));
+                new SetHoodPosition(hood, 0));
         OI.driverX.whenPressed(
                 new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 15.45, 5650, 8));
         OI.driverA.whenReleased(new SetHoodPosition(hood, 0));

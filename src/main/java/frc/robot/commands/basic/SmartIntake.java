@@ -48,9 +48,9 @@ public class SmartIntake extends CommandBase {
     public void execute() {
         counter++;
         magIntake.setIntakePercent(0.5, 0.6);
-        if (magIntake.getBeamBreak(BeamBreakID.ONE)
-                & magIntake.getBeamBreak(BeamBreakID.TWO)
-                & magIntake.getBeamBreak(BeamBreakID.THREE)) {
+        if (!magIntake.getBeamBreak(BeamBreakID.ONE)
+                & !magIntake.getBeamBreak(BeamBreakID.TWO)
+                & !magIntake.getBeamBreak(BeamBreakID.THREE)) {
             magIntake.setMagPercent(0, 0);
         } else if (!magIntake.getBeamBreak(BeamBreakID.THREE)) {
             magIntake.setMagPercent(0, 0);
@@ -58,7 +58,7 @@ public class SmartIntake extends CommandBase {
         } else if (!magIntake.getBeamBreak(BeamBreakID.ONE)
                 & magIntake.getBeamBreak(BeamBreakID.TWO)) {
             magIntake.setMagPercent(LOW_MAG_BREAK_1_POWER, HIGH_MAG_BREAK_1_POWER);
-            magIntake.setIntakePercent(0, MIDDLE_WHEEL_BREAK_1_POWER);
+            magIntake.setIntakePercent(0.5, MIDDLE_WHEEL_BREAK_1_POWER);
         } else if (!magIntake.getBeamBreak(BeamBreakID.TWO)
                 & magIntake.getBeamBreak(BeamBreakID.ONE)) {
             magIntake.setMagPercent(LOW_MAG_BREAK_2_NO_1_POWER, HIGH_MAG_BREAK_2_NO_1_POWER);

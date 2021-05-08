@@ -23,8 +23,9 @@ public class SetHoodPosition extends CommandBase {
 
     @Override
     public void execute() {
-        hoodPosCount++;
-        hood.setHoodTarget(target);
+        // hoodPosCount++;
+         hood.setHoodTarget(target);
+        //hood.setHoodPercent(0.2);
     }
 
     @Override
@@ -32,6 +33,6 @@ public class SetHoodPosition extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return true;
+        return false;
     }
 }
