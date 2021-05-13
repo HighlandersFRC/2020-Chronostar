@@ -15,6 +15,7 @@ public class SetHoodPosition extends CommandBase {
     private final double kP = 0.17;
     private final double kI = 0.005;
     private final double kD = 0.0;
+    private int hoodCounter = 0;
 
     public SetHoodPosition(Hood hood, double target) {
         this.hood = hood;
@@ -24,6 +25,7 @@ public class SetHoodPosition extends CommandBase {
 
     @Override
     public void initialize() {
+        hoodCounter = 0;
         SmartDashboard.putBoolean("finished hoodPID", false);
         pid = new PID(kP, kI, kD);
         pid.setSetPoint(target);
@@ -34,6 +36,7 @@ public class SetHoodPosition extends CommandBase {
 
     @Override
     public void execute() {
+        hoodCounter++;
         pid.updatePID(hood.getHoodPosition());
         SmartDashboard.putNumber("Hood PID Output", pid.getResult());
         hood.setHoodPercent(pid.getResult());
@@ -47,7 +50,7 @@ public class SetHoodPosition extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if (Math.abs(target - hood.getHoodPosition()) < 0.05) {
+        if (Math.abs(target - hood.getHoodPosition()) < 0.05 || hoodCounter > 35) {
             return true;
         }
         return false;

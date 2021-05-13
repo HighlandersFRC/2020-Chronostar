@@ -17,9 +17,9 @@ public class VisionAlignment extends CommandBase {
     private Peripherals peripherals;
 
     private PID pid;
-    private double kP = 0.015;
+    private double kP = 0.017;
     private double kI = 0.0;
-    private double kD = 0.0;
+    private double kD = 0.003;
     private int counter = 0;
     private int tapCounter = 0;
     private int thirdCounter = 0;

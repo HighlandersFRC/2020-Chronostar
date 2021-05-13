@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.Relay.Value;
 import frc.robot.commands.defaults.LightRingDefault;
 
 public class LightRing extends SubsystemBaseEnhanced {
-    private final Relay visionRelay = new Relay(0);
+    private final Relay visionRelay = new Relay(1);
 
     public LightRing() {}
 
@@ -18,11 +18,11 @@ public class LightRing extends SubsystemBaseEnhanced {
     }
 
     public void turnOff() {
-        visionRelay.set(Value.kForward);
+        visionRelay.set(Value.kReverse);
     }
 
     public void turnOn() {
-        visionRelay.set(Value.kReverse);
+        visionRelay.set(Value.kForward);
     }
 
     @Override
