@@ -24,7 +24,7 @@ public class Drive extends SubsystemBaseEnhanced {
         leftDriveLead, rightDriveLead, leftDriveFollower, rightDriveFollower
     };
 
-    private final double deadzone = 0.01;
+    private final double deadzone = 0.1;
     private final double vkF = 0.0455925;
     private final double vkP = 0.21;
     private final double vkI = 0.000002;
@@ -80,6 +80,19 @@ public class Drive extends SubsystemBaseEnhanced {
         setDriveCoast();
         leftDriveLead.setSelectedSensorPosition(0);
         rightDriveLead.setSelectedSensorPosition(0);
+    }
+
+    public double convertftpersToNativeUnitsper100ms(double feetPerSecond) {
+        return (((feetPerSecond / 10) / (Constants.DRIVE_WHEEL_CIRCUMFERENCE))
+                * Constants.DRIVE_TICKS_PER_ROTATION);
+    }
+
+    public void setRightVelocity(double speed) {
+        rightDriveLead.set(ControlMode.Velocity, convertftpersToNativeUnitsper100ms(speed));
+    }
+
+    public void setLeftVelocity(double speed) {
+        leftDriveLead.set(ControlMode.Velocity, convertftpersToNativeUnitsper100ms(speed));
     }
 
     public void setVoltageCompensation(double volts) {

@@ -204,15 +204,14 @@ public class Robot extends TimedRobot {
                 new SetHoodPosition(hood, 0.368));
         OI.driverB.whileHeld(
                 // new FireBack(
-                //         shooter, hood, magIntake, drive, lightRing, peripherals, 11.15, 4600,
-                // 8));
+                // shooter, hood, magIntake, drive, lightRing, peripherals, 11.15, 4600, 8));
                 new SetHoodPosition(hood, 1.368));
         OI.driverY.whileHeld(new SetHoodPosition(hood, 1.528));
         OI.driverX.whileHeld(
                 // new FireBack(
                 // shooter, hood, magIntake, drive, lightRing, peripherals, 1.2, 5550, 8));
                 // new SetHoodPosition(hood, 1.896));
-                new VisionAlignment(lightRing, drive, peripherals, 3.0));
+                new VisionAlignment(lightRing, drive, peripherals, 10.0));
         OI.driverA.whenReleased(new SetHoodPosition(hood, 0));
         OI.driverA.whenReleased(new CancelMagazine(magIntake));
         OI.driverB.whenReleased(new SetHoodPosition(hood, 0));

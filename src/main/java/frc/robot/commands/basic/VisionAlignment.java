@@ -17,9 +17,9 @@ public class VisionAlignment extends CommandBase {
     private Peripherals peripherals;
 
     private PID pid;
-    private double kP = 0.004;
-    private double kI = 0.003;
-    private double kD = 0.004;
+    private double kP = 0.03;
+    private double kI = 0.001;
+    private double kD = 0.05;
     private int counter = 0;
     private double angleOffset = 0;
 
@@ -52,8 +52,8 @@ public class VisionAlignment extends CommandBase {
         pid.updatePID(peripherals.getCamAngle() + angleOffset);
         SmartDashboard.putNumber("PID Output", pid.getResult());
         SmartDashboard.putNumber("Counter", counter);
-        drive.setRightPercent(-pid.getResult());
-        drive.setLeftPercent(pid.getResult());
+        drive.setRightVelocity(-pid.getResult());
+        drive.setLeftVelocity(pid.getResult());
     }
 
     @Override
@@ -69,6 +69,6 @@ public class VisionAlignment extends CommandBase {
         return (Math.abs(peripherals.getCamAngle()) <= 0.8
                         && Math.abs(pid.getResult()) < 0.05
                         && peripherals.getCamAngle() != angleOffset
-                || counter > 35);
+                || counter > 32);
     }
 }
