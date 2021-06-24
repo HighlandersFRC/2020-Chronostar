@@ -40,6 +40,7 @@ public class SetHoodPosition extends CommandBase {
         pid.updatePID(hood.getHoodPosition());
         SmartDashboard.putNumber("Hood PID Output", pid.getResult());
         hood.setHoodPercent(pid.getResult());
+        System.out.println("got to here 3");
     }
 
     @Override

@@ -14,6 +14,7 @@ public class SpinFlywheel extends CommandBase {
     private Shooter shooter;
     private MagIntake magIntake;
     private double rpm;
+    private int counter = 0;
 
     public SpinFlywheel(Shooter shooter, MagIntake magIntake, double rpm) {
         this.shooter = shooter;
@@ -24,15 +25,19 @@ public class SpinFlywheel extends CommandBase {
 
     @Override
     public void initialize() {
+        SmartDashboard.putBoolean("FinishedFlywheelCommand", false);
         spinShooterCount = 0;
         shooter.setRPM(rpm);
+        counter = 0;
     }
 
     @Override
     public void execute() {
+        counter++;
         spinShooterCount++;
         SmartDashboard.putNumber("Shooter Count", spinShooterCount);
         SmartDashboard.putNumber("Shooter rpm", shooter.getShooterRPM());
+        System.out.println("got to here 2");
     }
 
     @Override
@@ -43,7 +48,7 @@ public class SpinFlywheel extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return Math.abs(shooter.getShooterRPM() - rpm) < 100;
+        return Math.abs(shooter.getShooterRPM() - rpm) < 100 || counter >= 30;
         // return true;
     }
 }
