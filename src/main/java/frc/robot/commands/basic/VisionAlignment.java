@@ -54,7 +54,7 @@ public class VisionAlignment extends CommandBase {
         SmartDashboard.putNumber("Counter", counter);
         drive.setRightVelocity(-pid.getResult());
         drive.setLeftVelocity(pid.getResult());
-        System.out.println("got to here");
+        // System.out.println("got to here");
 
         //  if (Math.abs(peripherals.getCamAngle()) <= Math.abs(angleOffset + 0.8)) {
         //     drive.setLeftPercent(0);

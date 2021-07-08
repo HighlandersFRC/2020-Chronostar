@@ -37,7 +37,7 @@ public class SpinFlywheel extends CommandBase {
         spinShooterCount++;
         SmartDashboard.putNumber("Shooter Count", spinShooterCount);
         SmartDashboard.putNumber("Shooter rpm", shooter.getShooterRPM());
-        System.out.println("got to here 2");
+        // System.out.println("got to here 2");
     }
 
     @Override
