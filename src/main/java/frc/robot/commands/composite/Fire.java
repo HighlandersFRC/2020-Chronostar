@@ -4,6 +4,7 @@ package frc.robot.commands.composite;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import frc.robot.commands.basic.EjectMagazine;
 import frc.robot.commands.basic.SetHoodPosition;
@@ -34,8 +35,8 @@ public class Fire extends SequentialCommandGroup {
                 new ParallelCommandGroup(
                         new SetHoodPosition(hood, hoodPosition),
                         new SpinFlywheel(shooter, magIntake, fireSpeed),
-                        new VisionAlignment(lightRing, drive, peripherals, angleOffset)),
-                //  new WaitCommand(2)),
+                        new VisionAlignment(lightRing, drive, peripherals, angleOffset),
+                        new WaitCommand(2)),
                 new EjectMagazine(magIntake, drive));
     }
 }

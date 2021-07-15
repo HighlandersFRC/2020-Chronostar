@@ -33,8 +33,8 @@ public class Constants {
 
     // Sensor ports
     public static int BEAM_BREAK_1_ID = 1;
-    public static int BEAM_BREAK_2_ID = 3;
-    public static int BEAM_BREAK_3_ID = 2;
+    public static int BEAM_BREAK_2_ID = 2;
+    public static int BEAM_BREAK_3_ID = 3;
 
     // Shooter constants
     public static int SHOOTER_TICKS_PER_ROTATION = 1317;
