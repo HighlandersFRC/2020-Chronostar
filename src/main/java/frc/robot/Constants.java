@@ -52,6 +52,14 @@ public class Constants {
     public static final double DRIVE_WHEEL_CIRCUMFERENCE = DRIVE_WHEEL_DIAMETER * Math.PI;
     public static final double DRIVE_WHEEL_BASE = 2.1;
 
+    public static double ticksToFeet(double ticks) {
+        return (ticks / DRIVE_TICKS_PER_ROTATION) * DRIVE_WHEEL_CIRCUMFERENCE;
+    }
+
+    public static double feetToTicks(double feet) {
+        return (feet / DRIVE_WHEEL_CIRCUMFERENCE) * DRIVE_TICKS_PER_ROTATION;
+    }
+
     public static final SupplyCurrentLimitConfiguration currentLimitEnabled =
             new SupplyCurrentLimitConfiguration(
                     true, DRIVE_MAX_CURRENT, DRIVE_CURRENT_PEAK_THRESHOLD, DRIVE_CURRENT_PEAK_TIME);

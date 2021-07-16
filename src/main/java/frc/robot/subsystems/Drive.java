@@ -82,6 +82,12 @@ public class Drive extends SubsystemBaseEnhanced {
         rightDriveLead.setSelectedSensorPosition(0);
     }
 
+    public void setSpeed(double targetVelocityFeet) {
+        double targetVelocityTicks = Constants.feetToTicks(targetVelocityFeet);
+        leftDriveLead.set(ControlMode.Velocity, targetVelocityTicks);
+        rightDriveLead.set(ControlMode.Velocity, targetVelocityTicks);
+    }
+
     public double convertftpersToNativeUnitsper100ms(double feetPerSecond) {
         return (((feetPerSecond / 10) / (Constants.DRIVE_WHEEL_CIRCUMFERENCE))
                 * Constants.DRIVE_TICKS_PER_ROTATION);
@@ -121,6 +127,14 @@ public class Drive extends SubsystemBaseEnhanced {
 
     public void setLeftPercent(double percent) {
         leftDriveLead.set(ControlMode.PercentOutput, percent);
+    }
+
+    public void setMotionMagicLeft(double feet) {
+        leftDriveLead.set(ControlMode.MotionMagic, feet);
+    }
+
+    public void setMotionMagicRight(double feet) {
+        rightDriveLead.set(ControlMode.MotionMagic, feet);
     }
 
     public void setRightPercent(double percent) {
