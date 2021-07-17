@@ -129,14 +129,6 @@ public class Drive extends SubsystemBaseEnhanced {
         leftDriveLead.set(ControlMode.PercentOutput, percent);
     }
 
-    public void setMotionMagicLeft(double feet) {
-        leftDriveLead.set(ControlMode.MotionMagic, feet);
-    }
-
-    public void setMotionMagicRight(double feet) {
-        rightDriveLead.set(ControlMode.MotionMagic, feet);
-    }
-
     public void setRightPercent(double percent) {
         rightDriveLead.set(ControlMode.PercentOutput, percent);
     }
@@ -155,6 +147,13 @@ public class Drive extends SubsystemBaseEnhanced {
 
     public double getRightPosition() {
         return Constants.driveUnitsToFeet(rightDriveLead.getSelectedSensorPosition());
+    }
+
+    public double getDriveFeet() {
+        return Constants.ticksToFeet(
+                (rightDriveLead.getSelectedSensorPosition()
+                                + leftDriveLead.getSelectedSensorPosition())
+                        / 2);
     }
 
     public double getLeftSpeed() {
