@@ -5,13 +5,15 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 
 import frc.robot.commands.basic.CancelMagazine;
+import frc.robot.commands.basic.ClimberDown;
+import frc.robot.commands.basic.ClimberUp;
 import frc.robot.commands.basic.DriveBackwards;
 import frc.robot.commands.basic.Outtake;
 import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SmartIntake;
-import frc.robot.commands.composite.Autonomous;
 import frc.robot.commands.composite.Fire;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.MagIntake.BeamBreakID;
@@ -28,7 +30,8 @@ public class Robot extends TimedRobot {
     private final LightRing lightRing = new LightRing();
 
     DriveBackwards driveBackwards = new DriveBackwards(drive);
-    Autonomous autonomous = new Autonomous();
+    SmartIntake smartIntake = new SmartIntake(magIntake);
+    ParallelRaceGroup autonomous = new ParallelRaceGroup(driveBackwards, smartIntake);
 
     private final SubsystemBaseEnhanced[] subsystems = {
         hood, magIntake, drive, shooter, climber, lightRing, peripherals
@@ -73,7 +76,7 @@ public class Robot extends TimedRobot {
             s.autoInit();
         }
         odometry.zero();
-        driveBackwards.schedule();
+        autonomous.schedule();
     }
 
     @Override
@@ -95,9 +98,9 @@ public class Robot extends TimedRobot {
         OI.driverY.whenPressed(
                 new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 1.1, 4900, 10));
         OI.driverX.whenPressed(
-                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 1.25, 5400, 10));
-        // new SetHoodPosition(hood, 1.896));
-        // new VisionAlignment(lightRing, drive, peripherals, 10.0));
+                (new Fire(
+                        shooter, hood, magIntake, drive, lightRing, peripherals, 1.25, 5400, 10)));
+
         OI.driverA.whenReleased(new SetHoodPosition(hood, 0));
         OI.driverA.whenReleased(new CancelMagazine(magIntake));
         OI.driverB.whenReleased(new SetHoodPosition(hood, 0));
@@ -108,6 +111,8 @@ public class Robot extends TimedRobot {
         OI.driverX.whenReleased(new CancelMagazine(magIntake));
         OI.driverLT.whileHeld(new Outtake(magIntake));
         OI.driverRT.whileHeld(new SmartIntake(magIntake));
+        OI.operatorX.whenPressed(new ClimberUp(climber));
+        OI.operatorB.whenPressed(new ClimberDown(climber));
     }
 
     @Override

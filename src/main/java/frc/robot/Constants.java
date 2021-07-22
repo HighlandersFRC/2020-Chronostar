@@ -30,6 +30,7 @@ public class Constants {
     public static final int LEFT_FLYWHEEL_ID = 5;
     public static final int RIGHT_FLYWHEEL_ID = 6;
     public static final int HOOD_ID = 7;
+    public static final int CLIMBER_ID = 15;
 
     // Sensor ports
     public static int BEAM_BREAK_1_ID = 1;
