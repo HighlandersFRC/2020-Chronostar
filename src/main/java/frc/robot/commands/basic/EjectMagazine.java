@@ -47,7 +47,9 @@ public class EjectMagazine extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        magIntake.setMagPercent(0.0, 0.0);
+    }
 
     @Override
     public boolean isFinished() {

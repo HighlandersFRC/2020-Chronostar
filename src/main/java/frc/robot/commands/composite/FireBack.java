@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.basic.EjectMagazine;
 import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SpinFlywheel;
+import frc.robot.commands.basic.VisionAlignment;
 import frc.robot.subsystems.*;
 
 public class FireBack extends SequentialCommandGroup {
@@ -34,7 +35,7 @@ public class FireBack extends SequentialCommandGroup {
                 new ParallelCommandGroup(
                         new SetHoodPosition(hood, hoodPosition),
                         new SpinFlywheel(shooter, magIntake, fireSpeed),
-                        //  new VisionAlignment(lightRing, drive, peripherals, angleOffset),
+                        new VisionAlignment(lightRing, drive, peripherals, angleOffset),
                         new WaitCommand(2)),
                 new EjectMagazine(magIntake, drive));
     }

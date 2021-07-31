@@ -4,9 +4,11 @@
 
 package frc.robot.commands.composite;
 
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import frc.robot.commands.basic.DriveBackwards;
+import frc.robot.commands.basic.DriveForwards;
 import frc.robot.commands.basic.NavxTurn;
 import frc.robot.commands.basic.SmartIntake;
 import frc.robot.subsystems.Drive;
@@ -37,7 +39,8 @@ public class AutoShooting extends SequentialCommandGroup {
         // addCommands(new FooCommand(), new BarCommand());
         addCommands(
                 new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 1.1, 4900, 10),
-                new NavxTurn(drive, peripherals, 0));
-        // new ParallelRaceGroup(driveBackwards, smartIntake));
+                new NavxTurn(drive, peripherals, -3),
+                new ParallelRaceGroup(driveBackwards, smartIntake),
+                new DriveForwards(drive));
     }
 }

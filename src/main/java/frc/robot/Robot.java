@@ -14,7 +14,7 @@ import frc.robot.commands.basic.CancelMagazine;
 import frc.robot.commands.basic.ClimberDown;
 import frc.robot.commands.basic.ClimberUp;
 import frc.robot.commands.basic.DriveBackwards;
-import frc.robot.commands.basic.NavxTurn;
+import frc.robot.commands.basic.DriveForwards;
 import frc.robot.commands.basic.Outtake;
 import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SmartIntake;
@@ -87,7 +87,7 @@ public class Robot extends TimedRobot {
         for (SubsystemBaseEnhanced s : subsystems) {
             s.autoInit();
         }
-        // autonomous.schedule();
+        navx.softResetAngle();
         autoShooting.schedule();
 
         odometry.zero();
@@ -102,18 +102,14 @@ public class Robot extends TimedRobot {
             s.teleopInit();
         }
         navx.softResetAngle();
-        OI.driverA.whileHeld(
-                // new FireBack(shooter, hood, magIntake, drive, lightRing, peripherals, 3, 3400,
-                // 4));
-                new NavxTurn(drive, peripherals, 0));
-        //  OI.driverB.whenPressed(
+        OI.driverA.whileHeld(new SetHoodPosition(hood, 1.2));
+
+        // OI.driverB.whenPressed(
         // new AutoShooting(drive, shooter, hood, magIntake, lightRing, peripherals));
-        OI.driverY.whenPressed(
-                new FireBack(
-                        shooter, hood, magIntake, drive, lightRing, peripherals, 1.1, 4900, 10));
+        OI.driverY.whenPressed(new DriveForwards(drive));
         OI.driverX.whenPressed(
-                (new FireBack(
-                        shooter, hood, magIntake, drive, lightRing, peripherals, 1.3, 5500, 10)));
+                ((new FireBack(
+                        shooter, hood, magIntake, drive, lightRing, peripherals, 1.3, 5500, 10))));
 
         OI.driverA.whenReleased(new SetHoodPosition(hood, 0));
         OI.driverA.whenReleased(new CancelMagazine(magIntake));

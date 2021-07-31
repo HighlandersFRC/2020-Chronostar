@@ -8,13 +8,12 @@ import frc.robot.tools.controlloops.PID;
 
 public class SetHoodPosition extends CommandBase {
 
-    private int hoodPosCount = 0;
+    private PID pid;
+    private double kP = 0.17;
+    private double kI = 0.005;
+    private double kD = 0.0;
     private Hood hood;
     private double target;
-    private PID pid;
-    private final double kP = 0.17;
-    private final double kI = 0.005;
-    private final double kD = 0.0;
     private int hoodCounter = 0;
 
     public SetHoodPosition(Hood hood, double target) {
@@ -31,7 +30,6 @@ public class SetHoodPosition extends CommandBase {
         pid.setSetPoint(target);
         pid.setMaxOutput(0.5);
         pid.setMinOutput(-0.5);
-        hoodPosCount = 0;
     }
 
     @Override
@@ -40,7 +38,6 @@ public class SetHoodPosition extends CommandBase {
         pid.updatePID(hood.getHoodPosition());
         SmartDashboard.putNumber("Hood PID Output", pid.getResult());
         hood.setHoodPercent(pid.getResult());
-        // System.out.println("got to here 3");
     }
 
     @Override
@@ -51,9 +48,6 @@ public class SetHoodPosition extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if (Math.abs(target - hood.getHoodPosition()) < 0.05 || hoodCounter > 35) {
-            return true;
-        }
-        return false;
+        return true;
     }
 }
