@@ -51,6 +51,6 @@ public class EjectMagazine extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 }

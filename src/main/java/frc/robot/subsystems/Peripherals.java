@@ -61,6 +61,10 @@ public class Peripherals extends SubsystemBaseEnhanced {
         return navx.currentAngle();
     }
 
+    public void zeroNavx() {
+        navx.softResetAngle();
+    }
+
     @Override
     public void periodic() {}
 

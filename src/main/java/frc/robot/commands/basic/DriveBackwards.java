@@ -30,7 +30,7 @@ public class DriveBackwards extends CommandBase {
     public void initialize() {
         SmartDashboard.putBoolean("Finished Drive Backwards", false);
         pid = new PID(kP, kI, kD);
-        pid.setSetPoint(15);
+        pid.setSetPoint(17);
         pid.setMinOutput(-0.4);
         pid.setMaxOutput(0.4);
     }
