@@ -156,6 +156,11 @@ public class Drive extends SubsystemBaseEnhanced {
                         / 2);
     }
 
+    public void resetEncoder() {
+        rightDriveLead.setSelectedSensorPosition(0);
+        leftDriveLead.setSelectedSensorPosition(0);
+    }
+
     public double getLeftSpeed() {
         return Constants.driveUnitsPer100MSToFPS(leftDriveLead.getSelectedSensorVelocity());
     }

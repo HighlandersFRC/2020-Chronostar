@@ -12,6 +12,7 @@ import frc.robot.tools.controlloops.PID;
 
 public class DriveForwards extends CommandBase {
     private Drive drive;
+    private double target;
     private PID pid;
     private double kP = 0.05;
     private double kI = 0.005;
@@ -20,6 +21,7 @@ public class DriveForwards extends CommandBase {
     public DriveForwards(Drive drive) {
         this.drive = drive;
         addRequirements(drive);
+
         // Use addRequirements() here to declare subsystem dependencies.
     }
 
@@ -28,7 +30,7 @@ public class DriveForwards extends CommandBase {
     public void initialize() {
         SmartDashboard.putBoolean("drive forwards", true);
         pid = new PID(kP, kI, kD);
-        pid.setSetPoint(5);
+        pid.setSetPoint(7);
         pid.setMinOutput(-0.4);
         pid.setMaxOutput(0.4);
     }
@@ -54,7 +56,7 @@ public class DriveForwards extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if (Math.abs(drive.getDriveFeet() - 5) < 0.5) {
+        if (Math.abs(drive.getDriveFeet() - 7) < 0.5) {
             return true;
         }
         return false;
