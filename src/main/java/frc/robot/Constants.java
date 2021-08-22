@@ -48,9 +48,9 @@ public class Constants {
     public static final double DRIVE_CURRENT_PEAK_TIME = 10;
     public static final double DRIVE_MAX_CURRENT = 39;
     public static final double DRIVE_TICKS_PER_ROTATION = 28672;
-    public static final double DRIVE_WHEEL_DIAMETER = 0.5;
+    public static final double DRIVE_WHEEL_DIAMETER = 0.152;
     public static final double DRIVE_WHEEL_CIRCUMFERENCE = DRIVE_WHEEL_DIAMETER * Math.PI;
-    public static final double DRIVE_WHEEL_BASE = 2.1;
+    public static final double DRIVE_WHEEL_BASE = 0.64008;
 
     public static final SupplyCurrentLimitConfiguration currentLimitEnabled =
             new SupplyCurrentLimitConfiguration(
@@ -63,7 +63,7 @@ public class Constants {
                     DRIVE_CURRENT_PEAK_THRESHOLD,
                     DRIVE_CURRENT_PEAK_TIME);
 
-    public static double driveUnitsToFeet(double ticks) {
+    public static double driveUnitsToMeters(double ticks) {
         return ticks / DRIVE_TICKS_PER_ROTATION * DRIVE_WHEEL_CIRCUMFERENCE;
     }
 
@@ -72,7 +72,7 @@ public class Constants {
     }
 
     public static double driveUnitsPer100MSToFPS(double velocity) {
-        return driveUnitsToFeet(velocity) * 10;
+        return driveUnitsToMeters(velocity) * 10;
     }
 
     public static double driveFPSToUnitsPer100MS(double fps) {

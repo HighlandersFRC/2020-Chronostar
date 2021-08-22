@@ -46,6 +46,7 @@ public class Robot extends TimedRobot {
     private Trajectory bouncePart4;
     private Trajectory threePart1;
     private Trajectory threePart2;
+    private Trajectory autoPart1;
     private PurePursuit slalomPart1Follower;
     private PurePursuit slalomPart2Follower;
     private PurePursuit slalomPart3Follower;
@@ -58,6 +59,7 @@ public class Robot extends TimedRobot {
     private PurePursuit bouncePart2Follower;
     private PurePursuit bouncePart3Follower;
     private PurePursuit bouncePart4Follower;
+    private PurePursuit autoPart1Follower;
     private PurePursuit threePart1Follower;
     private PurePursuit threePart2Follower;
     private SequentialCommandGroup slalom;
@@ -77,6 +79,8 @@ public class Robot extends TimedRobot {
             s.init();
         }
         try {
+        
+            autoPart1 = TrajectoryUtil.fromPathweaverJson(Paths.get("home/lvuser/deploy/AutoPart1.json"));
             slalomPart1 =
                     TrajectoryUtil.fromPathweaverJson(
                             Paths.get("/home/lvuser/deploy/SlalomPart1.json"));
@@ -162,6 +166,7 @@ public class Robot extends TimedRobot {
         bouncePart2Follower = new PurePursuit(drive, odometry, bouncePart2, 2.5, 5.0, true);
         bouncePart3Follower = new PurePursuit(drive, odometry, bouncePart3, 2.5, 5.0, false);
         bouncePart4Follower = new PurePursuit(drive, odometry, bouncePart4, 2.5, 5.0, true);
+        autoPart1Follower = new PurePursuit(drive, odometry, autoPart1, 1, 1.0, true);
 
         slalom =
                 new SequentialCommandGroup(
@@ -188,7 +193,8 @@ public class Robot extends TimedRobot {
                         bouncePart3Follower,
                         new NavxTurn(drive, peripherals, -180),
                         bouncePart4Follower);
-        barrel.schedule();
+        // barrel.schedule();
+        autoPart1Follower.schedule();
     }
 
     @Override

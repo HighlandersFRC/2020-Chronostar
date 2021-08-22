@@ -70,7 +70,7 @@ public class Drive extends SubsystemBaseEnhanced {
     @Override
     public void autoInit() {
         setVoltageCompensation(Constants.DRIVE_MAX_VOLTAGE);
-        setDriveBrake();
+        // setDriveBrake();
         leftDriveLead.setSelectedSensorPosition(0);
         rightDriveLead.setSelectedSensorPosition(0);
     }
@@ -123,11 +123,11 @@ public class Drive extends SubsystemBaseEnhanced {
     }
 
     public double getLeftPosition() {
-        return Constants.driveUnitsToFeet(leftDriveLead.getSelectedSensorPosition());
+        return Constants.driveUnitsToMeters(leftDriveLead.getSelectedSensorPosition());
     }
 
     public double getRightPosition() {
-        return Constants.driveUnitsToFeet(rightDriveLead.getSelectedSensorPosition());
+        return Constants.driveUnitsToMeters(rightDriveLead.getSelectedSensorPosition());
     }
 
     public double getLeftSpeed() {

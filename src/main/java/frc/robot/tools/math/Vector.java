@@ -25,6 +25,13 @@ public class Vector {
         return j;
     }
 
+    public Vector multiply(Vector u, double mult) {
+        // System.out.println(u.getI();
+        Vector e = new Vector(u.getI() * mult, u.getJ() * mult);
+        // System.out.println(e.getI());
+        return e;
+    }
+
     public double dot(Vector u) {
         return i * u.getI() + j * u.getJ();
     }
