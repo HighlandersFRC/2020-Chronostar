@@ -14,11 +14,12 @@ import frc.robot.commands.basic.CancelMagazine;
 import frc.robot.commands.basic.ClimberDown;
 import frc.robot.commands.basic.ClimberUp;
 import frc.robot.commands.basic.DriveBackwards;
+import frc.robot.commands.basic.EjectMagazine;
 import frc.robot.commands.basic.Outtake;
 import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SmartIntake;
 import frc.robot.commands.composite.AutoShooting;
-import frc.robot.commands.composite.FireBack;
+import frc.robot.commands.composite.Fire;
 import frc.robot.sensors.Navx;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.MagIntake.BeamBreakID;
@@ -103,12 +104,10 @@ public class Robot extends TimedRobot {
         navx.softResetAngle();
         OI.driverA.whileHeld(new SetHoodPosition(hood, 1.2));
 
-        // OI.driverB.whenPressed(
-        // new AutoShooting(drive, shooter, hood, magIntake, lightRing, peripherals));
-        // OI.driverY.whenPressed(new DriveForwards(drive));
+        OI.driverB.whenPressed(new EjectMagazine(magIntake, drive));
         OI.driverX.whenPressed(
-                ((new FireBack(
-                        shooter, hood, magIntake, drive, lightRing, peripherals, 1.3, 5500, 10))));
+                ((new Fire(
+                        shooter, hood, magIntake, drive, lightRing, peripherals, 1.1, 3500, 10))));
 
         OI.driverA.whenReleased(new SetHoodPosition(hood, 0));
         OI.driverA.whenReleased(new CancelMagazine(magIntake));

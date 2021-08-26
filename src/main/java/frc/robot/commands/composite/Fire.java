@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import frc.robot.commands.basic.EjectMagazine;
-import frc.robot.commands.basic.SetHoodPosition;
 import frc.robot.commands.basic.SpinFlywheel;
 import frc.robot.commands.basic.VisionAlignment;
 import frc.robot.subsystems.*;
@@ -33,7 +32,7 @@ public class Fire extends SequentialCommandGroup {
         addRequirements(shooter, hood, magIntake, drive, lightRing);
         addCommands(
                 new ParallelCommandGroup(
-                        new SetHoodPosition(hood, hoodPosition),
+                        // new SetHoodPosition(hood, hoodPosition),
                         new SpinFlywheel(shooter, magIntake, fireSpeed),
                         new VisionAlignment(lightRing, drive, peripherals, angleOffset),
                         new WaitCommand(2)),

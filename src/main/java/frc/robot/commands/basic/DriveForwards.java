@@ -30,9 +30,10 @@ public class DriveForwards extends CommandBase {
     public void initialize() {
         SmartDashboard.putBoolean("drive forwards", true);
         pid = new PID(kP, kI, kD);
-        pid.setSetPoint(7);
+        pid.setSetPoint(12);
         pid.setMinOutput(-0.4);
         pid.setMaxOutput(0.4);
+        drive.resetEncoder();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -41,8 +42,8 @@ public class DriveForwards extends CommandBase {
         pid.updatePID(drive.getDriveFeet());
         SmartDashboard.putNumber("drive forward output", pid.getResult());
         SmartDashboard.putNumber("getdrivefeet", drive.getDriveFeet());
-        drive.setLeftPercent(pid.getResult());
-        drive.setRightPercent(pid.getResult());
+        drive.setLeftPercent(-pid.getResult());
+        drive.setRightPercent(-pid.getResult());
     }
 
     // Called once the command ends or is interrupted.
@@ -56,7 +57,7 @@ public class DriveForwards extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if (Math.abs(drive.getDriveFeet() - 7) < 0.5) {
+        if (Math.abs(drive.getDriveFeet() + 12) < 0.5) {
             return true;
         }
         return false;

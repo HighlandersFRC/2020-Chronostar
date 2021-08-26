@@ -32,6 +32,7 @@ public class NavxTurn extends CommandBase {
         pid.setSetPoint(target);
         pid.setMinOutput(-0.3);
         pid.setMaxOutput(0.3);
+        peripherals.zeroNavx();
     }
 
     @Override

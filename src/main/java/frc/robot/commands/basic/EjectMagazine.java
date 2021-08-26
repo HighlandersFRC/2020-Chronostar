@@ -23,11 +23,13 @@ public class EjectMagazine extends CommandBase {
     public EjectMagazine(MagIntake magIntake, Drive drive) {
         this.magIntake = magIntake;
         this.drive = drive;
-        addRequirements(this.magIntake, this.drive);
+        addRequirements(magIntake, drive);
     }
 
     @Override
-    public void initialize() {}
+    public void initialize() {
+        counter = 0;
+    }
 
     @Override
     public void execute() {
@@ -53,6 +55,9 @@ public class EjectMagazine extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return true;
+        if (counter >= 100) {
+            return true;
+        }
+        return false;
     }
 }

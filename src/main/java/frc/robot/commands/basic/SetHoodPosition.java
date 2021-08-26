@@ -4,17 +4,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.Hood;
-import frc.robot.tools.controlloops.PID;
 
 public class SetHoodPosition extends CommandBase {
 
-    private PID pid;
-    private double kP = 0.17;
-    private double kI = 0.005;
-    private double kD = 0.0;
     private Hood hood;
     private double target;
-    private int hoodCounter = 0;
 
     public SetHoodPosition(Hood hood, double target) {
         this.hood = hood;
@@ -23,21 +17,11 @@ public class SetHoodPosition extends CommandBase {
     }
 
     @Override
-    public void initialize() {
-        hoodCounter = 0;
-        SmartDashboard.putBoolean("finished hoodPID", false);
-        pid = new PID(kP, kI, kD);
-        pid.setSetPoint(target);
-        pid.setMaxOutput(0.5);
-        pid.setMinOutput(-0.5);
-    }
+    public void initialize() {}
 
     @Override
     public void execute() {
-        hoodCounter++;
-        pid.updatePID(hood.getHoodPosition());
-        SmartDashboard.putNumber("Hood PID Output", pid.getResult());
-        hood.setHoodPercent(pid.getResult());
+        hood.setHoodTarget(target);
     }
 
     @Override
@@ -48,6 +32,6 @@ public class SetHoodPosition extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return true;
+        return Math.abs(target - hood.getHoodPosition()) < 0.5;
     }
 }
