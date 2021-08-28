@@ -102,7 +102,10 @@ public class Robot extends TimedRobot {
             s.teleopInit();
         }
         navx.softResetAngle();
-        OI.driverA.whileHeld(new SetHoodPosition(hood, 1.2));
+        OI.driverA.whileHeld(
+                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 1.0, 2500, 4));
+        OI.driverY.whenPressed(
+                new Fire(shooter, hood, magIntake, drive, lightRing, peripherals, 0.3, 1500, 0));
 
         OI.driverB.whenPressed(new EjectMagazine(magIntake, drive));
         OI.driverX.whenPressed(
