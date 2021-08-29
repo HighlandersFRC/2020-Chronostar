@@ -4,8 +4,12 @@ package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoSink;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
@@ -36,6 +40,8 @@ public class Robot extends TimedRobot {
     private final LightRing lightRing = new LightRing();
     private AHRS imu = new AHRS(Port.kMXP);
     private Navx navx = new Navx(imu);
+    private UsbCamera camera;
+    private VideoSink server;
 
     DriveBackwards driveBackwards = new DriveBackwards(drive);
     SmartIntake smartIntake = new SmartIntake(magIntake);
@@ -57,6 +63,14 @@ public class Robot extends TimedRobot {
         }
         navx.softResetAngle();
         odometry.zero();
+        camera = CameraServer.getInstance().startAutomaticCapture("VisionCamera1", "/dev/video0");
+        camera.setResolution(320, 240);
+        camera.setFPS(10);
+
+        server = CameraServer.getInstance().addSwitchedCamera("driverVisionCameras");
+        server.setSource(camera);
+        Shuffleboard.update();
+        SmartDashboard.updateValues();
     }
 
     @Override
