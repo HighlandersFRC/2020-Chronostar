@@ -42,6 +42,10 @@ public class Robot extends TimedRobot {
     private Navx navx = new Navx(imu);
     private UsbCamera camera;
     private VideoSink server;
+    private UsbCamera camera2;
+    private VideoSink server2;
+    private boolean cameraBoolean;
+    private boolean ableToSwitch;
 
     DriveBackwards driveBackwards = new DriveBackwards(drive);
     SmartIntake smartIntake = new SmartIntake(magIntake);
@@ -67,6 +71,10 @@ public class Robot extends TimedRobot {
         camera.setResolution(320, 240);
         camera.setFPS(10);
 
+        camera2 = CameraServer.getInstance().startAutomaticCapture("VisionCamera2", "/dev/video1");
+        camera2.setResolution(320, 240);
+        camera2.setFPS(10);
+
         server = CameraServer.getInstance().addSwitchedCamera("driverVisionCameras");
         server.setSource(camera);
         Shuffleboard.update();
@@ -75,6 +83,18 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotPeriodic() {
+        if (OI.driverStart.get() && ableToSwitch) {
+            if (cameraBoolean) {
+                server.setSource(camera2);
+                cameraBoolean = false;
+            } else if (!cameraBoolean) {
+                server.setSource(camera);
+                cameraBoolean = true;
+            }
+            ableToSwitch = false;
+        } else if (!OI.driverStart.get()) {
+            ableToSwitch = true;
+        }
         SmartDashboard.putNumber("Vision Angle", peripherals.getCamAngle());
         hood.periodic();
         SmartDashboard.putNumber("Lidar Dist", peripherals.getLidarDistance());
